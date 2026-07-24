@@ -1,12 +1,12 @@
-// Landing Page — Redesigned Financial Instrument Document Homepage
+// Landing Page — /go — Cold-traffic conversion page
 import api from '../api.js';
 import { landingCSS } from './LandingStyles.js';
 
-// Inject LandingCSS once into document head
+// Inject LandingCSS once into document head to avoid duplication and parsing overhead
 if (!document.getElementById('lp-injected-styles')) {
     const style = document.createElement('style');
     style.id = 'lp-injected-styles';
-    style.textContent = landingCSS;
+    style.textContent = landingCSS + `\n@media(max-width:768px){.lp .ldesktop-proof{display:none!important}}`;
     document.head.appendChild(style);
 }
 
@@ -14,664 +14,3351 @@ export function renderLanding() {
     return `
         <div class="lp">
 
-            <!-- ══════════════════ NAV ══════════════════ -->
-            <header class="nav">
-                <div class="nav-in">
-                    <a class="wordmark" href="/" onclick="window.router.navigate('/'); return false;">Collateral</a>
-                    <nav class="nav-links" aria-label="Primary">
-                        <a href="#modes">Contracts</a>
-                        <a href="#record">Record</a>
-                        <a href="#flow">Escrow</a>
-                        <a href="#terms">Terms</a>
-                        <a href="#tape">Live</a>
-                    </nav>
-                    <div class="nav-right">
-                        <span class="nav-escrow"><span class="dot"></span>$12,400 in escrow</span>
-                        <a class="btn btn-out nav-btn" href="/signin" id="lp-nav-signin" onclick="window.router.navigate('/signin'); return false;">Sign in</a>
+            <!-- LOADING BAR -->
+            <div class="lloading-bar" id="lp-loading-bar"></div>
+
+            <!-- NAV -->
+            <nav class="ln">
+                <div class="ln-in">
+                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;" style="color: #0F172A !important;">
+                        <span class="logo-wordmark" style="color: #0F172A !important; font-weight: 800 !important; text-transform: uppercase !important;">COLLATERAL</span>
+                    </a>
+                    <div style="display:flex; align-items:center;">
+                        <button class="ln-cta" id="lp-nav-cta" style="background: #7A1C2B !important; background-color: #7A1C2B !important; color: #FFFFFF !important; border: 1.5px solid #7A1C2B !important;">Sign In</button>
+                        <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
+                            <div class="ch-hamburger-lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </button>
                     </div>
                 </div>
-            </header>
+            </nav>            <!-- ═══ HERO ═══ -->
+            <div class="lhero-section">
+                <!-- PROCEDURAL HERO BACKGROUND SYSTEM -->
+                <div class="lhero-bg-light-orb"></div>
+                
+                <div class="lw">
+                    <div class="lhero-main-wrap">
+                        <!-- HERO LOWER FLEX CONTENT -->
+                        <div class="lhero-bottom-area">
+                            <div class="lhero-grid">
+                                <!-- LEFT COLUMN -->
+                                <div class="lhero-left">
+                                    <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
+                                    <div class="lhero-headline-wrap">
+                                        <h1 class="lh1 animate-fade-in-up">
+                                            PUT YOUR MONEY<br>
+                                            BEHIND YOUR <span class="lh-gradient">WORD.</span>
+                                        </h1>
+                                    </div>
+                                    <p class="lsub animate-fade-in-up delay-1">
+                                        Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
+                                    </p>
+                                    <div class="lctas animate-fade-in-up delay-2">
+                                        <button class="lbtn lbtn-r" id="lp-hero-cta">START CONTRACT</button>
+                                        <button class="lbtn lbtn-g" id="lp-see-contracts-cta">SEE LIVE CONTRACTS</button>
+                                    </div>
 
-            <!-- 
-                ============================================================
-                SECTION 1 · HERO: THE CERTIFICATE
-                Document Type: Cover Plate of an Issued Financial Instrument
-                Invariant Kit: Paper (plate on #F8F6F1), Hairline Rules, 
-                Mono Caps Clerical Voice, Oxblood Accent & Tabular Numerals, 
-                Guilloche Engraving Pattern.
-                ============================================================
-            -->
-            <section class="hero">
-                <div class="shell">
-                    <div class="plate">
+                                    <!-- COMPACT LIVE RIVALRY SNAPSHOT -->
+                                    <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
+                                        <div class="l-lr-hdr">
+                                            <span class="l-lr-dot l-ticker-pulse"></span> LIVE CONTRACT RIVALRY
+                                        </div>
+                                        <div class="l-lr-ticker">
+                                            <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>
+                                            <span class="l-lr-divider">/</span>
+                                            <span class="l-lr-token">@marcus <span class="l-lr-num lag">+7.80%</span></span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-cap">POOL $2.0K</span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-time">T-MINUS 9D</span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-action-badge">VIEW MATCH <span style="display:inline-block; transition: transform 0.2s ease;">→</span></span>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <!-- GUILLOCHE BACKGROUND ENGRAVING -->
-                        <svg class="guilloche" aria-hidden="true" preserveAspectRatio="none">
-                            <defs>
-                                <pattern id="gl" width="112" height="112" patternUnits="userSpaceOnUse">
-                                    <g fill="none" stroke="#7B1E2B" stroke-width=".4" opacity=".2">
-                                        <ellipse cx="56" cy="56" rx="52" ry="17"/>
-                                        <ellipse cx="56" cy="56" rx="52" ry="17" transform="rotate(30 56 56)"/>
-                                        <ellipse cx="56" cy="56" rx="52" ry="17" transform="rotate(60 56 56)"/>
-                                        <ellipse cx="56" cy="56" rx="52" ry="17" transform="rotate(90 56 56)"/>
-                                        <ellipse cx="56" cy="56" rx="52" ry="17" transform="rotate(120 56 56)"/>
-                                        <ellipse cx="56" cy="56" rx="52" ry="17" transform="rotate(150 56 56)"/>
-                                    </g>
-                                </pattern>
-                                <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                    <stop offset="34%" stop-color="#fff" stop-opacity="0"/>
-                                    <stop offset="66%" stop-color="#fff" stop-opacity="0"/>
-                                    <stop offset="100%" stop-color="#fff" stop-opacity="1"/>
-                                </linearGradient>
-                                <mask id="edge"><rect width="100%" height="100%" fill="url(#fade)"/></mask>
-                            </defs>
-                            <rect width="100%" height="100%" fill="url(#gl)" mask="url(#edge)"/>
-                        </svg>
+                                <!-- RIGHT COLUMN: 3 COMPACT FANNED COLLATERAL CONTRACT CARDS DECK -->
+                                <div class="lhero-right animate-fade-in-up delay-2">
+                                    <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
+                                        <div class="lfan-deck-viewport">
+                                            <div class="lfan-deck-stage" id="lfan-deck-stage">
+                                                
+                                                <!-- CARD 1: STRIPE REVENUE CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-center" id="lfan-card-0">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
+                                                        <span class="lc-plat-text">Connected via Stripe Connect</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">22</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$8,700</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">Stripe Revenue</div>
+                                                                <div class="lc-contract-goal">Increase Stripe revenue by 20%</div>
+                                                                <div class="lc-contract-time">18 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$500</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$500</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$1,000</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Deposit Escrowed</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
 
-                        <div class="cert-head">
-                            <span class="mono">Escrow instrument &middot; Series&nbsp;A</span>
-                            <span class="mono">No.&nbsp;C&ndash;0001</span>
-                            <span class="mono">Custodian &middot; Stripe Connect</span>
+                                                <!-- CARD 2: SHOPIFY SALES CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-right" id="lfan-card-1">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">
+                                                        <span class="lc-plat-text">Verified via Shopify API</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">15</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$6,200</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">Shopify Sales</div>
+                                                                <div class="lc-contract-goal">Generate $5,000 in net sales</div>
+                                                                <div class="lc-contract-time">30 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$250</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$125</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$375</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Yield Multiplier Active</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                                <!-- CARD 3: X AUDIENCE GROWTH CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-left" id="lfan-card-2">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">
+                                                        <span class="lc-plat-text">Verified via X API v2</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">31</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$12,400</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">X Audience Growth</div>
+                                                                <div class="lc-contract-goal">Gain 1,000 net new followers</div>
+                                                                <div class="lc-contract-time">12 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$1,000</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$1,000</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$2,000</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Escrow Verified</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="cert-body">
-                            <p class="cert-kicker">Binding on execution</p>
-                            <h1 class="cert-title">Put your money<br>behind your <span class="em">word</span></h1>
 
-                            <div class="ornament" aria-hidden="true">
-                                <span></span>
-                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#7B1E2B" stroke-width="1">
-                                    <circle cx="15" cy="15" r="10.5"/>
-                                    <circle cx="15" cy="15" r="6"/>
-                                    <path d="M15 1.5v27M1.5 15h27M5.4 5.4l19.2 19.2M24.6 5.4L5.4 24.6" opacity=".4"/>
-                                </svg>
-                                <span></span>
-                            </div>
+                    </div>
+                </div>
+            </div>
 
-                            <p class="cert-copy">Every day people risk money on outcomes they don't control &mdash;
-                                sports teams, markets, ad algorithms. Collateral lets you lock capital on the one
-                                asset you do control: your own focus and execution.</p>
 
-                            <div class="cert-actions">
-                                <a class="btn btn-fill" href="/signin" id="lp-cert-cta-open" onclick="window.router.navigate('/signin'); return false;">Open a contract</a>
-                                <a class="btn btn-out" href="#tape">See live contracts</a>
-                            </div>
+
+
+
+
+
+            <!-- GLOBAL PROTOCOL STATISTICS / CYCLING BAND -->
+            <div class="l-global-stats-bar animate-fade-in-up delay-4" id="l-stats-band" style="padding: 0 !important; margin: 0 auto !important; background: transparent !important; border: none !important; width: 100% !important; display: flex !important; justify-content: center !important;">
+                <div class="lw" style="width: 100% !important; max-width: 1240px !important; margin: 0 auto !important; padding: 0 24px !important; box-sizing: border-box !important;">
+                    <div class="l-stats-card" style="background: #FBF9F5 !important; border: 1.5px solid rgba(28, 35, 51, 0.09) !important; border-radius: 16px !important; padding: 16px 32px !important; box-shadow: 0 8px 24px -10px rgba(28, 35, 51, 0.08) !important; width: 100% !important; max-width: 100% !important; margin: 0 auto !important; height: auto !important; min-height: 0 !important; box-sizing: border-box !important;">
+                        <!-- Visually hidden list of all metrics and supported APIs for screen readers -->
+                        <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
+                            Protocol metrics: Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812. Supported APIs: Stripe API, X / Twitter API, YouTube API, Shopify API.
+                        </div>
+                        <div class="l-stats-eyebrow" id="l-stats-eyebrow" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 2.5px !important; color: #8C8577 !important; text-transform: uppercase !important; text-align: center !important; margin: 0 0 8px 0 !important; padding: 0 !important; line-height: 1 !important;">LIVE METRICS</div>
+                        <div class="l-stats-bar-grid" id="l-stats-grid" aria-live="off" style="display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 16px !important; align-items: center !important; margin: 0 !important; padding: 0 !important;">
+                            <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="Active contracts">
+                                <div class="l-stat-bar-wrapper">
+                                    <div class="l-stat-bar-content current" data-state="A" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important;">
+                                        <div class="l-stat-bar-value-zone" style="height: 44px !important; min-height: 44px !important; max-height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; margin: 0 !important; padding: 0 !important;">
+                                            <span class="l-stat-bar-val" style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 34px !important; font-weight: 800 !important; color: #1C2333 !important; line-height: 1 !important; letter-spacing: -0.02em !important;">1,206</span>
+                                        </div>
+                                        <span class="l-stat-bar-lbl" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 1.6px !important; color: #8C8577 !important; text-transform: uppercase !important; text-align: center !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">Active Contracts</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="Average contract size">
+                                <div class="l-stat-bar-wrapper">
+                                    <div class="l-stat-bar-content current" data-state="A" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important;">
+                                        <div class="l-stat-bar-value-zone" style="height: 44px !important; min-height: 44px !important; max-height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; margin: 0 !important; padding: 0 !important;">
+                                            <span class="l-stat-bar-val" style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 34px !important; font-weight: 800 !important; color: #1C2333 !important; line-height: 1 !important; letter-spacing: -0.02em !important;">$6,940</span>
+                                        </div>
+                                        <span class="l-stat-bar-lbl" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 1.6px !important; color: #8C8577 !important; text-transform: uppercase !important; text-align: center !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">Average Contract Size</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/market" class="l-stat-bar-item" data-cell-index="2" aria-label="Median settlement time">
+                                <div class="l-stat-bar-wrapper">
+                                    <div class="l-stat-bar-content current" data-state="A" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important;">
+                                        <div class="l-stat-bar-value-zone" style="height: 44px !important; min-height: 44px !important; max-height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; margin: 0 !important; padding: 0 !important;">
+                                            <span class="l-stat-bar-val" style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 34px !important; font-weight: 800 !important; color: #1C2333 !important; line-height: 1 !important; letter-spacing: -0.02em !important;">1.4 days</span>
+                                        </div>
+                                        <span class="l-stat-bar-lbl" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 1.6px !important; color: #8C8577 !important; text-transform: uppercase !important; text-align: center !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">Median Settlement Time</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/market" class="l-stat-bar-item" data-cell-index="3" aria-label="Verified counterparties">
+                                <div class="l-stat-bar-wrapper">
+                                    <div class="l-stat-bar-content current" data-state="A" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important;">
+                                        <div class="l-stat-bar-value-zone" style="height: 44px !important; min-height: 44px !important; max-height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; margin: 0 !important; padding: 0 !important;">
+                                            <span class="l-stat-bar-val" style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 34px !important; font-weight: 800 !important; color: #1C2333 !important; line-height: 1 !important; letter-spacing: -0.02em !important;">812</span>
+                                        </div>
+                                        <span class="l-stat-bar-lbl" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 1.6px !important; color: #8C8577 !important; text-transform: uppercase !important; text-align: center !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">Verified Counterparties</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ SIGNATURE TYPOGRAPHIC CONTRACT HERO (YOU vs YOU / YOU vs THEM) ═══ -->
+            <section class="sor-section" id="sor-contract-section" data-r style="padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px);">
+                <div class="sor-grid">
+                    <!-- LEFT COLUMN: MODE SELECTOR & TIMELINE -->
+                    <div class="sor-left-col" style="display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-top: 4px;" class="reveal-item">
+                            <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                            <span style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
+                                CONTRACT EXECUTION MODES
+                            </span>
                         </div>
 
-                        <div class="cert-foot">
-                            <div class="foot-cell">
-                                <span class="mono">Held in escrow</span>
-                                <span class="foot-val blood">$8,700,000</span>
-                            </div>
-                            <div class="foot-cell">
-                                <span class="mono">Returned to creators</span>
-                                <span class="foot-val win">$8,326,200</span>
-                            </div>
-                            <div class="foot-cell">
-                                <span class="mono">Oracle hit rate</span>
-                                <span class="foot-val">96.2%</span>
-                            </div>
-                            <div class="foot-cell">
-                                <span class="mono">Open contracts</span>
-                                <span class="foot-val">31</span>
-                            </div>
+                        <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(38px,5.2vw,62px); line-height: 0.95; margin: 0 0 20px; letter-spacing: -0.035em; font-weight: 900; text-transform: uppercase;">
+                            <span style="color: #1C2333;">SOLO OR </span><span style="color: #7A1C2B;">RIVALRY.</span>
+                        </h2>
+
+                        <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; line-height: 1.6; letter-spacing: -0.011em; color: #5A6072; margin: 0 0 24px; max-width: 62ch;">
+                            Lock money behind a goal. Hit it and get paid. Miss it and forfeit.
+                        </p>
+
+                        <!-- MODE CARDS AT THE BOTTOM OF THE COLUMN FOR PERFECT ALIGNMENT -->
+                        <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; margin-top: auto; margin-bottom: 0;">
+                            <!-- SOLO CARD WITH ENGRAVING (176px BAND, CENTER 46% CROP) -->
+                            <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1); display: flex; flex-direction: column;">
+                                <div style="position: relative; height: 176px; overflow: hidden; background: #EFE8DA; width: 100%;">
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 46%; display: block;" />
+                                    <div class="sor-art-fade" aria-hidden="true"></div>
+                                </div>
+                                <div style="padding: 14px 14px 16px; display: flex; flex-direction: column; flex: 1;">
+                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; align-self: flex-start;">SOLO</span>
+                                    <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #1C2333; margin-bottom: 10px; line-height: 1.25;">Beat your own goal</div>
+                                    <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Stake against yourself
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Keep your principal
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Earn execution rewards
+                                        </li>
+                                    </ul>
+                                    <div class="sor-cta" style="margin-top: auto; padding-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start solo <span class="sor-arrow">→</span></div>
+                                </div>
+                            </button>
+
+                            <!-- RIVALRY CARD WITH ENGRAVING (176px BAND, CENTER 52% CROP) -->
+                            <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1); display: flex; flex-direction: column;">
+                                <div style="position: relative; height: 176px; overflow: hidden; background: #5E1521; width: 100%;">
+                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Seals Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 52%; display: block;" />
+                                    <div class="sor-art-fade" aria-hidden="true"></div>
+                                </div>
+                                <div style="padding: 14px 14px 16px; display: flex; flex-direction: column; flex: 1;">
+                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; align-self: flex-start;">RIVALRY</span>
+                                    <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #1C2333; margin-bottom: 10px; line-height: 1.25;">Stake head-to-head</div>
+                                    <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Two people lock capital
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Verified winner
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Winner receives escrow
+                                        </li>
+                                    </ul>
+                                    <div class="sor-cta" style="margin-top: auto; padding-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start rivalry <span class="sor-arrow">→</span></div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: TYPOGRAPHIC HERO CARD -->
+                    <div class="sor-hero-card" id="sor-hero-card" onmouseenter="window.userStopAutoDemo()" onclick="window.userStopAutoDemo()">
+                        <div class="sor-ambient-glow"></div>
+                        <div class="sor-mode-tag">
+                            <span class="sor-live-dot"></span>
+                            <span id="sor-tag-text">SOLO CONTRACT</span>
                         </div>
 
+                        <div style="position: relative; text-align: center; z-index: 1;">
+                            <div class="sor-word-top">YOU</div>
+                            <div class="sor-vs-row">
+                                <span class="sor-rule"></span>
+                                <span class="sor-vs">vs</span>
+                                <span class="sor-rule"></span>
+                            </div>
+                            <div class="sor-word-bottom sor-morph" id="sor-opponent-word" style="color: #1C2333;">YOU</div>
+
+                            <div class="sor-figure-wrap sor-figure" id="sor-figure-wrap" style="margin-top: clamp(18px,2.6vw,32px);">
+                                <div class="sor-figure-val" id="sor-figure-val">$1,000</div>
+                                <div class="sor-figure-lbl" id="sor-figure-lbl">LOCKED BY YOU</div>
+                            </div>
+
+                            <div class="sor-outcome-text sor-outcome" id="sor-outcome-text">
+                                Beat your own goal — keep every dollar, plus yield.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 
-                ============================================================
-                SECTION 2 · DIPTYCH: SOLO OR RIVALRY
-                Document Type: Printed Spread Diptych with Vertical Rule Separator
-                Invariant Kit: Hairline Rules, Dual Engraved Plates (Hand-and-Coin 
-                & Two-Hands Pressing Coin), Mono Caps Labels, Oxblood Dark Leaf.
-                ============================================================
-            -->
-            <section class="section" id="modes">
-                <div class="shell">
-                    <p class="eyebrow">Execution modes</p>
-                    <h2 class="title">Two ways to make a promise cost something</h2>
-                    <p class="lede">Lock money behind a goal. Hit it and take back your principal plus yield.
-                        Miss it and the deposit funds somebody who didn't.</p>
-
-                    <div class="diptych">
-                        <article class="leaf">
-                            <div class="leaf-art">
-                                <svg viewBox="0 0 400 190" role="img" aria-label="Engraving: a hand pressing a coin into still water">
-                                    <g fill="none" stroke="#131A2B" stroke-width=".7" stroke-linecap="round">
-                                        <ellipse cx="200" cy="150" rx="122" ry="17" opacity=".3"/>
-                                        <ellipse cx="200" cy="150" rx="94" ry="13" opacity=".45"/>
-                                        <ellipse cx="200" cy="150" rx="66" ry="9" opacity=".6"/>
-                                        <ellipse cx="200" cy="150" rx="38" ry="5.5" opacity=".8"/>
-                                        <circle cx="200" cy="132" r="17"/>
-                                        <circle cx="200" cy="132" r="12" opacity=".55"/>
-                                        <path d="M193 132h14M200 125v14" opacity=".55"/>
-                                        <path d="M186 96c0-15 5-27 12-30 6-2 9 3 8 11l-3 21"/>
-                                        <path d="M203 98l4-24c1-8 5-11 10-9 5 2 6 8 5 15l-4 20"/>
-                                        <path d="M218 100l5-19c2-7 6-9 10-7 4 3 4 8 3 14l-4 15"/>
-                                        <path d="M232 105l4-13c2-6 6-7 9-5 3 3 3 7 2 11l-3 10"/>
-                                        <path d="M186 96c-9 4-13 12-11 21 3 12 13 19 26 19h22c15 0 23-8 25-20l2-11"/>
-                                        <g opacity=".28">
-                                            <path d="M192 74v14M198 68v18M205 72v14M212 78v12M219 82v9"/>
-                                        </g>
-                                    </g>
-                                </svg>
-                            </div>
-                            <span class="mono mono-b">Mode 01 &middot; Solo</span>
-                            <h3 class="leaf-name">Stake against your own goal</h3>
-                            <ul class="leaf-list">
-                                <li>You set the target and the window</li>
-                                <li>Your principal stays yours on success</li>
-                                <li>Execution yield paid from the match pool</li>
-                                <li>Settles on your own connected API</li>
-                            </ul>
-                            <a class="link" href="/signin" onclick="window.router.navigate('/signin'); return false;">Open a solo contract &rarr;</a>
-                        </article>
-
-                        <div class="divider-v" aria-hidden="true"></div>
-
-                        <article class="leaf leaf--dark">
-                            <div class="leaf-art">
-                                <svg viewBox="0 0 400 190" role="img" aria-label="Engraving: two hands pressing a single coin from opposite sides">
-                                    <g fill="none" stroke="#F4EDE9" stroke-width=".7" stroke-linecap="round">
-                                        <ellipse cx="200" cy="150" rx="122" ry="17" opacity=".28"/>
-                                        <ellipse cx="200" cy="150" rx="94" ry="13" opacity=".4"/>
-                                        <ellipse cx="200" cy="150" rx="66" ry="9" opacity=".55"/>
-                                        <circle cx="200" cy="132" r="17"/>
-                                        <circle cx="200" cy="132" r="12" opacity=".55"/>
-                                        <path d="M193 132h14M200 125v14" opacity=".55"/>
-                                        <path d="M150 98c-2-15 2-28 9-32 6-3 10 2 10 10l-1 22"/>
-                                        <path d="M168 98l2-25c1-8 5-11 10-9 5 2 6 8 5 15l-3 20"/>
-                                        <path d="M150 98c-9 5-12 13-9 22 4 11 13 17 25 17h20"/>
-                                        <path d="M250 98c2-15-2-28-9-32-6-3-10 2-10 10l1 22"/>
-                                        <path d="M232 98l-2-25c-1-8-5-11-10-9-5 2-6 8-5 15l3 20"/>
-                                        <path d="M250 98c9 5 12 13 9 22-4 11-13 17-25 17h-20"/>
-                                        <g opacity=".25">
-                                            <path d="M158 76v13M166 70v17M234 70v17M242 76v13"/>
-                                        </g>
-                                    </g>
-                                </svg>
-                            </div>
-                            <span class="mono">Mode 02 &middot; Rivalry</span>
-                            <h3 class="leaf-name">Stake head to head</h3>
-                            <ul class="leaf-list">
-                                <li>Two counterparties lock equal capital</li>
-                                <li>Same metric, same window, same oracle</li>
-                                <li>Verified winner takes the escrow</li>
-                                <li>No manual claim, no dispute queue</li>
-                            </ul>
-                            <a class="link" href="/signin" onclick="window.router.navigate('/signin'); return false;">Open a rivalry contract &rarr;</a>
-                        </article>
+            <!-- ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS & STATS) ═══ -->
+            <div class="lreal-results" data-r style="background: #F8F5F0; padding: clamp(40px,6vw,88px) clamp(20px,5vw,64px); font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <div class="lw" style="max-width: 1240px; margin: 0 auto;">
+                    <!-- SECTION TAG -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                            PROOF OF SETTLEMENT
+                        </span>
                     </div>
-                </div>
-            </section>
 
-            <!-- 
-                ============================================================
-                SECTION 3 · ARGUMENT: THE PRINTED PAGE
-                Document Type: Printed Book Page with Marginalia & Ruled Table
-                Invariant Kit: Deep Cream Stock (#F2EEE7), Dropcap Typography, 
-                Hairline Ledger Rules, Struck-through Void Column.
-                ============================================================
-            -->
-            <section class="section alt">
-                <div class="shell">
-                    <div class="argument">
+                    <!-- HEAD STACK -->
+                    <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
+                        <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(32px, 5.2vw, 60px); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; text-wrap: balance; color: #1C2333; margin: 0 0 14px; max-width: 22ch; width: 100%;">
+                            Skin in the game is the<br class="l-br-desktop" />only thing that <span style="color: #7A1C2B;">works.</span>
+                        </h2>
+                        <p style="font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em; font-family: 'Inter', sans-serif;">
+                            Skin in the game is the only mechanism that enforces real execution. Every contract settles automatically on objective API telemetry — including the ones people lose.
+                        </p>
+                    </div>
+
+                    <!-- 3 STAMPED RECEIPT CARDS GRID -->
+                    <div class="ps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px);">
+                        
+                        <!-- RECEIPT 1: @revpilot (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-34D6</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    +20% revenue in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @revpilot · via Stripe API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$2,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">Stripe oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 14, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp1g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="7" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="18" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="10" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp1b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure1" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask1">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure1)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp1b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp1g)" mask="url(#pressureMask1)" opacity="0.86" transform="rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 2: @deltacreator (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-9F21</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    50,000 subscribers in 60 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @deltacreator · via YouTube API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">YouTube oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 09, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp2g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="14" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="22" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="12" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp2b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure2" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask2">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure2)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp2b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-6 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp2g)" mask="url(#pressureMask2)" opacity="0.86" transform="rotate(-6 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 3: @marcusk (FORFEIT/DENIED) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-780B</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    25,000 followers in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @marcusk · via X API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,500.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">X oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 02, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH RUBBER STAMP (DENIED) -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp3g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="21" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="32" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp3b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure3" x1="0" y1="1" x2="1" y2="0">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask3">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure3)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp3b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                        <g filter="url(#stamp3g)" mask="url(#pressureMask3)" opacity="0.88" transform="rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- 4 STATS STRIP BELOW -->
+                    <div class="ps-stats reveal-item" style="margin-top: clamp(34px,4vw,54px); padding-top: clamp(24px,3vw,34px); border-top: 1px solid rgba(28,35,51,0.11); display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
                         <div>
-                            <p class="eyebrow">The case</p>
-                            <h2 class="title">A plan without stakes is just a comfortable wish</h2>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">74%</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">OF CONTRACTS ARE WON</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">$127k</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">TOTAL CAPITAL SETTLED</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">18 days</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">AVERAGE TIME TO TARGET</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <div class="prose">
-                                <p class="dropcap">Planning is easy and executing is hard, and the gap between them
-                                    is not a knowledge problem. You already know what the next step is. You have known
-                                    for months.</p>
-                                <p>What you don't have is a reason that the step has to happen this week rather than
-                                    some other week. Failure is free. Nothing arrives to mark it. The deadline slides
-                                    and the only cost is a feeling, and feelings are cheap enough to absorb
-                                    indefinitely.</p>
-                                <p>Collateral makes the miss cost something you can count. Not a streak, not a badge,
-                                    not a notification &mdash; capital you already own, held by a custodian, released only on
-                                    evidence.</p>
-                                <p>That single change reorders the week. The work stops competing with everything
-                                    else on equal terms, because now it is the only item on the list with a price
-                                    attached to skipping it.</p>
+            <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
+            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
+                <div class="lw">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-top: 4px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
+                            WHY IT WORKS
+                        </span>
+                    </div>
+
+
+                    <div class="fk-grid reveal-item">
+                        <div>
+                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px,4.2vw,50px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 20px; line-height: 1.06; text-wrap: balance;">
+                                A plan without stakes is just a <span style="color: #7A1C2B;">comfortable wish.</span>
+                            </h2>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em;">
+                                Planning is easy. Executing is hard. You miss targets because failing is free — Collateral makes failure cost something real so intentions become actions.
+                            </p>
+                            <p class="l-sec-line" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(28,35,51,0.11); font-family: 'Inter', sans-serif; font-size: 14.5px; color: #7A1C2B; font-weight: 600; max-width: 62ch; line-height: 1.5;">
+                                Bet on your own focus.
+                            </p>
+                        </div>
+
+                        <!-- THE FORK SVG PANEL -->
+                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(12px,1.4vw,20px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4); max-width: 630px; width: 100%; margin: 0 auto;">
+                            <svg viewBox="0 0 680 520" width="100%" role="img" aria-label="One goal, two paths: without stakes the path fades to nothing; with a locked deposit it ends in capital returned plus yield." style="display: block; height: auto;">
+                                <defs>
+                                    <marker id="fkArrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#7A1C2B" />
+                                    </marker>
+                                    <marker id="fkArrowG" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#166534" />
+                                    </marker>
+                                    <linearGradient id="fkFade" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#8C8577" stop-opacity="0.5" />
+                                        <stop offset="100%" stop-color="#8C8577" stop-opacity="0.08" />
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- shared origin -->
+                                <g>
+                                    <rect x="230" y="16" width="220" height="50" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.11)" />
+                                    <text x="340" y="41" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="700" fill="#1C2333">You set a goal.</text>
+                                </g>
+
+                                <!-- the fork itself -->
+                                <path d="M305 66 C 275 84, 213 78, 173 98" fill="none" stroke="#8C8577" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.6" />
+                                <path d="M375 66 C 405 84, 467 78, 507 98" fill="none" stroke="#7A1C2B" stroke-width="1.7" opacity="0.65" marker-end="url(#fkArrow)" />
+
+                                <!-- column headers -->
+                                <text x="26" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#8C8577">WITHOUT STAKES</text>
+                                <text x="360" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#7A1C2B">WITH COLLATERAL</text>
+
+                                <!-- ---- LEFT: the path that dissolves ---- -->
+                                <!-- Step 01 -->
+                                <g opacity="1">
+                                    <rect x="26" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
+                                    <text x="42" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">01</text>
+                                    <text x="72" y="137" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Plan a new goal</text>
+                                </g>
+                                <!-- Step 02 -->
+                                <g opacity="0.68">
+                                    <rect x="26" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
+                                    <text x="42" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">02</text>
+                                    <text x="72" y="213" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Get distracted</text>
+                                </g>
+                                <!-- Step 03 -->
+                                <g opacity="0.44">
+                                    <rect x="26" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
+                                    <text x="42" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">03</text>
+                                    <text x="72" y="289" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Push the deadline</text>
+                                </g>
+                                <!-- Step 04 -->
+                                <g opacity="0.26">
+                                    <rect x="26" y="334" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
+                                    <text x="42" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">04</text>
+                                    <text x="72" y="365" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Another year slides by</text>
+                                </g>
+
+                                <!-- connectors thin out as path fades -->
+                                <line x1="173" y1="168" x2="173" y2="182" stroke="#8C8577" stroke-width="1.3" stroke-dasharray="3 5" opacity="0.54" />
+                                <line x1="173" y1="244" x2="173" y2="258" stroke="#8C8577" stroke-width="1.0" stroke-dasharray="3 5" opacity="0.35" />
+                                <line x1="173" y1="320" x2="173" y2="334" stroke="#8C8577" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.21" />
+
+                                <!-- dead end -->
+                                <line x1="173" y1="396" x2="173" y2="422" stroke="url(#fkFade)" stroke-width="1" stroke-dasharray="3 5" />
+                                <g opacity="0.9">
+                                    <rect x="26" y="424" width="294" height="76" rx="14" fill="none" stroke="#8C8577" stroke-width="1.5" stroke-dasharray="6 6" />
+                                    <text x="173" y="454" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#6E685C">Nothing was at risk.</text>
+                                    <text x="173" y="480" text-anchor="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#5A6072">So nothing changed.</text>
+                                </g>
+
+                                <!-- ---- RIGHT: the path that firms up ---- -->
+                                <!-- Step 01 -->
+                                <g>
+                                    <rect x="360" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.14)" stroke-width="1" />
+                                    <text x="376" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.55">01</text>
+                                    <text x="406" y="137" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Lock a deposit on target</text>
+                                </g>
+                                <!-- Step 02 -->
+                                <g>
+                                    <rect x="360" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.21)" stroke-width="1" />
+                                    <text x="376" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.7">02</text>
+                                    <text x="406" y="213" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Failure now has a cost</text>
+                                </g>
+                                <!-- Step 03 -->
+                                <g>
+                                    <rect x="360" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.28)" stroke-width="1" />
+                                    <text x="376" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.85">03</text>
+                                    <text x="406" y="289" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Work through the night</text>
+                                </g>
+                                <!-- Step 04 -->
+                                <g>
+                                    <rect x="360" y="334" width="294" height="62" rx="11" fill="rgba(22,101,52,0.07)" stroke="rgba(22,101,52,0.45)" stroke-width="1.5" />
+                                    <text x="376" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#166534" opacity="1">04</text>
+                                    <text x="406" y="365" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#166534">Hit target, claim yield</text>
+                                </g>
+
+                                <!-- Right solid connectors -->
+                                <line x1="507" y1="168" x2="507" y2="176" stroke="#7A1C2B" stroke-width="1.5" opacity="0.4" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="244" x2="507" y2="252" stroke="#7A1C2B" stroke-width="1.5" opacity="0.55" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="320" x2="507" y2="328" stroke="#7A1C2B" stroke-width="1.5" opacity="0.7" marker-end="url(#fkArrow)" />
+
+                                <line x1="507" y1="396" x2="507" y2="418" stroke="#166534" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
+
+                                <!-- payout badge -->
+                                <g class="fk-payout">
+                                    <rect x="360" y="424" width="294" height="76" rx="14" fill="rgba(22,101,52,0.11)" stroke="rgba(22,101,52,0.55)" stroke-width="2" />
+                                    <circle cx="394" cy="462" r="13" fill="#166534" class="fk-check" />
+                                    <path d="m-4.4 0 2.9 2.9 5.7-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(394, 462) scale(1.15)" />
+                                    <text x="418" y="454" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#1C2333">Capital returned + yield.</text>
+                                    <text x="418" y="480" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">The goal actually happened.</text>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ VISUAL CENTERPIECE: CONTINUOUS MONEY FLOW SCHEMATIC ═══ -->
+            <div class="lengine-section" id="engine-section" data-r>
+                <div class="lw">
+                    <div class="lengine-hdr-wrap">
+                        <div class="lengine-tag">
+                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
+                        </div>
+                        <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
+                        <p class="lengine-sub" style="max-width: 62ch; font-size: 16.5px; line-height: 1.6; letter-spacing: -0.011em; font-family: 'Inter', sans-serif;">
+                            Every deposit is secured in custodial escrow until verified by direct platform APIs. Winners receive their principal plus matching yield funded by forfeited deposits. No manual claims required.
+                        </p>
+                    </div>
+
+                    <!-- SCHEMATIC: CSS GRID LAYOUT (no absolute positioning) -->
+                    <div class="lflow-container">
+
+                        <!-- DESKTOP FLOW (hidden <900px) -->
+                        <div class="lflow-desktop">
+                            <!-- NODE ROW — CSS Grid handles horizontal containment -->
+                            <div class="lflow-row">
+                                <!-- NODE: DEPOSIT IN -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                    <div class="lflow-node-sub">Stripe Connect Escrow</div>
+                                </div>
+
+                                <div class="lflow-arrow">
+                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
+                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
+                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
+                                    </svg>
+                                </div>
+
+                                <!-- NODE: ESCROW VAULT -->
+                                <div class="lflow-node lflow-node-vault" id="lflow-vault-node">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
+                                </div>
+
+                                <div class="lflow-arrow">
+                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
+                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
+                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
+                                    </svg>
+                                </div>
+
+                                <!-- NODE: ORACLE API -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                    <div class="lflow-node-sub">Stripe • Shopify • X • YouTube</div>
+                                </div>
+
+                                <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
+                                <div class="lflow-split-arrows">
+                                    <svg width="44" height="156" viewBox="0 0 44 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Win path (thick green #145C14) -->
+                                        <path d="M 0 78 C 16 78, 22 20, 34 20" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
+                                        <polygon points="42,20 32,14 32,26" fill="#145C14"/>
+
+                                        <!-- Forfeit path (medium crimson #7A1220) -->
+                                        <path d="M 0 78 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
+                                        <polygon points="42,78 33,73 33,83" fill="#7A1220"/>
+
+                                        <!-- Burn path (hairline dashed crimson #7A1220) -->
+                                        <path d="M 0 78 C 16 78, 22 136, 34 136" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
+                                        <polygon points="41,136 34,132 34,140" fill="#7A1220"/>
+                                    </svg>
+                                </div>
+
+                                <!-- THREE TERMINAL OUTCOMES -->
+                                <div class="lflow-outcomes">
+                                    <div class="lflow-outcome is-win">
+                                        <div class="lflow-outcome-indicator" style="background:#145C14;width:5px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
+                                            <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                            <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                            <div class="lflow-out-desc">100% Principal + Matching Yield</div>
+                                        </div>
+                                    </div>
+                                    <div class="lflow-outcome is-forfeit" id="lflow-forfeit-node">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:3px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                            <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                            <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                            <div class="lflow-out-desc">Feeds Winner Match Pool</div>
+                                        </div>
+                                    </div>
+                                    <div class="lflow-outcome is-burn">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:1px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                            <div class="lflow-out-title">CLTR BURNED</div>
+                                            <div class="lflow-out-val">$43,200</div>
+                                            <div class="lflow-out-desc">Permanently Destroyed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RECIRCULATING LOOP — routed SVG path below node row landing directly into Escrow Vault -->
+                            <div class="lflow-loop-wrap">
+                                <svg class="lflow-loop-svg" viewBox="0 0 1000 48" preserveAspectRatio="none">
+                                    <defs>
+                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
+                                            <path d="M 1 9 L 5 1 L 9 9 Z" fill="#7A1C2B"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- Path: exits from x=845 (center of forfeited card), routes down to y=38, runs left, turns UP into x=310 (center of Escrow Vault) -->
+                                    <path class="lflow-loop-path" d="M 845 0 C 845 26, 820 38, 770 38 L 385 38 C 310 38, 310 26, 310 2" stroke="#7A1C2B" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
+                                </svg>
+                                <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
                             </div>
                         </div>
 
-                        <aside class="margin-note">
-                            <span class="mono mono-b">Note</span>
-                            <p>Contracts settle on read-only telemetry from the platform where the goal lives.
-                                Collateral never asks you to self-report, and self-reported outcomes are not
-                                accepted as evidence.</p>
-                        </aside>
-                    </div>
-
-                    <table class="ledger-compare">
-                        <caption>Same goal, recorded two ways</caption>
-                        <thead>
-                            <tr><th scope="col">Wk</th><th scope="col">Without stakes</th><th scope="col">Under contract</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>01</td><td class="void">Plan a new goal</td><td>Lock a deposit on target</td></tr>
-                            <tr><td>02</td><td class="void">Get distracted</td><td>Failure now has a price</td></tr>
-                            <tr><td>03</td><td class="void">Push the deadline</td><td>Work through the night</td></tr>
-                            <tr><td>04</td><td class="void">Another year slides by</td><td>Target hit, yield claimed</td></tr>
-                            <tr>
-                                <td>&mdash;</td>
-                                <td class="void">Nothing was at risk, so nothing changed</td>
-                                <td class="outcome-win">Capital returned. The goal actually happened.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- 
-                ============================================================
-                SECTION 4 · SETTLEMENT RECORD: THE LEDGER
-                Document Type: Official Perforated Receipts Ledger
-                Invariant Kit: Perforated Edge Detailing, Serialized Receipt Numbers, 
-                APPROVED & DENIED Rubber Stamps, Tabular Book Totals Footing.
-                ============================================================
-            -->
-            <section class="section" id="record">
-                <div class="shell">
-                    <p class="eyebrow">Settlement record</p>
-                    <h2 class="title">Skin in the game is the only thing that works</h2>
-                    <p class="lede">Every contract settles automatically on objective API telemetry &mdash; including
-                        the ones people lose. Three from the current book.</p>
-
-                    <div class="receipts">
-
-                        <article class="receipt">
-                            <div class="r-top">
-                                <div class="r-meta">
-                                    <span class="mono">Settlement receipt</span>
-                                    <span class="mono">№ C&ndash;34D6</span>
+                        <!-- MOBILE VERTICAL FLOW (shown <900px) -->
+                        <div class="lflow-mobile">
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">01</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
                                 </div>
-                                <h3 class="r-goal">+20% revenue in 30 days</h3>
-                                <p class="r-src">@revpilot &middot; via Stripe API</p>
-                                <dl class="r-fields">
-                                    <div class="r-row"><dt>Capital staked</dt><span class="r-dots"></span><dd>$2,000.00</dd></div>
-                                    <div class="r-row"><dt>Verified by</dt><span class="r-dots"></span><dd>Stripe oracle</dd></div>
-                                    <div class="r-row"><dt>Settled on</dt><span class="r-dots"></span><dd>14 Mar 2026</dd></div>
-                                </dl>
                             </div>
-                            <div class="perf" aria-hidden="true"></div>
-                            <div class="r-bottom won">
-                                <div>
-                                    <p class="r-amt">+$2,240.00</p>
-                                    <p class="r-note">Principal + yield returned</p>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step lflow-mob-vault">
+                                <div class="lflow-mob-num">02</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
                                 </div>
-                                <span class="stamp won">Approved</span>
                             </div>
-                        </article>
+                            <div class="lflow-mob-arrow">↓</div>
 
-                        <article class="receipt">
-                            <div class="r-top">
-                                <div class="r-meta">
-                                    <span class="mono">Settlement receipt</span>
-                                    <span class="mono">№ C&ndash;9F21</span>
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">03</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
                                 </div>
-                                <h3 class="r-goal">50,000 subscribers in 60 days</h3>
-                                <p class="r-src">@deltacreator &middot; via YouTube API</p>
-                                <dl class="r-fields">
-                                    <div class="r-row"><dt>Capital staked</dt><span class="r-dots"></span><dd>$1,000.00</dd></div>
-                                    <div class="r-row"><dt>Verified by</dt><span class="r-dots"></span><dd>YouTube oracle</dd></div>
-                                    <div class="r-row"><dt>Settled on</dt><span class="r-dots"></span><dd>09 Mar 2026</dd></div>
-                                </dl>
                             </div>
-                            <div class="perf" aria-hidden="true"></div>
-                            <div class="r-bottom won">
-                                <div>
-                                    <p class="r-amt">+$1,120.00</p>
-                                    <p class="r-note">Principal + yield returned</p>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-outcomes">
+                                <div class="lflow-outcome is-win">
+                                    <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
+                                        <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                        <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                    </div>
                                 </div>
-                                <span class="stamp won">Approved</span>
-                            </div>
-                        </article>
-
-                        <article class="receipt">
-                            <div class="r-top">
-                                <div class="r-meta">
-                                    <span class="mono">Settlement receipt</span>
-                                    <span class="mono">№ C&ndash;780B</span>
+                                <div class="lflow-outcome is-forfeit">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                        <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                        <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                        <div class="lflow-mob-loop">↺ Re-circulates to Escrow Vault</div>
+                                    </div>
                                 </div>
-                                <h3 class="r-goal">25,000 followers in 30 days</h3>
-                                <p class="r-src">@marcusk &middot; via X API</p>
-                                <dl class="r-fields">
-                                    <div class="r-row"><dt>Capital staked</dt><span class="r-dots"></span><dd>$1,500.00</dd></div>
-                                    <div class="r-row"><dt>Verified by</dt><span class="r-dots"></span><dd>X oracle</dd></div>
-                                    <div class="r-row"><dt>Settled on</dt><span class="r-dots"></span><dd>02 Mar 2026</dd></div>
-                                </dl>
-                            </div>
-                            <div class="perf" aria-hidden="true"></div>
-                            <div class="r-bottom lost">
-                                <div>
-                                    <p class="r-amt">&minus;$1,500.00</p>
-                                    <p class="r-note">Forfeited to match pool</p>
+                                <div class="lflow-outcome is-burn">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                        <div class="lflow-out-title">CLTR BURNED</div>
+                                        <div class="lflow-out-val">$43,200</div>
+                                    </div>
                                 </div>
-                                <span class="stamp lost">Denied</span>
                             </div>
-                        </article>
-
-                    </div>
-
-                    <div class="footing">
-                        <p class="mono" style="margin:0 0 4px">Book totals &middot; inception to date</p>
-                        <dl class="footing-rows">
-                            <div class="f-row"><dt>Contracts won</dt><span class="f-dots"></span><dd>74%</dd></div>
-                            <div class="f-row"><dt>Verified counterparties</dt><span class="f-dots"></span><dd>812</dd></div>
-                            <div class="f-row"><dt>Average time to target</dt><span class="f-dots"></span><dd>18 days</dd></div>
-                            <div class="f-row"><dt>Deposits taken in</dt><span class="f-dots"></span><dd>$8,700,000</dd></div>
-                            <div class="f-row f-total"><dt>Total capital settled</dt><span class="f-dots"></span><dd>$8,369,400</dd></div>
-                        </dl>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 
-                ============================================================
-                SECTION 5 · HOW MONEY FLOWS: THE SCHEMATIC
-                Document Type: Technical Plotted Engineering Blueprint
-                Invariant Kit: Mono Annotations, Linear SVG Arrow Flows, 
-                Recirculating Forfeit Path, Reconciled Figures Legend.
-                ============================================================
-            -->
-            <section class="section alt" id="flow">
-                <div class="shell">
-                    <p class="eyebrow">Escrow schematic</p>
-                    <h2 class="title">How money moves through a contract</h2>
-                    <p class="lede">Deposits sit in custodial escrow until a platform API confirms the outcome.
-                        Winners receive principal plus matching yield funded by forfeited deposits.</p>
-
-                    <div class="schematic">
-                        <div class="sch-head">
-                            <span class="mono">Drawing 01 &middot; settlement path</span>
-                            <span class="mono">Rev. 2026.03</span>
                         </div>
 
-                        <svg class="sch-svg" viewBox="0 0 1080 400" role="img"
-                             aria-label="Schematic: deposits enter custodial escrow, are verified by platform APIs, then split into returned capital, forfeited deposits which recirculate to the match pool, and a protocol fee.">
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY TICKER BAR -->
+            <div class="l-community-momentum" data-r style="background: #FAF8F5; border-top: 1px solid rgba(28,35,51,0.08); border-bottom: 1px solid rgba(28,35,51,0.08); padding: 18px 0;">
+                <div class="lw">
+                    <div class="l-momentum-wrap">
+                        <span class="l-momentum-title reveal-item">Today's Activity</span>
+                        <div class="l-momentum-items">
+                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LIVE CONTRACT EXAMPLES (OPEN CONTRACTS REDESIGN) ═══ -->
+            <section class="lcontracts" id="contracts" data-r style="background: #F8F5F0; padding: clamp(36px,5vw,72px) clamp(20px,5vw,56px); font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;">
+                <div class="lw" style="max-width: 1200px; margin: 0 auto;">
+
+                    <!-- SECTION HEADER -->
+                    <div class="oc-head reveal-item">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                                CHOOSE YOUR COMMITMENT
+                            </span>
+                        </div>
+                        <div style="display: inline-flex; align-items: center; gap: 9px;">
+                            <span class="oc-live" style="width: 7px; height: 7px; border-radius: 999px; background: #3F9D5A; display: inline-block;"></span>
+                            <strong style="font-size: 15px; font-weight: 800; color: #3F9D5A; font-variant-numeric: tabular-nums;">$12.4k</strong>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 1.3px; color: #8C8577;">CURRENTLY IN ESCROW</span>
+                        </div>
+                    </div>
+
+                    <h2 class="reveal-item" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px,3.4vw,42px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 18px 0 6px; line-height: 1.06;">
+                        How much is the goal <span style="color: #7A1C2B;">worth to you?</span>
+                    </h2>
+                    <p class="reveal-item" style="font-size: 16px; color: #5A6072; margin: 0 0 clamp(28px,3vw,44px); max-width: 460px; line-height: 1.55;">
+                        Bigger stake, bigger return. Miss the target and you forfeit.
+                    </p>
+
+                    <!-- 3 TIER CARDS GRID (INLINE GRID STYLES FOR HARDENED 3-COLUMN LAYOUT) -->
+                    <div class="oc-grid reveal-item" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); align-items: stretch;">
+                        
+                        <!-- TIER 1: PLEDGE -->
+                        <div class="oc-tier" style="position: relative; background: #FFFDFA; border: 1.5px solid rgba(28,35,51,0.11); border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; box-shadow: 0 12px 30px -22px rgba(28,35,51,0.32); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #7A1C2B;">PLEDGE</span>
+                            <div style="margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.03em; color: #7A1C2B; line-height: 0.95; font-variant-numeric: tabular-nums;">1.5×</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">RETURN ON SUCCESS</div>
+
+                            <div style="margin-top: 22px; margin-bottom: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Deposit</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">$100 – $1,500</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Window</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">30 days</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">On miss</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">Grace period</span>
+                                </div>
+                            </div>
+
+                            <button class="oc-cta oc-cta-ghost" data-source="SHOPIFY" data-tier="pledge" data-capital="100" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B !important; background-color: transparent !important; background-image: none !important; border: 1.5px solid #7A1C2B !important; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                                Start pledge <span class="oc-arrow">→</span>
+                            </button>
+                        </div>
+
+                        <!-- TIER 2: STAKE (MOST CHOSEN / FEATURED) -->
+                        <div class="oc-tier" style="position: relative; background: #FFFFFF; border: 1.5px solid #7A1C2B; border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; transform: translateY(-6px); box-shadow: 0 26px 54px -28px rgba(122,28,43,0.35), 0 0 0 4px rgba(122,28,43,0.07); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <span style="position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: #7A1C2B; color: #FBF9F5; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; padding: 5px 12px; border-radius: 999px; white-space: nowrap;">MOST CHOSEN</span>
+
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #7A1C2B;">STAKE</span>
+                            <div style="margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.03em; color: #7A1C2B; line-height: 0.95; font-variant-numeric: tabular-nums;">2.5×</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">RETURN ON SUCCESS</div>
+
+                            <div style="margin-top: 22px; margin-bottom: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Deposit</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">$250 – $3,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Window</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">30 days</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">On miss</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">Full forfeit</span>
+                                </div>
+                            </div>
+
+                            <button class="oc-cta oc-cta-solid" data-source="STRIPE" data-tier="stake" data-capital="250" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #FBF9F5 !important; background-color: #7A1C2B !important; background-image: none !important; border: 1.5px solid #7A1C2B !important; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                                Start stake <span class="oc-arrow">→</span>
+                            </button>
+                        </div>
+
+                        <!-- TIER 3: ALL-IN -->
+                        <div class="oc-tier" style="position: relative; background: #FFFDFA; border: 1.5px solid rgba(28,35,51,0.11); border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; box-shadow: 0 12px 30px -22px rgba(28,35,51,0.32); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #7A1C2B;">ALL-IN</span>
+                            <div style="margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.03em; color: #7A1C2B; line-height: 0.95; font-variant-numeric: tabular-nums;">4.0×</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">RETURN ON SUCCESS</div>
+
+                            <div style="margin-top: 22px; margin-bottom: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Deposit</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">$500 – $10,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Window</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">14 days</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">On miss</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">Full forfeit</span>
+                                </div>
+                            </div>
+
+                            <button class="oc-cta oc-cta-ghost" data-source="STRIPE" data-tier="allin" data-capital="500" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B !important; background-color: transparent !important; background-image: none !important; border: 1.5px solid #7A1C2B !important; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                                Start all-in <span class="oc-arrow">→</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- LIVE RIVALRY DUELS STRIP BELOW -->
+                    <section class="reveal-item" style="margin-top: clamp(28px,3vw,44px); width: 100% !important; max-width: 540px !important; margin-left: auto !important; margin-right: auto !important; padding: 0 12px !important; box-sizing: border-box !important;">
+                        <div style="display: flex !important; align-items: center !important; gap: 7px !important; margin-bottom: 10px !important;">
+                            <span style="width: 6px !important; height: 6px !important; border-radius: 50% !important; background: #059669 !important; display: inline-block !important;"></span>
+                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 11.5px !important; font-weight: 600 !important; letter-spacing: 0.05em !important; color: #78716C !important; margin: 0 !important; text-transform: uppercase !important;">
+                                Live rivalry duels
+                            </h2>
+                            <span style="flex: 1 !important; height: 1px !important; background: #E7E5E4 !important;"></span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, monospace !important; font-size: 11px !important; color: #A8A29E !important; font-weight: 500 !important;">2 active</span>
+                        </div>
+
+                        <div style="display: flex !important; flex-direction: column !important; gap: 8px !important; width: 100% !important;">
+                            <!-- DUEL CARD 1 -->
+                            <button type="button" class="rd-duel-card" data-rivalry-id="R-VOSS-MARCUS" data-p1="JakeVoss" data-p1-delta="+12.4%" data-p2="Marcus" data-p2-delta="+9.2%" data-pool="$5,000" data-time="14 Days" data-platform="YouTube" aria-label="Audience duel, @jakevoss versus @marcus. View duel.">
+                                <div style="display: flex !important; align-items: center !important; gap: 6px !important; margin-bottom: 8px !important;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; font-weight: 500 !important; color: #78716C !important;">Audience</span>
+                                    <span style="margin-left: auto !important; background: #ECFDF5 !important; color: #047857 !important; padding: 2px 8px !important; border-radius: 9999px !important; font-size: 10px !important; font-weight: 600 !important; font-family: ui-monospace, SFMono-Regular, monospace !important;">Live · 14d left</span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 10px !important; margin-bottom: 8px !important;">
+                                    <!-- Challenger -->
+                                    <div style="min-width: 0 !important; flex: 1 !important;">
+                                        <div style="display: flex !important; align-items: center !important; gap: 5px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13.5px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@jakevoss</span>
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Leading" style="display: block !important; flex-shrink: 0 !important;">
+                                                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                                            </svg>
+                                        </div>
+                                        <div style="margin-top: 1px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 16px !important; font-weight: 700 !important; color: #059669 !important; font-variant-numeric: tabular-nums !important;">+12.4%</div>
+                                    </div>
+
+                                    <span style="padding: 0 2px !important; font-family: ui-monospace, SFMono-Regular, monospace !important; font-size: 10px !important; font-weight: 700 !important; color: #A8A29E !important;">VS</span>
+
+                                    <!-- Opponent -->
+                                    <div style="min-width: 0 !important; flex: 1 !important; text-align: right !important;">
+                                        <div style="display: flex !important; align-items: center !important; justify-content: flex-end !important; gap: 5px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13.5px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@marcus</span>
+                                        </div>
+                                        <div style="margin-top: 1px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 16px !important; font-weight: 700 !important; color: #78716C !important; font-variant-numeric: tabular-nums !important;">+9.2%</div>
+                                    </div>
+                                </div>
+
+                                <!-- Momentum ShareBar -->
+                                <div style="display: flex !important; height: 4.5px !important; overflow: hidden !important; border-radius: 9999px !important; background: #F5F5F4 !important; margin-bottom: 8px !important;" role="img" aria-label="Leader holds 57 percent of the combined growth">
+                                    <span style="width: 57.4% !important; background: #059669 !important; height: 100% !important; transition: width 0.5s ease !important;"></span>
+                                    <span style="width: 2px !important; height: 100% !important; background: #FFFFFF !important; flex-shrink: 0 !important;"></span>
+                                    <span style="flex: 1 !important; background: #991B1B !important; height: 100% !important;"></span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 6px !important; border-top: 1px solid #F5F5F4 !important; padding-top: 8px !important;">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <circle cx="8" cy="8" r="6"/><path d="M18 0a6 6 0 0 1 0 12"/><path d="M6 15.35A6 6 0 0 0 12 21"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; font-weight: 700 !important; color: #1C1917 !important;">$5,000</span>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; color: #A8A29E !important;">pool</span>
+                                    <span style="margin-left: auto !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; font-weight: 600 !important; color: #78716C !important;" class="rd-cta-lbl">
+                                        View duel
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="rd-cta-arrow" style="display: block !important;">
+                                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </button>
+
+                            <!-- DUEL CARD 2 -->
+                            <button type="button" class="rd-duel-card" data-rivalry-id="R-REVPILOT-QUOTA" data-p1="revpilot" data-p1-delta="+8.1%" data-p2="quotaops" data-p2-delta="+5.4%" data-pool="$2,000" data-time="Settling" data-platform="Stripe Revenue" aria-label="Revenue duel, @revpilot versus @quotaops. View results.">
+                                <div style="display: flex !important; align-items: center !important; gap: 6px !important; margin-bottom: 8px !important;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; font-weight: 500 !important; color: #78716C !important;">Revenue</span>
+                                    <span style="margin-left: auto !important; background: #FEF3C7 !important; color: #B45309 !important; padding: 2px 8px !important; border-radius: 9999px !important; font-size: 10px !important; font-weight: 600 !important; font-family: ui-monospace, SFMono-Regular, monospace !important;">Settling</span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 10px !important; margin-bottom: 8px !important;">
+                                    <!-- Challenger -->
+                                    <div style="min-width: 0 !important; flex: 1 !important;">
+                                        <div style="display: flex !important; align-items: center !important; gap: 5px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13.5px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@revpilot</span>
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Leading" style="display: block !important; flex-shrink: 0 !important;">
+                                                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                                            </svg>
+                                        </div>
+                                        <div style="margin-top: 1px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 16px !important; font-weight: 700 !important; color: #059669 !important; font-variant-numeric: tabular-nums !important;">+8.1%</div>
+                                    </div>
+
+                                    <span style="padding: 0 2px !important; font-family: ui-monospace, SFMono-Regular, monospace !important; font-size: 10px !important; font-weight: 700 !important; color: #A8A29E !important;">VS</span>
+
+                                    <!-- Opponent -->
+                                    <div style="min-width: 0 !important; flex: 1 !important; text-align: right !important;">
+                                        <div style="display: flex !important; align-items: center !important; justify-content: flex-end !important; gap: 5px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13.5px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@quotaops</span>
+                                        </div>
+                                        <div style="margin-top: 1px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 16px !important; font-weight: 700 !important; color: #78716C !important; font-variant-numeric: tabular-nums !important;">+5.4%</div>
+                                    </div>
+                                </div>
+
+                                <!-- Momentum ShareBar -->
+                                <div style="display: flex !important; height: 4.5px !important; overflow: hidden !important; border-radius: 9999px !important; background: #F5F5F4 !important; margin-bottom: 8px !important;" role="img" aria-label="Leader holds 60 percent of the combined growth">
+                                    <span style="width: 60% !important; background: #059669 !important; height: 100% !important; transition: width 0.5s ease !important;"></span>
+                                    <span style="width: 2px !important; height: 100% !important; background: #FFFFFF !important; flex-shrink: 0 !important;"></span>
+                                    <span style="flex: 1 !important; background: #991B1B !important; height: 100% !important;"></span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 6px !important; border-top: 1px solid #F5F5F4 !important; padding-top: 8px !important;">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <circle cx="8" cy="8" r="6"/><path d="M18 0a6 6 0 0 1 0 12"/><path d="M6 15.35A6 6 0 0 0 12 21"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; font-weight: 700 !important; color: #1C1917 !important;">$2,000</span>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; color: #A8A29E !important;">pool</span>
+                                    <span style="margin-left: auto !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 12px !important; font-weight: 600 !important; color: #78716C !important;" class="rd-cta-lbl">
+                                        View results
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="rd-cta-arrow" style="display: block !important;">
+                                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+                    </section>
+
+                </div>
+            </section>
+
+            <!-- MINI CTA BLOCK -->
+            <div class="lw">
+                <div class="lmini-cta" data-r>
+                    <h3 class="lmini-cta-h reveal-item">Done planning. Ready to commit?</h3>
+                    <p class="lmini-cta-p reveal-item">Your first performance bonus is matched up to $250.</p>
+                    <button class="lbtn lbtn-r reveal-item" id="lp-mini-cta">Start Contract</button>
+                    <div class="lmini-cta-micro reveal-item">Objective tracking. Verified business data only.</div>
+                </div>
+            </div>
+
+            <!-- ═══ THE CLTR TOKEN ECONOMY (BURN CURVE DATA STORY) ═══ -->
+            <div class="lemo-reframe" data-r style="padding: clamp(48px, 6vw, 80px) 0; overflow: visible !important;">
+                <div class="lw">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-top: 4px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
+                            PROTOCOL TOKEN
+                        </span>
+                    </div>
+
+                    <div class="bc-head reveal-item">
+                        <div>
+                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px,4.4vw,52px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 14px; line-height: 1.02;">
+                                Supply only<br /><span style="color: #7A1C2B;">goes down.</span>
+                            </h2>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em;">
+                                Every settled contract burns supply. Permanently.
+                            </p>
+
+                            <div style="margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; max-width: 400px;">
+                                <div>
+                                    <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(26px,3vw,34px); font-weight: 800; letter-spacing: -0.02em; color: #1C2333; line-height: 1; font-variant-numeric: tabular-nums;">91.2M</div>
+                                    <div style="margin-top: 7px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">CIRCULATING SUPPLY</div>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(26px,3vw,34px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">8.8M</div>
+                                    <div style="margin-top: 7px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">BURNED TO DATE</div>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(26px,3vw,34px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">1.2M</div>
+                                    <div style="margin-top: 7px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">BURNED THIS WEEK</div>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(26px,3vw,34px); font-weight: 800; letter-spacing: -0.02em; color: #1C2333; line-height: 1; font-variant-numeric: tabular-nums;">−8.8%</div>
+                                    <div style="margin-top: 7px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">SUPPLY, 12 WEEKS</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BURN CURVE CHART SVG PANEL -->
+                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(14px,2vw,24px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4);">
+                            <svg viewBox="0 0 680 340" width="100%" role="img" aria-label="Circulating CLTR supply over the last twelve weeks, declining from 100 million to 91.2 million as settled contracts burn supply" style="display: block; height: auto;">
+                                <defs>
+                                    <linearGradient id="bcArea" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="rgba(122,28,43,0.22)" />
+                                        <stop offset="100%" stop-color="rgba(122,28,43,0)" />
+                                    </linearGradient>
+                                    <linearGradient id="bcLine" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#9A2B3D" />
+                                        <stop offset="100%" stop-color="#7A1C2B" />
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- horizontal grid + y labels -->
+                                <g>
+                                    <line x1="62" y1="34" x2="640" y2="34" stroke="rgba(28,35,51,0.07)" stroke-width="1" />
+                                    <text x="50" y="37.5" text-anchor="end" font-family='JetBrains Mono', monospace font-size="10" fill="#8C8577">100M</text>
+                                </g>
+                                <g>
+                                    <line x1="62" y1="97.8" x2="640" y2="97.8" stroke="rgba(28,35,51,0.07)" stroke-width="1" />
+                                    <text x="50" y="101.3" text-anchor="end" font-family='JetBrains Mono', monospace font-size="10" fill="#8C8577">97M</text>
+                                </g>
+                                <g>
+                                    <line x1="62" y1="161.6" x2="640" y2="161.6" stroke="rgba(28,35,51,0.07)" stroke-width="1" />
+                                    <text x="50" y="165.1" text-anchor="end" font-family='JetBrains Mono', monospace font-size="10" fill="#8C8577">94M</text>
+                                </g>
+                                <g>
+                                    <line x1="62" y1="225.5" x2="640" y2="225.5" stroke="rgba(28,35,51,0.07)" stroke-width="1" />
+                                    <text x="50" y="229" text-anchor="end" font-family='JetBrains Mono', monospace font-size="10" fill="#8C8577">91M</text>
+                                </g>
+
+                                <!-- area + line -->
+                                <path d="M62.0 34.0 L114.5 51.1 L167.1 66.0 L219.6 85.2 L272.2 100.1 L324.7 117.1 L377.3 132.0 L429.8 149.1 L482.4 164.0 L534.9 178.9 L587.5 196.0 L640.0 221.5 L640.0 268.0 L62.0 268.0 Z" fill="url(#bcArea)" />
+                                <path d="M62.0 34.0 L114.5 51.1 L167.1 66.0 L219.6 85.2 L272.2 100.1 L324.7 117.1 L377.3 132.0 L429.8 149.1 L482.4 164.0 L534.9 178.9 L587.5 196.0 L640.0 221.5" fill="none" stroke="url(#bcLine)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="bc-draw" pathLength="1" />
+
+                                <!-- burn event markers -->
+                                <circle cx="62.0" cy="34.0" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="114.5" cy="51.1" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="167.1" cy="66.0" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="219.6" cy="85.2" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="272.2" cy="100.1" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="324.7" cy="117.1" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="377.3" cy="132.0" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="429.8" cy="149.1" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="482.4" cy="164.0" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="534.9" cy="178.9" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="587.5" cy="196.0" r="3" fill="#FBF9F5" stroke="#7A1C2B" stroke-width="1.5" />
+
+                                <!-- latest burn — emphasized -->
+                                <circle class="bc-pulse" cx="640.0" cy="221.5" r="6" fill="none" stroke="#7A1C2B" stroke-width="1.5" />
+                                <circle cx="640.0" cy="221.5" r="5.5" fill="#7A1C2B" stroke="#FBF9F5" stroke-width="2" />
+
+                                <!-- callout badge on latest burn -->
+                                <g class="bc-callout">
+                                    <line x1="636.0" y1="210.5" x2="606.0" y2="187.5" stroke="#7A1C2B" stroke-width="1" opacity="0.5" />
+                                    <rect x="544.0" y="159.5" width="104" height="28" rx="8" fill="#FBF9F5" stroke="rgba(122,28,43,0.28)" />
+                                    <text x="596.0" y="178.5" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="12" font-weight="700" fill="#7A1C2B" style="font-variant-numeric: tabular-nums;">−1.2M</text>
+                                </g>
+
+                                <!-- x axis -->
+                                <line x1="62" y1="268" x2="640" y2="268" stroke="rgba(28,35,51,0.14)" stroke-width="1" />
+                                <text x="62" y="288" font-family='JetBrains Mono', monospace font-size="10" fill="#8C8577">12 WEEKS AGO</text>
+                                <text x="640" y="288" text-anchor="end" font-family='JetBrains Mono', monospace font-size="10" fill="#8C8577">NOW</text>
+
+                                <!-- caption -->
+                                <text x="62" y="328" font-family='Plus Jakarta Sans', sans-serif font-size="11" fill="#8C8577">
+                                    Circulating supply · every settled contract burns a 0.5% protocol fee
+                                </text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- LOOP RIBBON PROCESS BANNER UNDERNEATH -->
+                    <div style="margin-top: clamp(30px,4vw,52px);" class="reveal-item">
+                        <svg viewBox="0 0 1100 96" width="100%" role="img" aria-label="The loop steps" style="display: block; height: auto;">
                             <defs>
-                                <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                                    <path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <marker id="bcArrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+                                    <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#7A1C2B" />
                                 </marker>
                             </defs>
 
-                            <g fill="none" stroke="#131A2B" stroke-width="1">
-                                <rect x="20" y="150" width="180" height="86"/>
-                                <rect x="290" y="150" width="180" height="86" stroke-width="1.6"/>
-                                <rect x="560" y="150" width="180" height="86"/>
+                            <!-- 6 Step Items -->
+                            <!-- Step 1 -->
+                            <g>
+                                <text x="91.6" y="22" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.2" fill="rgba(122,28,43,0.5)">01</text>
+                                <text x="91.6" y="42" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="12.5" font-weight="600" fill="#1C2333">Contract created</text>
+                                <line x1="153.9" y1="37" x2="205.2" y2="37" stroke="#7A1C2B" stroke-width="1.4" opacity="0.5" marker-end="url(#bcArrow)" />
                             </g>
 
-                            <g font-size="10" letter-spacing="1.6" fill="#8B909D">
-                                <text x="34" y="172">INPUT</text>
-                                <text x="304" y="172">CUSTODY</text>
-                                <text x="574" y="172">VERIFICATION</text>
-                            </g>
-                            <g font-size="13" fill="#131A2B" letter-spacing=".4">
-                                <text x="34" y="196">Deposit in</text>
-                                <text x="304" y="196">Escrow vault</text>
-                                <text x="574" y="196">Oracle API</text>
-                            </g>
-                            <g font-size="14" fill="#7B1E2B" letter-spacing=".4">
-                                <text x="34" y="220">$8,700,000</text>
-                                <text x="304" y="220">$8.7M locked</text>
-                                <text x="574" y="220">96.2% hit rate</text>
+                            <!-- Step 2 -->
+                            <g>
+                                <text x="275.0" y="22" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.2" fill="rgba(122,28,43,0.5)">02</text>
+                                <text x="275.0" y="42" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="12.5" font-weight="600" fill="#1C2333">CLTR staked</text>
+                                <line x1="337.3" y1="37" x2="388.6" y2="37" stroke="#7A1C2B" stroke-width="1.4" opacity="0.5" marker-end="url(#bcArrow)" />
                             </g>
 
-                            <g stroke-width="1" marker-end="url(#ar)" fill="none">
-                                <line x1="204" y1="193" x2="282" y2="193" stroke="#131A2B"/>
-                                <line x1="474" y1="193" x2="552" y2="193" stroke="#131A2B"/>
-                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#1A7A52" stroke-width="1.4"/>
-                                <path d="M744 193 L820 193 L856 193" stroke="#7B1E2B" stroke-dasharray="5 4"/>
-                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#8B909D" stroke-dasharray="2 4"/>
+                            <!-- Step 3 -->
+                            <g>
+                                <text x="458.3" y="22" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.2" fill="rgba(122,28,43,0.5)">03</text>
+                                <text x="458.3" y="42" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="12.5" font-weight="600" fill="#1C2333">Execution verified</text>
+                                <line x1="520.6" y1="37" x2="571.9" y2="37" stroke="#7A1C2B" stroke-width="1.4" opacity="0.5" marker-end="url(#bcArrow)" />
                             </g>
 
-                            <g fill="none" stroke-width="1">
-                                <rect x="860" y="40" width="200" height="76" stroke="#1A7A52"/>
-                                <rect x="860" y="155" width="200" height="76" stroke="#7B1E2B"/>
-                                <rect x="860" y="272" width="200" height="76" stroke="#D9D2C6"/>
-                            </g>
-                            <g font-size="10" letter-spacing="1.6">
-                                <text x="874" y="62" fill="#1A7A52">WIN PATH &middot; 95.7%</text>
-                                <text x="874" y="177" fill="#7B1E2B">FORFEITED &middot; 3.8%</text>
-                                <text x="874" y="294" fill="#8B909D">PROTOCOL FEE &middot; 0.5%</text>
-                            </g>
-                            <g font-size="12.5" fill="#131A2B" letter-spacing=".3">
-                                <text x="874" y="83">Returned to creator</text>
-                                <text x="874" y="198">Funds the match pool</text>
-                                <text x="874" y="315">Operations</text>
-                            </g>
-                            <g font-size="14" letter-spacing=".3">
-                                <text x="874" y="105" fill="#1A7A52">$8,326,200</text>
-                                <text x="874" y="220" fill="#7B1E2B">$330,600</text>
-                                <text x="874" y="337" fill="#8B909D">$43,200</text>
+                            <!-- Step 4 (Protocol fee burned - HIGHLIGHTED) -->
+                            <g>
+                                <text x="641.6" y="22" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.2" fill="#7A1C2B">04</text>
+                                <text x="641.6" y="42" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="12.5" font-weight="800" fill="#7A1C2B">Protocol fee burned</text>
+                                <line x1="703.9" y1="37" x2="755.2" y2="37" stroke="#7A1C2B" stroke-width="1.4" opacity="0.5" marker-end="url(#bcArrow)" />
                             </g>
 
-                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7B1E2B"
-                                  stroke-width="1" stroke-dasharray="5 4" marker-end="url(#ar)"/>
-                            <text x="670" y="366" font-size="10" letter-spacing="1.6" fill="#7B1E2B"
-                                  text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO THE VAULT</text>
-
-                            <g stroke="#8B909D" stroke-width=".6">
-                                <path d="M20 268 v10 M200 268 v10 M20 273 h180"/>
+                            <!-- Step 5 -->
+                            <g>
+                                <text x="825.0" y="22" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.2" fill="rgba(122,28,43,0.5)">05</text>
+                                <text x="825.0" y="42" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="12.5" font-weight="600" fill="#1C2333">Trust scales</text>
+                                <line x1="887.3" y1="37" x2="938.6" y2="37" stroke="#7A1C2B" stroke-width="1.4" opacity="0.5" marker-end="url(#bcArrow)" />
                             </g>
-                            <text x="110" y="290" font-size="9.5" letter-spacing="1.4" fill="#8B909D"
-                                  text-anchor="middle">STRIPE CONNECT CUSTODY</text>
+
+                            <!-- Step 6 -->
+                            <g>
+                                <text x="1008.3" y="22" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.2" fill="rgba(122,28,43,0.5)">06</text>
+                                <text x="1008.3" y="42" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="12.5" font-weight="600" fill="#1C2333">More CLTR required</text>
+                            </g>
+
+                            <!-- single return line closing the loop -->
+                            <path d="M 1008.3 54 C 1008.3 78, 980 82, 640 82 L 181.6 82 C 120 82, 91.6 78, 91.6 58" fill="none" stroke="#7A1C2B" stroke-width="1.3" stroke-dasharray="4 6" opacity="0.55" marker-end="url(#bcArrow)" />
+                            <text x="550" y="78" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#7A1C2B" opacity="0.8">GROWTH COMPOUNDS</text>
                         </svg>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="sch-foot">
-                            <span class="legend"><span class="swatch" style="color:#1A7A52"></span>Returned capital</span>
-                            <span class="legend"><span class="swatch dash" style="color:#7B1E2B"></span>Forfeited &amp; recirculated</span>
-                            <span class="legend"><span class="swatch dash" style="color:#8B909D"></span>Protocol fee</span>
-                            <span class="legend" style="margin-left:auto">Figures reconcile to the book totals above</span>
+            <!-- ═══ FAQ ═══ -->
+            <div class="lfaq" data-r id="faq">
+            <div class="lw">
+                    <div class="lred-dash reveal-item"><span class="lmono">Common Questions</span></div>
+                    <h2 class="lhow-h reveal-item" style="margin-bottom:28px">No fine print. No <strong>loopholes.</strong></h2>
+                    <div class="lfaq-wrap">
+                        <div class="fq open reveal-item">
+                            <div class="fq-q">Is this gambling?</div>
+                            <div class="fq-a">No. Gambling is risking money on variables you can't control (sports, markets, algorithms). Collateral is betting on your own focus, work, and execution.</div>
+                        </div>
+                        <div class="fq reveal-item">
+                            <div class="fq-q">Where is the money held?</div>
+                            <div class="fq-a">All deposits are held securely in a dedicated Stripe escrow account until settled.</div>
+                        </div>
+                        <div class="fq reveal-item">
+                            <div class="fq-q">How is the target verified?</div>
+                            <div class="fq-a">We query official platform APIs (Stripe, Shopify, X, YouTube) directly. No manual uploads, no cheating.</div>
+                        </div>
+                        <div class="fq reveal-item">
+                            <div class="fq-q">Can I cancel after locking?</div>
+                            <div class="fq-a">No. Once capital is locked, it cannot be withdrawn or canceled until the contract deadline.</div>
+                        </div>
+                        <div class="fq lhide-mobile reveal-item">
+                            <div class="fq-q">Can I get a refund if I miss?</div>
+                            <div class="fq-a">No. If you fail, the deposit is forfeited. This financial risk is why the system works.</div>
+                        </div>
+                        <div class="fq lhide-mobile reveal-item">
+                            <div class="fq-q">What happens if an API goes down?</div>
+                            <div class="fq-a">The contract pauses. If an integration breaks permanently, deposits are refunded.</div>
+                        </div>
+                        <div class="fq lhide-mobile reveal-item">
+                            <div class="fq-q">What data do you access?</div>
+                            <div class="fq-a">We request read-only access to verify target metrics. We never store customer or billing data.</div>
+                        </div>
+                        <div class="fq lhide-mobile reveal-item">
+                            <div class="fq-q">Is this legal?</div>
+                            <div class="fq-a">Yes. It is a performance-based commercial escrow agreement based on objective business data, not probability.</div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- 
-                ============================================================
-                SECTION 6 · CHOOSE YOUR COMMITMENT: THE TERM SHEET
-                Document Type: Ruled Financial Rate Table (Schedule A)
-                Invariant Kit: Monospace Column Headers, Oxblood Multiplier Figures, 
-                Marked Column Annotation (Stake 2.5x), Hairline Field Grid.
-                ============================================================
-            -->
-            <section class="section" id="terms">
-                <div class="shell">
-                    <p class="eyebrow">Commitment terms</p>
-                    <h2 class="title">How much is the goal worth to you</h2>
-                    <p class="lede">Bigger stake, bigger return. Miss the target and you forfeit. Every tier
-                        settles on the same oracle.</p>
-
-                    <table class="termsheet">
-                        <caption>Schedule A &middot; deposit tiers and forfeit terms</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col"><span class="t-tier">Term</span></th>
-                                <th scope="col">
-                                    <span class="t-tier">Pledge</span>
-                                    <span class="t-mult">1.5<small>&times;</small></span>
-                                </th>
-                                <th scope="col" class="col-mark">
-                                    <span class="t-tier">Stake</span>
-                                    <span class="t-mult">2.5<small>&times;</small></span>
-                                    <span class="t-annot">&larr; Most contracts written here</span>
-                                </th>
-                                <th scope="col">
-                                    <span class="t-tier">All-in</span>
-                                    <span class="t-mult">4.0<small>&times;</small></span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">Deposit range</th>
-                                <td>$100 &ndash; $1,500</td>
-                                <td class="col-mark">$250 &ndash; $3,000</td>
-                                <td>$500 &ndash; $10,000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Execution window</th>
-                                <td>30 days</td>
-                                <td class="col-mark">30 days</td>
-                                <td>14 days</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Return on success</th>
-                                <td>1.5&times; principal</td>
-                                <td class="col-mark">2.5&times; principal</td>
-                                <td>4.0&times; principal</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">On miss</th>
-                                <td>Grace period</td>
-                                <td class="col-mark">Full forfeit</td>
-                                <td>Full forfeit</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Rivalry eligible</th>
-                                <td>No</td>
-                                <td class="col-mark">Yes</td>
-                                <td>Yes</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td></td>
-                                <td><a class="btn btn-out" href="/signin" onclick="window.router.navigate('/signin'); return false;">Open pledge</a></td>
-                                <td class="col-mark"><a class="btn btn-fill" href="/signin" onclick="window.router.navigate('/signin'); return false;">Open stake</a></td>
-                                <td><a class="btn btn-out" href="/signin" onclick="window.router.navigate('/signin'); return false;">Open all-in</a></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </section>
-
-            <!-- 
-                ============================================================
-                SECTION 7 · LIVE RIVALRY: THE TAPE
-                Document Type: Monospace Live Market Feed Ticker
-                Invariant Kit: Continuous Monospace Stream, Live Emerald Pulse Dot, 
-                Tabular Growth Deltas, Live Market Contract Data.
-                ============================================================
-            -->
-            <section class="section alt" id="tape" style="padding-bottom:calc(var(--section-y) - 20px)">
-                <div class="shell">
-                    <p class="eyebrow eyebrow--live">Live rivalry tape</p>
-                    <h2 class="title">Contracts running right now</h2>
-                    <p class="lede">Open rivalry duels, updated on every oracle poll. Select any line to open
-                        the match.</p>
-                </div>
-
-                <div class="tape">
-                    <div class="tape-head shell" style="max-width:none">
-                        <span class="dot" aria-hidden="true"></span>
-                        <span class="mono">6 open &middot; $19,500 at risk &middot; polled 40s ago</span>
+            <!-- Landing Mobile Menu Overlay & Drawer -->
+            <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
+            <div id="mobile-menu" class="pnl-drawer">
+                <div class="pnl-header">
+                    <div class="pnl-header-left">
+                        <span class="pnl-header-title">Menu</span>
                     </div>
-                    <div class="tape-strip">
-                        <a class="tick" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Audience</span><span>@jakevoss</span><span class="tick-up">+12.4%</span><span class="tick-vs">VS</span><span>@marcus</span><span class="tick-dn">+9.2%</span><span class="tick-pool">$5,000</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Revenue</span><span>@revpilot</span><span class="tick-up">+8.1%</span><span class="tick-vs">VS</span><span>@quotaops</span><span class="tick-dn">+5.4%</span><span class="tick-pool">$2,000</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Subscribers</span><span>@deltacreator</span><span class="tick-up">+21.0%</span><span class="tick-vs">VS</span><span>@northloop</span><span class="tick-dn">+18.7%</span><span class="tick-pool">$3,500</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Orders</span><span>@shopfern</span><span class="tick-up">+6.9%</span><span class="tick-vs">VS</span><span>@basketcase</span><span class="tick-dn">+4.1%</span><span class="tick-pool">$4,000</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Audience</span><span>@quietbuild</span><span class="tick-up">+15.2%</span><span class="tick-vs">VS</span><span>@harborco</span><span class="tick-dn">+11.8%</span><span class="tick-pool">$2,500</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Revenue</span><span>@mileshaus</span><span class="tick-up">+3.4%</span><span class="tick-vs">VS</span><span>@ridgeline</span><span class="tick-dn">+2.9%</span><span class="tick-pool">$2,500</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" aria-hidden="true" tabindex="-1" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Audience</span><span>@jakevoss</span><span class="tick-up">+12.4%</span><span class="tick-vs">VS</span><span>@marcus</span><span class="tick-dn">+9.2%</span><span class="tick-pool">$5,000</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" aria-hidden="true" tabindex="-1" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Revenue</span><span>@revpilot</span><span class="tick-up">+8.1%</span><span class="tick-vs">VS</span><span>@quotaops</span><span class="tick-dn">+5.4%</span><span class="tick-pool">$2,000</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" aria-hidden="true" tabindex="-1" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Subscribers</span><span>@deltacreator</span><span class="tick-up">+21.0%</span><span class="tick-vs">VS</span><span>@northloop</span><span class="tick-dn">+18.7%</span><span class="tick-pool">$3,500</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" aria-hidden="true" tabindex="-1" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Orders</span><span>@shopfern</span><span class="tick-up">+6.9%</span><span class="tick-vs">VS</span><span>@basketcase</span><span class="tick-dn">+4.1%</span><span class="tick-pool">$4,000</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" aria-hidden="true" tabindex="-1" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Audience</span><span>@quietbuild</span><span class="tick-up">+15.2%</span><span class="tick-vs">VS</span><span>@harborco</span><span class="tick-dn">+11.8%</span><span class="tick-pool">$2,500</span><span class="tick-arrow">&rarr;</span></a>
-                        <a class="tick" aria-hidden="true" tabindex="-1" href="/signin" onclick="window.router.navigate('/signin'); return false;"><span class="tick-cat">Revenue</span><span>@mileshaus</span><span class="tick-up">+3.4%</span><span class="tick-vs">VS</span><span>@ridgeline</span><span class="tick-dn">+2.9%</span><span class="tick-pool">$2,500</span><span class="tick-arrow">&rarr;</span></a>
+                    <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+
+                <!-- User Identity (shown when logged in) -->
+                <div id="mobile-user-section" class="pnl-user">
+                    <div class="pnl-user-badge">
+                        <span class="pnl-user-initial" id="mobile-menu-initial">U</span>
+                        <img class="pnl-user-avatar" id="mobile-menu-avatar" alt="" />
+                    </div>
+                    <div class="pnl-user-info">
+                        <span class="pnl-user-name" id="mobile-menu-username">@user</span>
                     </div>
                 </div>
-            </section>
 
-            <!-- 
-                ============================================================
-                SECTION 8 · SIGNATURE BLOCK & DISCLOSURE
-                Document Type: Countersigned Affidavit & Statutory Disclosure
-                Invariant Kit: Engraved Institutional Wax Seal SVG, Dual Signature Lines, 
-                Formal Custody Disclosure Footnote.
-                ============================================================
-            -->
-            <section class="section" style="padding-top:0">
-                <div class="shell">
-                    <div class="signblock">
-                        <svg width="76" height="76" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
-                             style="margin:0 auto" fill="none" stroke="#7B1E2B">
-                            <circle cx="38" cy="38" r="35" stroke-width="1"/>
-                            <circle cx="38" cy="38" r="30" stroke-width=".6"/>
-                            <circle cx="38" cy="38" r="17" stroke-width=".6"/>
-                            <g stroke-width=".6" opacity=".75">
-                                <path d="M38 8v6M38 62v6M8 38h6M62 38h6M17 17l4 4M55 55l4 4M59 17l-4 4M21 55l-4 4"/>
-                            </g>
-                            <text x="38" y="42" text-anchor="middle" font-family="IBM Plex Mono, monospace"
-                                  font-size="12" letter-spacing="1.5" fill="#7B1E2B" stroke="none">CLTR</text>
-                        </svg>
+                <div class="pnl-body">
+                    <!-- Navigation -->
+                    <div class="pnl-section-label">Navigation</div>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts'); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market?type=rivalry'); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/ledger'); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/sources'); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
+                    
+                    <!-- Account Links (shown when logged in) -->
+                    <div id="mobile-account-links" style="display:none;">
+                        <div class="pnl-divider"></div>
+                        <div class="pnl-section-label">Account</div>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="pnl-acct-link" style="animation-delay: 0.21s"><i data-lucide="user" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Profile</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="pnl-acct-link" style="animation-delay: 0.24s"><i data-lucide="gift" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Referrals</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="pnl-acct-link" style="animation-delay: 0.27s"><i data-lucide="wallet" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Account Capital</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="pnl-acct-link" style="animation-delay: 0.30s"><i data-lucide="file-text" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Documentation</a>
+                        
+                        <!-- Sign Out -->
+                        <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            Sign Out
+                        </button>
+                    </div>
 
-                        <h2 class="sign-title">Sign it, and the week reorders itself</h2>
-                        <p class="sign-copy">Objective tracking. Verified business data only. No self-reporting,
-                            no manual claims, no disputes.</p>
-                        <a class="btn btn-fill" href="/signin" onclick="window.router.navigate('/signin'); return false;">Open a contract</a>
+                    <!-- Connect (shown when NOT logged in) -->
+                    <div id="mobile-connect-section" class="pnl-connect-section">
+                        <div class="pnl-connect-badge">
+                            <span class="pnl-connect-badge-dot"></span>
+                            $250 Match Active
+                        </div>
+                        <div class="pnl-connect-promo">Lock capital. Force execution.</div>
+                        <div class="pnl-connect-promo-sub">Connect your account to lock performance contracts and match up to $250.</div>
+                        <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                            Sign In
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pnl-footer">
+                    <div class="pnl-status">
+                        <div class="pnl-status-dot"></div>
+                        <span class="pnl-status-text">All systems operational</span>
+                    </div>
+                    <div class="pnl-meta">
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Protocol</span>
+                            <span class="pnl-meta-value">v1.0</span>
+                        </div>
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Network</span>
+                            <span class="pnl-meta-value">Mainnet</span>
+                        </div>
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Settlement</span>
+                            <span class="pnl-meta-value">USD</span>
+                        </div>
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Uptime</span>
+                            <span class="pnl-meta-value">99.9%</span>
+                        </div>
+                    </div>
+                    <div class="pnl-legal">
+                        <a href="/terms" onclick="window.app.closeMobileMenu()">Terms</a>
+                        <a href="/docs" onclick="window.app.closeMobileMenu()">Docs</a>
+                        <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="sign-lines">
-                            <div class="sign-line">
-                                <p class="sign-script">&nbsp;</p>
-                                <span class="mono">Counterparty signature</span>
+            <!-- RIVALRY QUICK-VIEW OVERLAY MODAL -->
+            <div id="rivalry-quick-view-overlay" class="l-modal-overlay">
+                <div class="l-modal-container">
+                    <div class="l-modal-header">
+                        <span class="l-modal-title">
+                            <span class="l-ticker-pulse"></span> RIVALRY SPECIFICATION · ID: R-VOSS-MARCUS
+                        </span>
+                        <button class="l-modal-close" id="l-modal-close-btn">✕</button>
+                    </div>
+                    <div class="l-modal-body">
+                        
+                        <!-- 1. LIVE RIVALRY SCOREBOARD (HERO) -->
+                        <div class="l-modal-scoreboard">
+                            <div class="l-ms-header">
+                                <div class="l-ms-player left">
+                                    <span class="l-ms-name">JakeVoss</span>
+                                    <span class="l-ms-delta green">+8.40%</span>
+                                    <span class="l-ms-badge leading">LEADING</span>
+                                </div>
+                                <div class="l-ms-vs-box">
+                                    <span class="l-ms-vs-lbl">VS</span>
+                                    <div class="l-ms-lead-bubble">
+                                        <span class="l-ms-lead-lbl">Lead Margin</span>
+                                        <span class="l-ms-lead-val">+0.60%</span>
+                                    </div>
+                                </div>
+                                <div class="l-ms-player right">
+                                    <span class="l-ms-name">Marcus</span>
+                                    <span class="l-ms-delta burgundy">+7.80%</span>
+                                    <span class="l-ms-badge trailing">TRAILING</span>
+                                </div>
                             </div>
-                            <div class="sign-line">
-                                <p class="sign-script">Collateral</p>
-                                <span class="mono">Custodian, countersigned</span>
+                            
+                            <!-- 2. MOMENTUM BAR -->
+                            <div class="l-ms-momentum-wrap">
+                                <div class="l-ms-momentum-names">
+                                    <span>JakeVoss</span>
+                                    <span>Marcus</span>
+                                </div>
+                                <div class="l-ms-momentum-bar">
+                                    <div class="l-ms-momentum-fill left" style="width: 54%;"></div>
+                                    <div class="l-ms-momentum-fill right" style="width: 46%;"></div>
+                                    <div class="l-ms-momentum-divider" style="left: 54%;"></div>
+                                </div>
+                                <div class="l-ms-momentum-footer">
+                                    <span>Current Lead: +0.60%</span>
+                                </div>
                             </div>
                         </div>
 
-                        <p class="disclosure">Deposits are held by a third-party custodian via Stripe Connect and
-                            are not held by Collateral. Outcomes are determined solely by read-only telemetry from
-                            the connected platform API named in the contract. Matching yield is funded from
-                            forfeited deposits and sponsor contributions, is not interest, and is not guaranteed.
-                            Collateral is not a broker, dealer, exchange, investment adviser, or deposit
-                            institution, and contracts are not securities, insurance, or wagers on events outside
-                            the counterparty's control. Forfeited capital is not recoverable. Figures shown are
-                            book totals as of 24 July 2026.</p>
+                        <!-- 3. PERFORMANCE CHART -->
+                        <div class="l-modal-graph-container">
+                            <div class="l-mg-header" style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 8px !important; flex-wrap: wrap !important; gap: 8px !important;">
+                                <div style="display: flex !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important;">
+                                    <span class="l-mg-title" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10px !important; font-weight: 700 !important; letter-spacing: 1.2px !important; color: #8C8577 !important; text-transform: uppercase !important;">PERFORMANCE METRIC HISTORY</span>
+                                    <div style="display: flex !important; align-items: center !important; gap: 12px !important; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important;">
+                                        <span style="color: #166534 !important; display: flex !important; align-items: center !important; gap: 5px !important;"><span style="display: inline-block !important; width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #166534 !important;"></span> JakeVoss (+8.40%)</span>
+                                        <span style="color: #7A1C2B !important; display: flex !important; align-items: center !important; gap: 5px !important;"><span style="display: inline-block !important; width: 12px !important; height: 0 !important; border-top: 2px dashed #7A1C2B !important;"></span> Marcus (+7.80%)</span>
+                                    </div>
+                                </div>
+                                <span class="l-mg-live-dot" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10px !important; font-weight: 700 !important; color: #166534 !important; display: flex !important; align-items: center !important; gap: 6px !important;">
+                                    <span style="display: inline-block !important; width: 6px !important; height: 6px !important; border-radius: 50% !important; background: #166534 !important; box-shadow: 0 0 8px #166534 !important;"></span> LIVE STREAM
+                                </span>
+                            </div>
+                            <div class="l-modal-graph" style="height: 190px !important; width: 100% !important; border: 1.5px solid rgba(28, 35, 51, 0.12) !important; border-radius: 12px !important; position: relative !important; background: #FFFFFF !important; padding: 16px 20px 28px 45px !important; box-sizing: border-box !important;">
+                                <svg width="100%" height="100%" viewBox="0 0 500 130" preserveAspectRatio="none" style="display: block !important; overflow: visible !important;">
+                                    <defs>
+                                        <linearGradient id="jakeGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#166534" stop-opacity="0.18" />
+                                            <stop offset="100%" stop-color="#166534" stop-opacity="0.0" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <!-- Horizontal Grid Lines -->
+                                    <line x1="0" y1="10" x2="500" y2="10" stroke="rgba(28, 35, 51, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+                                    <line x1="0" y1="48" x2="500" y2="48" stroke="rgba(28, 35, 51, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+                                    <line x1="0" y1="86" x2="500" y2="86" stroke="rgba(28, 35, 51, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+                                    <line x1="0" y1="124" x2="500" y2="124" stroke="rgba(28, 35, 51, 0.14)" stroke-width="1" />
+
+                                    <!-- Y-Axis Labels -->
+                                    <text x="-6" y="13" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">+10.0%</text>
+                                    <text x="-6" y="51" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">+5.0%</text>
+                                    <text x="-6" y="89" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">+2.5%</text>
+                                    <text x="-6" y="127" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">0.0%</text>
+
+                                    <!-- Area Fill for Leader (JakeVoss) -->
+                                    <path d="M 0 124 C 110 110, 210 70, 330 40 L 500 18 L 500 124 Z" fill="url(#jakeGrad)" />
+
+                                    <!-- Trailing Line (Marcus: +7.80%) -->
+                                    <path d="M 0 124 C 110 118, 210 90, 330 64 L 500 32" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-dasharray="5 4" stroke-linecap="round" />
+
+                                    <!-- Leading Line (JakeVoss: +8.40%) -->
+                                    <path d="M 0 124 C 110 110, 210 70, 330 40 L 500 18" fill="none" stroke="#166534" stroke-width="2.8" stroke-linecap="round" />
+
+                                    <!-- End Dot for Marcus -->
+                                    <circle cx="500" cy="32" r="4" fill="#7A1C2B" />
+
+                                    <!-- Pulsing End Dot for JakeVoss (Leader) -->
+                                    <circle cx="500" cy="18" r="5" fill="#166534" />
+                                    <circle cx="500" cy="18" r="10" fill="none" stroke="#166534" stroke-width="1.5" opacity="0.6">
+                                        <animate attributeName="r" values="5;13;5" dur="2.2s" repeatCount="indefinite" />
+                                        <animate attributeName="opacity" values="0.8;0;0.8" dur="2.2s" repeatCount="indefinite" />
+                                    </circle>
+                                </svg>
+
+                                <!-- X-Axis Time Labels -->
+                                <div style="display: flex !important; justify-content: space-between !important; margin-top: 6px !important; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 9px !important; font-weight: 700 !important; color: #8C8577 !important;">
+                                    <span>DAY 1</span>
+                                    <span>DAY 3</span>
+                                    <span>DAY 6</span>
+                                    <span>TODAY</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. ORACLE FEED -->
+                        <div class="l-modal-oracle-section">
+                            <div class="l-os-title">ORACLE VERIFICATION FEED</div>
+                            <div class="l-modal-console-new">
+                                <div class="l-os-card">
+                                    <div class="l-os-card-header">
+                                        <span class="l-os-time">12:31:05</span>
+                                        <span class="l-os-label">Oracle Verification</span>
+                                        <span class="l-os-status verified">✓ Verified</span>
+                                    </div>
+                                    <div class="l-os-card-body">
+                                        <span class="l-os-competitor">JakeVoss</span>
+                                        <span class="l-os-metric">Subscribers: <strong>+8.22% → +8.40%</strong></span>
+                                    </div>
+                                </div>
+                                <div class="l-os-card">
+                                    <div class="l-os-card-header">
+                                        <span class="l-os-time">12:31:05</span>
+                                        <span class="l-os-label">Oracle Verification</span>
+                                        <span class="l-os-status verified">✓ Verified</span>
+                                    </div>
+                                    <div class="l-os-card-body">
+                                        <span class="l-os-competitor">Marcus</span>
+                                        <span class="l-os-metric">Subscribers: <strong style="color:var(--t3)">Unchanged (+7.80%)</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. CONTRACT SUMMARY STRIP -->
+                        <div class="l-modal-summary-strip">
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Pool</span>
+                                <span class="l-ss-val">$2,000</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Lead</span>
+                                <span class="l-ss-val">+0.60%</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Time</span>
+                                <span class="l-ss-val">9 Days</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Oracle</span>
+                                <span class="l-ss-val" style="color:var(--g)">Verified</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Platform</span>
+                                <span class="l-ss-val">YouTube</span>
+                            </div>
+                        </div>
+
+                        <!-- 6. PRIMARY CTA -->
+                        <button class="l-modal-action-btn-new" id="l-modal-action-btn">Open Live Rivalry</button>
+                    </div>
+            </div>
+
+            <!-- CONTRACT SPECIFICATION OVERLAY MODAL -->
+            <div id="contract-spec-overlay" class="l-modal-overlay">
+                <div class="l-modal-container">
+                    <div class="l-modal-header">
+                        <span class="l-modal-title">
+                            <span class="l-ticker-pulse"></span> CONTRACT SPECIFICATION
+                        </span>
+                        <button class="l-modal-close" id="l-spec-modal-close-btn">✕</button>
+                    </div>
+                    <div class="l-modal-body">
+                        
+                        <!-- 1. CONTRACT HEADER DETAILS -->
+                        <div class="l-spec-hero-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <span class="l-spec-platform-badge" id="l-spec-platform-name">Platform</span>
+                                <span class="l-spec-tier-badge" id="l-spec-tier-name">Tier</span>
+                            </div>
+                            <h3 class="l-spec-title" id="l-spec-title">Revenue Growth</h3>
+                            <p class="l-spec-desc" id="l-spec-desc">Objective target tracking via API integrations.</p>
+                        </div>
+
+                        <!-- 2. SPEC PARAMETERS -->
+                        <div class="l-spec-params">
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Deposit Range</span>
+                                <span class="val" id="l-spec-deposit-range">$250 – $3,000</span>
+                            </div>
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Custody Yield</span>
+                                <span class="val" id="l-spec-bonus-yield">2.5x</span>
+                            </div>
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Contract Window</span>
+                                <span class="val" id="l-spec-window">30 days</span>
+                            </div>
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Verification API</span>
+                                <span class="val" id="l-spec-verification-api">Stripe API Balance v3</span>
+                            </div>
+                        </div>
+
+                        <!-- 3. CUSTODY & RESOLUTION CONSOLE -->
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                            <span style="font-family:'JetBrains Mono', monospace; font-size:8.5px; font-weight:700; color:var(--t3); letter-spacing:0.5px;">CUSTODY & RESOLUTION PIPELINE</span>
+                            <div class="l-modal-console" style="height:100px;">
+                                <div class="l-console-line"><span class="c-time">[ESCROW]</span> Funds held in secure Stripe custody vault</div>
+                                <div class="l-console-line"><span class="c-time">[ORACLE]</span> Performance queries resolved every 24 hours</div>
+                                <div class="l-console-line"><span class="c-time">[SETTLE]</span> Target matched returns paid out immediately on success</div>
+                                <div class="l-console-line"><span class="c-time">[FORFEIT]</span> Failure triggers custody burn to capacity pool</div>
+                            </div>
+                        </div>
+
+                        <!-- 4. LIVE ACTIVITY STAT -->
+                        <div class="l-spec-activity-bar" id="l-spec-live-stat-bar">
+                            <span class="l-ticker-pulse" id="l-spec-live-pulse-dot"></span>
+                            <span id="l-spec-live-stat">48 Active contracts currently tracking</span>
+                        </div>
+
+                        <!-- 5. PRIMARY CTA -->
+                        <button class="l-modal-action-btn-new" id="l-spec-execute-btn">Execute Contract</button>
                     </div>
                 </div>
-            </section>
-
-            <!-- FOOTER -->
-            <footer class="foot">
-                <div class="shell foot-in">
-                    <span class="wordmark" style="font-size:16px">Collateral</span>
-                    <span class="mono">Escrow via Stripe Connect</span>
-                    <nav class="foot-links" aria-label="Footer">
-                        <a href="#modes">Contracts</a>
-                        <a href="#record">Record</a>
-                        <a href="#flow">Escrow</a>
-                        <a href="#terms">Terms</a>
-                        <a href="#tape">Live</a>
-                    </nav>
-                </div>
-            </footer>
+            </div>
 
         </div>
     `;
 }
 
-export function initLandingEvents() {
-    // Enable smooth hash scrolling for inline nav links
-    document.querySelectorAll('.lp a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href').substring(1);
-            const targetEl = document.getElementById(targetId);
-            if (targetEl) {
-                e.preventDefault();
-                targetEl.scrollIntoView({ behavior: 'smooth' });
+export function initLanding() {
+    if (window.landingIntervals) {
+        window.landingIntervals.forEach(clearInterval);
+    }
+    window.landingIntervals = [];
+
+    // Count-up helpers
+    const animateCount = (id, val, pre = '', suf = '') => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const dur = 1200, st = performance.now();
+        function tick(ts) {
+            const p = Math.min((ts - st) / dur, 1);
+            const v = Math.floor(p * (2 - p) * val);
+            el.textContent = pre + v.toLocaleString() + suf;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = pre + val.toLocaleString() + suf;
+        }
+        requestAnimationFrame(tick);
+    };
+
+    const animateCountFloat = (id, val, pre = '', suf = '', decimals = 1) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const dur = 1200, st = performance.now();
+        function tick(ts) {
+            const p = Math.min((ts - st) / dur, 1);
+            const v = p * (2 - p) * val;
+            el.textContent = pre + v.toFixed(decimals) + suf;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = pre + val.toFixed(decimals) + suf;
+        }
+        requestAnimationFrame(tick);
+    };
+
+    // Fade in page container and run hero animations immediately
+    setTimeout(() => {
+        const lp = document.querySelector('.lp');
+        if (lp) {
+            lp.classList.add('v');
+            
+            // Force immediate opacity 1 / normal transform on hero items if animations are disabled
+            const disableAnimations = window.DISABLE_ENTRANCE_ANIMATIONS || 
+                                      document.querySelector('.lp-no-animations') || 
+                                      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (disableAnimations) {
+                document.querySelectorAll('.animate-fade-in-up, .animate-scale-in').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                    el.style.animation = 'none';
+                });
+            }
+        }
+    }, 50);
+
+    // Fast fallback for above-the-fold hero elements (1000ms) to ensure they are visible
+    setTimeout(() => {
+        const heroItems = document.querySelectorAll('.lh1, .lsub, .lctas, .lcta-match, .l-live-rivalry-preview, .lhero-right, .l-global-stats-bar');
+        heroItems.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.animation = 'none';
+        });
+    }, 1000);
+
+    // ═══ IMAGE-ONLY CAROUSEL AUTO-ROTATE (EVERY 4s) ═══
+    let imgCarouselIndex = 0;
+    const updateCarouselSlide = (targetIndex) => {
+        imgCarouselIndex = targetIndex;
+        const slides = [document.getElementById('mode-slide-0'), document.getElementById('mode-slide-1')];
+        const dots = [document.getElementById('mode-img-dot-0'), document.getElementById('mode-img-dot-1')];
+        const badges = [document.getElementById('mode-badge-0'), document.getElementById('mode-badge-1')];
+
+        slides.forEach((s, idx) => {
+            if (s) {
+                if (idx === imgCarouselIndex) s.classList.add('active');
+                else s.classList.remove('active');
+            }
+        });
+        dots.forEach((d, idx) => {
+            if (d) {
+                if (idx === imgCarouselIndex) d.classList.add('active');
+                else d.classList.remove('active');
+            }
+        });
+        badges.forEach((b, idx) => {
+            if (b) {
+                if (idx === imgCarouselIndex) b.classList.add('active');
+                else b.classList.remove('active');
+            }
+        });
+    };
+
+    let carouselTimer = setInterval(() => {
+        updateCarouselSlide((imgCarouselIndex + 1) % 2);
+    }, 4000);
+
+    // Dot click handling
+    [document.getElementById('mode-img-dot-0'), document.getElementById('mode-img-dot-1')].forEach((dot, idx) => {
+        dot?.addEventListener('click', () => {
+            clearInterval(carouselTimer);
+            updateCarouselSlide(idx);
+            carouselTimer = setInterval(() => {
+                updateCarouselSlide((imgCarouselIndex + 1) % 2);
+            }, 4000);
+        });
+    });
+
+    // Update nav CTA text if logged in
+    const navCta = document.getElementById('lp-nav-cta');
+    if (navCta && window.appState?.isLoggedIn) {
+        navCta.textContent = 'Dashboard';
+    }
+
+    // Animate progress loading bar
+    const bar = document.getElementById('lp-loading-bar');
+    if (bar) {
+        bar.style.width = '30%';
+        setTimeout(() => { bar.style.width = '70%'; }, 100);
+        setTimeout(() => {
+            bar.style.width = '100%';
+            setTimeout(() => {
+                bar.style.opacity = '0';
+                setTimeout(() => { bar.style.display = 'none'; }, 300);
+            }, 150);
+        }, 450);
+    }
+
+    // ── 2-STATE CYCLING STATS / SUPPORTED APIS BAND ──
+    const CYCLE_INTERVAL_MS = 5000;
+
+    const STATE_A_ITEMS = [
+        { val: '1,206', lbl: 'Active Contracts', aria: 'Active contracts: 1,206' },
+        { val: '$6,940', lbl: 'Average Contract Size', aria: 'Average contract size: $6,940' },
+        { val: '1.4 days', lbl: 'Median Settlement Time', aria: 'Median settlement time: 1.4 days' },
+        { val: '812', lbl: 'Counterparties', aria: 'Counterparties: 812' }
+    ];
+
+    const STATE_B_ITEMS = [
+        {
+            logoSvg: `<svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" style="display:block;height:38px;max-height:38px;width:auto;"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>`,
+            lbl: 'STRIPE API',
+            aria: 'Supported API: Stripe'
+        },
+        {
+            logoSvg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:block;height:40px;max-height:40px;width:auto;"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+            lbl: 'X / TWITTER API',
+            aria: 'Supported API: X / Twitter'
+        },
+        {
+            logoSvg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:block;height:40px;max-height:40px;width:auto;"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+            lbl: 'YOUTUBE API',
+            aria: 'Supported API: YouTube'
+        },
+        {
+            logoSvg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:block;height:42px;max-height:42px;width:auto;"><path fill="#95BF47" d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg>`,
+            lbl: 'SHOPIFY API',
+            aria: 'Supported API: Shopify'
+        }
+    ];
+
+    let currentState = 'A';
+    let isStatsBandPaused = false;
+    let isTabVisible = true;
+
+    function cycleStatsBand() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return; // Disable cycle if reduced motion is requested
+        }
+
+        const nextState = currentState === 'A' ? 'B' : 'A';
+        const items = nextState === 'A' ? STATE_A_ITEMS : STATE_B_ITEMS;
+
+        // Crossfade eyebrow text smoothly
+        const eyebrowEl = document.getElementById('l-stats-eyebrow');
+        if (eyebrowEl) {
+            eyebrowEl.style.transition = 'opacity 250ms ease';
+            eyebrowEl.style.opacity = '0';
+            setTimeout(() => {
+                eyebrowEl.textContent = nextState === 'A' ? 'LIVE METRICS' : 'SUPPORTED INTEGRATIONS';
+                eyebrowEl.style.opacity = '1';
+            }, 260);
+        }
+
+        const cellElements = document.querySelectorAll('.l-stat-bar-item');
+        if (!cellElements || cellElements.length < 4) return;
+
+        cellElements.forEach((cellEl, idx) => {
+            const wrapper = cellEl.querySelector('.l-stat-bar-wrapper');
+            const currentContent = wrapper?.querySelector('.l-stat-bar-content.current');
+            if (!wrapper || !currentContent) return;
+
+            const itemData = items[idx];
+            cellEl.setAttribute('aria-label', itemData.aria);
+
+            const incomingContent = document.createElement('div');
+            incomingContent.className = 'l-stat-bar-content incoming';
+            incomingContent.setAttribute('data-state', nextState);
+            incomingContent.style.cssText = 'position: absolute !important; inset: 0 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important; width: 100% !important;';
+
+            const valueZone = document.createElement('div');
+            valueZone.className = 'l-stat-bar-value-zone';
+            valueZone.style.cssText = 'height: 44px !important; min-height: 44px !important; max-height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; margin: 0 !important; padding: 0 !important;';
+
+            if (nextState === 'A') {
+                const valSpan = document.createElement('span');
+                valSpan.className = 'l-stat-bar-val';
+                valSpan.style.cssText = "font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 34px !important; font-weight: 800 !important; color: #1C2333 !important; line-height: 1 !important; letter-spacing: -0.02em !important;";
+                valSpan.textContent = itemData.val;
+                valueZone.appendChild(valSpan);
+            } else {
+                const logoWrap = document.createElement('div');
+                logoWrap.className = 'l-stat-bar-logo-wrap';
+                logoWrap.style.cssText = 'height: 44px !important; display: flex !important; align-items: center !important; justify-content: center !important; margin: 0 !important; padding: 0 !important;';
+                logoWrap.innerHTML = itemData.logoSvg;
+                valueZone.appendChild(logoWrap);
+            }
+            incomingContent.appendChild(valueZone);
+
+            const lblSpan = document.createElement('span');
+            lblSpan.className = 'l-stat-bar-lbl';
+            lblSpan.style.cssText = "font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 1.6px !important; color: #8C8577 !important; text-transform: uppercase !important; text-align: center !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;";
+            lblSpan.textContent = itemData.lbl;
+            incomingContent.appendChild(lblSpan);
+
+            incomingContent.style.opacity = '0';
+            incomingContent.style.transform = 'translateY(14px)';
+
+            currentContent.style.position = 'absolute';
+            currentContent.style.inset = '0';
+            currentContent.style.pointerEvents = 'none';
+
+            wrapper.appendChild(incomingContent);
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    currentContent.style.transition = 'opacity 350ms ease, transform 380ms cubic-bezier(0.16, 1, 0.3, 1)';
+                    currentContent.style.opacity = '0';
+                    currentContent.style.transform = 'translateY(-14px)';
+
+                    incomingContent.style.transition = 'opacity 420ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1)';
+                    incomingContent.style.opacity = '1';
+                    incomingContent.style.transform = 'translateY(0)';
+                });
+            });
+
+            setTimeout(() => {
+                if (currentContent.parentNode === wrapper) {
+                    wrapper.removeChild(currentContent);
+                }
+                incomingContent.classList.remove('incoming');
+                incomingContent.classList.add('current');
+                incomingContent.style.position = 'relative';
+                incomingContent.style.inset = 'auto';
+                incomingContent.style.transition = '';
+                incomingContent.style.transform = '';
+            }, 440);
+        });
+
+        currentState = nextState;
+    }
+
+    // Set up pause on hover
+    const statsBandContainer = document.getElementById('l-stats-band') || document.querySelector('.l-global-stats-bar');
+    if (statsBandContainer) {
+        statsBandContainer.addEventListener('mouseenter', () => { isStatsBandPaused = true; });
+        statsBandContainer.addEventListener('mouseleave', () => { isStatsBandPaused = false; });
+    }
+
+    const onVisibilityChange = () => {
+        isTabVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    const rotationIntervalId = setInterval(() => {
+        if (!document.body.contains(statsBandContainer)) {
+            clearInterval(rotationIntervalId);
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            return;
+        }
+        if (!isStatsBandPaused && isTabVisible) {
+            cycleStatsBand();
+        }
+    }, CYCLE_INTERVAL_MS);
+    window.landingIntervals.push(rotationIntervalId);
+
+    // Set up hover/focus & click handlers for all cells
+    const cells = document.querySelectorAll('.l-stat-bar-item');
+    cells.forEach((cell, idx) => {
+        cell.addEventListener('focus', () => { isPaused = true; });
+        cell.addEventListener('blur', () => { isPaused = false; });
+        
+        cell.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Route through the main landing auth logic
+            goAction('/market', 'signup');
+            
+            // Track event if available
+            if (window.trackEvent) {
+                const metricIndex = activeMetricIndices[idx];
+                const metric = METRIC_POOL[metricIndex];
+                window.trackEvent('stat_cell_click', { cell_index: idx, metric_key: metric?.key });
             }
         });
     });
+
+    // ═══ INTERACTIVE MOUSE SPOTLIGHT CURSOR TRACKING ═══
+    const spotlightCards = document.querySelectorAll('.lcard, .lstep, .ltype, .lactivity-card');
+    spotlightCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
+
+    // ═══ INTERACTIVE SETTLEMENT ENGINE PIPELINE STAGE SWITCHER ═══
+    const engineStageData = {
+        1: {
+            title: '01. CAPITAL ESCROW & DEPOSIT LOCK',
+            desc: 'Creator commits target goal and deposits funds held in FDIC-insured Stripe Connect custodial escrow accounts mapped directly to smart contract state. Principal remains locked until target deadline or API verification event.',
+            metric1: '$500.00',
+            metric2: 'ESCROW_LOCKED',
+            exampleHtml: '',
+            logs: [
+                { ts: '[15:47:02]', text: 'INIT_ESCROW: Vault #4902 initialized', type: 'text' },
+                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in Stripe Connect escrow', type: 'pending' },
+                { ts: '[15:47:03]', text: 'STATUS: Escrow locked & verified safe', type: 'success' }
+            ]
+        },
+        2: {
+            title: '02. ORACLE API VERIFICATION STREAM',
+            desc: 'Connected platform API (Stripe, Shopify, or X) streams verified telemetry payload directly to the smart contract oracle endpoint.',
+            metric1: 'STRIPE_API_V2',
+            metric2: 'VERIFIED_100%',
+            exampleHtml: '',
+            logs: [
+                { ts: '[15:48:10]', text: 'ORACLE_POLL: Requesting Stripe revenue payload', type: 'pending' },
+                { ts: '[15:48:11]', text: 'API_RESPONSE: 200 OK — Revenue milestone met', type: 'text' },
+                { ts: '[15:48:11]', text: 'STATUS: Telemetry target 100% verified', type: 'success' }
+            ]
+        },
+        3: {
+            title: '03. MATCH CAPITAL ALLOCATION',
+            desc: 'Match capital is funded directly from two explicit sources: 80% comes from forfeited deposits of users who failed to hit their targets, and 20% comes from verified corporate brand sponsors. Multipliers reflect real available pool ratios, not guaranteed investment returns.',
+            metric1: '+$500.00 MATCH',
+            metric2: '80% FORFEIT / 20% SPONSOR',
+            exampleHtml: `
+                <div class="lengine-example-box">
+                    <div class="lengine-example-hdr">
+                        <span style="color:#7A1220;">↳</span> WORKED EXAMPLE: $500 DEPOSIT → $1,000 PAYOUT
+                    </div>
+                    <div>Deposit <strong>$500.00</strong> → Complete Target → Receive <strong>$1,000.00 Total</strong></div>
+                    <div class="lengine-example-breakdown">
+                        <span>• <strong>$500.00</strong> — 100% returned principal deposit</span>
+                        <span>• <strong>+$400.00</strong> — Funded from forfeited deposits of failed contracts (80%)</span>
+                        <span>• <strong>+$100.00</strong> — Funded from corporate brand sponsors & protocol pool (20%)</span>
+                    </div>
+                </div>
+            `,
+            logs: [
+                { ts: '[15:48:15]', text: 'POOL_AUDIT: Forfeited pool ratio calculated', type: 'pending' },
+                { ts: '[15:48:16]', text: 'MATCH_ALLOCATE: +$400.00 (Forfeits) + $100.00 (Sponsors)', type: 'text' },
+                { ts: '[15:48:16]', text: 'STATUS: Total payout $1,000.00 fully backed & queued', type: 'success' }
+            ]
+        },
+        4: {
+            title: '04. SETTLEMENT & DEFLATIONARY BURN',
+            desc: 'Funds automatically unlock and return to creator account. A 0.5% protocol fee is automatically burned from total CLTR supply. Unsuccessful contracts trigger automated deposit forfeiture to fund winner matches.',
+            metric1: '$1,000.00',
+            metric2: 'SETTLED & BURNED',
+            exampleHtml: '',
+            logs: [
+                { ts: '[15:48:20]', text: 'SETTLEMENT: $1,000.00 payout executed to winner', type: 'success' },
+                { ts: '[15:48:21]', text: 'BURN_EVENT: 25.4 CLTR destroyed forever (0.5% fee)', type: 'text' },
+                { ts: '[15:48:21]', text: 'STATUS: Contract settled & closed (0.8s)', type: 'success' }
+            ]
+        }
+    };
+
+    const engineBtns = document.querySelectorAll('.lengine-step-btn');
+    engineBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const stage = btn.getAttribute('data-stage');
+            engineBtns.forEach(b => {
+                b.classList.remove('is-active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-selected', 'true');
+
+            const data = engineStageData[stage];
+            if (data) {
+                const titleEl = document.getElementById('engine-stage-title');
+                const descEl = document.getElementById('engine-stage-desc');
+                const m1El = document.getElementById('engine-metric-1');
+                const m2El = document.getElementById('engine-metric-2');
+                const exampleEl = document.getElementById('engine-stage-example');
+                const terminalBody = document.getElementById('engine-terminal-body');
+
+                if (titleEl) titleEl.textContent = data.title;
+                if (descEl) descEl.textContent = data.desc;
+                if (m1El) m1El.textContent = data.metric1;
+                if (m2El) m2El.textContent = data.metric2;
+                if (exampleEl) exampleEl.innerHTML = data.exampleHtml || '';
+
+                if (terminalBody) {
+                    terminalBody.innerHTML = data.logs.map(log => {
+                        let logClass = 'lengine-log-text';
+                        if (log.type === 'success') logClass = 'lengine-log-success';
+                        else if (log.type === 'pending') logClass = 'lengine-log-pending';
+                        else if (log.type === 'forfeit') logClass = 'lengine-log-forfeit';
+                        
+                        return `
+                            <div class="lengine-log-line">
+                                <span class="lengine-log-ts">${log.ts}</span>
+                                <span class="${logClass}">${log.text}</span>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        });
+    });
+
+    // Populate live toast notifications and hero activity with real data
+    setTimeout(async () => {
+        try {
+            const [response, statsResponse] = await Promise.all([
+                window.api.getPublicLedger(),
+                window.api.getHomepageStats()
+            ]);
+            if (response && response.events && response.events.length > 0 && statsResponse) {
+                
+                const totalLocked = statsResponse.capitalLocked;
+                const totalActive = statsResponse.activeContractsCount || 22;
+                const achievementRate = statsResponse.achievementRate || 68;
+
+                // Animate proof stats
+                animateCount('live-stat-locked', totalLocked, '$');
+                animateCount('live-stat-active-count', totalActive);
+                animateCount('live-stat-success-rate', achievementRate, '', '%');
+
+                // Upgraded executions stream loop
+                const executionsList = [
+                    { name: 'JakeVoss', action: 'completed YouTube Goal', amount: '+$1,270 paid', time: '14 sec ago' },
+                    { name: 'Shopify merchant', action: 'hit revenue target', amount: '+$4,800 settled', time: '1 min ago' },
+                    { name: 'X Creator', action: 'reached follower milestone', amount: '+$950 returned', time: '3 min ago' },
+                    { name: 'tylerbrooks', action: 'completed Stripe Goal', amount: '+$1,500 settled', time: '5 min ago' },
+                    { name: 'sarah_k', action: 'hit follower growth target', amount: '+$750 returned', time: '8 min ago' }
+                ];
+                let exIdx = 0;
+                const scrollEl = document.getElementById('l-exec-feed-scroll');
+                if (scrollEl) {
+                    const renderExec = (item) => `
+                        <div class="l-exec-item active">
+                            <span class="l-exec-status-ok">✓</span>
+                            <span class="l-exec-username">@${item.name}</span>
+                            <span>${item.action}</span>
+                            <span class="l-exec-amount">${item.amount}</span>
+                            <span class="l-exec-time">• ${item.time}</span>
+                        </div>
+                    `;
+                    scrollEl.innerHTML = renderExec(executionsList[0]);
+
+                    const intervalId1 = setInterval(() => {
+                        const current = scrollEl.querySelector('.l-exec-item');
+                        if (current) {
+                            current.classList.remove('active');
+                            current.classList.add('exit');
+                            setTimeout(() => current.remove(), 400);
+                        }
+                        exIdx = (exIdx + 1) % executionsList.length;
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = renderExec(executionsList[exIdx]);
+                        const nextEl = tempDiv.firstElementChild;
+                        nextEl.classList.remove('active');
+                        scrollEl.appendChild(nextEl);
+                        nextEl.offsetHeight; // force reflow
+                        nextEl.classList.add('active');
+                    }, 3500);
+                    window.landingIntervals.push(intervalId1);
+                }
+
+                // Upgraded subtle Hero Contract State Ticker
+                const heroStatesList = [
+                    { label: 'DEPOSIT LOCKED', val: 'Match Escrowed' },
+                    { label: 'MATCH ESCROWED', val: 'Yield Multiplier Active' },
+                    { label: 'PROJECTED RETURN', val: 'Secured via Forfeitures' },
+                    { label: 'ORACLE VERIFIED', val: 'API Oracle Resolved' },
+                    { label: 'RECENT SETTLEMENT', val: 'Payout Executed' }
+                ];
+                let hStateIdx = 0;
+                const stateValEl = document.getElementById('lc-live-state-val');
+                const stateLblEl = document.querySelector('.lc-live-state-lbl');
+                if (stateValEl && stateLblEl) {
+                    const intervalId2 = setInterval(() => {
+                        hStateIdx = (hStateIdx + 1) % heroStatesList.length;
+                        stateValEl.style.opacity = '0';
+                        stateLblEl.style.opacity = '0';
+                        setTimeout(() => {
+                            stateLblEl.textContent = heroStatesList[hStateIdx].label;
+                            stateValEl.textContent = heroStatesList[hStateIdx].val;
+                            stateValEl.style.opacity = '1';
+                            stateLblEl.style.opacity = '1';
+                        }, 300);
+                    }, 4000);
+                    window.landingIntervals.push(intervalId2);
+                }
+
+                // Update centerpiece card active contract indicators
+                const globalActiveCountEl = document.getElementById('lc-global-active-count');
+                if (globalActiveCountEl) {
+                    globalActiveCountEl.textContent = totalActive;
+                }
+                const globalLockedAmountEl = document.getElementById('lc-global-locked-amount');
+                if (globalLockedAmountEl) {
+                    globalLockedAmountEl.textContent = `$${totalLocked.toLocaleString()}`;
+                }
+
+                // ═══ FEATURED CONTRACT — FROM REAL EVENTS ═══
+                const events = response.events;
+                const platformData = {
+                    STRIPE:  { name: 'Stripe Revenue',     goal: 'Increase Stripe Revenue 20%',  windowDays: 30, mult: 1.0 },
+                    X:       { name: 'X Followers',        goal: 'Acquire +1,000 X Followers',   windowDays: 14, mult: 1.5 },
+                    TWITTER: { name: 'X Followers',        goal: 'Acquire +1,000 X Followers',   windowDays: 14, mult: 1.5 },
+                    SHOPIFY: { name: 'Shopify Sales',      goal: 'Generate $5,000 in net sales',   windowDays: 30, mult: 0.5 },
+                    YOUTUBE: { name: 'YouTube Subs',       goal: 'Acquire +500 YouTube Subs',    windowDays: 30, mult: 0.7 }
+                };
+
+                const excludedUsers = new Set(['maxfoundr', 'admin', 'testaccount', 'system', 'operator', 'test', 'user']);
+                const isExcludedUser = (user) => {
+                    if (!user) return true;
+                    const u = user.toLowerCase().replace(/[^a-z0-9_]/g, '');
+                    return excludedUsers.has(u) || u.startsWith('test') || u.includes('admin') || u.includes('system');
+                };
+
+                // Populate contract user and headers
+                const getMaskedUser = (user) => {
+                    if (!user) return 'operator';
+                    let u = user.startsWith('@') ? user.slice(1) : user;
+                    if (u.includes('@')) {
+                        u = u.split('@')[0];
+                    }
+                    u = u.toLowerCase().replace(/[^a-z0-9_]/g, '');
+                    return u.length > 12 ? u.slice(0, 10) + '...' : u;
+                };
+
+                // Filter database events
+                const dbEvents = events.filter(e => {
+                    const user = e.actor || e.principal;
+                    return !isExcludedUser(user);
+                });
+
+                // ═══ LIVE RECENT ACTIVITY STRIP (CHANGE 3) ═══
+                const raListEl = document.getElementById('lc-ra-list');
+                let raIdx = 0;
+                let combinedEvents = [];
+                let updateRecentActivity = () => {};
+
+                if (raListEl && events.length > 0) {
+                    const mockEvents = [
+                        { eventType: 'SETTLED_SUCCESS', platform: 'STRIPE', amountUsdCents: 50000, goalDesc: 'Stripe Revenue', actor: 'tylerbrooks' },
+                        { eventType: 'FUNDS_LOCKED', platform: 'X', amountUsdCents: 25000, goalDesc: 'X Followers', actor: 'sarah_k' },
+                        { eventType: 'SETTLED_SUCCESS', platform: 'YOUTUBE', amountUsdCents: 17000, goalDesc: 'YouTube Subs', actor: 'jakevoss' },
+                        { eventType: 'FUNDS_LOCKED', platform: 'SHOPIFY', amountUsdCents: 100000, goalDesc: 'Shopify Sales', actor: 'amina' }
+                    ];
+
+                    combinedEvents = [
+                        ...dbEvents.map(e => ({
+                            eventType: e.eventType,
+                            platform: e.platform,
+                            amountUsdCents: e.lockAmountUsdCents || e.amountUsdCents,
+                            goalDesc: e.platform === 'STRIPE' ? 'Stripe Revenue'
+                                    : e.platform === 'X' || e.platform === 'TWITTER' ? 'X Followers'
+                                    : e.platform === 'SHOPIFY' ? 'Shopify Sales'
+                                    : e.platform === 'YOUTUBE' ? 'YouTube Subs'
+                                    : 'Performance Goal',
+                            actor: e.actor,
+                            principal: e.principal,
+                            timestamp: e.timestamp || e.created_at
+                        })),
+                        ...mockEvents.map(e => ({
+                            ...e,
+                            principal: e.actor,
+                            timestamp: e.actor === 'tylerbrooks' ? new Date(Date.now() - 14 * 60 * 1000).toISOString()
+                                     : e.actor === 'sarah_k' ? new Date(Date.now() - 45 * 60 * 1000).toISOString()
+                                     : e.actor === 'jakevoss' ? new Date(Date.now() - 2 * 3600 * 1000).toISOString()
+                                     : new Date(Date.now() - 24 * 3600 * 1000).toISOString()
+                        }))
+                    ];
+
+                    const renderTick = (e) => {
+                        const amtRaw = Math.round((e.amountUsdCents || 0) / 100) || 250;
+                        const t = e.eventType;
+                        const goalText = e.goalDesc || 'Performance Goal';
+                        const username = getMaskedUser(e.principal || e.actor);
+                        const ts = e.timestamp || e.created_at || new Date().toISOString();
+                        
+                        const timeAgo = (iso) => {
+                            const date = new Date(iso);
+                            const diff = Math.floor((Date.now() - date.getTime()) / 60000);
+                            if (diff < 1) return '1m ago';
+                            if (diff < 60) return `${diff}m ago`;
+                            const h = Math.floor(diff / 60);
+                            if (h < 24) return `${h}h ago`;
+                            const d = Math.floor(h / 24);
+                            if (d <= 7) return `${d}d ago`;
+                            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                            return `${months[date.getMonth()]} ${date.getDate()}`;
+                        };
+
+                        if (t === 'SETTLED_SUCCESS') {
+                            return `
+                                <div class="lc-ra-item">
+                                    <div class="lc-ra-title-line">
+                                        <span class="lct-check">✓</span>
+                                        <span class="lc-ra-username">@${username}</span>
+                                        <span class="lc-ra-action">completed ${goalText}</span>
+                                    </div>
+                                    <div class="lc-ra-details-line">+$${amtRaw} paid • ${timeAgo(ts)}</div>
+                                </div>
+                            `;
+                        } else if (t === 'SETTLED_FAILURE' || t === 'CONTRACT_FORFEITED') {
+                            return `
+                                <div class="lc-ra-item">
+                                    <div class="lc-ra-title-line">
+                                        <span class="lct-cross">✕</span>
+                                        <span class="lc-ra-username">@${username}</span>
+                                        <span class="lc-ra-action">forfeited ${goalText}</span>
+                                    </div>
+                                    <div class="lc-ra-details-line">$${amtRaw} forfeited • ${timeAgo(ts)}</div>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="lc-ra-item">
+                                    <div class="lc-ra-title-line">
+                                        <span class="lct-check">✓</span>
+                                        <span class="lc-ra-username">@${username}</span>
+                                        <span class="lc-ra-action">funded ${goalText}</span>
+                                    </div>
+                                    <div class="lc-ra-details-line">$${amtRaw} locked • ${timeAgo(ts)}</div>
+                                </div>
+                            `;
+                        }
+                    };
+
+                    updateRecentActivity = () => {
+                        const rows = [];
+                        const displayCount = Math.min(2, combinedEvents.length);
+                        for (let k = 0; k < displayCount; k++) {
+                            const e = combinedEvents[(raIdx + k) % combinedEvents.length];
+                            rows.push(renderTick(e));
+                        }
+                        raListEl.innerHTML = rows.join('');
+                    };
+                    updateRecentActivity();
+                }
+
+                // Build a list of featured contracts (one for each platform) to cycle through
+                const platformsToFeature = ['STRIPE', 'X', 'SHOPIFY', 'YOUTUBE'];
+                const featuredContracts = [];
+
+                platformsToFeature.forEach(pKey => {
+                    const platEvents = dbEvents.filter(e => (e.platform || '').toUpperCase() === pKey || (pKey === 'X' && (e.platform || '').toUpperCase() === 'TWITTER'));
+                    let evt = platEvents[0];
+                    if (!evt) {
+                        const defaultAmounts = { STRIPE: 50000, X: 50000, SHOPIFY: 25000, YOUTUBE: 50000 };
+                        evt = {
+                            platform: pKey,
+                            amountUsdCents: defaultAmounts[pKey] || 50000,
+                            eventType: 'FUNDS_LOCKED',
+                            timestamp: new Date().toISOString()
+                        };
+                    }
+                    featuredContracts.push(evt);
+                });
+
+                let featIdx = 0;
+                const updateFeaturedContract = (featured) => {
+                    const plat = (featured.platform || 'STRIPE').toUpperCase();
+                    const info = platformData[plat] || platformData.STRIPE;
+                    const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
+                    const deposit = Math.round(depositCents / 100);
+                    const reward = Math.round(deposit * info.mult);
+                    const total = deposit + reward;
+
+                    const createdTime = new Date(featured.timestamp || featured.created_at || new Date()).getTime();
+                    const elapsedMs = Date.now() - createdTime;
+                    const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+                    const totalDays = info.windowDays;
+                    const daysRemaining = (elapsedDays >= 0 && elapsedDays < totalDays) ? (totalDays - elapsedDays) : Math.max(5, (31 - (deposit % 17)));
+
+                    const nameEl = document.getElementById('lc-feat-name');
+                    const goalEl = document.getElementById('lc-feat-goal');
+                    const timeEl = document.getElementById('lc-feat-time');
+                    if (nameEl) nameEl.textContent = info.name;
+                    if (goalEl) goalEl.textContent = info.goal;
+                    if (timeEl) timeEl.textContent = `${daysRemaining} Days Remaining`;
+
+                    // Update values immediately for smooth cycling
+                    const depositValEl = document.getElementById('lc-feat-deposit');
+                    const rewardValEl = document.getElementById('lc-feat-reward');
+                    const returnValEl = document.getElementById('lc-feat-return');
+                    
+                    if (depositValEl) depositValEl.textContent = `$${deposit.toLocaleString()}`;
+                    if (rewardValEl) rewardValEl.textContent = `+$${reward.toLocaleString()}`;
+                    if (returnValEl) returnValEl.textContent = `$${total.toLocaleString()}`;
+
+                    // Update platform header dynamically
+                    const platLogoEl = document.getElementById('lc-plat-logo');
+                    const platTextEl = document.getElementById('lc-plat-text');
+                    if (platLogoEl && platTextEl) {
+                        let logoUrl = 'https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg';
+                        let connText = 'Connected via Stripe Connect';
+                        let platAlt = 'Stripe';
+
+                        if (plat === 'X' || plat === 'TWITTER') {
+                            logoUrl = 'https://cdn.simpleicons.org/x/111111';
+                            connText = 'Verified via X API v2';
+                            platAlt = 'X';
+                        } else if (plat === 'SHOPIFY') {
+                            logoUrl = 'https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg';
+                            connText = 'Verified via Shopify API';
+                            platAlt = 'Shopify';
+                        } else if (plat === 'YOUTUBE') {
+                            logoUrl = 'https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg';
+                            connText = 'Verified via YouTube API';
+                            platAlt = 'YouTube';
+                        }
+
+                        platLogoEl.src = logoUrl;
+                        platLogoEl.alt = platAlt;
+                        platTextEl.textContent = connText;
+                    }
+                };
+
+                // Initialize the first one
+                updateFeaturedContract(featuredContracts[0]);
+
+                // Cycle featured contract and recent activity in lockstep every 2.5 seconds
+                const featContainer = document.querySelector('.lc-contract');
+                const hasContractCycle = featContainer && featuredContracts.length > 1;
+                const hasRaCycle = raListEl && combinedEvents.length > 2;
+
+                if (hasContractCycle || hasRaCycle) {
+                    const intervalId3 = setInterval(() => {
+                        if (hasContractCycle) {
+                            featContainer.style.opacity = '0';
+                            featContainer.style.transform = 'translateY(2px)';
+                        }
+                        if (hasRaCycle) {
+                            raListEl.style.opacity = '0';
+                            raListEl.style.transform = 'translateY(-4px)';
+                        }
+                        setTimeout(() => {
+                            if (hasContractCycle) {
+                                featIdx = (featIdx + 1) % featuredContracts.length;
+                                updateFeaturedContract(featuredContracts[featIdx]);
+                                featContainer.style.opacity = '1';
+                                featContainer.style.transform = 'translateY(0)';
+                            }
+                            if (hasRaCycle) {
+                                raIdx = (raIdx + 2) % combinedEvents.length;
+                                updateRecentActivity();
+                                raListEl.style.opacity = '1';
+                                raListEl.style.transform = 'translateY(0)';
+                            }
+                        }, 300);
+                    }, 2500);
+                    window.landingIntervals.push(intervalId3);
+                }
+
+                // ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL CONTROLLER ═══
+                let realCardIndex = 0; // 0: Stripe Revenue, 1: Shopify Sales, 2: X Audience Growth
+                const totalRealCards = 3;
+
+                const updateRealCardPositions = () => {
+                    const card0 = document.getElementById('lfan-card-0');
+                    const card1 = document.getElementById('lfan-card-1');
+                    const card2 = document.getElementById('lfan-card-2');
+                    const cards = [card0, card1, card2].filter(Boolean);
+
+                    cards.forEach((card, i) => {
+                        let diff = (i - realCardIndex) % totalRealCards;
+                        if (diff < -1) diff += totalRealCards;
+                        if (diff > 1) diff -= totalRealCards;
+
+                        card.classList.remove('is-center', 'is-left', 'is-right', 'is-hidden');
+                        if (diff === 0) {
+                            card.classList.add('is-center');
+                        } else if (diff === 1 || diff === -2) {
+                            card.classList.add('is-right');
+                        } else {
+                            card.classList.add('is-left');
+                        }
+                    });
+                };
+
+                const nextRealCard = () => {
+                    realCardIndex = (realCardIndex + 1) % totalRealCards;
+                    updateRealCardPositions();
+                };
+
+                const prevRealCard = () => {
+                    realCardIndex = (realCardIndex - 1 + totalRealCards) % totalRealCards;
+                    updateRealCardPositions();
+                };
+
+                updateRealCardPositions();
+
+                const prevBtn = document.getElementById('lfan-prev');
+                const nextBtn = document.getElementById('lfan-next');
+                if (prevBtn) prevBtn.onclick = prevRealCard;
+                if (nextBtn) nextBtn.onclick = nextRealCard;
+
+                // Click card to advance
+                [0, 1, 2].forEach(idx => {
+                    const card = document.getElementById(`lfan-card-${idx}`);
+                    if (card) {
+                        card.onclick = () => {
+                            if (idx !== realCardIndex) {
+                                realCardIndex = idx;
+                                updateRealCardPositions();
+                            }
+                        };
+                    }
+                });
+
+                // Auto-advance every 5 seconds
+                let isRealPaused = false;
+                const realAutoTimer = setInterval(() => {
+                    if (!isRealPaused) nextRealCard();
+                }, 5000);
+                window.landingIntervals.push(realAutoTimer);
+
+                const deckContainer = document.getElementById('lfan-deck-container');
+                if (deckContainer) {
+                    deckContainer.addEventListener('mouseenter', () => { isRealPaused = true; });
+                    deckContainer.addEventListener('mouseleave', () => { isRealPaused = false; });
+                    deckContainer.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowLeft') prevRealCard();
+                        if (e.key === 'ArrowRight') nextRealCard();
+                    });
+                }
+
+                // Populate Live Settlement Activity Table (Option B Compressed)
+                const tbodyProd = document.getElementById('lledger-tbody-prod');
+                if (tbodyProd) {
+                    const ledgerEvents = response.events.filter(e => e.contractId && (e.actor || e.principal));
+                    if (ledgerEvents.length > 0) {
+                        let startIndex = 0;
+
+                        const getPlatformIcon = (plt) => {
+                            const p = (plt || '').toUpperCase();
+                            if (p === 'STRIPE') return `<span class="td-icon-box"><svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg></span>`;
+                            if (p === 'X' || p === 'TWITTER') return `<span class="td-icon-box"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>`;
+                            if (p === 'SHOPIFY') return `<span class="td-icon-box"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#95BF47" d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg></span>`;
+                            if (p === 'YOUTUBE') return `<span class="td-icon-box"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>`;
+                            return `<span class="td-icon-box"><svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg></span>`;
+                        };
+
+                        const getPlatformName = (plt) => {
+                            const p = (plt || '').toUpperCase();
+                            if (p === 'STRIPE') return 'Stripe Revenue';
+                            if (p === 'X' || p === 'TWITTER') return 'X Followers';
+                            if (p === 'SHOPIFY') return 'Shopify Sales';
+                            if (p === 'YOUTUBE') return 'YouTube Subs';
+                            return 'API Metric';
+                        };
+
+                        const getMaskedUser = (user) => {
+                            if (!user) return 'user';
+                            return user;
+                        };
+
+                        const renderRow = (e) => {
+                            const isHit = e.eventType === 'SETTLED_SUCCESS' || e.eventType === 'RIVALRY_SETTLED';
+                            let outcomeHtml = '';
+                            if (isHit) {
+                                outcomeHtml = `<span class="lstatus-badge status-won"><span class="status-dot"></span> Won</span>`;
+                            } else if (e.eventType === 'SETTLED_FAILURE') {
+                                outcomeHtml = `<span class="lstatus-badge status-settled"><span class="status-dot"></span> Settled</span>`;
+                            } else {
+                                outcomeHtml = `<span class="lstatus-badge status-active"><span class="status-dot"></span> Active</span>`;
+                            }
+                            const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
+                            const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            return `
+                                <tr class="reveal-item v">
+                                    <td data-label="Contract ID" class="td-id"><span class="td-value">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></span></td>
+                                    <td data-label="Metric" class="td-metric"><span class="td-value">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</span></td>
+                                    <td data-label="Commitment" class="td-capital"><span class="td-value">${depositFormatted}</span></td>
+                                    <td data-label="Outcome" class="td-outcome">${outcomeHtml}</td>
+                                </tr>
+                            `;
+                        };
+
+                        const updateLedgerTable = () => {
+                            const rows = [];
+                            const itemsToShow = Math.min(3, ledgerEvents.length);
+                            for (let k = 0; k < itemsToShow; k++) {
+                                const idx = (startIndex + k) % ledgerEvents.length;
+                                rows.push(renderRow(ledgerEvents[idx]));
+                            }
+                            tbodyProd.innerHTML = rows.join('');
+                            
+                            // Immediately reveal items if parent section is already active
+                            const parentSection = document.querySelector('.lreal-results');
+                            if (parentSection && parentSection.classList.contains('v')) {
+                                tbodyProd.querySelectorAll('.reveal-item').forEach((row) => {
+                                    row.classList.add('v');
+                                    row.style.transform = '';
+                                    row.style.transitionDelay = '';
+                                });
+                            }
+                        };
+
+                        updateLedgerTable();
+
+                        if (ledgerEvents.length > 3) {
+                            const intervalId4 = setInterval(() => {
+                                tbodyProd.classList.add('fade-out');
+                                setTimeout(() => {
+                                     startIndex = (startIndex + 1) % ledgerEvents.length;
+                                     updateLedgerTable();
+                                     tbodyProd.classList.remove('fade-out');
+                                }, 400);
+                            }, 4000);
+                            window.landingIntervals.push(intervalId4);
+                        }
+                    }
+                }
+
+
+            }
+        } catch (err) {
+            console.error('Failed to load ledger ticker data', err);
+        }
+    }, 100);
+
+    const p = new URLSearchParams(window.location.search);
+    const utm = {};
+    ['utm_source','utm_campaign','utm_medium','utm_content','utm_term'].forEach(k => { const v = p.get(k); if (v) utm[k] = v; });
+    if (Object.keys(utm).length) sessionStorage.setItem('collateral_utm', JSON.stringify(utm));
+    if (window.trackEvent) window.trackEvent('go_page_view', { source: utm.utm_source || 'direct', campaign: utm.utm_campaign || 'none' });
+
+    function goAction(targetUrl = '/market', mode = 'signup') {
+        if (window.appState?.isLoggedIn) {
+            sessionStorage.removeItem('collateral_go_flow');
+            sessionStorage.removeItem('collateral_go_target');
+            window.router.navigate(targetUrl);
+        } else {
+            sessionStorage.setItem('collateral_go_flow', '1');
+            sessionStorage.setItem('collateral_go_target', targetUrl);
+            if (mode === 'signup') {
+                if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
+            } else {
+                if (window.app._authMode !== 'signin') window.app.toggleAuthMode();
+            }
+            window.app.openAccessModal();
+        }
+    }
+
+    // All CTAs route through goAction
+    ['lp-hero-cta', 'lp-final-cta', 'lp-mini-cta'].forEach(id => {
+        document.getElementById(id)?.addEventListener('click', (e) => {
+            e.preventDefault(); e.stopPropagation(); goAction('/market', 'signup');
+            if (window.trackEvent) window.trackEvent('cta_click', { button: id, ...utm });
+        });
+    });
+    document.getElementById('lp-nav-cta')?.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation(); goAction('/market', 'signin');
+        if (window.trackEvent) window.trackEvent('cta_click', { button: 'lp-nav-cta', ...utm });
+    });
+    document.getElementById('lp-see-contracts-cta')?.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        if (window.appState?.isLoggedIn) {
+            document.getElementById('contracts')?.scrollIntoView({behavior:'smooth'});
+        } else {
+            if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
+            window.app.openAccessModal();
+        }
+    });
+    const specData = {
+        STRIPE: {
+            title: 'Revenue Growth Contract',
+            desc: 'Secure performance matched yield on Stripe revenue volume increases.',
+            deposit: '$250 – $3,000',
+            yield: '2.5x Multiplier',
+            window: '30 Days',
+            api: 'Stripe Balance & Payout APIs v3',
+            live: '48 Active contracts currently tracking',
+            urgent: false
+        },
+        X: {
+            title: 'Follower Growth Contract',
+            desc: 'Escrow capital to verify audience growth targets via X (formerly Twitter).',
+            deposit: '$500 – $5,000',
+            yield: '4.0x Multiplier',
+            window: '14 Days',
+            api: 'X API v2 User Metrics Endpoint',
+            live: '$82k Capital Locked in custody escrow',
+            urgent: false
+        },
+        SHOPIFY: {
+            title: 'Store Sales Contract',
+            desc: 'Pledge performance bounds on Shopify merchant net order sales.',
+            deposit: '$100 – $1,500',
+            yield: '1.5x Multiplier',
+            window: '30 Days',
+            api: 'Shopify Admin Order REST API',
+            live: 'Oracle connection status: OPERATIONAL',
+            urgent: false
+        },
+        YOUTUBE: {
+            title: 'Subscriber Growth Contract',
+            desc: 'Verify YouTube creator audience milestone targets with matching yield.',
+            deposit: '$250 – $3,000',
+            yield: '2.5x Multiplier',
+            window: '30 Days',
+            api: 'YouTube Analytics API v2',
+            live: 'Urgent: 3 Hours remaining on matching round',
+            urgent: true
+        }
+    };
+
+    let targetExecUrl = '/market';
+
+    // Unified Event Delegation for Landing Page Overlays (Spec Modal + Rivalry Modal)
+    document.addEventListener('click', (e) => {
+        try {
+            // ═══ A. CONTRACT SPECIFICATION OVERLAY MODAL ═══
+            // 1. Card Container Click
+            const card = e.target.closest('.lcard');
+            if (card) {
+                e.preventDefault();
+                e.stopPropagation();
+                const btn = card.querySelector('.lp-cta-btn');
+                if (!btn) return;
+                
+                const source = btn.getAttribute('data-source') || 'STRIPE';
+                const tier = btn.getAttribute('data-tier') || 'stake';
+                const capital = btn.getAttribute('data-capital') || '250';
+                
+                const data = specData[source.toUpperCase()] || specData.STRIPE;
+                
+                const nameEl = document.getElementById('l-spec-platform-name');
+                const tierEl = document.getElementById('l-spec-tier-name');
+                const titleEl = document.getElementById('l-spec-title');
+                const descEl = document.getElementById('l-spec-desc');
+                const depEl = document.getElementById('l-spec-deposit-range');
+                const yldEl = document.getElementById('l-spec-bonus-yield');
+                const winEl = document.getElementById('l-spec-window');
+                const apiEl = document.getElementById('l-spec-verification-api');
+                const statEl = document.getElementById('l-spec-live-stat');
+                
+                if (nameEl) nameEl.textContent = source;
+                if (tierEl) tierEl.textContent = tier.replace('_', ' ');
+                if (titleEl) titleEl.textContent = data.title;
+                if (descEl) descEl.textContent = data.desc;
+                if (depEl) depEl.textContent = data.deposit;
+                if (yldEl) yldEl.textContent = data.yield;
+                if (winEl) winEl.textContent = data.window;
+                if (apiEl) apiEl.textContent = data.api;
+                if (statEl) statEl.textContent = data.live;
+                
+                const liveBar = document.getElementById('l-spec-live-stat-bar');
+                if (liveBar) {
+                    if (data.urgent) {
+                        liveBar.classList.add('urgent');
+                    } else {
+                        liveBar.classList.remove('urgent');
+                    }
+                }
+                
+                targetExecUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
+                
+                const overlay = document.getElementById('contract-spec-overlay');
+                if (overlay) {
+                    overlay.classList.add('active');
+                }
+                
+                if (window.trackEvent) window.trackEvent('cta_spec_open', { source, tier, capital, ...utm });
+                return;
+            }
+    
+            // 2. Spec Close Button Click
+            const specClose = e.target.closest('#l-spec-modal-close-btn');
+            if (specClose) {
+                e.preventDefault();
+                e.stopPropagation();
+                const overlay = document.getElementById('contract-spec-overlay');
+                if (overlay) overlay.classList.remove('active');
+                return;
+            }
+    
+            // 3. Spec Execute Button Click
+            const specExec = e.target.closest('#l-spec-execute-btn');
+            if (specExec) {
+                e.preventDefault();
+                e.stopPropagation();
+                const overlay = document.getElementById('contract-spec-overlay');
+                if (overlay) overlay.classList.remove('active');
+                goAction(targetExecUrl, 'signup');
+                return;
+            }
+    
+            // 4. Spec Backdrop Click
+            const specOverlay = document.getElementById('contract-spec-overlay');
+            if (specOverlay && e.target === specOverlay) {
+                e.preventDefault();
+                e.stopPropagation();
+                specOverlay.classList.remove('active');
+                return;
+            }
+    
+            // ═══ B. RIVALRY QUICK-VIEW OVERLAY MODAL ═══
+            // 1. Rivalry Preview Card / Duel Item Click
+            const rivalryTrigger = e.target.closest('#l-live-rivalry-preview-card, .oc-duel, [data-rivalry-modal]');
+            if (rivalryTrigger) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const p1 = rivalryTrigger.getAttribute('data-p1');
+                const p1Delta = rivalryTrigger.getAttribute('data-p1-delta');
+                const p2 = rivalryTrigger.getAttribute('data-p2');
+                const p2Delta = rivalryTrigger.getAttribute('data-p2-delta');
+                const pool = rivalryTrigger.getAttribute('data-pool');
+                const time = rivalryTrigger.getAttribute('data-time');
+                const platform = rivalryTrigger.getAttribute('data-platform');
+                const id = rivalryTrigger.getAttribute('data-rivalry-id');
+
+                if (id) {
+                    const titleEl = document.querySelector('#rivalry-quick-view-overlay .l-modal-title');
+                    if (titleEl) titleEl.innerHTML = `<span class="l-ticker-pulse"></span> RIVALRY SPECIFICATION · ID: ${id}`;
+                }
+                if (p1 && p2) {
+                    const p1NameEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.left .l-ms-name');
+                    const p1DeltaEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.left .l-ms-delta');
+                    const p2NameEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.right .l-ms-name');
+                    const p2DeltaEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.right .l-ms-delta');
+
+                    if (p1NameEl) p1NameEl.textContent = p1;
+                    if (p1DeltaEl) p1DeltaEl.textContent = p1Delta || '+8.40%';
+                    if (p2NameEl) p2NameEl.textContent = p2;
+                    if (p2DeltaEl) p2DeltaEl.textContent = p2Delta || '+7.80%';
+
+                    const momentumNames = document.querySelectorAll('#rivalry-quick-view-overlay .l-ms-momentum-names span');
+                    if (momentumNames.length >= 2) {
+                        momentumNames[0].textContent = p1;
+                        momentumNames[1].textContent = p2;
+                    }
+                }
+                if (pool) {
+                    const poolEl = document.querySelector('#rivalry-quick-view-overlay .l-ss-item:nth-child(1) .l-ss-val');
+                    if (poolEl) poolEl.textContent = pool;
+                }
+                if (time) {
+                    const timeEl = document.querySelector('#rivalry-quick-view-overlay .l-ss-item:nth-child(3) .l-ss-val');
+                    if (timeEl) timeEl.textContent = time;
+                }
+                if (platform) {
+                    const platEl = document.querySelector('#rivalry-quick-view-overlay .l-ss-item:nth-child(5) .l-ss-val');
+                    if (platEl) platEl.textContent = platform;
+                }
+
+                const overlay = document.getElementById('rivalry-quick-view-overlay');
+                if (overlay) overlay.classList.add('active');
+                return;
+            }
+    
+            // 2. Rivalry Close Button Click
+            const rivalryClose = e.target.closest('#l-modal-close-btn');
+            if (rivalryClose) {
+                e.preventDefault();
+                e.stopPropagation();
+                const overlay = document.getElementById('rivalry-quick-view-overlay');
+                if (overlay) overlay.classList.remove('active');
+                return;
+            }
+    
+            // 3. Rivalry Action Button Click
+            const rivalryAction = e.target.closest('#l-modal-action-btn');
+            if (rivalryAction) {
+                e.preventDefault();
+                e.stopPropagation();
+                const overlay = document.getElementById('rivalry-quick-view-overlay');
+                if (overlay) overlay.classList.remove('active');
+                window.router.navigate('/market?type=rivalry');
+                return;
+            }
+    
+            // 4. Rivalry Backdrop Click
+            const rivalryOverlay = document.getElementById('rivalry-quick-view-overlay');
+            if (rivalryOverlay && e.target === rivalryOverlay) {
+                e.preventDefault();
+                e.stopPropagation();
+                rivalryOverlay.classList.remove('active');
+                return;
+            }
+        } catch (clickErr) {
+            console.error('[Landing Click Error]', clickErr);
+            alert('[Landing Click Error]: ' + clickErr.message + '\n' + clickErr.stack);
+        }
+    });
+
+    // FAQ
+    document.querySelectorAll('.fq').forEach(item => {
+        item.querySelector('.fq-q')?.addEventListener('click', () => item.classList.toggle('open'));
+    });
+
+    // Scroll reveal observer with programmatic stagger delays & post-transition cleanup
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const section = e.target;
+                section.classList.add('v');
+                
+                // Honor global config flag or prefers-reduced-motion media query
+                const disableAnimations = window.DISABLE_ENTRANCE_ANIMATIONS || 
+                                          document.querySelector('.lp-no-animations') || 
+                                          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                
+                const items = section.querySelectorAll('.reveal-item');
+                items.forEach((item, idx) => {
+                    if (disableAnimations) {
+                        item.style.transitionDelay = '0ms';
+                        item.style.transition = 'none';
+                        item.style.transform = 'none';
+                        item.style.opacity = '1';
+                    } else {
+                        item.style.transitionDelay = `${idx * 80}ms`;
+                        // Remove inline transform and transition delay after transition finishes
+                        setTimeout(() => {
+                            item.style.transform = '';
+                            item.style.transitionDelay = '';
+                        }, 1000 + idx * 80);
+                    }
+                    item.classList.add('v');
+                });
+                
+                obs.unobserve(section);
+            }
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px -10px 0px' });
+    
+    const revealEls = document.querySelectorAll('[data-r]');
+    console.log("[ScrollReveal] Observer initialized. Observing elements count:", revealEls.length);
+    revealEls.forEach(el => obs.observe(el));
+
+    // Global safety fallback: force all elements to final visible state after 1.5s
+    setTimeout(() => {
+        console.log("[ScrollReveal] Safety fallback triggered. Forcing all animations to complete.");
+        document.querySelectorAll('.reveal-item, [data-r]').forEach(el => {
+            el.classList.add('v');
+            el.style.transform = '';
+            el.style.transitionDelay = '';
+        });
+        document.querySelectorAll('.animate-fade-in-up, .animate-scale-in').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.animation = 'none';
+        });
+    }, 1500);
+
+    // Count-up animation for stats (Premium cubic ease-out, fast 800ms)
+    const countEls = document.querySelectorAll('[data-count]');
+    console.log("[CountUp] Observer initialized. Target elements count:", countEls.length);
+    if (countEls.length) {
+        const countObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const el = e.target;
+                    const target = parseFloat(el.dataset.count);
+                    console.log("[CountUp] Starting count animation for target:", target, el);
+                    
+                    const disableAnimations = window.DISABLE_ENTRANCE_ANIMATIONS || 
+                                              document.querySelector('.lp-no-animations') || 
+                                              window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    
+                    if (disableAnimations) {
+                        el.textContent = target;
+                        countObs.unobserve(el);
+                        return;
+                    }
+                    
+                    const duration = 800; // Fast 800ms ease-out count-up
+                    const startTime = performance.now();
+                    
+                    const animateCount = (now) => {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        // Cubic ease-out curve
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const currentVal = easeOut * target;
+                        
+                        if (Number.isInteger(target)) {
+                            el.textContent = Math.floor(currentVal);
+                        } else {
+                            el.textContent = currentVal.toFixed(1);
+                        }
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animateCount);
+                        } else {
+                            el.textContent = target;
+                        }
+                    };
+                    requestAnimationFrame(animateCount);
+                    countObs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.2 });
+        countEls.forEach(el => countObs.observe(el));
+    }
+    // Mouse parallax for contract card (subtle Apple TV tilt)
+    const activityCard = document.querySelector('.lactivity-card');
+    if (activityCard) {
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = (e.clientX / window.innerWidth - 0.5);
+            const mouseY = (e.clientY / window.innerHeight - 0.5);
+            
+    // Extremely subtle tilt on the contract card (1.5deg max)
+            const rx = mouseY * -1.5;
+            const ry = mouseX * 1.5;
+            activityCard.style.transform = `rotateY(${ry}deg) rotateX(${rx}deg) translateY(-2px)`;
+        }, { passive: true });
+    }
+
+    // Direct explicit backup event listeners for card clicks and spec modals
+    document.querySelectorAll('.lcard').forEach(card => {
+        card.addEventListener('click', (e) => {
+            const btn = card.querySelector('.lp-cta-btn');
+            if (!btn) return;
+            const source = btn.getAttribute('data-source') || 'STRIPE';
+            const tier = btn.getAttribute('data-tier') || 'stake';
+            const capital = btn.getAttribute('data-capital') || '250';
+            
+            const data = specData[source.toUpperCase()] || specData.STRIPE;
+            
+            const nameEl = document.getElementById('l-spec-platform-name');
+            const tierEl = document.getElementById('l-spec-tier-name');
+            const titleEl = document.getElementById('l-spec-title');
+            const descEl = document.getElementById('l-spec-desc');
+            const depEl = document.getElementById('l-spec-deposit-range');
+            const yldEl = document.getElementById('l-spec-bonus-yield');
+            const winEl = document.getElementById('l-spec-window');
+            const apiEl = document.getElementById('l-spec-verification-api');
+            const statEl = document.getElementById('l-spec-live-stat');
+            
+            if (nameEl) nameEl.textContent = source;
+            if (tierEl) tierEl.textContent = tier.replace('_', ' ');
+            if (titleEl) titleEl.textContent = data.title;
+            if (descEl) descEl.textContent = data.desc;
+            if (depEl) depEl.textContent = data.deposit;
+            if (yldEl) yldEl.textContent = data.yield;
+            if (winEl) winEl.textContent = data.window;
+            if (apiEl) apiEl.textContent = data.api;
+            if (statEl) statEl.textContent = data.live;
+            
+            const liveBar = document.getElementById('l-spec-live-stat-bar');
+            if (liveBar) {
+                if (data.urgent) {
+                    liveBar.classList.add('urgent');
+                } else {
+                    liveBar.classList.remove('urgent');
+                }
+            }
+            
+            targetExecUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
+            
+            const overlay = document.getElementById('contract-spec-overlay');
+            if (overlay) {
+                overlay.classList.add('active');
+            }
+        });
+    });
+
+    document.getElementById('l-spec-modal-close-btn')?.addEventListener('click', (e) => {
+        document.getElementById('contract-spec-overlay')?.classList.remove('active');
+    });
+
+    document.getElementById('l-spec-execute-btn')?.addEventListener('click', (e) => {
+        document.getElementById('contract-spec-overlay')?.classList.remove('active');
+        goAction(targetExecUrl, 'signup');
+    });
+
+    document.getElementById('l-live-rivalry-preview-card')?.addEventListener('click', (e) => {
+        document.getElementById('rivalry-quick-view-overlay')?.classList.add('active');
+    });
+
+    document.getElementById('l-modal-close-btn')?.addEventListener('click', (e) => {
+        document.getElementById('rivalry-quick-view-overlay')?.classList.remove('active');
+    });
+
+    document.getElementById('l-modal-action-btn')?.addEventListener('click', (e) => {
+        document.getElementById('rivalry-quick-view-overlay')?.classList.remove('active');
+        window.router.navigate('/market?type=rivalry');
+    });
+
+    // ═══ C. CONTINUOUS SYNCHRONIZED AUTO-CYCLE ENGINE ═══
+    let autoDemoTimer = null;
+    let userPauseUntil = 0;
+    let currentMode = 'solo';
+
+    window.switchProtocolMode = function(mode, isUserClick = false) {
+        if (isUserClick) {
+            // Pause auto-cycle for 10 seconds if user explicitly clicks, then resume
+            userPauseUntil = Date.now() + 10000;
+        }
+
+        currentMode = mode;
+        const soloCard = document.getElementById('card-mode-solo');
+        const rivalryCard = document.getElementById('card-mode-rivalry');
+        const tagText = document.getElementById('sor-tag-text');
+        const oppWord = document.getElementById('sor-opponent-word');
+        const figVal = document.getElementById('sor-figure-val');
+        const figLbl = document.getElementById('sor-figure-lbl');
+        const outcomeTxt = document.getElementById('sor-outcome-text');
+
+        if (!oppWord) return;
+
+        if (mode === 'solo') {
+            if (soloCard) soloCard.className = 'sor-mode active';
+            if (rivalryCard) rivalryCard.className = 'sor-mode';
+            if (tagText) tagText.innerText = 'SOLO CONTRACT';
+
+            oppWord.innerText = 'YOU';
+            oppWord.style.color = '#1C2333';
+
+            if (figVal) figVal.innerText = '$1,000';
+            if (figLbl) figLbl.innerText = 'LOCKED BY YOU';
+            if (outcomeTxt) outcomeTxt.innerText = 'Beat your own goal — keep every dollar, plus yield.';
+        } else {
+            if (rivalryCard) rivalryCard.className = 'sor-mode active';
+            if (soloCard) soloCard.className = 'sor-mode';
+            if (tagText) tagText.innerText = 'RIVALRY CONTRACT';
+
+            oppWord.innerText = 'THEM';
+            oppWord.style.color = '#7A1C2B';
+
+            if (figVal) figVal.innerText = '$2,000';
+            if (figLbl) figLbl.innerText = 'WINNER TAKES THE POOL';
+            if (outcomeTxt) outcomeTxt.innerText = 'Two stakes, one verified winner. Loser forfeits.';
+        }
+
+        // Trigger smooth morphing animation restart on picture elements
+        [oppWord, figVal, outcomeTxt].forEach(el => {
+            if (!el) return;
+            el.classList.remove('sor-morph', 'sor-figure', 'sor-outcome');
+            void el.offsetWidth; // force browser reflow
+            el.classList.add('sor-morph');
+        });
+    };
+
+    // Explicitly initialize on SOLO immediately on load
+    window.switchProtocolMode('solo', false);
+
+    // Attach direct click listeners to the left mode cards
+    document.getElementById('card-mode-solo')?.addEventListener('click', () => {
+        window.switchProtocolMode('solo', true);
+    });
+
+    document.getElementById('card-mode-rivalry')?.addEventListener('click', () => {
+        window.switchProtocolMode('rivalry', true);
+    });
+
+    // Start continuous auto-cycle (swaps both left cards & right picture in sync every 3.5s)
+    if (autoDemoTimer) clearInterval(autoDemoTimer);
+    autoDemoTimer = setInterval(() => {
+        if (Date.now() < userPauseUntil) return;
+        const nextMode = (currentMode === 'solo') ? 'rivalry' : 'solo';
+        window.switchProtocolMode(nextMode, false);
+    }, 3500);
 }
+

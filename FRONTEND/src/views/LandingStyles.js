@@ -959,7 +959,7 @@ export const landingCSS = `
 }
 
 .argue-note {
-  margin: 32px 0 0;
+  margin: 24px 0 0;
   padding-top: 16px;
   border-top: 2px solid var(--ink);
 }
@@ -967,8 +967,9 @@ export const landingCSS = `
 .argue-note p {
   margin: 10px 0 0;
   font-family: var(--mono);
-  font-size: 11.5px;
-  line-height: 1.8;
+  font-size: 12.5px;
+  line-height: 1.9;
+  max-width: 46ch;
   color: var(--ink-2);
 }
 
@@ -976,7 +977,7 @@ export const landingCSS = `
 .cmp caption {
   caption-side: top;
   text-align: left;
-  padding: 0 0 14px;
+  padding: 16px 20px 20px;
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .16em;

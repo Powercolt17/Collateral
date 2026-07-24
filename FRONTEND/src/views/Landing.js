@@ -159,7 +159,6 @@ export function renderLanding() {
 
             <!-- ═════ 3 · CASE ═════ -->
             <section class="section" id="case">
-                <span class="idx-mark" aria-hidden="true">03</span>
                 <div class="shell argue">
                     <div>
                         <p class="eyebrow">Why it works</p>

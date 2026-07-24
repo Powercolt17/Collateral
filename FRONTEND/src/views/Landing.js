@@ -758,7 +758,7 @@ export function initLanding() {
     const navEl    = document.getElementById('nav-escrow');
     const clockEl  = document.getElementById('clock');
 
-    let escrow = 8700000, settledToday = 0, settledCount = 0, cursor = 0;
+    let escrow = 8700000, settledToday = 2240, settledCount = 1, cursor = 0;
 
     function pick(){ var c = BOOK[cursor % BOOK.length]; cursor++; return c; }
 
@@ -779,10 +779,10 @@ export function initLanding() {
 
     if (rowsEl) {
         rowsEl.innerHTML = '';
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 4; i++) {
             var r = makeRow(pick());
             if (i === 0) {
-                // Pre-seed top row as already settled on mount so stamp is visible on first paint
+                // Pre-seed top row as already settled ("won" / "Approved") on mount so stamp renders immediately
                 r.classList.add('settled', 'won');
                 var fill = r.querySelector('.bar-mini i');
                 if (fill) fill.style.width = '100%';

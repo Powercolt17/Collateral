@@ -500,6 +500,7 @@ export const landingCSS = `
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+  margin-top: 48px;
   margin-bottom: 36px;
 }
 
@@ -538,13 +539,13 @@ export const landingCSS = `
 }
 
 .btn-out {
-  background: transparent;
+  background: transparent !important;
   border: 1px solid var(--ink) !important;
   color: var(--ink) !important;
 }
 
 .btn-out:hover {
-  background: var(--ink);
+  background: var(--ink) !important;
   color: var(--paper) !important;
   box-shadow: 0 12px 26px -18px rgba(14,20,32,.8);
 }
@@ -572,7 +573,7 @@ export const landingCSS = `
 /* ═══════════ TAPE FEED ═══════════ */
 .tape-rows {
   position: relative;
-  min-height: 200px;
+  min-height: 150px;
 }
 
 .bar-mini {

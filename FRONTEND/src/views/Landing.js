@@ -444,7 +444,7 @@ export function renderLanding() {
                             <g stroke-width="1" marker-end="url(#cl-ar)" fill="none">
                                 <line x1="204" y1="193" x2="282" y2="193" stroke="#0E1420"/>
                                 <line x1="474" y1="193" x2="552" y2="193" stroke="#0E1420"/>
-                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5" data-win/>
+                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5"/>
                                 <path d="M744 193 L820 193 L856 193" stroke="#7A1C29" stroke-dasharray="5 4"/>
                                 <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6E7686" stroke-dasharray="2 4"/>
                             </g>
@@ -472,9 +472,6 @@ export function renderLanding() {
                             <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#7A1C29" text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
                             <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180"/></g>
                             <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1.4" fill="#6E7686" text-anchor="middle">STRIPE CONNECT CUSTODY</text>
-
-                            <!-- Fail-visible wipe overlay (topmost child) -->
-                            <rect class="sch-wipe" x="0" y="0" width="1080" height="400" fill="var(--plate)"/>
                         </svg>
                         <dl class="sch-mobile">
                             <div class="sm-row"><dt>Deposits in</dt><span class="dots"></span><dd>$8,700,000</dd></div>
@@ -693,36 +690,6 @@ export function initLanding() {
 
     function money(n) {
         return '$' + Math.round(n).toLocaleString('en-US');
-    }
-
-    /* ── Arm Schematic Wipe Overlay (Only when JS is active) ── */
-    const schEl = document.querySelector('.sch');
-    if (schEl && !reduce) {
-        schEl.classList.add('is-armed');
-
-        if ('IntersectionObserver' in window) {
-            const schObserver = new IntersectionObserver((entries) => {
-                entries.forEach((e) => {
-                    if (e.isIntersecting) {
-                        schEl.classList.add('is-revealed');
-                        schObserver.disconnect();
-                    }
-                });
-            }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
-            schObserver.observe(schEl);
-
-            const rect = schEl.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
-                schEl.classList.add('is-revealed');
-            }
-
-            // Guaranteed safety fallback: reveal drawing within 1.8s max under any condition
-            setTimeout(() => {
-                schEl.classList.add('is-revealed');
-            }, 1800);
-        } else {
-            schEl.classList.add('is-revealed');
-        }
     }
 
     /* ── Motion System (Section Reveal Observers) ── */

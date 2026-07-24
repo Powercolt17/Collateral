@@ -133,34 +133,9 @@ export const revealStyles = `
 }
 .reveal.is-in tbody tr{opacity:1;transform:none}
 
-/* ═══════════ SCHEMATIC WIPE OVERLAY (FAIL-VISIBLE) ═══════════ */
-/* default: no overlay at all — drawing renders complete */
-.sch-wipe{ display:none; pointer-events:none; }
-
-/* only exists once JS has armed it */
-.sch.is-armed .sch-wipe{
-  display:block;
-  transform-origin:right center;
-  transform:scaleX(1);
-}
-.sch.is-armed.is-revealed .sch-wipe{
-  transform:scaleX(0);
-  transition:transform 1.5s cubic-bezier(.65,0,.35,1);
-}
-
-/* optional second beat — after the wipe completes, give the win path one stroke-weight pulse */
-.sch.is-revealed [data-win]{
-  animation:cl-settle .6s cubic-bezier(.22,.85,.26,1) 1.6s;
-}
-@keyframes cl-settle{
-  0%,100%{ stroke-width:1.5 }
-  45%{ stroke-width:2.8 }
-}
-
 @media(prefers-reduced-motion:reduce){
   .reveal .r-item,.reveal .r-plate,.reveal tbody tr{
     opacity:1!important;transform:none!important;transition:none!important}
   .reveal .r-rule{transform:none!important;transition:none!important}
-  .sch-wipe{ display:none !important; }
 }
 `;

@@ -508,16 +508,20 @@ export function renderLanding() {
                                     <input type="range" id="dep" min="100" max="10000" step="50" value="1000">
                                     <div class="scale"><span class="mono">$100</span><span class="mono">$10,000</span></div>
                                 </div>
+                                <div class="field" style="margin-top:30px">
+                                    <div class="field-top">
+                                        <span class="mono" style="color:var(--ink-2)">Execution window</span>
+                                    </div>
+                                    <div class="seg" id="seg" role="group" aria-label="Execution window">
+                                        <button type="button" data-days="14" aria-pressed="false">14 days</button>
+                                        <button type="button" data-days="30" aria-pressed="true">30 days</button>
+                                        <button type="button" data-days="60" aria-pressed="false">60 days</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="field" style="margin-top:24px">
-                                <div class="field-top">
-                                    <span class="mono" style="color:var(--ink-2)">Execution window</span>
-                                </div>
-                                <div class="seg" id="seg" role="group" aria-label="Execution window">
-                                    <button type="button" data-days="14" aria-pressed="false">14 days</button>
-                                    <button type="button" data-days="30" aria-pressed="true">30 days</button>
-                                    <button type="button" data-days="60" aria-pressed="false">60 days</button>
-                                </div>
+
+                            <div class="calc-left-foot">
+                                <span class="mono">Parameters lock on signature</span>
                             </div>
                         </div>
 

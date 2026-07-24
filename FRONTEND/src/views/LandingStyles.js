@@ -1683,6 +1683,17 @@ export const landingCSS = `
   justify-content: space-between;
 }
 
+.calc-left-foot {
+  margin-top: 32px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
 @media(max-width:940px){
   .calc-left { border-right: 0; border-bottom: 1px solid var(--rule); }
 }

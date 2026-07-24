@@ -741,11 +741,29 @@ export const landingCSS = `
   background: var(--paper);
   margin-bottom: 24px;
   overflow: hidden;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--r) - 2px);
 }
 
 .leaf--dark .leaf-art {
   border-color: #96505D;
   background: #5E1420;
+}
+
+.leaf-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s var(--ease);
+}
+
+.leaf:hover .leaf-img {
+  transform: scale(1.04);
 }
 
 .leaf-name {

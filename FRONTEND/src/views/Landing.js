@@ -96,22 +96,7 @@ export function renderLanding() {
                         <div class="plates plate ticks">
                             <article class="leaf">
                                 <div class="leaf-art">
-                                    <svg viewBox="0 0 360 150" role="img" aria-label="Engraving: a hand pressing a coin into still water">
-                                        <g fill="none" stroke="#131A2B" stroke-width=".7" stroke-linecap="round">
-                                            <ellipse cx="180" cy="118" rx="110" ry="15" opacity=".28"/>
-                                            <ellipse cx="180" cy="118" rx="84" ry="11" opacity=".42"/>
-                                            <ellipse cx="180" cy="118" rx="58" ry="8" opacity=".58"/>
-                                            <ellipse cx="180" cy="118" rx="32" ry="4.6" opacity=".78"/>
-                                            <circle cx="180" cy="102" r="15"/><circle cx="180" cy="102" r="10.5" opacity=".55"/>
-                                            <path d="M174 102h12M180 96v12" opacity=".55"/>
-                                            <path d="M167 70c0-14 5-25 11-28 5-2 8 3 7 10l-3 20"/>
-                                            <path d="M183 72l4-22c1-7 5-10 9-8 5 2 6 7 5 14l-4 18"/>
-                                            <path d="M197 74l5-17c2-6 5-8 9-6 4 2 4 7 3 13l-4 13"/>
-                                            <path d="M210 79l4-12c2-5 5-6 8-4 3 2 3 6 2 10l-3 9"/>
-                                            <path d="M167 70c-8 4-12 11-10 19 3 11 12 17 24 17h20c14 0 21-7 23-18l2-10"/>
-                                            <g opacity=".26"><path d="M172 50v13M178 45v17M185 48v13M192 54v11M199 58v8"/></g>
-                                        </g>
-                                    </svg>
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
                                 <span class="mono mono-b">Mode 01 &middot; Solo</span>
                                 <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
@@ -120,29 +105,14 @@ export function renderLanding() {
                                     <li>Hit it and every dollar comes back, plus yield</li>
                                     <li>Miss it and the money goes to someone who didn't</li>
                                 </ul>
-                                <a class="link" href="/signin" onclick="window.router.navigate('/signin'); return false;">Write a solo contract &rarr;</a>
+                                <a class="link" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
                             </article>
 
                             <div class="vrule" aria-hidden="true"></div>
 
                             <article class="leaf leaf--dark">
                                 <div class="leaf-art">
-                                    <svg viewBox="0 0 360 150" role="img" aria-label="Engraving: two hands pressing a single coin from opposite sides">
-                                        <g fill="none" stroke="#F6EEEA" stroke-width=".7" stroke-linecap="round">
-                                            <ellipse cx="180" cy="118" rx="110" ry="15" opacity=".26"/>
-                                            <ellipse cx="180" cy="118" rx="84" ry="11" opacity=".38"/>
-                                            <ellipse cx="180" cy="118" rx="58" ry="8" opacity=".52"/>
-                                            <circle cx="180" cy="102" r="15"/><circle cx="180" cy="102" r="10.5" opacity=".55"/>
-                                            <path d="M174 102h12M180 96v12" opacity=".55"/>
-                                            <path d="M136 72c-2-14 2-26 8-30 5-3 9 2 9 9l-1 20"/>
-                                            <path d="M152 72l2-23c1-7 5-10 9-8 5 2 6 7 5 14l-3 18"/>
-                                            <path d="M136 72c-8 5-11 12-8 20 4 10 12 16 23 16h18"/>
-                                            <path d="M224 72c2-14-2-26-8-30-5-3-9 2-9 9l1 20"/>
-                                            <path d="M208 72l-2-23c-1-7-5-10-9-8-5 2-6 7-5 14l3 18"/>
-                                            <path d="M224 72c8 5 11 12 8 20-4 10-12 16-23 16h-18"/>
-                                            <g opacity=".24"><path d="M143 52v12M150 46v16M210 46v16M217 52v12"/></g>
-                                        </g>
-                                    </svg>
+                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
                                 <span class="mono">Mode 02 &middot; Rivalry</span>
                                 <h3 class="leaf-name">Someone else is counting on you to fail</h3>
@@ -151,7 +121,7 @@ export function renderLanding() {
                                     <li>One oracle decides. Neither of you gets a vote</li>
                                     <li>The winner takes the escrow. There is no draw</li>
                                 </ul>
-                                <a class="link" href="/signin" onclick="window.router.navigate('/signin'); return false;">Find a counterparty &rarr;</a>
+                                <a class="link" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
                             </article>
                         </div>
 

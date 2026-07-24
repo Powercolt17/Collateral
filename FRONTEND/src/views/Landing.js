@@ -36,13 +36,10 @@ export function renderLanding() {
 
             <!-- ═════ 1 · HERO + LIVE TAPE ═════ -->
             <section class="hero section">
-                <span class="idx-mark" aria-hidden="true">01</span>
                 <div class="shell hero-grid">
                     <div>
                         <h1 class="h1"><span class="rise" style="--d:120ms;display:block">Put your money</span><span class="rise" style="--d:210ms;display:block">behind your <span class="em">word.</span></span></h1>
-                        <p class="hero-copy rise" style="--d:330ms">Everyone means it when they say it. The problem is that quitting is
-                            free, so the deadline slides and nothing arrives to mark it. Collateral puts your own
-                            money on the line and hands the decision to an API that doesn't care how your week went.</p>
+                        <p class="hero-copy rise" style="--d:330ms">Everyone means it when they say it. The problem is that quitting is free &mdash; so the deadline slides, and nothing arrives to mark it.</p>
                         <div class="hero-actions rise" style="--d:410ms">
                             <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
                             <a class="btn btn-out" href="#terms">Name your number</a>
@@ -60,7 +57,7 @@ export function renderLanding() {
                     <div class="tape seat ticks" style="--d:260ms">
                         <div class="tape-head">
                             <span class="dot pulse"></span>
-                            <span class="mono">Recently settled &middot; oracle feed</span>
+                            <span class="mono">Settlement queue &middot; live</span>
                             <span class="mono" style="margin-left:auto" id="clock">--:--:--</span>
                         </div>
                         <div class="tape-meters">
@@ -782,8 +779,21 @@ export function initLanding() {
 
     if (rowsEl) {
         rowsEl.innerHTML = '';
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 3; i++) {
             var r = makeRow(pick());
+            if (i === 0) {
+                // Pre-seed top row as already settled on mount so stamp is visible on first paint
+                r.classList.add('settled', 'won');
+                var fill = r.querySelector('.bar-mini i');
+                if (fill) fill.style.width = '100%';
+                var stamp = document.createElement('span');
+                stamp.className = 'stamp won';
+                stamp.textContent = 'Approved';
+                r.appendChild(stamp);
+                var stateSpan = r.querySelector('.row-state');
+                if (stateSpan) stateSpan.textContent = 'Settled';
+                r.dataset.seeded = '1';
+            }
             if (!reduce) { r.classList.add('rise'); r.style.setProperty('--d', (560 + i*90) + 'ms'); }
             rowsEl.appendChild(r);
         }
@@ -800,6 +810,18 @@ export function initLanding() {
         if (!rowsEl) return;
         var row = rowsEl.firstElementChild;
         if (!row) return;
+
+        if (row.dataset.seeded === '1') {
+            delete row.dataset.seeded;
+            row.classList.add('exiting');
+            setTimeout(function(){
+                if (row.parentNode) row.parentNode.removeChild(row);
+                rowsEl.appendChild(makeRow(pick()));
+                paint();
+            }, 420);
+            return;
+        }
+
         var amt = +row.dataset.amt, won = row.dataset.win === '1';
         row.classList.add('settled', won ? 'won' : 'lost');
         var fill = row.querySelector('.bar-mini i');

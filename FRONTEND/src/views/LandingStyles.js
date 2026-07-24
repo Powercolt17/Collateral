@@ -343,23 +343,27 @@ export const landingCSS = `
   border-right: 1px solid var(--gilt);
 }
 
+/* ═══════════ GLOBAL BANNER HIDE ON LANDING ═══════════ */
+#global-banner {
+  display: none !important;
+}
+
 /* ═══════════ HEADER ═══════════ */
 .ln {
   position: sticky;
-  top: 32px;
+  top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 60;
   background: rgba(247,244,237,.95);
   backdrop-filter: saturate(1.6) blur(14px);
   -webkit-backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid var(--rule-soft);
-  transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, box-shadow 0.4s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
 .ln.nav-scrolled {
-  top: 0px !important;
   background: rgba(255,255,255,0.96) !important;
   box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.03);
 }
@@ -405,29 +409,23 @@ export const landingCSS = `
 }
 
 .ln-cta {
-  background: #7A1C2B !important;
-  color: #FFFFFF !important;
+  background: transparent !important;
+  color: var(--ink) !important;
   font-family: var(--body);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 10px 24px;
-  border: none;
+  padding: 9px 20px;
+  border: 1px solid var(--ink) !important;
   border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 4px 14px rgba(122,28,41,.3);
   cursor: pointer;
-  transition: all .2s cubic-bezier(.16, 1, 0.3, 1);
+  transition: all .2s ease;
 }
 
 .ln-cta:hover {
-  background: #5C1414 !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 6px 18px rgba(92,20,20,.4);
-  transform: translateY(-1px);
-}
-
-.ln-cta:active {
-  transform: translateY(0);
+  background: var(--paper-alt) !important;
+  color: var(--ink) !important;
 }
 
 .ch-hamburger {
@@ -474,6 +472,121 @@ export const landingCSS = `
 @media(max-width:760px){
   .ln-in { padding: 0 16px; height: 60px; }
   .ln-right-group { gap: 16px; }
+}
+
+/* ═══════════ HERO ═══════════ */
+.hero {
+  position: relative;
+  padding-top: var(--section-y);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 56px;
+  align-items: start;
+}
+
+.hero-copy {
+  margin: 0 0 32px;
+  font-size: 17.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 42ch;
+  text-wrap: pretty;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+/* ═══════════ BUTTONS & ACTIONS ═══════════ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 28px;
+  border: 1px solid transparent;
+  border-radius: var(--r);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-fill {
+  background: var(--blood);
+  color: #FFF8F5 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 10px 24px -16px rgba(122,28,41,.85);
+}
+
+.btn-fill:hover {
+  background: var(--blood-deep);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 16px 32px -16px rgba(122,28,41,.9);
+}
+
+.btn-out {
+  background: transparent;
+  border: 1px solid var(--ink) !important;
+  color: var(--ink) !important;
+}
+
+.btn-out:hover {
+  background: var(--ink);
+  color: var(--paper) !important;
+  box-shadow: 0 12px 26px -18px rgba(14,20,32,.8);
+}
+
+/* ═══════════ SECTION INDEX MARK ═══════════ */
+.idx-mark {
+  position: absolute;
+  top: calc(var(--section-y) - 30px);
+  right: max(var(--gutter), calc((100vw - var(--shell)) / 2));
+  font-family: var(--display);
+  font-size: 136px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.06em;
+  color: var(--ink);
+  opacity: .035;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media(max-width:1280px){
+  .idx-mark { display: none; }
+}
+
+/* ═══════════ TAPE FEED ═══════════ */
+.tape-rows {
+  position: relative;
+  min-height: 200px;
+}
+
+.bar-mini {
+  height: 2px;
+  background: var(--rule-soft);
+  margin-top: 9px;
+  overflow: hidden;
+}
+
+.bar-mini i {
+  display: block;
+  height: 100%;
+  background: var(--rule-strong);
+  transition: width 1s linear, background .5s var(--ease);
 }
 
 /* ═══════════ HERO ═══════════ */

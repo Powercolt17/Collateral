@@ -496,21 +496,22 @@ export function renderLanding() {
                     <p class="lede">Too small and you'll shrug it off in week two. Too large and you'll talk
                         yourself out of signing at all. The right number is the one you flinch at slightly.</p>
 
-                    <div class="calc plate ticks">
+                    <div class="calc plate">
                         <div class="calc-left">
-                            <span class="mono">Contract parameters</span>
-                            <div class="field">
-                                <div class="field-top">
-                                    <label class="mono" for="dep" style="color:var(--ink-2)">Deposit</label>
-                                    <span class="field-val" id="dep-out">$1,000</span>
+                            <div>
+                                <span class="mono">Contract parameters</span>
+                                <div class="field">
+                                    <div class="field-top">
+                                        <label class="mono" for="dep" style="color:var(--ink-2)">Deposit</label>
+                                        <span class="field-val" id="dep-out">$1,000</span>
+                                    </div>
+                                    <input type="range" id="dep" min="100" max="10000" step="50" value="1000">
+                                    <div class="scale"><span class="mono">$100</span><span class="mono">$10,000</span></div>
                                 </div>
-                                <input type="range" id="dep" min="100" max="10000" step="50" value="1000">
-                                <div class="scale"><span class="mono">$100</span><span class="mono">$10,000</span></div>
                             </div>
-                            <div class="field">
+                            <div class="field" style="margin-top:24px">
                                 <div class="field-top">
                                     <span class="mono" style="color:var(--ink-2)">Execution window</span>
-                                    <span class="field-val" id="win-out">30d</span>
                                 </div>
                                 <div class="seg" id="seg" role="group" aria-label="Execution window">
                                     <button type="button" data-days="14" aria-pressed="false">14 days</button>
@@ -547,17 +548,17 @@ export function renderLanding() {
                     </div>
 
                     <div class="tiers" id="tiers">
-                        <button type="button" class="tier ticks" data-tier="60">
+                        <button type="button" class="tier" data-tier="14">
                             <span class="tier-tab">Your selection</span>
-                            <span class="mono">Schedule A &middot; Pledge</span>
-                            <p class="tier-mult">1.5<small>&times;</small></p>
-                            <span class="mono">60-day window</span>
+                            <span class="mono">Schedule A &middot; All-in</span>
+                            <p class="tier-mult">4.0<small>&times;</small></p>
+                            <span class="mono">14-day window</span>
                             <dl class="tier-rows">
-                                <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$100 &ndash; $1,500</dd></div>
-                                <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Grace period</dd></div>
+                                <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$500 &ndash; $10,000</dd></div>
+                                <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
                         </button>
-                        <button type="button" class="tier ticks" data-tier="30" data-active="true">
+                        <button type="button" class="tier" data-tier="30" data-active="true">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Stake</span>
                             <p class="tier-mult">2.5<small>&times;</small></p>
@@ -567,14 +568,14 @@ export function renderLanding() {
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
                         </button>
-                        <button type="button" class="tier ticks" data-tier="14">
+                        <button type="button" class="tier" data-tier="60">
                             <span class="tier-tab">Your selection</span>
-                            <span class="mono">Schedule A &middot; All-in</span>
-                            <p class="tier-mult">4.0<small>&times;</small></p>
-                            <span class="mono">14-day window</span>
+                            <span class="mono">Schedule A &middot; Pledge</span>
+                            <p class="tier-mult">1.5<small>&times;</small></p>
+                            <span class="mono">60-day window</span>
                             <dl class="tier-rows">
-                                <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$500 &ndash; $10,000</dd></div>
-                                <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
+                                <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$100 &ndash; $1,500</dd></div>
+                                <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Grace period</dd></div>
                             </dl>
                         </button>
                     </div>

@@ -744,6 +744,21 @@ export function initLanding() {
     document.documentElement.classList.add('js-load');
     document.body.classList.add('js-load');
 
+    /* ── Scroll Handler for Sticky Nav & Top Banner ── */
+    const navBar = document.querySelector('.ln');
+    const globalBanner = document.getElementById('global-banner');
+    function handleScroll() {
+        if (window.scrollY > 30) {
+            if (navBar) navBar.classList.add('nav-scrolled');
+            if (globalBanner) globalBanner.classList.add('nav-scrolled');
+        } else {
+            if (navBar) navBar.classList.remove('nav-scrolled');
+            if (globalBanner) globalBanner.classList.remove('nav-scrolled');
+        }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
     /* ── Smooth Anchor Navigation ── */
     document.querySelectorAll('.lp a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {

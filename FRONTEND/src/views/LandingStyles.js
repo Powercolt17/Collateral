@@ -346,15 +346,22 @@ export const landingCSS = `
 /* ═══════════ HEADER ═══════════ */
 .ln {
   position: sticky;
-  top: 0;
+  top: 32px;
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 60;
+  z-index: 50;
   background: rgba(247,244,237,.95);
   backdrop-filter: saturate(1.6) blur(14px);
   -webkit-backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid var(--rule-soft);
+  transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.ln.nav-scrolled {
+  top: 0px !important;
+  background: rgba(255,255,255,0.96) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.03);
 }
 
 .ln-in {

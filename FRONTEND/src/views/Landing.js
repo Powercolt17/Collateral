@@ -15,27 +15,24 @@ export function renderLanding() {
         <div class="lp cl-root">
             <div class="cl-grain" aria-hidden="true"></div>
 
-            <!-- ═════ TOP BURGUNDY BANNER ═════ -->
-            <div class="top-banner">
-                <span class="promo-text">LAUNCH OFFER &mdash; FIRST CONTRACT MATCH UP TO $250</span>
-            </div>
-
-            <!-- ═════ NAV ═════ -->
-            <header class="nav">
-                <div class="nav-in">
-                    <div class="nav-left">
-                        <a class="wordmark rise" style="--d:40ms" href="/" onclick="window.router.navigate('/'); return false;">COLLATERAL</a>
-                        <div class="nav-divider"></div>
-                        <div class="nav-tape">
-                            <span class="dot"></span>
-                            <span class="mono" id="nav-escrow">$8,754,010 IN ESCROW</span>
-                        </div>
-                    </div>
-                    <div class="nav-right">
-                        <button class="btn btn-fill nav-btn" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
+            <!-- ═════ NAV HEADER ═════ -->
+            <nav class="ln">
+                <div class="ln-in">
+                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;">
+                        <span class="logo-wordmark">COLLATERAL</span>
+                    </a>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button class="ln-cta" id="lp-nav-cta" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
+                        <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
+                            <div class="ch-hamburger-lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </button>
                     </div>
                 </div>
-            </header>
+            </nav>
 
             <!-- ═════ 1 · HERO + LIVE TAPE ═════ -->
             <section class="hero section">

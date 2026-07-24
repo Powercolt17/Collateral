@@ -20,8 +20,8 @@ export function renderLanding() {
             <!-- NAV -->
             <nav class="ln">
                 <div class="ln-in">
-                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;">
-                        <span class="logo-wordmark">Collateral</span>
+                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;" style="color: #FFFFFF !important;">
+                        <span class="logo-wordmark" style="color: #FFFFFF !important; font-weight: 800 !important; text-transform: uppercase !important;">COLLATERAL</span>
                     </a>
                     <div style="display:flex; align-items:center;">
                         <button class="ln-cta" id="lp-nav-cta" style="background: #7A1C2B !important; background-color: #7A1C2B !important; color: #FFFFFF !important; border: 1.5px solid #7A1C2B !important;">Sign In</button>
@@ -1526,21 +1526,6 @@ export function renderLanding() {
                     </div>
                 </div>
             </div>
-
-            <!-- ═══ FOOTER ═══ -->
-            <footer class="lfoot" data-r style="background: #7A1C2B !important; padding: 48px 24px !important; text-align: center !important; color: #FBF9F5 !important;">
-                <div class="lw" style="max-width: 1000px !important; margin: 0 auto !important; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 12px !important;">
-                    <div style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 800 !important; letter-spacing: 2.5px !important; color: #FBF9F5 !important; text-transform: uppercase !important;">
-                        COLLATERAL
-                    </div>
-                    <div style="font-family: 'Inter', sans-serif !important; font-size: 14px !important; color: rgba(251, 249, 245, 0.75) !important; max-width: 480px !important; line-height: 1.5 !important; text-align: center !important;">
-                        Lock capital behind your commitment. Complete your verified goal and claim your return.
-                    </div>
-                    <div class="lfoot-line reveal-item" style="margin-top: 14px !important; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 11px !important; color: rgba(251, 249, 245, 0.6) !important; letter-spacing: 1.2px !important;">
-                        Collateral.market · © 2026
-                    </div>
-                </div>
-            </footer>
 
             <!-- Landing Mobile Menu Overlay & Drawer -->
             <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>

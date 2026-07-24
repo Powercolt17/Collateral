@@ -278,7 +278,7 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 4 · RECORD ═════ -->
-            <section class="section alt" id="record">
+            <section class="section alt" id="record" style="padding-bottom: 52px;">
                 <span class="idx-mark" aria-hidden="true">05</span>
                 <div class="shell">
                     <p class="eyebrow">Settlement record</p>
@@ -351,28 +351,6 @@ export function renderLanding() {
                             <div class="f-row"><dt>Average time to target</dt><span class="dots"></span><dd>18 days</dd></div>
                             <div class="f-row f-total"><dt>Total capital settled</dt><span class="dots"></span><dd>$8,700,000</dd></div>
                         </dl>
-                    </div>
-
-                    <div class="cp">
-                        <div>
-                            <span class="mono mono-b">On the record</span>
-                            <blockquote class="cp-quote" style="margin-top:14px">
-                                &ldquo;I'd missed that same follower target three times before, and it cost me
-                                <em>nothing</em> every time. Missed it once here and it cost me fifteen hundred
-                                dollars. I have not missed one since.&rdquo;
-                            </blockquote>
-                            <div class="cp-attrib">
-                                <span class="cp-name">Marcus Kade</span>
-                                <span class="mono">@marcusk &middot; 4 contracts &middot; 3 won</span>
-                            </div>
-
-                            <div class="cp-receipt">
-                                <span class="mono" style="color:var(--blood)">№ C&ndash;780B</span>
-                                <span class="amt">&minus;$1,500.00</span>
-                                <span class="mono">Forfeited 02 Mar 2026</span>
-                                <span class="cp-stamp">Denied</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>

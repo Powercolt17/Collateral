@@ -1276,7 +1276,16 @@ export const landingCSS = `
 .r-stamp.won { color: var(--win); }
 .r-stamp.lost { color: var(--blood); }
 
-.footing { margin-top: 64px; width: 100%; max-width: 100%; }
+#record {
+  padding-bottom: 52px !important;
+}
+
+.footing {
+  margin-top: 56px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
 .f-row {
   display: flex;

@@ -343,12 +343,31 @@ export const landingCSS = `
   border-right: 1px solid var(--gilt);
 }
 
-/* ═══════════ NAV ═══════════ */
+/* ═══════════ TOP BANNER & NAV ═══════════ */
+.top-banner {
+  background: #5C1414;
+  color: #FFF8F5;
+  min-height: 34px;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+.top-banner .mono {
+  color: #F6E9EB;
+  font-size: 11px;
+  letter-spacing: .16em;
+  font-weight: 500;
+}
+
 .nav {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(247,244,237,.9);
+  background: rgba(247,244,237,.95);
   backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid var(--rule);
 }
@@ -357,7 +376,7 @@ export const landingCSS = `
   max-width: var(--shell);
   margin: 0 auto;
   padding: 0 var(--gutter);
-  height: 76px;
+  height: 64px;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -365,20 +384,20 @@ export const landingCSS = `
 
 .wordmark {
   font-family: var(--wordmark);
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: .13em;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: .22em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--ink);
+  color: #0F172A !important;
 }
 
 .nav-tape {
   display: flex;
   align-items: center;
   gap: 9px;
-  margin-left: 28px;
-  padding-left: 28px;
+  margin-left: 20px;
+  padding-left: 20px;
   border-left: 1px solid var(--rule);
 }
 
@@ -390,14 +409,22 @@ export const landingCSS = `
 }
 
 .nav-btn {
-  min-height: 40px;
-  padding: 0 20px;
-  font-size: 10.5px;
+  min-height: 38px;
+  padding: 0 22px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  background: #7B1E2B !important;
+  color: #FFFFFF !important;
+  border-radius: var(--r);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 4px 12px rgba(122,28,41,.4);
+  border: none;
+  cursor: pointer;
 }
 
 @media(max-width:760px){
   .nav-tape { display: none; }
-  .nav-in { height: 64px; }
+  .nav-in { height: 58px; }
 }
 
 /* ═══════════ HERO ═══════════ */

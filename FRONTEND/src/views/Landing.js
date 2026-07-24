@@ -15,13 +15,21 @@ export function renderLanding() {
         <div class="lp cl-root">
             <div class="cl-grain" aria-hidden="true"></div>
 
+            <!-- ═════ TOP BURGUNDY BANNER ═════ -->
+            <div class="top-banner">
+                <span class="mono">LAUNCH OFFER &mdash; FIRST CONTRACT MATCH UP TO $250</span>
+            </div>
+
             <!-- ═════ NAV ═════ -->
             <header class="nav">
                 <div class="nav-in">
-                    <a class="wordmark rise" style="--d:40ms" href="/" onclick="window.router.navigate('/'); return false;">Collateral</a>
-                    <span class="nav-tape"><span class="dot"></span><span class="mono" id="nav-escrow">Loading escrow</span></span>
+                    <a class="wordmark rise" style="--d:40ms" href="/" onclick="window.router.navigate('/'); return false;">COLLATERAL</a>
+                    <div class="nav-tape">
+                        <span class="dot"></span>
+                        <span class="mono" id="nav-escrow">$8,711,550 IN ESCROW</span>
+                    </div>
                     <div class="nav-right">
-                        <a class="btn btn-fill nav-btn" href="/signin" onclick="window.router.navigate('/signin'); return false;">Sign in</a>
+                        <button class="btn btn-fill nav-btn" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
                     </div>
                 </div>
             </header>
@@ -36,7 +44,7 @@ export function renderLanding() {
                             free, so the deadline slides and nothing arrives to mark it. Collateral puts your own
                             money on the line and hands the decision to an API that doesn't care how your week went.</p>
                         <div class="hero-actions rise" style="--d:410ms">
-                            <a class="btn btn-fill" href="/signin" onclick="window.router.navigate('/signin'); return false;">Write a contract</a>
+                            <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
                             <a class="btn btn-out" href="#terms">Name your number</a>
                         </div>
                         <div class="oracles">
@@ -592,7 +600,7 @@ export function renderLanding() {
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd id="t-miss">Full forfeit</dd></div>
                             </dl>
                             <div class="calc-cta">
-                                <a class="btn btn-fill" href="/signin" id="calc-go" onclick="window.router.navigate('/signin'); return false;">Lock $1,000 for 30 days</a>
+                                <button class="btn btn-fill" type="button" id="calc-go" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Lock $1,000 for 30 days</button>
                             </div>
                         </div>
                     </div>
@@ -648,7 +656,7 @@ export function renderLanding() {
                         the full position.</p>
 
                     <div class="duels">
-                        <button class="duel ticks" type="button" onclick="window.router.navigate('/signin'); return false;">
+                        <button class="duel ticks" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">
                             <span class="duel-head">
                                 <span class="mono">Audience &middot; X API</span>
                                 <span class="duel-badge badge-live">Live &middot; 14d left</span>
@@ -667,7 +675,7 @@ export function renderLanding() {
                             </span>
                         </button>
 
-                        <button class="duel ticks" type="button" onclick="window.router.navigate('/signin'); return false;">
+                        <button class="duel ticks" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">
                             <span class="duel-head">
                                 <span class="mono">Revenue &middot; Stripe API</span>
                                 <span class="duel-badge badge-settle">Settling</span>
@@ -708,7 +716,7 @@ export function renderLanding() {
                         <h2 class="sign-title">Sign it, and the week reorders itself</h2>
                         <p class="sign-copy">You will know within about four days whether you meant it. That is
                             the fastest honest answer anyone has ever given you about your own goal.</p>
-                        <a class="btn btn-fill" href="/signin" onclick="window.router.navigate('/signin'); return false;">Write a contract</a>
+                        <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
                         <div class="sign-lines">
                             <div class="sign-line"><p class="sign-script">&nbsp;</p><span class="mono">Counterparty signature</span></div>
                             <div class="sign-line"><p class="sign-script">Collateral</p><span class="mono">Custodian, countersigned</span></div>

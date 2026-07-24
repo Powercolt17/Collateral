@@ -1043,8 +1043,11 @@ export const landingCSS = `
 
 .marg-note-top p {
   margin-top: 8px;
+  font-family: var(--mono);
   font-size: 11.5px;
-  line-height: 1.75;
+  line-height: 1.85;
+  letter-spacing: .01em;
+  text-transform: none;
   color: var(--ink-2);
 }
 
@@ -1052,12 +1055,13 @@ export const landingCSS = `
 .reg caption {
   caption-side: top;
   text-align: left;
-  padding: 16px 22px 10px;
+  padding: 0 0 12px 0;
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--ink-3);
+  background: transparent;
 }
 
 .reg th {

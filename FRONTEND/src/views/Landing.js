@@ -192,7 +192,7 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 3b · ORACLE REGISTER ═════ -->
-            <section class="section" id="oracles" style="padding-top:0">
+            <section class="section" id="oracles" style="padding-top:0; padding-bottom:52px">
                 <div class="shell">
                     <div class="oracles-head">
                         <div>
@@ -202,7 +202,7 @@ export function renderLanding() {
                                 already reports, on a fixed schedule, and settles on whatever it finds there.</p>
                         </div>
                         <aside class="marg-note-top">
-                            <span class="mono mono-b">&sect; 3.4</span>
+                            <span class="mono mono-b" style="color:var(--blood)">&sect; 3.4</span>
                             <p class="mono">Read-only scopes only. Collateral cannot post, message, refund, or change a single
                                 setting on any account you connect, and the token can be revoked from your side at any
                                 time without affecting an open contract's settlement.</p>

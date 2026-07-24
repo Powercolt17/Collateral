@@ -95,9 +95,9 @@ export function renderLanding() {
                                 <div class="leaf-art">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
-                                <div class="leaf-header">
-                                    <span class="mono mono-b">Mode 01 &middot; Solo</span>
-                                    <span class="mono leaf-form-ref">FORM S&ndash;01</span>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span class="mono mono-b">MODE 01 &middot; SOLO</span>
+                                    <span class="mono">FORM S&ndash;01</span>
                                 </div>
                                 <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
                                 <ul class="leaf-list">
@@ -114,12 +114,12 @@ export function renderLanding() {
                                 <div class="leaf-art">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
-                                <div class="leaf-header">
-                                    <span class="mono">Mode 02 &middot; Rivalry</span>
-                                    <span class="mono leaf-form-ref">FORM R&ndash;02</span>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span class="mono">MODE 02 &middot; RIVALRY</span>
+                                    <span class="mono">FORM R&ndash;02</span>
                                 </div>
                                 <h3 class="leaf-name">Someone else is counting on you to fail</h3>
-                                <p class="rivalry-subline">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
+                                <p class="mono" style="margin: 6px 0 14px; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
                                 <ul class="leaf-list">
                                     <li>Equal capital, same metric, same clock</li>
                                     <li>One oracle decides. Neither of you gets a vote</li>
@@ -131,36 +131,22 @@ export function renderLanding() {
 
                         <aside class="demo plate-quiet ticks">
                             <div class="demo-top">
-                                <span class="mono">Specimen</span>
-                                <span class="mono">Solo contract</span>
+                                <span class="mono">SPECIMEN</span>
+                                <span class="mono">SOLO CONTRACT</span>
                             </div>
-                            <div class="demo-main">
-                                <p class="demo-you">You</p>
-                                <p class="demo-vs">VS</p>
-                                <p class="demo-you">You</p>
-                            </div>
-                            <div class="demo-ledger">
-                                <div class="demo-row">
-                                    <span class="mono">DEPOSIT</span>
-                                    <span class="dots"></span>
-                                    <span class="mono val">$1,000</span>
-                                </div>
-                                <div class="demo-row">
-                                    <span class="mono">WINDOW</span>
-                                    <span class="dots"></span>
-                                    <span class="mono val">30 days</span>
-                                </div>
-                                <div class="demo-row">
-                                    <span class="mono">ON SUCCESS</span>
-                                    <span class="dots"></span>
-                                    <span class="mono val win">$2,500</span>
-                                </div>
-                                <div class="demo-row">
-                                    <span class="mono">ON MISS</span>
-                                    <span class="dots"></span>
-                                    <span class="mono val blood">&minus;$1,000</span>
-                                </div>
-                            </div>
+                            <p class="demo-you">You</p>
+                            <p class="demo-vs">VS</p>
+                            <p class="demo-you">You</p>
+                            <p class="demo-amt">$1,000</p>
+                            <p class="mono demo-sub">Locked by you, against you</p>
+
+                            <dl class="demo-ledger">
+                                <div class="t-row"><dt>DEPOSIT</dt><span class="dots"></span><dd>$1,000</dd></div>
+                                <div class="t-row"><dt>WINDOW</dt><span class="dots"></span><dd>30 days</dd></div>
+                                <div class="t-row"><dt>ON SUCCESS</dt><span class="dots"></span><dd class="win">$2,500</dd></div>
+                                <div class="t-row"><dt>ON MISS</dt><span class="dots"></span><dd class="blood">&minus;$1,000</dd></div>
+                            </dl>
+
                             <div class="demo-foot-bar">
                                 <span class="mono">SPECIMEN &middot; NOT A LIVE CONTRACT</span>
                             </div>

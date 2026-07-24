@@ -868,27 +868,40 @@ export const landingCSS = `
   gap: 10px;
 }
 
-.demo-row {
+.demo-ledger .t-row {
   display: flex;
   align-items: baseline;
   gap: 8px;
+  font-family: var(--mono);
   font-size: 11px;
+  margin: 0;
 }
 
-.demo-row .mono { font-size: 11px; color: var(--ink-3); }
-.demo-row .dots {
+.demo-ledger .t-row dt {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.demo-ledger .t-row .dots {
   flex: 1;
   border-bottom: 1px dotted var(--rule-strong);
-  margin: 0 4px;
 }
 
-.demo-row .val {
+.demo-ledger .t-row dd {
+  margin: 0;
   font-weight: 500;
   color: var(--ink);
 }
 
-.demo-row .val.win { color: var(--win); font-weight: 600; }
-.demo-row .val.blood { color: var(--blood); font-weight: 600; }
+.demo-ledger .t-row dd.win {
+  color: var(--win) !important;
+  font-weight: 600;
+}
+
+.demo-ledger .t-row dd.blood {
+  color: var(--blood) !important;
+  font-weight: 600;
+}
 
 .demo-foot-bar {
   margin-top: 14px;

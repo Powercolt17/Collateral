@@ -1844,15 +1844,23 @@ router.onRouteChange = function (route, path) {
         return;
     }
 
-    // Landing page: no header, clean full-page layout
+    // Landing page: clean full-page layout + mount mobile drawer menu for hamburger
     const headerMount = document.getElementById('header-mount');
     const appMount = document.getElementById('app');
     if (path === '/' || path.startsWith('/go/')) {
-        headerMount.innerHTML = '';
+        // Mount slide-out panel menu drawer (#mobile-menu-overlay & #mobile-menu) for hamburger menu
+        const fullHeaderHTML = renderHeader(path);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = fullHeaderHTML;
+        const mainHeaderBar = tempDiv.querySelector('.ch-header');
+        if (mainHeaderBar) mainHeaderBar.remove(); // Keep landing page custom .ln header
+        headerMount.innerHTML = tempDiv.innerHTML;
+
         appMount.classList.remove('pt-24');
         appMount.innerHTML = route.render(route.params);
         if (route.init) setTimeout(() => route.init(route.params), 0);
         setTimeout(() => handleGlobalScroll(), 10);
+        updateAuthUI();
         return;
     }
 

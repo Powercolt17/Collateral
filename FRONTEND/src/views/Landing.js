@@ -1,6 +1,7 @@
 // Landing Page — Collateral Financial Document System with Paper Grain & Scoped Styling
 import api from '../api.js';
 import { landingCSS } from './LandingStyles.js';
+import { useReveal, useCountUp, useDrawOnce, revealStyles } from './LandingMotion.js';
 
 // Inject LandingCSS once into document head
 if (!document.getElementById('lp-injected-styles')) {
@@ -38,15 +39,15 @@ export function renderLanding() {
             <section class="hero section">
                 <div class="shell hero-grid">
                     <div>
-                        <h1 class="h1"><span class="rise" style="--d:120ms;display:block">Put your money</span><span class="rise" style="--d:210ms;display:block">behind your <span class="em">word.</span></span></h1>
-                        <p class="hero-copy rise" style="--d:330ms">Everyone means it when they say it. The problem is that quitting is free &mdash; so the deadline slides, and nothing arrives to mark it.</p>
-                        <div class="hero-actions rise" style="--d:410ms">
+                        <p class="eyebrow rise" style="--d:40ms">Self-enforcing performance contracts</p>
+                        <h1 class="h1 rise" style="--d:120ms">Put money on your own deadline</h1>
+                        <p class="lede rise" style="--d:220ms">Lock a deposit against a public goal. If your platform API confirms you hit it on time, your money comes back with matching yield. If you miss, your deposit funds someone who didn't.</p>
+                        <div class="hero-actions rise" style="--d:340ms">
                             <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
-                            <a class="btn btn-out" href="#terms">Name your number</a>
+                            <a class="btn btn-ghost" href="#flow">Watch forfeiture flow &darr;</a>
                         </div>
-                        <div class="oracles">
-                            <span class="rule-top" style="--d:480ms"></span>
-                            <span class="mono rise" style="--d:540ms">Settles on</span>
+                        <div class="oracles-strip rise" style="--d:480ms">
+                            <span class="mono" style="opacity:.45">ORACLES</span>
                             <a class="mono rise" style="--d:570ms" href="#oracles">Stripe</a>
                             <a class="mono rise" style="--d:600ms" href="#oracles">X</a>
                             <a class="mono rise" style="--d:630ms" href="#oracles">YouTube</a>
@@ -81,17 +82,17 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 2 · MODES ═════ -->
-            <section class="section alt" id="modes">
+            <section class="section alt reveal" id="modes">
                 <span class="idx-mark" aria-hidden="true">02</span>
                 <div class="shell">
-                    <p class="eyebrow">Contract execution modes</p>
-                    <h2 class="title">Two ways to make quitting expensive</h2>
-                    <p class="lede">Stake against your own record, or against somebody who wants it as badly as
+                    <p class="eyebrow r-item" style="--i:0">Contract execution modes</p>
+                    <h2 class="title r-item" style="--i:1">Two ways to make quitting expensive</h2>
+                    <p class="lede r-item" style="--i:2">Stake against your own record, or against somebody who wants it as badly as
                         you claim to. Both settle the same way, and neither asks your opinion.</p>
 
                     <div class="modes">
-                        <div class="plates plate ticks">
-                            <article class="leaf">
+                        <div class="plates plate ticks r-plate" style="--i:3">
+                            <article class="leaf r-plate" style="--i:3">
                                 <div class="leaf-art">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
@@ -110,7 +111,7 @@ export function renderLanding() {
 
                             <div class="vrule" aria-hidden="true"></div>
 
-                            <article class="leaf leaf--dark">
+                            <article class="leaf leaf--dark r-plate" style="--i:4">
                                 <div class="leaf-art">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
@@ -129,7 +130,7 @@ export function renderLanding() {
                             </article>
                         </div>
 
-                        <aside class="demo plate-quiet ticks">
+                        <aside class="demo plate-quiet ticks r-plate" style="--i:5">
                             <div class="demo-top">
                                 <span class="mono">SPECIMEN</span>
                                 <span class="mono">SOLO CONTRACT</span>
@@ -158,24 +159,24 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 3 · CASE ═════ -->
-            <section class="section" id="case">
+            <section class="section reveal" id="case">
                 <div class="shell argue">
                     <div>
-                        <p class="eyebrow">Why it works</p>
-                        <h2 class="title">A plan without stakes is just a comfortable wish</h2>
-                        <p class="lede" style="margin-top:18px">You already know what the next step is. You've
+                        <p class="eyebrow r-item" style="--i:0">Why it works</p>
+                        <h2 class="title r-item" style="--i:1">A plan without stakes is just a comfortable wish</h2>
+                        <p class="lede r-item" style="--i:2; margin-top:18px">You already know what the next step is. You've
                             known for months. What you don't have is a reason it has to happen this week instead of
                             some other week, because missing it costs a feeling, and feelings are cheap enough to
                             absorb forever.</p>
-                        <aside class="argue-note">
+                        <aside class="argue-note r-item" style="--i:4">
                             <span class="mono mono-b">Clerk's note</span>
                             <p>The median contract is opened at 11:40pm on a Sunday. We have theories about why,
                                 and none of them are flattering.</p>
                         </aside>
                     </div>
 
-                    <p class="cmp-caption mono">Same goal, recorded two ways</p>
-                    <table class="cmp plate-quiet">
+                    <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
+                    <table class="cmp plate-quiet r-plate" style="--i:3">
                         <thead>
                             <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
                         </thead>
@@ -192,16 +193,16 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 3b · ORACLE REGISTER ═════ -->
-            <section class="section" id="oracles" style="padding-top:0; padding-bottom:52px">
+            <section class="section reveal" id="oracles" style="padding-top:0">
                 <div class="shell">
                     <div class="oracles-head">
                         <div>
-                            <p class="eyebrow">Verification sources</p>
-                            <h2 class="title">Four APIs decide every contract</h2>
-                            <p class="lede">Collateral does not score you. It reads the same numbers your platform
+                            <p class="eyebrow r-item" style="--i:0">Verification sources</p>
+                            <h2 class="title r-item" style="--i:1">Four APIs decide every contract</h2>
+                            <p class="lede r-item" style="--i:2">Collateral does not score you. It reads the same numbers your platform
                                 already reports, on a fixed schedule, and settles on whatever it finds there.</p>
                         </div>
-                        <aside class="marg-note-top">
+                        <aside class="marg-note-top r-item" style="--i:3">
                             <span class="mono mono-b" style="color:var(--blood)">&sect; 3.4</span>
                             <p class="mono">Read-only scopes only. Collateral cannot post, message, refund, or change a single
                                 setting on any account you connect, and the token can be revoked from your side at any
@@ -209,8 +210,8 @@ export function renderLanding() {
                         </aside>
                     </div>
 
-                    <p class="reg-caption mono">Register of accepted oracles &middot; read-only scopes</p>
-                    <table class="reg plate">
+                    <p class="reg-caption mono r-item" style="--i:3">Register of accepted oracles &middot; read-only scopes</p>
+                    <table class="reg plate r-plate" style="--i:4">
                         <thead>
                             <tr>
                                 <th scope="col">Platform</th>
@@ -278,17 +279,17 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 4 · RECORD ═════ -->
-            <section class="section alt" id="record" style="padding-bottom: 52px;">
+            <section class="section alt reveal" id="record">
                 <span class="idx-mark" aria-hidden="true">05</span>
                 <div class="shell">
-                    <p class="eyebrow">Settlement record</p>
-                    <h2 class="title">The receipts, including the ones that hurt</h2>
-                    <p class="lede">Most sites show you the wins. Every contract here settles on the same
+                    <p class="eyebrow r-item" style="--i:0">Settlement record</p>
+                    <h2 class="title r-item" style="--i:1">The receipts, including the ones that hurt</h2>
+                    <p class="lede r-item" style="--i:2">Most sites show you the wins. Every contract here settles on the same
                         telemetry whether it went well or not, and we publish both, because a record with no
                         losses in it isn't a record.</p>
 
                     <div class="receipts">
-                        <article class="receipt">
+                        <article class="receipt r-plate" style="--i:3">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;34D6</span></div>
                                 <h3 class="r-goal">+20% revenue in 30 days</h3>
@@ -306,7 +307,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt">
+                        <article class="receipt r-plate" style="--i:4">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;9F21</span></div>
                                 <h3 class="r-goal">50,000 subscribers in 60 days</h3>
@@ -324,7 +325,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt">
+                        <article class="receipt r-plate" style="--i:5">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;780B</span></div>
                                 <h3 class="r-goal">25,000 followers in 30 days</h3>
@@ -343,28 +344,28 @@ export function renderLanding() {
                         </article>
                     </div>
 
-                    <div class="footing">
+                    <div class="footing r-plate" style="--i:6">
                         <p class="mono" style="margin:0 0 6px">Book totals &middot; inception to date</p>
                         <dl style="margin:0">
                             <div class="f-row"><dt>Contracts won</dt><span class="dots"></span><dd>74%</dd></div>
                             <div class="f-row"><dt>Verified counterparties</dt><span class="dots"></span><dd>812</dd></div>
                             <div class="f-row"><dt>Average time to target</dt><span class="dots"></span><dd>18 days</dd></div>
-                            <div class="f-row f-total"><dt>Total capital settled</dt><span class="dots"></span><dd>$8,700,000</dd></div>
+                            <div class="f-row f-total"><dt>Total capital settled</dt><span class="dots"></span><dd id="book-total-amt">$8,700,000</dd></div>
                         </dl>
                     </div>
                 </div>
             </section>
 
             <!-- ═════ 5 · FORFEIT FLOW + SCHEMATIC ═════ -->
-            <section class="section" id="flow">
+            <section class="section reveal" id="flow">
                 <span class="idx-mark" aria-hidden="true">06</span>
                 <div class="shell">
-                    <p class="eyebrow">Where forfeited money goes</p>
-                    <h2 class="title">Losers pay winners. That is the whole engine.</h2>
-                    <p class="lede">Marcus's fifteen hundred dollars did not vanish into a house account. Watch
+                    <p class="eyebrow r-item" style="--i:0">Where forfeited money goes</p>
+                    <h2 class="title r-item" style="--i:1">Losers pay winners. That is the whole engine.</h2>
+                    <p class="lede r-item" style="--i:2">Marcus's fifteen hundred dollars did not vanish into a house account. Watch
                         where it actually went, then read the full path underneath.</p>
 
-                    <div class="flow-wrap plate" id="flowwrap">
+                    <div class="flow-wrap plate r-plate" style="--i:3" id="flowwrap">
                         <div class="flow-head">
                             <span class="mono">Cycle 2026&ndash;W12 &middot; recirculation</span>
                             <span class="mono">Settled 14 Mar 2026</span>
@@ -402,18 +403,18 @@ export function renderLanding() {
                         </div>
                     </div>
 
-                    <div class="marg marg-strip" style="margin-top:34px">
+                    <div class="marg marg-strip r-item" style="--i:4; margin-top:34px">
                         <span class="marg-mark">&sect; 4.1</span>
                         <p>We take half a percent and nothing else. There is no spread, no rake on the match
                             pool, and no scenario in which Collateral profits more when you miss.</p>
                     </div>
 
-                    <div class="sch plate-quiet" style="margin-top:34px">
+                    <div class="sch plate-quiet r-plate" style="--i:5; margin-top:34px">
                         <div class="sch-head">
                             <span class="mono">Drawing 01 &middot; full settlement path</span>
                             <span class="mono">Rev. 2026.03</span>
                         </div>
-                        <svg viewBox="0 0 1080 400" role="img"
+                        <svg id="sch-svg" viewBox="0 0 1080 400" role="img"
                              aria-label="Schematic: deposits enter custodial escrow, are verified by platform APIs, then split into returned capital, forfeited deposits which recirculate, and a protocol fee.">
                             <defs>
                                 <marker id="cl-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -421,53 +422,56 @@ export function renderLanding() {
                                 </marker>
                             </defs>
                             <g fill="none" stroke="#0E1420" stroke-width="1">
-                                <rect x="20" y="150" width="180" height="86" rx="2"/>
-                                <rect x="290" y="150" width="180" height="86" rx="2" stroke-width="1.7"/>
-                                <rect x="560" y="150" width="180" height="86" rx="2"/>
+                                <rect x="20" y="150" width="180" height="86" rx="2" data-draw style="--d:0"/>
+                                <rect x="290" y="150" width="180" height="86" rx="2" stroke-width="1.7" data-draw style="--d:180"/>
+                                <rect x="560" y="150" width="180" height="86" rx="2" data-draw style="--d:360"/>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#6E7686">
-                                <text x="34" y="172">INPUT</text><text x="304" y="172">CUSTODY</text><text x="574" y="172">VERIFICATION</text>
+                                <text x="34" y="172" data-fade style="--d:300">INPUT</text>
+                                <text x="304" y="172" data-fade style="--d:480">CUSTODY</text>
+                                <text x="574" y="172" data-fade style="--d:660">VERIFICATION</text>
                             </g>
                             <g font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="#0E1420">
-                                <text x="34" y="197">Deposit in</text><text x="304" y="197">Escrow vault</text><text x="574" y="197">Oracle API stream</text>
+                                <text x="34" y="197" data-fade style="--d:300">Deposit in</text>
+                                <text x="304" y="197" data-fade style="--d:480">Escrow vault</text>
+                                <text x="574" y="197" data-fade style="--d:660">Oracle API stream</text>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#7A1C29">
-                                <text x="34" y="221">$8,700,000</text><text x="304" y="221">$8.7M locked</text><text x="574" y="221">96.2% hit rate</text>
+                                <text x="34" y="221" data-fade style="--d:300">$8,700,000</text>
+                                <text x="304" y="221" data-fade style="--d:480">$8.7M locked</text>
+                                <text x="574" y="221" data-fade style="--d:660">96.2% hit rate</text>
                             </g>
                             <g stroke-width="1" marker-end="url(#cl-ar)" fill="none">
-                                <line x1="204" y1="193" x2="282" y2="193" stroke="#0E1420"/>
-                                <line x1="474" y1="193" x2="552" y2="193" stroke="#0E1420"/>
-                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5"/>
-                                <path d="M744 193 L820 193 L856 193" stroke="#7A1C29" stroke-dasharray="5 4"/>
-                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6E7686" stroke-dasharray="2 4"/>
+                                <line x1="204" y1="193" x2="282" y2="193" stroke="#0E1420" data-draw style="--d:200"/>
+                                <line x1="474" y1="193" x2="552" y2="193" stroke="#0E1420" data-draw style="--d:380"/>
+                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5" data-draw data-win style="--d:900"/>
+                                <path d="M744 193 L820 193 L856 193" stroke="#7A1C29" stroke-dasharray="5 4" data-draw style="--d:1300"/>
+                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6E7686" stroke-dasharray="2 4" data-draw style="--d:1700"/>
                             </g>
                             <g fill="none" stroke-width="1">
-                                <rect x="860" y="40" width="200" height="76" rx="2" stroke="#186B4A"/>
-                                <rect x="860" y="155" width="200" height="76" rx="2" stroke="#7A1C29"/>
-                                <rect x="860" y="272" width="200" height="76" rx="2" stroke="#DCD5C6"/>
+                                <rect x="860" y="40" width="200" height="76" rx="2" stroke="#186B4A" data-draw data-win-box/>
+                                <rect x="860" y="155" width="200" height="76" rx="2" stroke="#7A1C29" data-draw style="--d:1500"/>
+                                <rect x="860" y="272" width="200" height="76" rx="2" stroke="#DCD5C6" data-draw style="--d:1900"/>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6">
-                                <text x="874" y="62" fill="#186B4A">WIN PATH &middot; 95.7%</text>
-                                <text x="874" y="177" fill="#7A1C29">FORFEITED &middot; 3.8%</text>
-                                <text x="874" y="294" fill="#6E7686">PROTOCOL FEE &middot; 0.5%</text>
+                                <text x="874" y="62" fill="#186B4A" data-fade style="--d:2400">WIN PATH &middot; 95.7%</text>
+                                <text x="874" y="177" fill="#7A1C29" data-fade style="--d:1600">FORFEITED &middot; 3.8%</text>
+                                <text x="874" y="294" fill="#6E7686" data-fade style="--d:2000">PROTOCOL FEE &middot; 0.5%</text>
                             </g>
                             <g font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="#0E1420">
-                                <text x="874" y="84">Returned to creator</text>
-                                <text x="874" y="199">Feeds winner match pool</text>
-                                <text x="874" y="316">Operations</text>
+                                <text x="874" y="84" data-fade style="--d:2400">Returned to creator</text>
+                                <text x="874" y="199" data-fade style="--d:1600">Feeds winner match pool</text>
+                                <text x="874" y="316" data-fade style="--d:2000">Operations</text>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="14">
-                                <text x="874" y="106" fill="#186B4A">$8,326,200</text>
-                                <text x="874" y="221" fill="#7A1C29">$330,600</text>
-                                <text x="874" y="338" fill="#6E7686">$43,200</text>
+                                <text x="874" y="106" fill="#186B4A" id="sch-win-amt" data-fade style="--d:2400">$8,326,200</text>
+                                <text x="874" y="221" fill="#7A1C29" id="sch-lose-amt" data-fade style="--d:1600">$330,600</text>
+                                <text x="874" y="338" fill="#6E7686" id="sch-fee-amt" data-fade style="--d:2000">$43,200</text>
                             </g>
-                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7A1C29"
-                                  stroke-width="1" stroke-dasharray="5 4" marker-end="url(#cl-ar)"/>
-                            <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10"
-                                  letter-spacing="1.6" fill="#7A1C29" text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
-                            <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180"/></g>
-                            <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5"
-                                  letter-spacing="1.4" fill="#6E7686" text-anchor="middle">STRIPE CONNECT CUSTODY</text>
+                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7A1C29" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#cl-ar)" data-draw style="--d:2100"/>
+                            <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#7A1C29" text-anchor="middle" data-fade style="--d:2200">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
+                            <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180" data-draw style="--d:700"/></g>
+                            <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1.4" fill="#6E7686" text-anchor="middle" data-fade style="--d:700">STRIPE CONNECT CUSTODY</text>
                         </svg>
                         <dl class="sch-mobile">
                             <div class="sm-row"><dt>Deposits in</dt><span class="dots"></span><dd>$8,700,000</dd></div>
@@ -477,7 +481,7 @@ export function renderLanding() {
                             <div class="sm-row blood"><dt>Forfeited &middot; 3.8%</dt><span class="dots"></span><dd>$330,600</dd></div>
                             <div class="sm-row"><dt>Protocol fee &middot; 0.5%</dt><span class="dots"></span><dd>$43,200</dd></div>
                         </dl>
-                        <div class="sch-foot">
+                        <div class="sch-foot" data-fade style="--d:2600">
                             <span class="legend"><span class="swatch" style="color:#186B4A"></span>Returned capital</span>
                             <span class="legend"><span class="swatch dash" style="color:#7A1C29"></span>Forfeited &amp; recirculated</span>
                             <span class="legend"><span class="swatch dash" style="color:#6E7686"></span>Protocol fee</span>
@@ -488,15 +492,15 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 6 · CALCULATOR + TIERS ═════ -->
-            <section class="section alt" id="terms">
+            <section class="section alt reveal" id="terms">
                 <span class="idx-mark" aria-hidden="true">07</span>
                 <div class="shell">
-                    <p class="eyebrow">Price your own contract</p>
-                    <h2 class="title">Name a number that would actually hurt to lose</h2>
-                    <p class="lede">Too small and you'll shrug it off in week two. Too large and you'll talk
+                    <p class="eyebrow r-item" style="--i:0">Price your own contract</p>
+                    <h2 class="title r-item" style="--i:1">Name a number that would actually hurt to lose</h2>
+                    <p class="lede r-item" style="--i:2">Too small and you'll shrug it off in week two. Too large and you'll talk
                         yourself out of signing at all. The right number is the one you flinch at slightly.</p>
 
-                    <div class="calc plate">
+                    <div class="calc plate r-plate" style="--i:3">
                         <div class="calc-left">
                             <div>
                                 <span class="mono">Contract parameters</span>
@@ -552,7 +556,7 @@ export function renderLanding() {
                     </div>
 
                     <div class="tiers" id="tiers">
-                        <button type="button" class="tier" data-tier="14">
+                        <button type="button" class="tier r-plate" style="--i:4" data-tier="14">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; All-in</span>
                             <p class="tier-mult">4.0<small>&times;</small></p>
@@ -562,7 +566,7 @@ export function renderLanding() {
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
                         </button>
-                        <button type="button" class="tier" data-tier="30" data-active="true">
+                        <button type="button" class="tier r-plate" style="--i:5" data-tier="30" data-active="true">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Stake</span>
                             <p class="tier-mult">2.5<small>&times;</small></p>
@@ -572,7 +576,7 @@ export function renderLanding() {
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
                         </button>
-                        <button type="button" class="tier" data-tier="60">
+                        <button type="button" class="tier r-plate" style="--i:6" data-tier="60">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Pledge</span>
                             <p class="tier-mult">1.5<small>&times;</small></p>
@@ -584,8 +588,8 @@ export function renderLanding() {
                         </button>
                     </div>
 
-                    <div class="marg" style="margin-top:34px">
-                        <span class="marg-mark">§ 6.2</span>
+                    <div class="marg r-item" style="--i:7; margin-top:34px">
+                        <span class="marg-mark">&sect; 6.2</span>
                         <p>Shorter windows pay more because they are harder, not because we are being generous.
                             Fourteen days is chosen by people who have already started.</p>
                     </div>
@@ -593,15 +597,15 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 7 · DUELS ═════ -->
-            <section class="section" id="duels">
+            <section class="section reveal" id="duels">
                 <span class="idx-mark" aria-hidden="true">08</span>
                 <div class="shell">
-                    <p class="eyebrow eyebrow--live">Live rivalry duels</p>
-                    <h2 class="title">Open right now, and somebody is behind</h2>
-                    <p class="lede">Real capital, real clocks, updated every oracle poll. Open a duel to see
+                    <p class="eyebrow eyebrow--live r-item" style="--i:0">Live rivalry duels</p>
+                    <h2 class="title r-item" style="--i:1">Open right now, and somebody is behind</h2>
+                    <p class="lede r-item" style="--i:2">Real capital, real clocks, updated every oracle poll. Open a duel to see
                         the full position.</p>
 
-                    <div class="duels">
+                    <div class="duels r-plate" style="--i:3">
                         <button class="duel ticks" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">
                             <span class="duel-head">
                                 <span class="mono">Audience &middot; X API</span>
@@ -644,11 +648,11 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 8 · SIGNATURE ═════ -->
-            <section class="section alt" style="padding-top:0">
+            <section class="section alt reveal" id="manifesto" style="padding-top:0">
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
-                    <div class="sign plate ticks">
-                        <svg width="70" height="70" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
+                    <div class="sign plate ticks r-plate" style="--i:0">
+                        <svg class="r-item" style="--i:0" width="70" height="70" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
                              style="margin:0 auto" fill="none" stroke="#7A1C29">
                             <circle cx="38" cy="38" r="35" stroke-width="1"/>
                             <circle cx="38" cy="38" r="30" stroke-width=".6"/>
@@ -659,15 +663,15 @@ export function renderLanding() {
                             <text x="38" y="43" text-anchor="middle" font-family="Archivo, sans-serif"
                                   font-size="17" font-weight="700" fill="#7A1C29" stroke="none">C</text>
                         </svg>
-                        <h2 class="sign-title">Sign it, and the week reorders itself</h2>
-                        <p class="sign-copy">You will know within about four days whether you meant it. That is
+                        <h2 class="sign-title r-item" style="--i:1">Sign it, and the week reorders itself</h2>
+                        <p class="sign-copy r-item" style="--i:2">You will know within about four days whether you meant it. That is
                             the fastest honest answer anyone has ever given you about your own goal.</p>
-                        <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
-                        <div class="sign-lines">
+                        <button class="btn btn-fill r-item" style="--i:3" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
+                        <div class="sign-lines r-item" style="--i:4">
                             <div class="sign-line"><p class="sign-script">&nbsp;</p><span class="mono">Counterparty signature</span></div>
                             <div class="sign-line"><p class="sign-script">Collateral</p><span class="mono">Custodian, countersigned</span></div>
                         </div>
-                        <p class="disclosure">Deposits are held by a third-party custodian via Stripe Connect and
+                        <p class="disclosure r-item" style="--i:5">Deposits are held by a third-party custodian via Stripe Connect and
                             are not held by Collateral. Outcomes are determined solely by read-only telemetry from
                             the connected platform API named in the contract. Matching yield is funded from
                             forfeited deposits and sponsor contributions, is not interest, and is not guaranteed.
@@ -677,123 +681,188 @@ export function renderLanding() {
                     </div>
                 </div>
             </section>
-
         </div>
     `;
 }
 
 export function initLanding() {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const money = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ── First Paint entrance classes ── */
-    document.documentElement.classList.add('js-load');
-    document.body.classList.add('js-load');
-
-    /* ── Scroll Handler for Sticky Nav & Top Banner ── */
-    const navBar = document.querySelector('.ln');
-    const globalBanner = document.getElementById('global-banner');
-    function handleScroll() {
-        if (window.scrollY > 30) {
-            if (navBar) navBar.classList.add('nav-scrolled');
-            if (globalBanner) globalBanner.classList.add('nav-scrolled');
-        } else {
-            if (navBar) navBar.classList.remove('nav-scrolled');
-            if (globalBanner) globalBanner.classList.remove('nav-scrolled');
-        }
+    function money(n) {
+        return '$' + Math.round(n).toLocaleString('en-US');
     }
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
 
-    /* ── Smooth Anchor Navigation ── */
-    document.querySelectorAll('.lp a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href').substring(1);
-            const targetEl = document.getElementById(targetId);
-            if (targetEl) {
-                e.preventDefault();
-                targetEl.scrollIntoView({ behavior: 'smooth' });
+    /* ── Motion System (Reveal Observers & Plotter) ── */
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('is-in');
+                    revealObserver.unobserve(e.target);
+
+                    // Count up book totals when Section 05 becomes active
+                    if (e.target.id === 'record') {
+                        const bookTotalEl = document.getElementById('book-total-amt');
+                        countUp(bookTotalEl, 8700000, money);
+                    }
+
+                    // Trigger schematic plotter and count up schematic figures when Section 06 becomes active
+                    if (e.target.id === 'flow') {
+                        const schSvg = document.getElementById('sch-svg');
+                        if (schSvg && !reduce) schSvg.classList.add('is-drawing');
+                        countUp(document.getElementById('sch-win-amt'), 8326200, money);
+                        countUp(document.getElementById('sch-lose-amt'), 330600, money);
+                        countUp(document.getElementById('sch-fee-amt'), 43200, money);
+                    }
+                }
+            });
+        }, { threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
+
+        document.querySelectorAll('.reveal').forEach((sec) => {
+            const rect = sec.getBoundingClientRect();
+            if (reduce || (rect.top < window.innerHeight * 0.85 && rect.bottom > 0)) {
+                sec.classList.add('is-in');
+                if (sec.id === 'record') {
+                    countUp(document.getElementById('book-total-amt'), 8700000, money);
+                }
+                if (sec.id === 'flow') {
+                    const schSvg = document.getElementById('sch-svg');
+                    if (schSvg) schSvg.classList.add('is-drawing');
+                    countUp(document.getElementById('sch-win-amt'), 8326200, money);
+                    countUp(document.getElementById('sch-lose-amt'), 330600, money);
+                    countUp(document.getElementById('sch-fee-amt'), 43200, money);
+                }
+            } else {
+                revealObserver.observe(sec);
             }
         });
-    });
-
-    /* ── 1 · Settlement Tape Feed Engine ── */
-    const BOOK = [
-        {goal:'+20% revenue in 30 days',     src:'@revpilot \u00B7 Stripe',      amt:2000, win:true},
-        {goal:'25,000 followers in 30 days', src:'@marcusk \u00B7 X API',        amt:1500, win:false},
-        {goal:'50,000 subs in 60 days',      src:'@deltacreator \u00B7 YouTube', amt:1000, win:true},
-        {goal:'+15% orders in 30 days',      src:'@shopfern \u00B7 Shopify',     amt:2500, win:true},
-        {goal:'10,000 followers in 14 days', src:'@northloop \u00B7 X API',      amt:800,  win:false},
-        {goal:'+30% MRR in 60 days',         src:'@quietbuild \u00B7 Stripe',    amt:3000, win:true},
-        {goal:'5,000 subs in 30 days',       src:'@harborco \u00B7 YouTube',     amt:1200, win:true},
-        {goal:'+8% AOV in 30 days',          src:'@basketcase \u00B7 Shopify',   amt:900,  win:false},
-        {goal:'40,000 followers in 60 days', src:'@mileshaus \u00B7 X API',      amt:1800, win:true}
-    ];
-
-    const rowsEl   = document.getElementById('rows');
-    const escrowEl = document.getElementById('m-escrow');
-    const settleEl = document.getElementById('m-settled');
-    const countEl  = document.getElementById('m-count');
-    const navEl    = document.getElementById('nav-escrow');
-    const clockEl  = document.getElementById('clock');
-
-    let escrow = 8700000, settledToday = 2240, settledCount = 1, cursor = 0;
-
-    function pick(){ var c = BOOK[cursor % BOOK.length]; cursor++; return c; }
-
-    function makeRow(c){
-        var el = document.createElement('div');
-        el.className = 'row';
-        el.dataset.amt = c.amt;
-        el.dataset.win = c.win ? '1' : '0';
-        el.innerHTML =
-            '<div class="row-main"><p class="row-goal"></p><p class="row-src"></p></div>' +
-            '<div class="row-right"><span class="row-amt"></span><span class="row-state">Pending</span></div>';
-        el.querySelector('.row-goal').textContent = c.goal;
-        el.querySelector('.row-src').textContent  = c.src;
-        el.querySelector('.row-amt').textContent  = money(c.amt);
-        return el;
+    } else {
+        document.querySelectorAll('.reveal').forEach((sec) => sec.classList.add('is-in'));
     }
 
-    if (rowsEl) {
-        rowsEl.innerHTML = '';
-        for (var i = 0; i < 4; i++) {
-            var r = makeRow(pick());
-            if (i === 2) {
-                // Pre-seed row at index 2 as already settled ("won" / "Approved")
-                // so the stamp renders immediately on first paint.
-                // Using 'stamp static won' skips the cl-press animation (which starts at opacity:0).
-                // Placed at index 2 so the queue has two pending rows at the head to settle first,
-                // keeping the stamp visible until this row's natural turn in the cycle.
-                r.classList.add('settled', 'won');
-                var stamp = document.createElement('span');
-                stamp.className = 'stamp static won';
-                stamp.textContent = 'Approved';
-                r.appendChild(stamp);
-                var stateSpan = r.querySelector('.row-state');
-                if (stateSpan) stateSpan.textContent = 'Settled';
-                r.dataset.seeded = '1';
+    // Prepare SVG stroke dash lengths for plotter before animation runs
+    const schSvg = document.getElementById('sch-svg');
+    if (schSvg) {
+        const strokes = schSvg.querySelectorAll('[data-draw]');
+        strokes.forEach((el) => {
+            let len = 0;
+            try {
+                len = el.getTotalLength ? el.getTotalLength() : 0;
+            } catch (err) {
+                len = 0;
             }
-            if (!reduce) { r.classList.add('rise'); r.style.setProperty('--d', (560 + i*90) + 'ms'); }
+            if (!len && el.tagName === 'rect') {
+                const w = +el.getAttribute('width') || 0;
+                const h = +el.getAttribute('height') || 0;
+                len = (w + h) * 2;
+            }
+            if (len) {
+                el.style.strokeDasharray = len;
+                el.style.strokeDashoffset = len;
+            }
+        });
+    }
+
+    function countUp(el, target, formatFn) {
+        if (!el || reduce) {
+            if (el) el.textContent = formatFn(target);
+            return;
+        }
+        let start = null;
+        const duration = 1500;
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+        function step(ts) {
+            if (!start) start = ts;
+            const p = Math.min((ts - start) / duration, 1);
+            el.textContent = formatFn(target * easeOutQuart(p));
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
+    /* ── 1 · Live Hero Tape Engine ── */
+    var rowsEl = document.getElementById('rows');
+    var escrowEl = document.getElementById('m-escrow');
+    var settledEl = document.getElementById('m-settled');
+    var countEl = document.getElementById('m-count');
+    var clockEl = document.getElementById('clock');
+
+    var SAMPLE_GOALS = [
+        { g: '+20% revenue in 30 days',       u: '@revpilot',   p: 'Stripe API',   a: 2000, w: true  },
+        { g: '50,000 subscribers in 60 days', u: '@deltacreator', p: 'YouTube API', a: 1000, w: true  },
+        { g: '25,000 followers in 30 days',   u: '@marcusk',     p: 'X API',       a: 1500, w: false },
+        { g: '$100k ARR in 90 days',          u: '@saasfounder', p: 'Stripe API',   a: 5000, w: true  },
+        { g: '10,000 email leads in 30 days', u: '@growthlead',  p: 'Shopify API',  a: 1200, w: true  },
+        { g: '100k views on launch video',    u: '@indiehacker', p: 'YouTube API', a: 800,  w: false }
+    ];
+
+    var escrow = 148200;
+    var settledToday = 34200;
+    var settledCount = 48;
+    var rowCounter = 100;
+
+    function paint() {
+        if (escrowEl)  escrowEl.textContent  = money(escrow);
+        if (settledEl) settledEl.textContent = money(settledToday);
+        if (countEl)   countEl.textContent   = settledCount + ' settled today';
+    }
+
+    function makeRow(data) {
+        rowCounter++;
+        var div = document.createElement('div');
+        div.className = 'row';
+        div.dataset.amt = data.a;
+        div.dataset.win = data.w ? '1' : '0';
+        div.innerHTML =
+            '<div class="row-left">' +
+                '<span class="row-id">№ ' + rowCounter + '</span>' +
+                '<p class="row-goal">' + data.g + '</p>' +
+                '<p class="row-src">' + data.u + ' &middot; via ' + data.p + '</p>' +
+            '</div>' +
+            '<div class="row-right">' +
+                '<span class="row-amt">' + money(data.a) + '</span>' +
+                '<span class="row-state"><span class="dot-live"></span>Pending</span>' +
+            '</div>';
+        return div;
+    }
+
+    if (rowsEl && rowsEl.children.length === 0) {
+        for (var i = 0; i < 4; i++) {
+            var item = SAMPLE_GOALS[i % SAMPLE_GOALS.length];
+            var r = makeRow(item);
+            if (i === 2) {
+                r.classList.add('settled', 'won');
+                var s = document.createElement('span');
+                s.className = 'stamp static won';
+                s.textContent = 'Approved';
+                r.appendChild(s);
+            }
             rowsEl.appendChild(r);
         }
     }
 
-    function paint(){
-        if (escrowEl) escrowEl.textContent = money(escrow);
-        if (settleEl) settleEl.textContent = money(settledToday);
-        if (countEl) countEl.textContent  = settledCount + ' settled';
-        if (navEl) navEl.textContent = money(escrow) + ' in escrow';
+    function pick() {
+        return SAMPLE_GOALS[Math.floor(Math.random() * SAMPLE_GOALS.length)];
     }
 
-    function settleTop(){
-        if (!rowsEl) return;
-        var row = rowsEl.firstElementChild;
-        if (!row) return;
+    function settleTop() {
+        if (!rowsEl || rowsEl.children.length === 0) return;
+        var firstSettled = rowsEl.querySelector('.row.settled');
+        if (firstSettled) {
+            firstSettled.classList.add('exiting');
+            setTimeout(function(){
+                if (firstSettled.parentNode) firstSettled.parentNode.removeChild(firstSettled);
+                while (rowsEl.children.length < 4) {
+                    rowsEl.appendChild(makeRow(pick()));
+                }
+                paint();
+            }, 420);
+            return;
+        }
 
-        if (row.dataset.seeded === '1') {
-            // Seeded row reached the head — recycle it normally
-            delete row.dataset.seeded;
+        var row = rowsEl.children[0];
+        if (row.classList.contains('settled')) {
             row.classList.add('exiting');
             setTimeout(function(){
                 if (row.parentNode) row.parentNode.removeChild(row);
@@ -939,13 +1008,7 @@ export function initLanding() {
         setTimeout(function(){
             poolBar.style.width = '100%';
             if (reduce) { poolAmt.textContent = money(1500); return; }
-            var start = null;
-            (function step(ts){
-                if (!start) start = ts;
-                var p = Math.min((ts - start) / 1400, 1);
-                poolAmt.textContent = money(1500 * p);
-                if (p < 1) requestAnimationFrame(step);
-            })(performance.now());
+            countUp(poolAmt, 1500, money);
         }, delay);
 
         winners.forEach(function(w, i){

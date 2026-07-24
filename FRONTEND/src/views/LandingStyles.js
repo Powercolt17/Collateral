@@ -1,4 +1,6 @@
 // Collateral — Landing Styles (Institutional Document Design System & Motion Tokens)
+import { revealStyles } from "./LandingMotion";
+
 export const landingCSS = `
 /* ═══════════ TOKENS ═══════════ */
 .cl-root {
@@ -2125,7 +2127,7 @@ export const landingCSS = `
   .pulse::after { opacity: 0; }
   .stamp { transform: translateY(-50%) rotate(-11deg); opacity: .78; }
   .coin { display: none; }
-}
+${revealStyles}
 `;
 
 export default landingCSS;

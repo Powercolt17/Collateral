@@ -169,7 +169,7 @@ export const landingCSS = `
 .eyebrow--c { justify-content: center; }
 
 .title {
-  margin: 0 0 16px;
+  margin: 0 0 26px !important;
   font-family: var(--display);
   font-size: clamp(30px, 4.3vw, 50px);
   font-weight: 700;
@@ -1276,7 +1276,7 @@ export const landingCSS = `
 .r-stamp.won { color: var(--win); }
 .r-stamp.lost { color: var(--blood); }
 
-.footing { margin-top: 64px; max-width: 740px; }
+.footing { margin-top: 64px; width: 100%; max-width: 100%; }
 
 .f-row {
   display: flex;
@@ -1315,15 +1315,8 @@ export const landingCSS = `
 
 /* ═══════════ COUNTERPARTY ═══════════ */
 .cp {
-  display: grid;
-  grid-template-columns: 224px minmax(0, 1fr);
-  gap: 52px;
-  align-items: start;
+  display: block;
   margin-top: 56px;
-}
-
-@media(max-width:840px){
-  .cp { grid-template-columns: 1fr; gap: 32px; }
 }
 
 .cp-portrait { padding: 16px; }

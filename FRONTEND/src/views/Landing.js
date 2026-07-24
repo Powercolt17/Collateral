@@ -288,7 +288,7 @@ export function renderLanding() {
                         losses in it isn't a record.</p>
 
                     <div class="receipts">
-                        <article class="receipt ticks">
+                        <article class="receipt">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;34D6</span></div>
                                 <h3 class="r-goal">+20% revenue in 30 days</h3>
@@ -306,7 +306,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt ticks">
+                        <article class="receipt">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;9F21</span></div>
                                 <h3 class="r-goal">50,000 subscribers in 60 days</h3>
@@ -324,7 +324,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt ticks">
+                        <article class="receipt">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;780B</span></div>
                                 <h3 class="r-goal">25,000 followers in 30 days</h3>
@@ -354,38 +354,6 @@ export function renderLanding() {
                     </div>
 
                     <div class="cp">
-                        <figure class="cp-portrait plate ticks" style="margin:0">
-                            <svg viewBox="0 0 200 236" role="img" aria-label="Engraved portrait of Marcus Kade">
-                                <defs>
-                                    <clipPath id="cp-oval"><ellipse cx="100" cy="112" rx="76" ry="94"/></clipPath>
-                                </defs>
-                                <ellipse cx="100" cy="112" rx="76" ry="94" fill="#EFEAE0"/>
-                                <g clip-path="url(#cp-oval)" fill="none" stroke="#0E1420" stroke-width=".65" stroke-linecap="round">
-                                    <g opacity=".26">
-                                        <path d="M24 40h152M24 54h152M24 68h152M24 82h152M24 96h152M24 110h152M24 124h152M24 138h152M24 152h152M24 166h152M24 180h152M24 194h152"/>
-                                    </g>
-                                    <path d="M100 44c-21 0-34 15-34 36 0 13 3 22 8 30"/>
-                                    <path d="M100 44c21 0 34 15 34 36 0 13-3 22-8 30"/>
-                                    <path d="M74 110c4 12 13 21 26 21s22-9 26-21"/>
-                                    <path d="M78 86c5-3 12-3 16 0M106 86c4-3 11-3 16 0"/>
-                                    <path d="M96 96l-3 14h9"/>
-                                    <path d="M88 120c7 4 17 4 24 0"/>
-                                    <path d="M66 74c2-20 15-32 34-32s32 12 34 32"/>
-                                    <path d="M74 131l-22 12c-14 8-22 22-24 38l-4 25h152l-4-25c-2-16-10-30-24-38l-22-12"/>
-                                    <path d="M100 143l-9 18 9 10 9-10z"/>
-                                    <g opacity=".5">
-                                        <path d="M52 150c-8 8-13 19-15 31M148 150c8 8 13 19 15 31"/>
-                                        <path d="M70 62c8-6 20-8 30-8s22 2 30 8"/>
-                                    </g>
-                                </g>
-                                <ellipse cx="100" cy="112" rx="76" ry="94" fill="none" stroke="#0E1420" stroke-width="1"/>
-                                <ellipse cx="100" cy="112" rx="70" ry="88" fill="none" stroke="#7A1C29" stroke-width=".5" opacity=".55"/>
-                            </svg>
-                            <figcaption class="cp-cap">
-                                <span class="mono">Counterparty № 0417</span>
-                            </figcaption>
-                        </figure>
-
                         <div>
                             <span class="mono mono-b">On the record</span>
                             <blockquote class="cp-quote" style="margin-top:14px">

@@ -223,7 +223,7 @@ export function renderHeader(currentRoute) {
             .ch-logo-wordmark {
                 font-size: 18px;
                 font-weight: 800;
-                color: #FFFFFF !important;
+                color: #0F172A !important;
                 letter-spacing: 0.22em;
                 font-family: 'Sora', 'IBM Plex Sans', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;

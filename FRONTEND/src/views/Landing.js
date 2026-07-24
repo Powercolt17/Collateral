@@ -20,8 +20,8 @@ export function renderLanding() {
             <!-- NAV -->
             <nav class="ln">
                 <div class="ln-in">
-                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;" style="color: #FFFFFF !important;">
-                        <span class="logo-wordmark" style="color: #FFFFFF !important; font-weight: 800 !important; text-transform: uppercase !important;">COLLATERAL</span>
+                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;" style="color: #0F172A !important;">
+                        <span class="logo-wordmark" style="color: #0F172A !important; font-weight: 800 !important; text-transform: uppercase !important;">COLLATERAL</span>
                     </a>
                     <div style="display:flex; align-items:center;">
                         <button class="ln-cta" id="lp-nav-cta" style="background: #7A1C2B !important; background-color: #7A1C2B !important; color: #FFFFFF !important; border: 1.5px solid #7A1C2B !important;">Sign In</button>

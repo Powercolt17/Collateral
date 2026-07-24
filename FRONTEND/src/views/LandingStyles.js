@@ -254,8 +254,8 @@ export const landingCSS = `
 .lfan-deck-viewport {
     position: relative;
     width: 100%;
-    max-width: 580px;
-    height: 460px;
+    max-width: 640px;
+    height: 520px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,8 +265,8 @@ export const landingCSS = `
 
 .lfan-deck-stage {
     position: relative;
-    width: 410px;
-    height: 430px;
+    width: 465px;
+    height: 485px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -275,32 +275,32 @@ export const landingCSS = `
 
 .lfan-real-card {
     position: absolute !important;
-    width: 410px !important;
+    width: 465px !important;
     top: 0;
-    padding: 26px 28px !important;
+    padding: 30px 32px !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 15px !important;
+    gap: 16px !important;
     transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms ease !important;
     transform-origin: bottom center !important;
     cursor: pointer;
     border: 1px solid rgba(15, 23, 42, 0.12) !important;
     background: #FFFFFF !important;
-    border-radius: 18px !important;
+    border-radius: 20px !important;
 }
 
 .lfan-real-card.is-center {
     transform: translateX(0) translateY(0) rotate(0deg) scale(1) !important;
     z-index: 5 !important;
     opacity: 1 !important;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08), 0 24px 48px rgba(15, 23, 42, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 28px 56px rgba(15, 23, 42, 0.14) !important;
     pointer-events: auto !important;
     filter: none !important;
     backdrop-filter: none !important;
 }
 
 .lfan-real-card.is-left {
-    transform: translateX(-24px) translateY(14px) rotate(-3.5deg) scale(0.96) !important;
+    transform: translateX(-28px) translateY(16px) rotate(-3.5deg) scale(0.96) !important;
     z-index: 2 !important;
     opacity: 0.65 !important;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
@@ -310,7 +310,7 @@ export const landingCSS = `
 }
 
 .lfan-real-card.is-right {
-    transform: translateX(24px) translateY(14px) rotate(3.5deg) scale(0.96) !important;
+    transform: translateX(28px) translateY(16px) rotate(3.5deg) scale(0.96) !important;
     z-index: 2 !important;
     opacity: 0.65 !important;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
@@ -7554,30 +7554,30 @@ button.ln-cta,
 .lc-platform-header {
   display: flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
 }
 
 .lc-plat-logo {
-  height: 20px !important;
+  height: 24px !important;
   width: auto !important;
 }
 
 .lc-plat-text {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.8px !important;
+  letter-spacing: 0.9px !important;
   color: #64748B !important;
 }
 
 .lc-global-stats-row {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 14px !important;
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 11.5px !important;
+  font-size: 13px !important;
   color: #64748B !important;
-  padding-bottom: 12px !important;
+  padding-bottom: 14px !important;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
 }
 
@@ -7588,23 +7588,23 @@ button.ln-cta,
 
 .lc-contract-name {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 19px !important;
+  font-size: 22px !important;
   font-weight: 900 !important;
   color: #0F172A !important;
   letter-spacing: -0.02em !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 6px !important;
 }
 
 .lc-contract-goal {
-  font-size: 14.5px !important;
+  font-size: 16px !important;
   color: #334155 !important;
   line-height: 1.4 !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 6px !important;
 }
 
 .lc-contract-time {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 11.5px !important;
+  font-size: 12.5px !important;
   font-weight: 700 !important;
   color: #64748B !important;
   letter-spacing: 0.6px !important;
@@ -7613,12 +7613,12 @@ button.ln-cta,
 
 .lc-status {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   letter-spacing: 1px !important;
   color: #145C14 !important;
   background: rgba(20, 92, 20, 0.08) !important;
-  padding: 4px 10px !important;
+  padding: 5px 12px !important;
   border-radius: 999px !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -7627,8 +7627,8 @@ button.ln-cta,
 }
 
 .lc-status-dot {
-  width: 6px !important;
-  height: 6px !important;
+  width: 7px !important;
+  height: 7px !important;
   background: #145C14 !important;
   border-radius: 50% !important;
 }
@@ -7639,21 +7639,21 @@ button.ln-cta,
   justify-content: space-between !important;
   background: #FAF8F5 !important;
   border: 1px solid rgba(15, 23, 42, 0.08) !important;
-  border-radius: 12px !important;
-  padding: 14px 18px !important;
-  margin: 12px 0 !important;
+  border-radius: 14px !important;
+  padding: 16px 22px !important;
+  margin: 16px 0 !important;
 }
 
 .lc-flow-col {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 2px !important;
+  gap: 3px !important;
 }
 
 .lc-flow-label {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 10.5px !important;
+  font-size: 11.5px !important;
   font-weight: 700 !important;
   letter-spacing: 1px !important;
   color: #64748B !important;
@@ -7662,7 +7662,7 @@ button.ln-cta,
 
 .lc-flow-val {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 18px !important;
+  font-size: 22px !important;
   font-weight: 800 !important;
   color: #0F172A !important;
 }
@@ -7672,12 +7672,12 @@ button.ln-cta,
 }
 
 .lc-flow-arrow-right {
-  font-size: 16px !important;
+  font-size: 18px !important;
   color: #94A3B8 !important;
 }
 
 .lc-flow-footnote {
-  font-size: 12.5px !important;
+  font-size: 13.5px !important;
   color: #64748B !important;
   line-height: 1.45 !important;
 }
@@ -7694,14 +7694,14 @@ button.ln-cta,
   align-items: center !important;
   background: #FAF8F5 !important;
   border: 1px dashed rgba(15, 23, 42, 0.12) !important;
-  border-radius: 8px !important;
-  padding: 8px 14px !important;
-  margin-top: 12px !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  margin-top: 14px !important;
 }
 
 .lc-live-state-lbl {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 10.5px !important;
+  font-size: 11.5px !important;
   font-weight: 700 !important;
   letter-spacing: 1.2px !important;
   color: #64748B !important;
@@ -7709,7 +7709,7 @@ button.ln-cta,
 
 .lc-live-state-val {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 12.5px !important;
+  font-size: 14px !important;
   font-weight: 800 !important;
   color: #7A1220 !important;
 }

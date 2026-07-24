@@ -21,6 +21,9 @@ export default defineConfig({
         sourcemap: false
     },
     esbuild: {
+        loader: 'jsx',
+        include: /src\/.*\.[jt]sx?$/,
+        exclude: [],
         drop: ['console', 'debugger'],
     },
     server: {

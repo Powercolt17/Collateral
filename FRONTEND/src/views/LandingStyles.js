@@ -599,7 +599,7 @@ export const landingCSS = `
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 20px;
+  padding: 13.5px 20px;
   border-bottom: 1px dotted var(--rule);
   overflow: hidden;
   transition: background .55s var(--ease), opacity .45s var(--ease), transform .45s var(--ease);
@@ -636,6 +636,7 @@ export const landingCSS = `
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--ink-4);
+  transition: opacity .2s ease;
 }
 
 .row.won { background: var(--win-wash); }
@@ -643,19 +644,19 @@ export const landingCSS = `
 .row.won .row-amt { color: var(--win); }
 .row.lost .row-amt { color: var(--blood); }
 .row.exiting { opacity: 0; transform: translateY(-10px); }
-.row.settled .row-right { opacity: 0; transition: opacity .2s; }
+.row.settled .row-state { opacity: 0; }
 
 .stamp {
   position: absolute;
-  right: 18px;
+  right: 86px;
   top: 50%;
   border: 2px solid currentColor;
   border-radius: 2px;
-  padding: 5px 11px;
+  padding: 4px 9px;
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .2em;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .16em;
   text-transform: uppercase;
   pointer-events: none;
   transform-origin: center;

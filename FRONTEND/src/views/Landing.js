@@ -818,7 +818,9 @@ export function initLanding() {
             row.classList.add('exiting');
             setTimeout(function(){
                 if (row.parentNode) row.parentNode.removeChild(row);
-                rowsEl.appendChild(makeRow(pick()));
+                while (rowsEl.children.length < 4) {
+                    rowsEl.appendChild(makeRow(pick()));
+                }
                 paint();
             }, 420);
             return;
@@ -838,7 +840,9 @@ export function initLanding() {
             row.classList.add('exiting');
             setTimeout(function(){
                 if (row.parentNode) row.parentNode.removeChild(row);
-                rowsEl.appendChild(makeRow(pick()));
+                while (rowsEl.children.length < 4) {
+                    rowsEl.appendChild(makeRow(pick()));
+                }
                 escrow += 1200 + Math.round(Math.random()*2400);
                 paint();
             }, 420);

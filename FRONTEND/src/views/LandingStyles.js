@@ -977,7 +977,7 @@ export const landingCSS = `
 .cmp caption {
   caption-side: top;
   text-align: left;
-  padding: 16px 20px 20px;
+  padding: 16px 20px 10px;
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .16em;

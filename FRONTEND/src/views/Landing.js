@@ -174,17 +174,17 @@ export function renderLanding() {
                         </aside>
                     </div>
 
-                    <table class="cmp plate-quiet ticks">
+                    <table class="cmp plate-quiet">
                         <caption>Same goal, recorded two ways</caption>
                         <thead>
-                            <tr><th scope="col">Wk</th><th scope="col">Without stakes</th><th scope="col">Under contract</th></tr>
+                            <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
                         </thead>
                         <tbody>
                             <tr><td>01</td><td class="void">Announce the goal</td><td>Lock the deposit</td></tr>
                             <tr><td>02</td><td class="void">Something urgent comes up</td><td>Something urgent comes up anyway</td></tr>
                             <tr><td>03</td><td class="void">Move the deadline, quietly</td><td>The deadline does not move</td></tr>
                             <tr><td>04</td><td class="void">Decide it wasn't the right time</td><td>Ship it at 2am, badly, on time</td></tr>
-                            <tr><td>&mdash;</td><td class="void">Nothing was at risk, so nothing changed</td>
+                            <tr><td>&mdash;</td><td class="void">Nothing at risk, nothing changed</td>
                                 <td class="won-txt">Money back. And the thing exists.</td></tr>
                         </tbody>
                     </table>

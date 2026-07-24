@@ -7090,9 +7090,9 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 .l-stats-card {
   background: #FBF9F5 !important;
   border: 1.5px solid rgba(28, 35, 51, 0.09) !important;
-  border-radius: 14px !important;
-  padding: 7px 24px !important;
-  box-shadow: 0 4px 16px -10px rgba(28, 35, 51, 0.05) !important;
+  border-radius: 16px !important;
+  padding: 16px 32px !important;
+  box-shadow: 0 8px 24px -10px rgba(28, 35, 51, 0.08) !important;
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 auto !important;

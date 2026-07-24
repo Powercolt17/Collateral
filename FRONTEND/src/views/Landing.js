@@ -193,77 +193,87 @@ export function renderLanding() {
 
             <!-- ═════ 3b · ORACLE REGISTER ═════ -->
             <section class="section" id="oracles" style="padding-top:0">
-                <span class="idx-mark" aria-hidden="true">04</span>
                 <div class="shell">
-                    <p class="eyebrow">Verification sources</p>
-                    <h2 class="title">Four APIs decide every contract</h2>
-                    <p class="lede">Collateral does not score you. It reads the same numbers your platform
-                        already reports, on a fixed schedule, and settles on whatever it finds there.</p>
+                    <div class="oracles-head">
+                        <div>
+                            <p class="eyebrow">Verification sources</p>
+                            <h2 class="title">Four APIs decide every contract</h2>
+                            <p class="lede">Collateral does not score you. It reads the same numbers your platform
+                                already reports, on a fixed schedule, and settles on whatever it finds there.</p>
+                        </div>
+                        <aside class="marg-note-top">
+                            <span class="mono mono-b">&sect; 3.4</span>
+                            <p class="mono">Read-only scopes only. Collateral cannot post, message, refund, or change a single
+                                setting on any account you connect, and the token can be revoked from your side at any
+                                time without affecting an open contract's settlement.</p>
+                        </aside>
+                    </div>
 
-                    <table class="reg plate ticks">
+                    <table class="reg plate">
                         <caption>Register of accepted oracles &middot; read-only scopes</caption>
                         <thead>
                             <tr>
                                 <th scope="col">Platform</th>
                                 <th scope="col">Metrics read</th>
                                 <th scope="col">Poll cadence</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Last poll</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
                                     <span class="reg-name">
-                                        <span class="reg-mark" aria-hidden="true">S</span>
+                                        <span class="reg-mark" aria-hidden="true">
+                                            <img src="/assets/images/stripe-brand.svg" alt="Stripe" class="reg-logo" />
+                                        </span>
                                         <span class="reg-plat">Stripe</span>
                                     </span>
                                 </td>
                                 <td data-label="Reads">Net revenue, MRR, order volume</td>
                                 <td data-label="Cadence"><span class="reg-num">Every 6h</span></td>
-                                <td data-label="Status"><span class="reg-live"><span class="dot"></span>Live</span></td>
+                                <td data-label="Last poll"><span class="reg-num"><span class="dot-live"></span>4m ago</span></td>
                             </tr>
                             <tr>
                                 <td>
                                     <span class="reg-name">
-                                        <span class="reg-mark" aria-hidden="true">X</span>
+                                        <span class="reg-mark" aria-hidden="true">
+                                            <img src="/assets/images/x-brand.svg" alt="X" class="reg-logo" />
+                                        </span>
                                         <span class="reg-plat">X</span>
                                     </span>
                                 </td>
                                 <td data-label="Reads">Followers, impressions, post reach</td>
                                 <td data-label="Cadence"><span class="reg-num">Every 1h</span></td>
-                                <td data-label="Status"><span class="reg-live"><span class="dot"></span>Live</span></td>
+                                <td data-label="Last poll"><span class="reg-num">12m ago</span></td>
                             </tr>
                             <tr>
                                 <td>
                                     <span class="reg-name">
-                                        <span class="reg-mark" aria-hidden="true">Y</span>
+                                        <span class="reg-mark" aria-hidden="true">
+                                            <img src="/assets/images/youtube-brand.svg" alt="YouTube" class="reg-logo" />
+                                        </span>
                                         <span class="reg-plat">YouTube</span>
                                     </span>
                                 </td>
                                 <td data-label="Reads">Subscribers, views, watch time</td>
                                 <td data-label="Cadence"><span class="reg-num">Every 12h</span></td>
-                                <td data-label="Status"><span class="reg-live"><span class="dot"></span>Live</span></td>
+                                <td data-label="Last poll"><span class="reg-num">1h ago</span></td>
                             </tr>
                             <tr>
                                 <td>
                                     <span class="reg-name">
-                                        <span class="reg-mark" aria-hidden="true">Sh</span>
+                                        <span class="reg-mark" aria-hidden="true">
+                                            <img src="/assets/images/shopify-brand.svg" alt="Shopify" class="reg-logo" />
+                                        </span>
                                         <span class="reg-plat">Shopify</span>
                                     </span>
                                 </td>
                                 <td data-label="Reads">Orders, revenue, average order value</td>
                                 <td data-label="Cadence"><span class="reg-num">Every 6h</span></td>
-                                <td data-label="Status"><span class="reg-live"><span class="dot"></span>Live</span></td>
+                                <td data-label="Last poll"><span class="reg-num">22m ago</span></td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <div class="marg" style="margin-top:30px">
-                        <span class="marg-mark">§ 3.4</span>
-                        <p>Read-only scopes only. Collateral cannot post, message, refund, or change a single
-                            setting on any account you connect, and the token can be revoked from your side at any
-                            time without affecting an open contract's settlement.</p>
-                    </div>
                 </div>
             </section>
 

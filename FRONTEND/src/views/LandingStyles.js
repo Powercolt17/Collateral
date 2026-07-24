@@ -1019,11 +1019,40 @@ export const landingCSS = `
 .won-txt { color: var(--win); }
 
 /* ═══════════ ORACLE REGISTER ═══════════ */
-.reg { width: 100%; border-collapse: collapse; margin-top: 44px; }
+.oracles-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+@media(max-width:960px){
+  .oracles-head {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.marg-note-top {
+  border-top: 2px solid var(--ink);
+  padding-top: 14px;
+  max-width: 44ch;
+  justify-self: end;
+}
+
+.marg-note-top p {
+  margin-top: 8px;
+  font-size: 11.5px;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+.reg { width: 100%; border-collapse: collapse; margin-top: 16px; }
 .reg caption {
   caption-side: top;
   text-align: left;
-  padding: 0 0 14px;
+  padding: 16px 22px 10px;
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .16em;
@@ -1058,11 +1087,29 @@ export const landingCSS = `
   display: grid;
   place-items: center;
   background: var(--paper);
-  font-family: var(--display);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink);
+  border-radius: var(--r);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.7);
+}
+
+.reg-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0.2);
+}
+
+.dot-live {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--win);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+#oracles .title {
+  margin-bottom: 26px !important;
 }
 
 .reg-plat {

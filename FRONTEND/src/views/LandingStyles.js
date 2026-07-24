@@ -1424,12 +1424,40 @@ export const landingCSS = `
   min-height: 220px;
 }
 
+.stage-mid::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: var(--blood);
+  opacity: .4;
+  z-index: 1;
+}
+
+.stage-mid::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--blood);
+  opacity: .6;
+  z-index: 1;
+}
+
 @media(max-width:900px){
   .stage-mid {
     border-inline: 0;
     border-block: 1px dotted var(--rule);
     min-height: 120px;
   }
+  .stage-mid::before, .stage-mid::after { display: none; }
 }
 
 .loser {
@@ -1489,14 +1517,20 @@ export const landingCSS = `
 }
 
 .mid-label {
+  position: relative;
+  z-index: 2;
   font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .2em;
+  font-size: 9.5px;
+  letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--blood);
   text-align: center;
-  padding: 0 10px;
-  line-height: 1.9;
+  padding: 6px 14px;
+  line-height: 1.6;
+  background: var(--paper);
+  border: 1px solid var(--blood-mid);
+  border-radius: var(--r);
+  box-shadow: 0 1px 3px rgba(122,28,41,.08);
 }
 
 .pool {

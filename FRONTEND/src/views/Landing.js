@@ -364,7 +364,7 @@ export function renderLanding() {
                     <p class="lede">Marcus's fifteen hundred dollars did not vanish into a house account. Watch
                         where it actually went, then read the full path underneath.</p>
 
-                    <div class="flow-wrap plate ticks" id="flowwrap">
+                    <div class="flow-wrap plate" id="flowwrap">
                         <div class="flow-head">
                             <span class="mono">Cycle 2026&ndash;W12 &middot; recirculation</span>
                             <span class="mono">Settled 14 Mar 2026</span>
@@ -403,12 +403,12 @@ export function renderLanding() {
                     </div>
 
                     <div class="marg marg-strip" style="margin-top:34px">
-                        <span class="marg-mark">§ 4.1</span>
+                        <span class="marg-mark">&sect; 4.1</span>
                         <p>We take half a percent and nothing else. There is no spread, no rake on the match
                             pool, and no scenario in which Collateral profits more when you miss.</p>
                     </div>
 
-                    <div class="sch plate-quiet ticks" style="margin-top:34px">
+                    <div class="sch plate-quiet" style="margin-top:34px">
                         <div class="sch-head">
                             <span class="mono">Drawing 01 &middot; full settlement path</span>
                             <span class="mono">Rev. 2026.03</span>

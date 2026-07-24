@@ -1196,110 +1196,129 @@ export function renderLanding() {
 
                     </div>
 
-                    <!-- LIVE DUELS STRIP BELOW -->
-                    <div class="reveal-item" style="margin-top: clamp(36px,4vw,58px); width: 100% !important; max-width: 1080px !important; margin-left: auto !important; margin-right: auto !important;">
-                        <div style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; margin-bottom: 16px !important;">
-                            <span style="width: 32px !important; height: 1.5px !important; background: #7A1C2B !important; opacity: 0.5 !important;"></span>
-                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 2px !important; color: #8C8577 !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; gap: 6px !important;">
-                                <span style="width: 6px !important; height: 6px !important; border-radius: 50% !important; background: #3F9D5A !important; display: inline-block !important;"></span> LIVE RIVALRY DUELS
-                            </span>
-                            <span style="width: 32px !important; height: 1.5px !important; background: #7A1C2B !important; opacity: 0.5 !important;"></span>
+                    <!-- LIVE RIVALRY DUELS STRIP BELOW -->
+                    <section class="reveal-item" style="margin-top: clamp(36px,4vw,58px); width: 100% !important; max-width: 720px !important; margin-left: auto !important; margin-right: auto !important; padding: 0 12px !important; box-sizing: border-box !important;">
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 12px !important;">
+                            <span style="width: 7px !important; height: 7px !important; border-radius: 50% !important; background: #059669 !important; display: inline-block !important;"></span>
+                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 600 !important; letter-spacing: 0.04em !important; color: #78716C !important; margin: 0 !important; text-transform: uppercase !important;">
+                                Live rivalry duels
+                            </h2>
+                            <span style="flex: 1 !important; height: 1px !important; background: #E7E5E4 !important;"></span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, monospace !important; font-size: 12px !important; color: #A8A29E !important; font-weight: 500 !important;">2 active</span>
                         </div>
 
-                        <div class="oc-duels-card" style="background: #FFFDFA !important; border: 1.5px solid rgba(28,35,51,0.11) !important; border-radius: 16px !important; padding: 12px 20px !important; box-shadow: 0 8px 24px -16px rgba(28,35,51,0.25) !important; max-width: 1080px !important; margin: 0 auto !important; box-sizing: border-box !important;">
-                            <!-- DUEL 1 -->
-                            <div class="oc-duel" data-rivalry-id="R-VOSS-MARCUS" data-p1="JakeVoss" data-p1-delta="+12.4%" data-p2="Marcus" data-p2-delta="+9.2%" data-pool="$5,000" data-time="14 Days" data-platform="YouTube" style="cursor: pointer;">
-                                <div class="oc-duel-head">
-                                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
-                                        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
-                                            <g transform="translate(12 11.5)">
-                                                <g transform="rotate(-43) translate(0 2)">
-                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                                </g>
-                                                <g transform="rotate(43) translate(0 2)">
-                                                    <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
-                                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
-                                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
-                                                    </g>
-                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                        <span class="oc-duel-type">AUDIENCE</span>
+                        <div style="display: flex !important; flex-direction: column !important; gap: 10px !important; width: 100% !important;">
+                            <!-- DUEL CARD 1 -->
+                            <button type="button" class="rd-duel-card" data-rivalry-id="R-VOSS-MARCUS" data-p1="JakeVoss" data-p1-delta="+12.4%" data-p2="Marcus" data-p2-delta="+9.2%" data-pool="$5,000" data-time="14 Days" data-platform="YouTube" aria-label="Audience duel, @jakevoss versus @marcus. View duel.">
+                                <div style="display: flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 12px !important;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 500 !important; color: #78716C !important;">Audience</span>
+                                    <span style="margin-left: auto !important; background: #ECFDF5 !important; color: #047857 !important; padding: 3px 10px !important; border-radius: 9999px !important; font-size: 11px !important; font-weight: 600 !important; font-family: ui-monospace, SFMono-Regular, monospace !important;">Live · 14d left</span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 12px !important; margin-bottom: 10px !important;">
+                                    <!-- Challenger -->
+                                    <div style="min-width: 0 !important; flex: 1 !important;">
+                                        <div style="display: flex !important; align-items: center !important; gap: 6px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 15px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@jakevoss</span>
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Leading" style="display: block !important; flex-shrink: 0 !important;">
+                                                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                                            </svg>
+                                        </div>
+                                        <div style="margin-top: 2px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 700 !important; color: #059669 !important; font-variant-numeric: tabular-nums !important;">+12.4%</div>
                                     </div>
-                                    <div class="oc-duel-mob-sub" style="display: none;">$5,000 pool · 14d left</div>
-                                </div>
 
-                                <div class="oc-duel-match">
-                                    <span class="oc-duel-player">
-                                        <span class="oc-duel-user">@jakevoss</span>
-                                        <strong class="oc-duel-val green">+12.4%</strong>
-                                    </span>
-                                    <span class="oc-duel-vs">VS</span>
-                                    <span class="oc-duel-player">
-                                        <span class="oc-duel-user">@marcus</span>
-                                        <strong class="oc-duel-val red">+9.2%</strong>
-                                    </span>
-                                </div>
+                                    <span style="padding: 0 2px !important; font-family: ui-monospace, SFMono-Regular, monospace !important; font-size: 11px !important; font-weight: 700 !important; color: #A8A29E !important;">VS</span>
 
-                                <div class="oc-duel-meta">
-                                    <span class="oc-duel-pool">$5,000 <span class="oc-duel-sub">pool</span></span>
-                                    <span class="oc-duel-time">14d left</span>
-                                    <button class="oc-view">
-                                        View <span class="oc-arrow">→</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- DUEL 2 -->
-                            <div class="oc-duel" data-rivalry-id="R-REVPILOT-QUOTA" data-p1="revpilot" data-p1-delta="+8.1%" data-p2="quotaops" data-p2-delta="+5.4%" data-pool="$2,000" data-time="Settling" data-platform="Stripe Revenue" style="cursor: pointer;">
-                                <div class="oc-duel-head">
-                                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
-                                        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
-                                            <g transform="translate(12 11.5)">
-                                                <g transform="rotate(-43) translate(0 2)">
-                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                                </g>
-                                                <g transform="rotate(43) translate(0 2)">
-                                                    <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
-                                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
-                                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
-                                                    </g>
-                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                        <span class="oc-duel-type">REVENUE</span>
+                                    <!-- Opponent -->
+                                    <div style="min-width: 0 !important; flex: 1 !important; text-align: right !important;">
+                                        <div style="display: flex !important; align-items: center !important; justify-content: flex-end !important; gap: 6px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 15px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@marcus</span>
+                                        </div>
+                                        <div style="margin-top: 2px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 700 !important; color: #78716C !important; font-variant-numeric: tabular-nums !important;">+9.2%</div>
                                     </div>
-                                    <div class="oc-duel-mob-sub" style="display: none;">$2,000 pool · SETTLING</div>
                                 </div>
 
-                                <div class="oc-duel-match">
-                                    <span class="oc-duel-player">
-                                        <span class="oc-duel-user">@revpilot</span>
-                                        <strong class="oc-duel-val green">+8.1%</strong>
-                                    </span>
-                                    <span class="oc-duel-vs">VS</span>
-                                    <span class="oc-duel-player">
-                                        <span class="oc-duel-user">@quotaops</span>
-                                        <strong class="oc-duel-val red">+5.4%</strong>
-                                    </span>
+                                <!-- Momentum ShareBar -->
+                                <div style="display: flex !important; height: 6px !important; overflow: hidden !important; border-radius: 9999px !important; background: #F5F5F4 !important; margin-bottom: 12px !important;" role="img" aria-label="Leader holds 57 percent of the combined growth">
+                                    <span style="width: 57.4% !important; background: #059669 !important; height: 100% !important; transition: width 0.5s ease !important;"></span>
+                                    <span style="width: 2px !important; height: 100% !important; background: #FFFFFF !important; flex-shrink: 0 !important;"></span>
+                                    <span style="flex: 1 !important; background: #991B1B !important; height: 100% !important;"></span>
                                 </div>
 
-                                <div class="oc-duel-meta">
-                                    <span class="oc-duel-pool">$2,000 <span class="oc-duel-sub">pool</span></span>
-                                    <span class="oc-duel-settling">SETTLING</span>
-                                    <button class="oc-view">
-                                        View <span class="oc-arrow">→</span>
-                                    </button>
+                                <div style="display: flex !important; align-items: center !important; gap: 8px !important; border-top: 1px solid #F5F5F4 !important; padding-top: 10px !important;">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <circle cx="8" cy="8" r="6"/><path d="M18 0a6 6 0 0 1 0 12"/><path d="M6 15.35A6 6 0 0 0 12 21"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 700 !important; color: #1C1917 !important;">$5,000</span>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; color: #A8A29E !important;">pool</span>
+                                    <span style="margin-left: auto !important; display: inline-flex !important; align-items: center !important; gap: 6px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 600 !important; color: #78716C !important;" class="rd-cta-lbl">
+                                        View duel
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="rd-cta-arrow" style="display: block !important;">
+                                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                                        </svg>
+                                    </span>
                                 </div>
-                            </div>
+                            </button>
+
+                            <!-- DUEL CARD 2 -->
+                            <button type="button" class="rd-duel-card" data-rivalry-id="R-REVPILOT-QUOTA" data-p1="revpilot" data-p1-delta="+8.1%" data-p2="quotaops" data-p2-delta="+5.4%" data-pool="$2,000" data-time="Settling" data-platform="Stripe Revenue" aria-label="Revenue duel, @revpilot versus @quotaops. View results.">
+                                <div style="display: flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 12px !important;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 500 !important; color: #78716C !important;">Revenue</span>
+                                    <span style="margin-left: auto !important; background: #FEF3C7 !important; color: #B45309 !important; padding: 3px 10px !important; border-radius: 9999px !important; font-size: 11px !important; font-weight: 600 !important; font-family: ui-monospace, SFMono-Regular, monospace !important;">Settling</span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 12px !important; margin-bottom: 10px !important;">
+                                    <!-- Challenger -->
+                                    <div style="min-width: 0 !important; flex: 1 !important;">
+                                        <div style="display: flex !important; align-items: center !important; gap: 6px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 15px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@revpilot</span>
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Leading" style="display: block !important; flex-shrink: 0 !important;">
+                                                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                                            </svg>
+                                        </div>
+                                        <div style="margin-top: 2px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 700 !important; color: #059669 !important; font-variant-numeric: tabular-nums !important;">+8.1%</div>
+                                    </div>
+
+                                    <span style="padding: 0 2px !important; font-family: ui-monospace, SFMono-Regular, monospace !important; font-size: 11px !important; font-weight: 700 !important; color: #A8A29E !important;">VS</span>
+
+                                    <!-- Opponent -->
+                                    <div style="min-width: 0 !important; flex: 1 !important; text-align: right !important;">
+                                        <div style="display: flex !important; align-items: center !important; justify-content: flex-end !important; gap: 6px !important;">
+                                            <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 15px !important; font-weight: 600 !important; color: #1C1917 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">@quotaops</span>
+                                        </div>
+                                        <div style="margin-top: 2px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 700 !important; color: #78716C !important; font-variant-numeric: tabular-nums !important;">+5.4%</div>
+                                    </div>
+                                </div>
+
+                                <!-- Momentum ShareBar -->
+                                <div style="display: flex !important; height: 6px !important; overflow: hidden !important; border-radius: 9999px !important; background: #F5F5F4 !important; margin-bottom: 12px !important;" role="img" aria-label="Leader holds 60 percent of the combined growth">
+                                    <span style="width: 60% !important; background: #059669 !important; height: 100% !important; transition: width 0.5s ease !important;"></span>
+                                    <span style="width: 2px !important; height: 100% !important; background: #FFFFFF !important; flex-shrink: 0 !important;"></span>
+                                    <span style="flex: 1 !important; background: #991B1B !important; height: 100% !important;"></span>
+                                </div>
+
+                                <div style="display: flex !important; align-items: center !important; gap: 8px !important; border-top: 1px solid #F5F5F4 !important; padding-top: 10px !important;">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                        <circle cx="8" cy="8" r="6"/><path d="M18 0a6 6 0 0 1 0 12"/><path d="M6 15.35A6 6 0 0 0 12 21"/>
+                                    </svg>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 700 !important; color: #1C1917 !important;">$2,000</span>
+                                    <span style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; color: #A8A29E !important;">pool</span>
+                                    <span style="margin-left: auto !important; display: inline-flex !important; align-items: center !important; gap: 6px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 13px !important; font-weight: 600 !important; color: #78716C !important;" class="rd-cta-lbl">
+                                        View results
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="rd-cta-arrow" style="display: block !important;">
+                                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </button>
                         </div>
-                    </div>
+                    </section>
 
                 </div>
             </section>

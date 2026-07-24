@@ -7224,6 +7224,39 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   .l-br-desktop { display: none !important; }
 }
 
+/* 3. Modern Rivalry Duels Card Styles */
+.rd-duel-card {
+  display: block !important;
+  width: 100% !important;
+  border-radius: 14px !important;
+  border: 1px solid #E7E5E4 !important;
+  background: #FFFFFF !important;
+  padding: 16px 20px !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  outline: none !important;
+}
+.rd-duel-card:hover {
+  transform: translateY(-1.5px) !important;
+  border-color: #A8A29E !important;
+  background: #FAFAFA !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04) !important;
+}
+.rd-duel-card:hover .rd-cta-lbl {
+  color: #1C1917 !important;
+}
+.rd-duel-card:hover .rd-cta-arrow {
+  transform: translateX(3px) !important;
+  color: #1C1917 !important;
+}
+.rd-cta-arrow {
+  transition: transform 0.18s ease, color 0.18s ease !important;
+}
+
 /* ═══ COMPREHENSIVE MOBILE REFINEMENTS & CRITICAL BUG FIXES (390px READY) ═══ */
 
 /* 1. Header CTA button maroon color (#7A1C2B) */

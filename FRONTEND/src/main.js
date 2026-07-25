@@ -1880,44 +1880,23 @@ watchAccount(wagmiAdapter.wagmiConfig, {
 });
 
 function updateAuthUI() {
-    // Don't render until session hydration completes (prevents flicker)
     if (!appState.sessionHydrated) return;
 
     const btnAuth = document.getElementById('btn-auth');
     const capitalArea = document.getElementById('header-capital-area');
+    const headerAvatarInitial = document.getElementById('header-avatar-initial');
+    const headerAvatarImg = document.getElementById('header-avatar-img');
 
     if (appState.isLoggedIn) {
-        // Logged in: show capital, hide connect button
         if (btnAuth) btnAuth.style.display = 'none';
         if (capitalArea) {
-            capitalArea.style.display = '';
-            // Fetch balance for header
+            capitalArea.style.display = 'flex';
             window.api.getBillingStatus().then(res => {
                 const availCents = res?.balances?.availableBalanceUsdCents || 0;
                 const capEl = document.getElementById('header-avail-cap');
                 if (capEl) {
-                    if (!availCents || availCents <= 300) {
-                        capEl.textContent = '$2,500.00';
-                    } else {
-                        capEl.textContent = '$' + (availCents / 100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                    }
-                }
-            }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
-        }
-        console.log('[Auth] UI updated, showing:', appState.username);
-    } else {
-        // Logged out: hide capital, show connect button
-        if (btnAuth) btnAuth.style.display = '';
-        if (capitalArea) capitalArea.style.display = 'none';
-    }
-
-    // Update panel auth state (user card, account links, sign out)
-    if (window.app && window.app.updateMobileAuthUI) {
-        window.app.updateMobileAuthUI();
-    }
-}
-
-// Protected routes that require login
+                    const dollars = (!availCents || availCents <= 300) ? 2500 : Math.round(availCents / 100);
+                    capEl.textContent = '$'
 const protectedRoutes = ['/market', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources', '/rivalry', '/ledger', '/contract'];
 
 // Route change handler
@@ -2142,3 +2121,32 @@ function runDecoderAnimation() {
     });
 }
 setInterval(runDecoderAnimation, 500);
+ + dollars.toLocaleString();
+                }
+            }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
+        }
+
+        // Header Avatar Trigger Sync
+        if (headerAvatarInitial && appState.displayName) {
+            headerAvatarInitial.textContent = appState.displayName.charAt(0).toUpperCase();
+        }
+        if (appState.photoUrl && headerAvatarImg) {
+            headerAvatarImg.src = appState.photoUrl;
+            headerAvatarImg.style.display = 'block';
+            if (headerAvatarInitial) headerAvatarInitial.style.display = 'none';
+        } else {
+            if (headerAvatarImg) headerAvatarImg.style.display = 'none';
+            if (headerAvatarInitial) headerAvatarInitial.style.display = '';
+        }
+
+        console.log('[Auth] UI updated, showing:', appState.username);
+    } else {
+        if (btnAuth) btnAuth.style.display = 'inline-block';
+        if (capitalArea) capitalArea.style.display = 'none';
+    }
+
+    if (window.app && window.app.updateMobileAuthUI) {
+        window.app.updateMobileAuthUI();
+    }
+}
+

@@ -827,6 +827,40 @@ export function renderActiveContracts() {
             </div>
 
             <!-- Mechanism Section -->
+            
+            <!-- Open Rivalries Section -->
+            <section style="max-width: 1300px; margin: 64px auto 0; padding: 0 32px;">
+                <div style="border-top: 1px solid var(--rule, #DCD5C6); padding-top: 40px; margin-bottom: 24px;">
+                    <div class="mono-lbl" style="margin-bottom: 8px;">— OPEN RIVALRIES</div>
+                    <h2 class="eq-market-title" style="font-size: 32px; margin-bottom: 8px;">Somebody has to <strong>lose.</strong></h2>
+                    <p style="font-size: 14.5px; color: var(--ink-2, #4A5464); max-width: 580px; line-height: 1.6; margin: 0 0 24px;">Two operators, matched capital, one oracle. Join an open challenge or issue your own.</p>
+                </div>
+
+                <!-- Rivalry Stat Strip (Reconciled Subset of Page Totals) -->
+                <div style="display: flex; gap: 48px; padding: 18px 28px; background: var(--plate, #FFFDF9); border: 1px solid var(--rule, #DCD5C6); border-radius: var(--r, 2px); box-shadow: var(--lift); margin-bottom: 28px;">
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <div style="font-family: var(--display, 'Archivo', sans-serif); font-size: 24px; font-weight: 700; color: var(--ink, #0E1420); font-variant-numeric: tabular-nums;">4</div>
+                        <div class="mono-lbl">OPEN CHALLENGES</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <div style="font-family: var(--display, 'Archivo', sans-serif); font-size: 24px; font-weight: 700; color: var(--ink, #0E1420); font-variant-numeric: tabular-nums;">$184.2k</div>
+                        <div class="mono-lbl">MATCHED CAPITAL</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <div style="font-family: var(--display, 'Archivo', sans-serif); font-size: 24px; font-weight: 700; color: var(--win, #186B4A); font-variant-numeric: tabular-nums;">18</div>
+                        <div class="mono-lbl">DUELS SETTLED THIS WEEK</div>
+                    </div>
+                </div>
+
+                <!-- Rivalry Cards Grid -->
+                <div class="eq-grid" id="rivalry-grid" style="margin-bottom: 28px;">
+                    <!-- Rendered dynamically -->
+                </div>
+
+                <!-- Issue a Challenge CTA -->
+                <button class="eq-btn-primary" style="width: 100%; text-align: center; padding: 16px;" onclick="window.router.navigate('/rivalry')">ISSUE A CHALLENGE &rarr;</button>
+            </section>
+
             <section class="eq-mechanism">
                 <div style="margin-bottom: 32px;">
                     <div class="mono-lbl" style="margin-bottom: 8px;">DETERMINISTIC PROTOCOL</div>
@@ -1055,6 +1089,138 @@ export function initActiveContracts() {
         }
     ];
 
+    
+    // Mock Rivalries Data (Open challenges sorted above Live duels)
+    const mockRivalries = [
+        {
+            id: 'RVL-9981-A',
+            title: 'Shopify Revenue Growth (30d)',
+            domain: 'commerce',
+            platform: 'SHOPIFY',
+            rail: 'USD · CUSTODIAL',
+            state: 'open', // OPEN CHALLENGE (Sorted first!)
+            receipt: 'RCPT-9981',
+            days_left: 14,
+            stake_per_side: 500,
+            total_pool: 1000,
+            op1: { handle: '@northloop', delta: '+22.4%', is_leader: true },
+            op2: { handle: 'AWAITING COUNTERPARTY', delta: '—', is_leader: false }
+        },
+        {
+            id: 'RVL-4412-B',
+            title: 'X Follower Sprint (14d)',
+            domain: 'social',
+            platform: 'X API',
+            rail: 'CLTR · ON-CHAIN',
+            state: 'open', // OPEN CHALLENGE (Sorted first!)
+            receipt: 'RCPT-4412',
+            days_left: 7,
+            stake_per_side: 1000,
+            total_pool: 2000,
+            op1: { handle: '@solomon_k', delta: '+14.2%', is_leader: true },
+            op2: { handle: 'AWAITING COUNTERPARTY', delta: '—', is_leader: false }
+        },
+        {
+            id: 'RVL-7710-C',
+            title: 'Monthly Recurring Revenue Duel',
+            domain: 'finance',
+            platform: 'STRIPE',
+            rail: 'USD · CUSTODIAL',
+            state: 'live', // LIVE DUEL
+            receipt: 'RCPT-7710',
+            days_left: 10,
+            stake_per_side: 2500,
+            total_pool: 5000,
+            op1: { handle: '@vance_cap', delta: '+34.8%', is_leader: true },
+            op2: { handle: '@meridian', delta: '+19.2%', is_leader: false }
+        },
+        {
+            id: 'RVL-3341-D',
+            title: 'YouTube Subscriber Growth',
+            domain: 'social',
+            platform: 'YOUTUBE',
+            rail: 'CLTR · ON-CHAIN',
+            state: 'live', // LIVE DUEL
+            receipt: 'RCPT-3341',
+            days_left: 3,
+            stake_per_side: 750,
+            total_pool: 1500,
+            op1: { handle: '@atlas_v', delta: '+8.6%', is_leader: true },
+            op2: { handle: '@kodiak', delta: '+5.1%', is_leader: false }
+        }
+    ];
+
+    function renderRivalries() {
+        const rGrid = document.getElementById('rivalry-grid');
+        if (!rGrid) return;
+        rGrid.innerHTML = '';
+
+        let list = [...mockRivalries];
+        if (activeCategory !== 'all') {
+            list = list.filter(r => r.domain.toLowerCase() === activeCategory.toLowerCase());
+        }
+
+        // Sort Open challenges first
+        list.sort((a, b) => (a.state === 'open' ? -1 : b.state === 'open' ? 1 : 0));
+
+        list.forEach(r => {
+            const card = document.createElement('div');
+            card.className = 'eq-card';
+            card.style.position = 'relative';
+
+            const stateBadge = r.state === 'open' 
+                ? '<span class="mono-lbl" style="background: rgba(122,28,41,0.08); color: #7A1C29; border: 1px solid rgba(122,28,41,0.2); padding: 3px 8px; border-radius: 2px;">OPEN CHALLENGE</span>'
+                : '<span class="mono-lbl" style="background: rgba(24,107,74,0.08); color: #186B4A; border: 1px solid rgba(24,107,74,0.2); padding: 3px 8px; border-radius: 2px;">LIVE DUEL &middot; ' + r.days_left + 'd left</span>';
+
+            const ctaBtn = r.state === 'open'
+                ? '<button class="eq-card-cta" style="background:#7A1C29 !important; color:#FFF8F5 !important;">ACCEPT CHALLENGE</button>'
+                : '<button class="eq-card-cta" style="background:transparent !important; color:#0E1420 !important; border:1px solid #0E1420 !important;">VIEW DUEL &rarr;</button>';
+
+            const op1Color = r.op1.is_leader ? 'var(--win, #186B4A)' : 'var(--ink, #0E1420)';
+            const op2Color = r.state === 'open' ? 'var(--ink-3, #6E7686)' : (r.op2.is_leader ? 'var(--win, #186B4A)' : 'var(--ink, #0E1420)');
+
+            card.innerHTML = `
+                <div class="eq-card-header-line1">
+                    ${stateBadge}
+                </div>
+                <div class="eq-card-header-line2">
+                    <span class="mono-lbl">${r.receipt}</span>
+                    <span class="mono-lbl" style="font-variant-numeric: tabular-nums;">${r.days_left}d left</span>
+                </div>
+                <h3 class="eq-card-title" style="font-size:16px;">${r.title}</h3>
+                <div class="eq-card-provider">
+                    <span class="eq-platform-dot"></span>
+                    <span class="mono-lbl">${r.domain.toUpperCase()} &middot; ${r.platform}</span>
+                </div>
+                <div class="eq-card-divider"></div>
+
+                <!-- Dual Competitor & Proportional Bar -->
+                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                    <div style="display:flex; justify-space-between; align-items:center; font-size:13px; font-weight:700;">
+                        <span style="color:${op1Color}">${r.op1.handle} (${r.op1.delta})</span>
+                        <span style="color:${op2Color}">${r.op2.handle} (${r.op2.delta})</span>
+                    </div>
+                    <!-- Proportional Share Bar -->
+                    <div style="height:6px; width:100%; background:var(--paper-alt, #EFEAE0); border-radius:3px; overflow:hidden; display:flex;">
+                        <div style="width:${r.state === 'open' ? '50%' : '60%'}; background:var(--win, #186B4A);"></div>
+                        <div style="width:${r.state === 'open' ? '50%' : '40%'}; background:var(--rule-strong, #BDB3A0);"></div>
+                    </div>
+                </div>
+
+                <div class="eq-card-stake-info" style="margin-bottom:16px;">
+                    <div>
+                        <div class="eq-stake-val" style="font-size:16px;">${r.stake_per_side.toLocaleString()} / side</div>
+                        <div class="mono-lbl" style="font-size:9px;">${r.total_pool.toLocaleString()} TOTAL POOL</div>
+                    </div>
+                    <span style="font-family:var(--mono, 'IBM Plex Mono', monospace); font-size:9.5px; font-weight:700; background:var(--paper-alt, #EFEAE0); border:1px solid var(--rule, #DCD5C6); padding:2px 6px; border-radius:2px; color:var(--ink, #0E1420);">${r.rail}</span>
+                </div>
+
+                ${ctaBtn}
+            `;
+            rGrid.appendChild(card);
+        });
+    }
+
     function renderGrid(contracts) {
         grid.innerHTML = '';
 
@@ -1172,6 +1338,7 @@ export function initActiveContracts() {
             tab.classList.add('active');
             activeSort = tab.dataset.sort;
             renderGrid();
+    renderRivalries();
         });
     }
 
@@ -1185,6 +1352,8 @@ export function initActiveContracts() {
             pill.classList.add('active');
             activeCategory = pill.dataset.category;
             renderGrid();
+    renderRivalries();
+            renderRivalries();
         });
     }
 
@@ -1256,4 +1425,5 @@ export function initActiveContracts() {
 
     // Initial render
     renderGrid();
+    renderRivalries();
 }

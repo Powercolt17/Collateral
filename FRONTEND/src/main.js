@@ -1505,30 +1505,39 @@ window.app = {
         document.addEventListener('keydown', window.app._focusHandler);
     },
     updateMobileAuthUI: function () {
+        const headerCapitalArea = document.getElementById('header-capital-area');
+        const btnAuthHeader = document.getElementById('btn-auth');
+
         const mobileUserSection = document.getElementById('mobile-user-section');
+        const mobileCapitalSummary = document.getElementById('mobile-capital-summary');
         const mobileAccountLinks = document.getElementById('mobile-account-links');
         const mobileConnectSection = document.getElementById('mobile-connect-section');
         const signoutBtn = document.getElementById('pnl-signout-btn');
+
         const mobileInitial = document.getElementById('mobile-menu-initial');
         const mobileUsername = document.getElementById('mobile-menu-username');
         const mobileAvatar = document.getElementById('mobile-menu-avatar');
         const mobileBadge = document.querySelector('.pnl-user-badge');
 
         if (appState.isLoggedIn) {
-            // Show user identity + account links + sign out, hide connect
-            if (mobileUserSection) mobileUserSection.classList.add('visible');
+            // Header: Show capital balance, hide sign-in button
+            if (headerCapitalArea) headerCapitalArea.style.display = 'flex';
+            if (btnAuthHeader) btnAuthHeader.style.display = 'none';
+
+            // Drawer: Show user profile + capital block + account links + signout, HIDE sign-in callout
+            if (mobileUserSection) mobileUserSection.style.display = 'flex';
+            if (mobileCapitalSummary) mobileCapitalSummary.style.display = 'grid';
             if (mobileAccountLinks) mobileAccountLinks.style.display = 'block';
             if (signoutBtn) signoutBtn.style.display = 'flex';
             if (mobileConnectSection) mobileConnectSection.style.display = 'none';
 
-            if (mobileInitial && appState.displayName) {
-                mobileInitial.textContent = appState.displayName.charAt(0).toUpperCase();
-            }
             if (mobileUsername && appState.username) {
                 mobileUsername.textContent = '@' + appState.username;
             }
+            if (mobileInitial && appState.displayName) {
+                mobileInitial.textContent = appState.displayName.charAt(0).toUpperCase();
+            }
 
-            // Show avatar image if available, hide initial
             if (appState.photoUrl && mobileAvatar) {
                 mobileAvatar.src = appState.photoUrl;
                 mobileAvatar.style.display = 'block';
@@ -1537,11 +1546,16 @@ window.app = {
             } else {
                 if (mobileAvatar) mobileAvatar.style.display = 'none';
                 if (mobileInitial) mobileInitial.style.display = '';
-                if (mobileBadge) mobileBadge.style.background = '#111';
+                if (mobileBadge) mobileBadge.style.background = '#0E1420';
             }
         } else {
-            // Hide user identity + account links + sign out, show connect
-            if (mobileUserSection) mobileUserSection.classList.remove('visible');
+            // Header: Show sign-in button, hide capital balance
+            if (headerCapitalArea) headerCapitalArea.style.display = 'none';
+            if (btnAuthHeader) btnAuthHeader.style.display = 'inline-block';
+
+            // Drawer: Show sign-in callout row, HIDE profile + capital block + account section
+            if (mobileUserSection) mobileUserSection.style.display = 'none';
+            if (mobileCapitalSummary) mobileCapitalSummary.style.display = 'none';
             if (mobileAccountLinks) mobileAccountLinks.style.display = 'none';
             if (signoutBtn) signoutBtn.style.display = 'none';
             if (mobileConnectSection) mobileConnectSection.style.display = 'block';

@@ -1,46 +1,32 @@
-// Header Component - Refactored Navigation Drawer & Responsive Panel
+// Header Component - Right-Anchored Navigation Drawer & Responsive Panel
 export function renderHeader(currentRoute = '') {
-    const isMarket = currentRoute === '/market' || currentRoute.startsWith('/market/');
+    // Route matching (root '/' maps to MARKET as default active)
+    const isRoot = currentRoute === '/' || currentRoute === '' || currentRoute === '/market';
+    const isMarket = isRoot || currentRoute.startsWith('/market/');
     const isActiveContracts = currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/');
     const isLedger = currentRoute === '/ledger';
     const isSources = currentRoute === '/sources';
-    const isProtocol = currentRoute === '/protocol' || currentRoute.startsWith('/protocol');
     const isCustodyTerminal = currentRoute === '/protocol?tab=terminal';
+    const isProtocol = (currentRoute === '/protocol' || currentRoute.startsWith('/protocol')) && !isCustodyTerminal;
     const isDocs = currentRoute === '/docs';
     const isProfile = currentRoute === '/profile';
     const isReferrals = currentRoute === '/referrals';
     const isFunding = currentRoute === '/funding';
 
-    const routes = [
-        { path: '/market', label: 'MARKET', hasDropdown: true },
-        { path: '/my-contracts', label: 'ACTIVE' },
-        { path: '/ledger', label: 'LEDGER' },
-        { path: '/sources', label: 'SOURCES' },
-        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true },
-        { path: '/protocol?tab=terminal', label: 'CUSTODY TERMINAL' }
-    ];
-
     // Desktop top-bar nav links
     const topNavItems = [
-        { path: '/market', label: 'MARKET' },
-        { path: '/my-contracts', label: 'ACTIVE' },
-        { path: '/ledger', label: 'LEDGER' },
-        { path: '/sources', label: 'SOURCES' },
-        { path: '/protocol', label: 'PROTOCOL' },
-        { path: '/protocol?tab=terminal', label: 'CUSTODY TERMINAL' }
-    ].map(route => {
-        const active = currentRoute === route.path || 
-            (route.path === '/market' && isMarket) ||
-            (route.path === '/my-contracts' && isActiveContracts) ||
-            (route.path === '/protocol' && isProtocol && !isCustodyTerminal);
-
-        return `<a href="#" onclick="window.router.navigate('${route.path}'); return false;" class="nav-link ${active ? 'active' : ''}" ${active ? 'aria-current="page"' : ''}>${route.label}</a>`;
-    }).join('');
+        { path: '/market', label: 'MARKET', active: isMarket },
+        { path: '/my-contracts', label: 'ACTIVE', active: isActiveContracts },
+        { path: '/ledger', label: 'LEDGER', active: isLedger },
+        { path: '/sources', label: 'SOURCES', active: isSources },
+        { path: '/protocol', label: 'PROTOCOL', active: isProtocol },
+        { path: '/protocol?tab=terminal', label: 'CUSTODY TERMINAL', active: isCustodyTerminal }
+    ].map(route => `<a href="#" onclick="window.router.navigate('${route.path}'); return false;" class="nav-link ${route.active ? 'active' : ''}" ${route.active ? 'aria-current="page"' : ''}>${route.label}</a>`).join('');
 
     return `
         <style>
             /* ══════════════════════════════════════════════════════════════
-               NAVIGATION DRAWER & PANEL STYLES
+               RIGHT-ANCHORED NAVIGATION DRAWER & PANEL STYLES
                ══════════════════════════════════════════════════════════════ */
             .ch-header {
                 width: 100%;
@@ -59,7 +45,7 @@ export function renderHeader(currentRoute = '') {
                 height: 100%;
                 display: flex;
                 align-items: center;
-                gap: 40px;
+                gap: 36px;
             }
             .ch-logo-wordmark {
                 font-family: var(--display, 'Archivo', sans-serif);
@@ -73,7 +59,7 @@ export function renderHeader(currentRoute = '') {
             .ch-nav {
                 display: none;
                 align-items: center;
-                gap: 24px;
+                gap: 22px;
                 flex: 1;
             }
             @media (min-width: 1024px) {
@@ -112,6 +98,31 @@ export function renderHeader(currentRoute = '') {
                 gap: 16px;
                 margin-left: auto;
             }
+
+            .ch-capital-btn {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                cursor: pointer;
+                padding-right: 16px;
+                border-right: 1px solid var(--rule, #DCD5C6);
+            }
+
+            .ch-connect-btn {
+                padding: 8px 16px;
+                font-size: 11px;
+                font-weight: 700;
+                color: #FFF8F5;
+                background: var(--blood, #7A1C29);
+                border: none;
+                border-radius: var(--r, 2px);
+                cursor: pointer;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                transition: background 150ms ease;
+            }
+            .ch-connect-btn:hover { background: #54111B; }
 
             .ch-hamburger {
                 width: 40px;
@@ -153,7 +164,7 @@ export function renderHeader(currentRoute = '') {
             .ch-hamburger.open .ch-hamburger-lines span:nth-child(2) { opacity: 0; }
             .ch-hamburger.open .ch-hamburger-lines span:nth-child(3) { transform: translateY(-5.25px) rotate(-45deg); }
 
-            /* ════════ SCRIM / OVERLAY (Mobile <768px only) ════════ */
+            /* ════════ SCRIM OVERLAY (Mobile <768px only) ════════ */
             .pnl-overlay {
                 position: fixed;
                 inset: 0;
@@ -173,20 +184,22 @@ export function renderHeader(currentRoute = '') {
                 .pnl-overlay { display: none !important; }
             }
 
-            /* ════════ UNIVERSAL PANEL CONTAINER ════════ */
+            /* ════════ UNIVERSAL RIGHT-ANCHORED PANEL ════════ */
             .pnl-drawer {
                 position: fixed;
                 top: 0;
-                left: 0;
+                right: 0; /* ANCHORED FLUSH TO RIGHT EDGE */
+                left: auto;
                 bottom: 0;
                 height: 100vh;
                 background: var(--paper, #FFFDF9);
-                border-right: 1px solid var(--rule, #DCD5C6);
+                border-left: 1px solid var(--rule, #DCD5C6);
+                border-right: none;
                 z-index: 100;
                 display: flex;
                 flex-direction: column;
-                box-shadow: 12px 0 36px rgba(14, 20, 32, 0.08);
-                box-sizing: border-border;
+                box-shadow: -12px 0 36px rgba(14, 20, 32, 0.08);
+                box-sizing: border-box;
             }
 
             /* Mobile (<768px): overlay drawer 85vw max 360px */
@@ -194,7 +207,7 @@ export function renderHeader(currentRoute = '') {
                 .pnl-drawer {
                     width: 85vw;
                     max-width: 360px;
-                    transform: translateX(-100%);
+                    transform: translateX(100%); /* SLIDES FROM RIGHT */
                     transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
                 }
                 .pnl-drawer.open {
@@ -202,11 +215,11 @@ export function renderHeader(currentRoute = '') {
                 }
             }
 
-            /* Desktop (>=768px): 280px fixed panel flush to edge */
+            /* Desktop (>=768px): 280px fixed panel anchored to right edge */
             @media (min-width: 768px) {
                 .pnl-drawer {
                     width: 280px;
-                    transform: translateX(-100%);
+                    transform: translateX(100%);
                     transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
                 }
                 .pnl-drawer.open {
@@ -214,7 +227,7 @@ export function renderHeader(currentRoute = '') {
                 }
             }
 
-            /* Header row inside panel */
+            /* Panel Header (Single Close Button Inside Panel Header) */
             .pnl-header {
                 display: flex;
                 justify-content: space-between;
@@ -256,9 +269,9 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: -2px;
             }
 
-            /* User identity card (No left border, accent means location only) */
+            /* User identity card (No left accent border) */
             .pnl-user {
-                display: none;
+                display: flex;
                 align-items: center;
                 gap: 14px;
                 padding: 16px 20px;
@@ -266,7 +279,6 @@ export function renderHeader(currentRoute = '') {
                 border-bottom: 1px solid var(--rule, #DCD5C6);
                 flex-shrink: 0;
             }
-            .pnl-user.visible { display: flex; }
             .pnl-user-badge {
                 width: 40px;
                 height: 40px;
@@ -304,17 +316,20 @@ export function renderHeader(currentRoute = '') {
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-            .pnl-user-handle {
+            .pnl-user-role {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
-                font-size: 11px;
+                font-size: 9.5px;
+                font-weight: 500;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
                 color: var(--ink-3, #6E7686);
             }
 
-            /* Capital Summary Block (Two columns directly under profile) */
+            /* Capital Summary Block (3 values: Cash Balance, Notional Exposure, Account Health) */
             .pnl-capital-summary {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
                 padding: 14px 20px;
                 background: var(--plate, #FFFDF9);
                 border-bottom: 1px solid var(--rule, #DCD5C6);
@@ -328,14 +343,16 @@ export function renderHeader(currentRoute = '') {
                 display: flex;
                 flex-direction: column;
                 gap: 3px;
+                min-width: 0;
             }
             .pnl-cap-lbl {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
-                font-size: 9px;
+                font-size: 8px;
                 font-weight: 500;
-                letter-spacing: 0.12em;
+                letter-spacing: 0.1em;
                 text-transform: uppercase;
                 color: var(--ink-3, #6E7686);
+                white-space: nowrap;
             }
             .pnl-cap-val {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
@@ -343,6 +360,16 @@ export function renderHeader(currentRoute = '') {
                 font-weight: 700;
                 font-variant-numeric: tabular-nums;
                 color: var(--ink, #0E1420);
+                white-space: nowrap;
+            }
+            .pnl-cap-val--secondary {
+                font-size: 11px;
+                font-weight: 500;
+                color: var(--ink-3, #6E7686);
+            }
+            .pnl-cap-val--health {
+                font-size: 12px;
+                color: var(--win, #186B4A);
             }
 
             /* Body wrapper with scroll affordance mask */
@@ -396,7 +423,7 @@ export function renderHeader(currentRoute = '') {
                 border-bottom: 1px solid var(--rule-light, #EFECE6);
             }
 
-            /* Navigation Rows (Mobile >=44px, Desktop >=36px) */
+            /* Navigation Rows (Left Text, Right Active Accent Rail on Panel Edge) */
             .pnl-nav-link, .pnl-acct-link {
                 width: 100%;
                 display: flex;
@@ -407,9 +434,11 @@ export function renderHeader(currentRoute = '') {
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
                 text-decoration: none;
+                text-align: left;
                 background: transparent;
                 border: none;
-                border-left: 3px solid transparent;
+                border-right: 3px solid transparent; /* MIRRORED ACCENT RAIL ON RIGHT EDGE */
+                border-left: none;
                 color: var(--ink, #0E1420);
                 cursor: pointer;
                 transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
@@ -418,14 +447,14 @@ export function renderHeader(currentRoute = '') {
             @media (max-width: 767px) {
                 .pnl-nav-link, .pnl-acct-link {
                     min-height: 44px;
-                    padding: 10px 20px;
+                    padding: 10px 24px 10px 20px; /* Padding reserves room for right rail */
                     font-size: 12px;
                 }
             }
             @media (min-width: 768px) {
                 .pnl-nav-link, .pnl-acct-link {
                     min-height: 36px;
-                    padding: 8px 20px;
+                    padding: 8px 24px 8px 20px;
                     font-size: 11.5px;
                 }
             }
@@ -437,9 +466,9 @@ export function renderHeader(currentRoute = '') {
                 }
             }
 
-            /* Parent Active State: 3px accent left rail + fill + accent text */
+            /* Parent Active State: 3px accent rail on RIGHT panel edge + fill + accent text */
             .pnl-nav-link.active, .pnl-acct-link.active {
-                border-left-color: var(--blood, #7A1C29) !important;
+                border-right-color: var(--blood, #7A1C29) !important;
                 background: rgba(122, 28, 41, 0.05) !important;
                 color: var(--blood, #7A1C29) !important;
                 font-weight: 700;
@@ -472,7 +501,7 @@ export function renderHeader(currentRoute = '') {
             .pnl-subnav-link {
                 display: flex;
                 align-items: center;
-                padding: 8px 20px 8px 36px;
+                padding: 8px 24px 8px 36px;
                 min-height: 36px;
                 font-family: var(--display, 'Archivo', sans-serif);
                 font-size: 13px;
@@ -480,6 +509,7 @@ export function renderHeader(currentRoute = '') {
                 color: var(--ink-2, #4A5464);
                 text-decoration: none;
                 border-left: 1px solid var(--rule, #DCD5C6);
+                border-right: none !important;
                 margin-left: 20px;
                 transition: color 150ms ease, border-color 150ms ease;
                 box-sizing: border-box;
@@ -504,37 +534,15 @@ export function renderHeader(currentRoute = '') {
                 margin: 12px 20px;
             }
 
-            /* Sign out button */
-            .pnl-signout {
-                width: calc(100% - 40px);
-                margin: 14px 20px 6px;
-                min-height: 40px;
-                padding: 10px 16px;
-                font-family: var(--mono, 'IBM Plex Mono', monospace);
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: var(--blood, #7A1C29);
-                background: rgba(122, 28, 41, 0.04);
-                border: 1px solid rgba(122, 28, 41, 0.2);
-                border-radius: var(--r, 2px);
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                transition: background 150ms ease, border-color 150ms ease;
+            /* Sign Out Row: Plain row matching other account links, visually de-emphasized */
+            .pnl-signout-row {
+                color: var(--ink-3, #6E7686);
             }
-            .pnl-signout:hover {
-                background: rgba(122, 28, 41, 0.08);
-                border-color: var(--blood, #7A1C29);
-            }
-            .pnl-signout:focus-visible {
-                outline: 2px solid var(--blood, #7A1C29);
-                outline-offset: -2px;
+            .pnl-signout-row:hover {
+                color: var(--blood, #7A1C29) !important;
             }
 
-            /* Connect promo block */
+            /* Connect Callout (Logged Out State) */
             .pnl-connect-section {
                 padding: 16px 20px;
                 border-top: 1px solid var(--rule, #DCD5C6);
@@ -663,8 +671,16 @@ export function renderHeader(currentRoute = '') {
                     ${topNavItems}
                 </nav>
 
-                <!-- Right Controls -->
+                <!-- Right Controls (Header Has ONLY Capital Button + Sign In + Hamburger) -->
                 <div class="ch-right">
+                    <div class="ch-capital-btn" id="header-capital-area" onclick="window.router.navigate('/funding')" style="${isFunding ? 'display: none !important;' : ''}">
+                        <span style="font-size: 9px; color: var(--ink-3, #6E7686); font-family: var(--mono, 'IBM Plex Mono', monospace); letter-spacing: 0.14em; text-transform: uppercase;">Available Balance</span>
+                        <span id="header-avail-cap" style="font-size: 13.5px; font-weight: 700; color: var(--ink, #0E1420); font-variant-numeric: tabular-nums; font-family: var(--mono, 'IBM Plex Mono', monospace);">$2,500.00</span>
+                    </div>
+
+                    <button class="ch-connect-btn" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
+
+                    <!-- Hamburger Button (Top Right Trigger) -->
                     <button id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
                             class="ch-hamburger" 
@@ -684,7 +700,7 @@ export function renderHeader(currentRoute = '') {
         <!-- Scrim Overlay (Mobile <768px) -->
         <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
 
-        <!-- Universal Navigation Panel -->
+        <!-- Universal Navigation Panel (Anchored Right) -->
         <aside id="mobile-menu" 
                class="pnl-drawer" 
                role="dialog" 
@@ -698,31 +714,35 @@ export function renderHeader(currentRoute = '') {
                 </button>
             </div>
 
-            <!-- Profile Row (No accent left rail) -->
-            <div id="mobile-user-section" class="pnl-user">
+            <!-- Profile Row (Shown when logged in) -->
+            <div id="mobile-user-section" class="pnl-user" style="display:none;">
                 <div class="pnl-user-badge">
                     <span class="pnl-user-initial" id="mobile-menu-initial">U</span>
                     <img class="pnl-user-avatar" id="mobile-menu-avatar" alt="" />
                 </div>
                 <div class="pnl-user-info">
-                    <span class="pnl-user-name" id="mobile-menu-username">User</span>
-                    <span class="pnl-user-handle" id="mobile-menu-handle">@user</span>
+                    <span class="pnl-user-name" id="mobile-menu-username">@user</span>
+                    <span class="pnl-user-role">VERIFIED OPERATOR &middot; CUSTODIAL TIER 1</span>
                 </div>
             </div>
 
-            <!-- Capital Summary Block (Tapping routes to /funding) -->
-            <div id="mobile-capital-summary" class="pnl-capital-summary" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding');">
+            <!-- Capital Summary Block (3 values: Cash Balance, Notional Exposure, Account Health) -->
+            <div id="mobile-capital-summary" class="pnl-capital-summary" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding');" style="display:none;">
                 <div class="pnl-cap-col">
-                    <span class="pnl-cap-lbl">AVAILABLE BALANCE</span>
+                    <span class="pnl-cap-lbl">AVAILABLE</span>
                     <span class="pnl-cap-val">$2,500.00</span>
                 </div>
                 <div class="pnl-cap-col">
-                    <span class="pnl-cap-lbl">OPEN EXPOSURE</span>
-                    <span class="pnl-cap-val">$633,600.00</span>
+                    <span class="pnl-cap-lbl">NOTIONAL</span>
+                    <span class="pnl-cap-val pnl-cap-val--secondary">$633.6k</span>
+                </div>
+                <div class="pnl-cap-col">
+                    <span class="pnl-cap-lbl">HEALTH</span>
+                    <span class="pnl-cap-val pnl-cap-val--health">98.4%</span>
                 </div>
             </div>
 
-            <!-- Body Wrapper with Bottom Scroll Affordance Mask -->
+            <!-- Body Wrapper with Scroll Affordance Mask -->
             <div class="pnl-body-wrap">
                 <div class="pnl-body" id="pnl-body-scroll">
                     <nav aria-label="Sidebar Navigation">
@@ -734,7 +754,8 @@ export function renderHeader(currentRoute = '') {
                                 <button class="pnl-nav-link ${isMarket ? 'active' : ''}" 
                                         onclick="window.app.toggleNavSection(this); return false;"
                                         aria-expanded="${isMarket ? 'true' : 'false'}"
-                                        aria-controls="subnav-market">
+                                        aria-controls="subnav-market"
+                                        ${isMarket ? 'aria-current="page"' : ''}>
                                     <span>MARKET</span>
                                     <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                                 </button>
@@ -751,12 +772,13 @@ export function renderHeader(currentRoute = '') {
                         <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/sources'); return false;" class="pnl-nav-link ${isSources ? 'active' : ''}" ${isSources ? 'aria-current="page"' : ''}>SOURCES</a>
 
                         <!-- PROTOCOL Group (Overview, Vision, Whitepaper, Economics) -->
-                        <div class="pnl-nav-group ${(isProtocol && !isCustodyTerminal) ? 'expanded' : ''}">
+                        <div class="pnl-nav-group ${isProtocol ? 'expanded' : ''}">
                             <div class="pnl-nav-group-header">
-                                <button class="pnl-nav-link ${(isProtocol && !isCustodyTerminal) ? 'active' : ''}" 
+                                <button class="pnl-nav-link ${isProtocol ? 'active' : ''}" 
                                         onclick="window.app.toggleNavSection(this); return false;"
-                                        aria-expanded="${(isProtocol && !isCustodyTerminal) ? 'true' : 'false'}"
-                                        aria-controls="subnav-protocol">
+                                        aria-expanded="${isProtocol ? 'true' : 'false'}"
+                                        aria-controls="subnav-protocol"
+                                        ${isProtocol ? 'aria-current="page"' : ''}>
                                     <span>PROTOCOL</span>
                                     <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                                 </button>
@@ -772,22 +794,23 @@ export function renderHeader(currentRoute = '') {
                         <!-- Promoted Custody Terminal Top-Level Item -->
                         <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=terminal'); return false;" class="pnl-nav-link ${isCustodyTerminal ? 'active' : ''}" ${isCustodyTerminal ? 'aria-current="page"' : ''}>CUSTODY TERMINAL</a>
 
-                        <!-- Account Group (Normalized uppercase without icons) -->
+                        <!-- Account Group (Shown ONLY when logged in) -->
                         <div id="mobile-account-links" style="display:none;">
                             <div class="pnl-divider"></div>
                             <div class="pnl-section-label">ACCOUNT</div>
-                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="pnl-acct-link ${isProfile ? 'active' : ''}">PROFILE</a>
-                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="pnl-acct-link ${isReferrals ? 'active' : ''}">REFERRALS</a>
-                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="pnl-acct-link ${isFunding ? 'active' : ''}">ACCOUNT CAPITAL</a>
-                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="pnl-acct-link ${isDocs ? 'active' : ''}">DOCUMENTATION</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="pnl-acct-link ${isProfile ? 'active' : ''}" ${isProfile ? 'aria-current="page"' : ''}>PROFILE</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="pnl-acct-link ${isReferrals ? 'active' : ''}" ${isReferrals ? 'aria-current="page"' : ''}>REFERRALS</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="pnl-acct-link ${isFunding ? 'active' : ''}" ${isFunding ? 'aria-current="page"' : ''}>ACCOUNT CAPITAL</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="pnl-acct-link ${isDocs ? 'active' : ''}" ${isDocs ? 'aria-current="page"' : ''}>DOCUMENTATION</a>
 
-                            <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
+                            <!-- De-emphasized Plain Sign Out Row -->
+                            <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-acct-link pnl-signout-row" style="display:none;">
+                                <span>SIGN OUT</span>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                                SIGN OUT
                             </button>
                         </div>
 
-                        <!-- Connect Section (Logged out state) -->
+                        <!-- Sign In Row (Shown ONLY when logged OUT) -->
                         <div id="mobile-connect-section" class="pnl-connect-section">
                             <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
                                 SIGN IN

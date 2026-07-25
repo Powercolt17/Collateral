@@ -2002,7 +2002,9 @@ footer .logo-wordmark-light,
 
 /* ═══════════ SIGNATURE ═══════════ */
 .sign {
-  padding: clamp(36px, 6vw, 72px) clamp(24px, 4vw, 56px);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(36px, 6vw, 72px) clamp(24px, 5vw, 64px);
   text-align: center;
 }
 
@@ -2038,30 +2040,45 @@ footer .logo-wordmark-light,
 .sign-lines {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  gap: 48px;
   width: 100%;
-  max-width: 640px;
-  margin: 48px auto 0;
+  max-width: 720px;
+  margin: 52px auto 0;
   text-align: left;
 }
 
 .sign-line {
   border-top: 1px solid var(--ink);
   padding-top: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sign-script {
+  height: 32px;
+  display: flex;
+  align-items: flex-end;
   margin-bottom: 8px;
-  min-height: 28px;
   font-family: var(--display);
   font-size: 19px;
   font-weight: 600;
+  line-height: 1;
   letter-spacing: .02em;
+}
+
+.sign-line .mono {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  line-height: 1;
 }
 
 .disclosure {
   width: 100%;
-  max-width: 640px;
+  max-width: 720px;
   margin: 44px auto 0;
   font-family: var(--mono);
   font-size: 10px;
@@ -2070,7 +2087,6 @@ footer .logo-wordmark-light,
   text-align: left;
   letter-spacing: .02em;
 }
-
 
 /* ═══════════ MARGINALIA ═══════════ */
 .marg { display: flex; gap: 16px; align-items: flex-start; max-width: 660px; margin: 0; }

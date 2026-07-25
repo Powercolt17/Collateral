@@ -1,3 +1,4 @@
+import { PROTOCOL_METRICS } from '../constants/protocolMetrics.js';
 // Token view — CLTR Institutional Control Portal
 // Fully integrated with Reown AppKit & Viem on Robinhood Chain
 
@@ -1951,7 +1952,7 @@ export function renderToken() {
                             </div>
                             <div class="snapshot-card">
                                 <span class="snapshot-lbl">Avg Success Rate</span>
-                                <span class="snapshot-val">94.8%</span>
+                                <span class="snapshot-val">98.7%</span>
                             </div>
                             <div class="snapshot-card">
                                 <span class="snapshot-lbl">CLTR Burned</span>
@@ -2109,7 +2110,7 @@ export function renderToken() {
                         </div>
                         <div class="cltr-focal-mini-card">
                             <span class="cltr-focal-mini-lbl">GLOBAL SUCCESS RATE</span>
-                            <span class="cltr-focal-mini-num" id="focal-success-rate">94.8%</span>
+                            <span class="cltr-focal-mini-num" id="focal-success-rate">98.7%</span>
                         </div>
                     </div>
                 </div>

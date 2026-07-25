@@ -688,17 +688,12 @@ export function renderLanding() {
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
                     <div class="sign plate ticks r-plate">
-                        <svg width="70" height="70" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
-                             fill="none" stroke="#7A1C29">
-                            <circle cx="38" cy="38" r="35" stroke-width="1"/>
-                            <circle cx="38" cy="38" r="30" stroke-width=".6"/>
-                            <circle cx="38" cy="38" r="17" stroke-width=".6"/>
-                            <g stroke-width=".6" opacity=".7">
-                                <path d="M38 8v6M38 62v6M8 38h6M62 38h6M17 17l4 4M55 55l4 4M59 17l-4 4M21 55l-4 4"/>
-                            </g>
-                            <text x="38" y="43" text-anchor="middle" font-family="Archivo, sans-serif"
-                                  font-size="17" font-weight="700" fill="#7A1C29" stroke="none">C</text>
-                        </svg>
+                        <img src="/wax-seal-official.png" 
+                             alt="Collateral Official Wax Seal" 
+                             class="sign-seal-img" 
+                             width="84" 
+                             height="84" 
+                             style="display: block; margin: 0 auto 20px auto; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(122, 28, 41, 0.28)); transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);" />
                         <h2 class="sign-title">Sign it, and the week reorders itself</h2>
                         <p class="sign-copy">You will know within about four days whether you meant it. That is
                             the fastest honest answer anyone has ever given you about your own goal.</p>
@@ -1039,7 +1034,7 @@ export function initLanding() {
     }
 
     /* ── Seal Strike Observer ── */
-    var seal = document.querySelector('.sign svg');
+    var seal = document.querySelector('.sign-seal-img') || document.querySelector('.sign svg');
     if (seal && 'IntersectionObserver' in window && !reduce) {
         var sealed = false;
         new IntersectionObserver(function(en){

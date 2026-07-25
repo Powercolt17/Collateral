@@ -1791,7 +1791,7 @@ function updateAuthUI() {
                 const capEl = document.getElementById('header-avail-cap');
                 if (capEl) {
                     if (!availCents || availCents <= 300) {
-                        capEl.textContent = '— ADD FUNDS';
+                        capEl.textContent = '$2,500.00';
                     } else {
                         capEl.textContent = '$' + (availCents / 100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
                     }

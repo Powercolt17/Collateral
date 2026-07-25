@@ -1,14 +1,11 @@
 // PUBLIC LEDGER — Append-only record of executions and settlements
-// Institutional Document System Alignment (Paper #F7F4ED, Plates #FFFDF9, Dotted Separators, Dark Ink Pills #0E1420, Custom Sort)
+// Institutional Document System Alignment (Paper #F7F4ED, Plates #FFFDF9, Segmented Sort, Dark Ink Pills #0E1420)
 
 import { collateralFullLoader } from '../components/CollateralLoader.js';
 
 export function renderLedger() {
     return `
         <style>
-            /* ══════════════════════════════════════════════════════════════
-               ROOT DESIGN TOKEN BLOCK (HOMEPAGE PARITY)
-               ══════════════════════════════════════════════════════════════ */
             :root {
               --paper: #F7F4ED;
               --paper-alt: #EFEAE0;
@@ -243,14 +240,15 @@ export function renderLedger() {
                 padding: 16px 0;
                 border-bottom: 1px solid var(--rule, #DCD5C6);
                 flex-wrap: wrap;
-                gap: 12px;
+                gap: 16px;
             }
             .ldg-pills-group {
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
-            .ldg-pill {
+            .ldg .ldg-pill,
+            .ldg button.ldg-pill {
                 padding: 6px 14px;
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10.5px;
@@ -264,39 +262,17 @@ export function renderLedger() {
                 color: var(--ink-2, #4A5464);
                 transition: all 0.2s ease;
             }
-            /* Dark Ink Pills (#0E1420, NOT black) */
-            .ldg-pill.active {
+            /* Dark Ink Pills (#0E1420, ZERO pure black) */
+            .ldg .ldg-pill.active,
+            .ldg button.ldg-pill.active {
                 background: #0E1420 !important;
                 color: #FFFDF9 !important;
                 border-color: #0E1420 !important;
             }
-            .ldg-pill:hover:not(.active) {
+            .ldg .ldg-pill:hover:not(.active) {
                 border-color: var(--ink-3, #6E7686);
                 color: var(--ink, #0E1420);
             }
-
-            /* Custom Styled Clerical Select Dropdown */
-            .ldg-sort-inline {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            .ldg-sort-select {
-                padding: 6px 12px;
-                font-family: var(--mono, 'IBM Plex Mono', monospace);
-                font-size: 10.5px;
-                font-weight: 600;
-                letter-spacing: .12em;
-                text-transform: uppercase;
-                border: 1px solid var(--rule, #DCD5C6);
-                border-radius: var(--r, 2px);
-                background: var(--plate, #FFFDF9);
-                color: var(--ink, #0E1420);
-                cursor: pointer;
-                outline: none;
-                transition: border-color 0.2s ease;
-            }
-            .ldg-sort-select:focus { border-color: var(--ink, #0E1420); }
 
             /* ── Table Plate & Dotted Separators ── */
             .ldg-table-wrap {
@@ -327,12 +303,12 @@ export function renderLedger() {
                 text-align: right;
             }
             .ldg-table tbody tr {
-                border-bottom: 1px dotted var(--rule, #DCD5C6);
+                border-bottom: 1px dotted var(--rule, #DCD5C6) !important;
                 cursor: pointer;
                 transition: background 0.15s ease;
             }
             .ldg-table tbody tr:last-child {
-                border-bottom: none;
+                border-bottom: none !important;
             }
             .ldg-table tbody tr:hover {
                 background: rgba(122, 28, 41, 0.02);
@@ -365,11 +341,12 @@ export function renderLedger() {
                         SYNCED
                     </div>
                 </div>
+                <!-- Item 4: Verified by platform APIs (Removed "Verified on-chain") -->
                 <div class="ldg-hero-desc">
-                    Append-only record of all contract commitments, oracle verifications, and capital settlements. Verified on-chain.
+                    Append-only record of all contract commitments, oracle verifications, and capital settlements. Verified by platform APIs.
                 </div>
 
-                <!-- Reconciled Stat Strip (Order Aligned with Market Page: Value -> Label) -->
+                <!-- Reconciled Stat Strip -->
                 <div class="ldg-stats-strip">
                     <div class="ldg-stat-group">
                         <div class="ldg-stat-value" id="stat-total-volume">$1,000</div>
@@ -423,15 +400,12 @@ export function renderLedger() {
                         </div>
                     </div>
 
-                    <!-- Custom Styled Clerical Select -->
-                    <div class="ldg-sort-inline">
+                    <!-- Item 2: Segmented Control replacing native <select> -->
+                    <div class="ldg-pills-group" id="sort-filters">
                         <span class="mono-lbl">SORT</span>
-                        <select class="ldg-sort-select" id="ldg-sort">
-                            <option value="newest">NEWEST FIRST</option>
-                            <option value="oldest">OLDEST FIRST</option>
-                            <option value="amount-high">HIGHEST AMOUNT</option>
-                            <option value="amount-low">LOWEST AMOUNT</option>
-                        </select>
+                        <button class="ldg-pill active" data-sort="newest">NEWEST</button>
+                        <button class="ldg-pill" data-sort="oldest">OLDEST</button>
+                        <button class="ldg-pill" data-sort="amount">HIGHEST</button>
                     </div>
                 </div>
 
@@ -492,8 +466,10 @@ export function initLedger() {
         rowsEl.innerHTML = '';
         events.forEach(e => {
             const tr = document.createElement('tr');
-            const stateColor = e.state === 'SETTLED' ? 'var(--win, #186B4A)' : 'var(--blood, #7A1C29)';
-            const stateBg = e.state === 'SETTLED' ? 'rgba(24, 107, 74, 0.08)' : 'rgba(122, 28, 41, 0.08)';
+            // Item 6: Neutral Ink state badge for ACTIVE (not oxblood loss state)
+            const stateColor = e.state === 'SETTLED' ? 'var(--win, #186B4A)' : 'var(--ink-2, #4A5464)';
+            const stateBg = e.state === 'SETTLED' ? 'rgba(24, 107, 74, 0.08)' : 'var(--paper-alt, #EFEAE0)';
+            const stateBorder = e.state === 'SETTLED' ? 'rgba(24, 107, 74, 0.2)' : 'var(--rule, #DCD5C6)';
 
             tr.innerHTML = `
                 <td style="font-family: var(--mono, 'IBM Plex Mono', monospace); font-weight: 700;">${e.id}</td>
@@ -501,10 +477,21 @@ export function initLedger() {
                 <td>${e.contract}</td>
                 <td><span class="mono-lbl">${e.source.toUpperCase()}</span></td>
                 <td style="font-family: var(--display, 'Archivo', sans-serif); font-weight: 700;">$${e.amount.toLocaleString()}</td>
-                <td><span style="font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 9.5px; font-weight: 700; color: ${stateColor}; background: ${stateBg}; padding: 3px 8px; border-radius: 2px; text-transform: uppercase;">${e.state}</span></td>
+                <td><span style="font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 9.5px; font-weight: 700; color: ${stateColor}; background: ${stateBg}; border: 1px solid ${stateBorder}; padding: 3px 8px; border-radius: 2px; text-transform: uppercase;">${e.state}</span></td>
                 <td style="text-align: right; font-family: var(--mono, 'IBM Plex Mono', monospace); color: var(--ink-3, #6E7686);">${e.time}</td>
             `;
             rowsEl.appendChild(tr);
+        });
+    }
+
+    // Segmented Sort Listener
+    const sortContainer = document.getElementById('sort-filters');
+    if (sortContainer) {
+        sortContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('.ldg-pill');
+            if (!btn) return;
+            sortContainer.querySelectorAll('.ldg-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
         });
     }
 

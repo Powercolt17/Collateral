@@ -987,8 +987,8 @@ export function renderHeader(currentRoute) {
                 <div class="ch-right">
                     <!-- Capital Display (logged in) / Connect Button (logged out) -->
                     <div class="ch-capital" id="header-capital-area" onclick="window.router.navigate('/funding')" style="${currentRoute === '/funding' ? 'display: none !important;' : ''}">
-                        <span style="font-size: 10px; color: var(--ink-3, #6E7686); font-family: var(--mono, 'JetBrains Mono', monospace); letter-spacing: 0.16em; text-transform: uppercase;">Available Capital</span>
-                        <span id="header-avail-cap" style="font-size: 14px; font-weight: 700; color: var(--ink, #0E1420); font-variant-numeric: tabular-nums; font-family: var(--mono, 'JetBrains Mono', monospace);">$2,500.00</span>
+                        <span style="font-size: 10px; color: var(--ink-3, #6E7686); font-family: var(--mono, 'IBM Plex Mono', monospace); letter-spacing: 0.16em; text-transform: uppercase;">Your Balance</span>
+                        <span id="header-avail-cap" style="font-size: 14px; font-weight: 700; color: var(--ink, #0E1420); font-variant-numeric: tabular-nums; font-family: var(--mono, 'IBM Plex Mono', monospace);">$2,500.00</span>
                     </div>
                     <button class="ch-connect" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
 

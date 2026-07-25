@@ -282,7 +282,6 @@ p {
 
 /* ── Button Clarity ── */
 button[class*="-connect"],
-button[class*="-cta"]:not(.ln-cta),
 .btn-primary {
     background: #111111 !important;
     color: #ffffff !important;

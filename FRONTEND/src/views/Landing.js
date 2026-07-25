@@ -92,44 +92,52 @@ export function renderLanding() {
 
                     <div class="modes">
                         <div class="plates plate ticks r-plate" style="--i:3">
-                            <article class="leaf r-plate" style="--i:3">
+                            <!-- Cream Panel: Solo Contract -->
+                            <article class="leaf leaf--cream r-plate" style="--i:3">
                                 <div class="leaf-art">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
-                                <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <span class="mono mono-b">MODE 01 &middot; SOLO</span>
-                                    <span class="mono">FORM S&ndash;01</span>
+                                <div class="leaf-body">
+                                    <div class="leaf-head-row">
+                                        <span class="mono leaf-mode-tag">MODE 01 &middot; SOLO</span>
+                                        <span class="mono leaf-form-ref">FORM S&ndash;01</span>
+                                    </div>
+                                    <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
+                                    <p class="mono leaf-spec-line">ONE OPERATOR &middot; ONE ORACLE &middot; NO EXCUSES</p>
+                                    <ul class="leaf-list">
+                                        <li>You set the target. You don't get to move it</li>
+                                        <li>Hit it and every dollar comes back, plus yield</li>
+                                        <li>Miss it and the money goes to someone who didn't</li>
+                                    </ul>
+                                    <a class="link leaf-cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
                                 </div>
-                                <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
-                                <ul class="leaf-list">
-                                    <li>You set the target. You don't get to move it</li>
-                                    <li>Hit it and every dollar comes back, plus yield</li>
-                                    <li>Miss it and the money goes to someone who didn't</li>
-                                </ul>
-                                <a class="link" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
                             </article>
 
                             <div class="vrule" aria-hidden="true"></div>
 
+                            <!-- Maroon Panel: Rivalry Contract -->
                             <article class="leaf leaf--dark r-plate" style="--i:4">
                                 <div class="leaf-art">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
-                                <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <span class="mono">MODE 02 &middot; RIVALRY</span>
-                                    <span class="mono">FORM R&ndash;02</span>
+                                <div class="leaf-body">
+                                    <div class="leaf-head-row">
+                                        <span class="mono leaf-mode-tag">MODE 02 &middot; RIVALRY</span>
+                                        <span class="mono leaf-form-ref">FORM R&ndash;01</span>
+                                    </div>
+                                    <h3 class="leaf-name">Someone else is counting on you to fail</h3>
+                                    <p class="mono leaf-spec-line">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
+                                    <ul class="leaf-list">
+                                        <li>Equal capital, same metric, same clock</li>
+                                        <li>One oracle decides. Neither of you gets a vote</li>
+                                        <li>The winner takes the escrow. There is no draw</li>
+                                    </ul>
+                                    <a class="link leaf-cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
                                 </div>
-                                <h3 class="leaf-name">Someone else is counting on you to fail</h3>
-                                <p class="mono" style="margin: 6px 0 14px; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
-                                <ul class="leaf-list">
-                                    <li>Equal capital, same metric, same clock</li>
-                                    <li>One oracle decides. Neither of you gets a vote</li>
-                                    <li>The winner takes the escrow. There is no draw</li>
-                                </ul>
-                                <a class="link" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
                             </article>
                         </div>
 
+                        <!-- Specimen Panel -->
                         <aside class="demo plate-quiet ticks r-plate" style="--i:5">
                             <div class="demo-top">
                                 <span class="mono">SPECIMEN</span>

@@ -703,7 +703,7 @@ footer .logo-wordmark-light,
   background: #FBF8F2;
 }
 
-/* ═══════════ MODES ═══════════ */
+/* ═══════════ TWO-PANEL MODE COMPARISON ═══════════ */
 .modes {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
@@ -720,63 +720,61 @@ footer .logo-wordmark-light,
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
   overflow: hidden;
+  border-radius: var(--r, 2px);
+  border: 1px solid var(--rule, #DCD5C6);
+  background: var(--paper, #FFFDF9);
 }
 
-.vrule { background: var(--rule); }
+.vrule {
+  background: var(--blood, #7A1C29);
+  width: 1px;
+  height: 100%;
+}
 
-@media(max-width:720px){
+@media(max-width:767px){
   .plates { grid-template-columns: 1fr; }
-  .vrule { height: 1px; }
+  .vrule { height: 1px; width: 100%; }
 }
 
-.leaf { padding: 26px; display: flex; flex-direction: column; height: 100%; }
-
-.leaf--dark {
-  color: #F7EDEA;
-  background-image: radial-gradient(120% 100% at 50% 0%, #8E2432 0%, #6E1723 100%);
-}
-
-.leaf--dark .mono { color: #DEBBC0; }
-.leaf--dark .link { color: #FFF; }
-
-.leaf-header {
+.leaf {
+  padding: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.leaf-form-ref {
-  font-size: 10px;
-  letter-spacing: .14em;
-  opacity: .6;
+/* CREAM PANEL TOKENS: ink=#0E1420, muted=#6E7686, accent=#7A1C29, paper=#FFFDF9 */
+.leaf--cream {
+  background: var(--paper, #FFFDF9);
+  color: var(--ink, #0E1420);
 }
 
-.rivalry-subline {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: #DEBBC0;
-  margin: -4px 0 14px;
+/* MAROON PANEL TOKENS: ink=#FFF8F5, muted=rgba(255,248,245,0.70), accent=#F0C493 (pale gold), bg=#6E1723 */
+.leaf--dark {
+  background: #6E1723 !important;
+  color: #FFF8F5 !important;
 }
 
+/* FULL-BLEED ILLUSTRATIONS */
 .leaf-art {
   position: relative;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  margin-bottom: 20px;
+  width: 100%;
+  height: 180px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  height: 165px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: calc(var(--r) - 2px);
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  flex: none;
 }
 
+.leaf--cream .leaf-art {
+  background: var(--paper, #FFFDF9);
+}
 .leaf--dark .leaf-art {
-  border-color: #96505D;
-  background: #5E1420;
+  background: #6E1723;
 }
 
 .leaf-img {
@@ -785,22 +783,71 @@ footer .logo-wordmark-light,
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform 0.4s var(--ease);
+  transition: transform 0.4s ease;
 }
-
 .leaf:hover .leaf-img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-.leaf-name {
-  margin: 14px 0 16px;
-  font-family: var(--display);
-  font-size: 21px;
+/* CARD CHROME STARTS BELOW IMAGE */
+.leaf-body {
+  padding: 24px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.leaf-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.leaf--cream .leaf-mode-tag, .leaf--cream .leaf-form-ref {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.16;
-  letter-spacing: -.028em;
+  letter-spacing: .14em;
+  color: var(--blood, #7A1C29);
 }
 
+.leaf--dark .leaf-mode-tag, .leaf--dark .leaf-form-ref {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #F0C493 !important; /* Pale gold accent */
+}
+
+/* SHARED HEADLINE BASELINE GRID */
+.leaf-name {
+  margin: 0 0 6px;
+  font-family: var(--display, 'Archivo', sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.028em;
+  min-height: 52px;
+}
+.leaf--cream .leaf-name { color: var(--ink, #0E1420); }
+.leaf--dark .leaf-name { color: #FFF8F5 !important; }
+
+/* SPEC SUBLINES MATCHING TYPOGRAPHY */
+.leaf-spec-line {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  min-height: 14px;
+}
+.leaf--cream .leaf-spec-line { color: var(--ink-3, #6E7686); }
+.leaf--dark .leaf-spec-line { color: rgba(255, 248, 245, 0.70) !important; }
+
+/* BULLET LIST (Uniform Row Height & Separators) */
 .leaf-list {
   list-style: none;
   margin: 0 0 24px;
@@ -809,31 +856,65 @@ footer .logo-wordmark-light,
 
 .leaf-list li {
   display: flex;
+  align-items: flex-start;
   gap: 11px;
-  padding: 10px 0;
-  border-bottom: 1px dotted var(--rule);
-  font-size: 14.5px;
-  color: var(--ink-2);
-  line-height: 1.5;
+  padding: 11px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  min-height: 48px;
+  box-sizing: border-box;
 }
 
+.leaf--cream .leaf-list li {
+  border-bottom: 1px dotted var(--rule, #DCD5C6);
+  color: var(--ink-2, #4A5464);
+}
 .leaf--dark .leaf-list li {
-  border-color: #96505D;
-  color: #EEDADD;
+  border-bottom: 1px dotted rgba(240, 196, 147, 0.35);
+  color: #FFF8F5 !important;
 }
 
 .leaf-list li::before {
   content: "§";
-  font-family: var(--mono);
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
   font-size: 11px;
-  color: var(--blood);
   flex: none;
   padding-top: 2px;
-  opacity: .8;
 }
+.leaf--cream .leaf-list li::before { color: var(--blood, #7A1C29); }
+.leaf--dark .leaf-list li::before { color: #F0C493 !important; }
 
-.leaf--dark .leaf-list li::before { color: #E5B4BC; }
-.leaf .link { margin-top: auto !important; align-self: flex-start; }
+/* CTA LINKS */
+.leaf-cta {
+  margin-top: auto !important;
+  align-self: flex-start;
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+  display: inline-block;
+  transition: opacity 150ms ease;
+}
+.leaf--cream .leaf-cta {
+  color: var(--blood, #7A1C29);
+}
+.leaf--dark .leaf-cta {
+  color: #F0C493 !important; /* Pale gold accent */
+}
+.leaf-cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform .35s ease;
+}
+.leaf-cta:hover::after { transform: scaleX(.4); }
 
 /* ═══════════ SPECIMEN PANEL ═══════════ */
 .demo {

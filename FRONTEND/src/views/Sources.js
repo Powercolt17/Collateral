@@ -506,6 +506,9 @@ export function renderSources() {
                             Collateral never asks you to report your own results. Every contract settles on read-only telemetry pulled directly from the platform where the goal lives — the same numbers your dashboard already shows you.
                         </p>
                         <p class="why-ver-p">
+                            USD contracts settle through custodial escrow via Stripe Connect. CLTR contracts settle on-chain: the same verified telemetry is signed and submitted to Robinhood Chain, where the smart contract releases or forfeits capital without any manual step.
+                        </p>
+                        <p class="why-ver-p">
                             By binding contract execution to cryptographic API signatures, Collateral guarantees that settlement is objective, tamper-proof, and deterministic. No manual submissions. No dispute periods. No human bias.
                         </p>
                     </div>

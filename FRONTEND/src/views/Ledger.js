@@ -343,7 +343,7 @@ export function renderLedger() {
                 </div>
                 <!-- Item 4: Verified by platform APIs (Removed "Verified on-chain") -->
                 <div class="ldg-hero-desc">
-                    Append-only record of all contract commitments, oracle verifications, and capital settlements. Verified by platform APIs.
+                    Append-only record of all contract commitments, oracle verifications, and capital settlements. USD contracts custodied via Stripe Connect; CLTR contracts verified on Robinhood Chain.
                 </div>
 
                 <!-- Reconciled Stat Strip -->
@@ -447,8 +447,7 @@ export function initLedger() {
             contract: 'Order Volume Growth (30d)',
             operator: '@northloop',
             source: 'Shopify API',
-            amount: 1000,
-            state: 'SETTLED',
+            amount: 1000, rail: 'USD', state: 'SETTLED',
             time: '12m ago'
         },
         {
@@ -456,8 +455,7 @@ export function initLedger() {
             contract: 'Monthly Recurring Revenue (30d)',
             operator: '@vance_cap',
             source: 'Stripe API',
-            amount: 2500,
-            state: 'ACTIVE',
+            amount: 2500, rail: 'CLTR', state: 'ACTIVE',
             time: '1h ago'
         }
     ];
@@ -475,7 +473,7 @@ export function initLedger() {
                 <td style="font-family: var(--mono, 'IBM Plex Mono', monospace); font-weight: 700;">${e.id}</td>
                 <td>${e.operator}</td>
                 <td>${e.contract}</td>
-                <td><span class="mono-lbl">${e.source.toUpperCase()}</span></td>
+                <td><span class="mono-lbl">${e.source.toUpperCase()}</span> <span style="font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 9px; font-weight: 700; background: var(--paper-alt, #EFEAE0); border: 1px solid var(--rule, #DCD5C6); padding: 2px 5px; border-radius: 2px; margin-left: 6px; color: var(--ink-2, #4A5464);">${e.rail || 'USD'}</span></td>
                 <td style="font-family: var(--display, 'Archivo', sans-serif); font-weight: 700;">$${e.amount.toLocaleString()}</td>
                 <td><span style="font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 9.5px; font-weight: 700; color: ${stateColor}; background: ${stateBg}; border: 1px solid ${stateBorder}; padding: 3px 8px; border-radius: 2px; text-transform: uppercase;">${e.state}</span></td>
                 <td style="text-align: right; font-family: var(--mono, 'IBM Plex Mono', monospace); color: var(--ink-3, #6E7686);">${e.time}</td>

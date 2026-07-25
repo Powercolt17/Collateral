@@ -62,7 +62,7 @@ export function renderToken() {
             }
 
             .cltr-page {
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 min-height: 100vh;
                 font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 color: #111111;
@@ -93,7 +93,7 @@ export function renderToken() {
             .cltr-logo-svg {
                 width: 48px;
                 height: 48px;
-                color: #5C1414;
+                color: #7A1C29;
                 fill: currentColor;
             }
             .cltr-title-text {
@@ -119,7 +119,7 @@ export function renderToken() {
                 --w3m-watermark-display: none !important;
             }
             .cltr-wallet-banner {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 18px 24px;
@@ -172,7 +172,7 @@ export function renderToken() {
                 border-radius: 2px;
             }
             .cltr-connect-btn {
-                background: #111111;
+                background: #0E1420;
                 color: #FFFFFF;
                 border: none;
                 padding: 10px 18px;
@@ -186,7 +186,7 @@ export function renderToken() {
                 transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .cltr-connect-btn:hover {
-                background: #5C1414;
+                background: #7A1C29;
             }
             .cltr-connect-btn.connected {
                 background: transparent;
@@ -203,7 +203,7 @@ export function renderToken() {
                DOMINANT FOCAL POINT
                =================================================== */
             .cltr-focal-hero {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 40px;
@@ -221,7 +221,7 @@ export function renderToken() {
                 position: absolute;
                 left: 0; top: 0; bottom: 0;
                 width: 5px;
-                background: #5C1414;
+                background: #7A1C29;
             }
             .cltr-focal-left {
                 flex: 1;
@@ -232,7 +232,7 @@ export function renderToken() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #5C1414;
+                color: #7A1C29;
                 margin-bottom: 12px;
             }
             .cltr-focal-num {
@@ -283,7 +283,7 @@ export function renderToken() {
                 animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
             }
             .cltr-metric-card {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 24px;
@@ -328,7 +328,7 @@ export function renderToken() {
                PANEL & CARD SYSTEM
                =================================================== */
             .cltr-panel {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 32px;
@@ -375,7 +375,7 @@ export function renderToken() {
             }
             .cltr-max-trigger {
                 cursor: pointer;
-                color: #5C1414;
+                color: #7A1C29;
                 text-decoration: underline;
             }
             .cltr-input-container {
@@ -397,8 +397,8 @@ export function renderToken() {
                 transition: all 0.15s ease;
             }
             .cltr-input-field:focus:not(:disabled) {
-                border-color: #5C1414;
-                background: #FFFFFF;
+                border-color: #7A1C29;
+                background: var(--plate, #FFFDF9);
                 box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.04);
             }
             .cltr-input-field:disabled {
@@ -436,7 +436,7 @@ export function renderToken() {
             }
             .cltr-lock-pill {
                 border: 1px solid #E5E5E5;
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 padding: 14px 8px;
                 text-align: center;
                 cursor: pointer;
@@ -445,10 +445,10 @@ export function renderToken() {
                 outline: none;
             }
             .cltr-lock-pill:hover:not(:disabled) {
-                border-color: #5C1414;
+                border-color: #7A1C29;
             }
             .cltr-lock-pill.active {
-                background: #111111;
+                background: #0E1420;
                 border-color: #111111;
                 color: #FFFFFF;
             }
@@ -469,7 +469,7 @@ export function renderToken() {
 
             /* Staking summary */
             .cltr-calc-summary {
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 18px 20px;
@@ -488,7 +488,7 @@ export function renderToken() {
                 color: #111;
             }
             .cltr-calc-row.accent strong {
-                color: #5C1414;
+                color: #7A1C29;
                 font-size: 12px;
             }
 
@@ -496,7 +496,7 @@ export function renderToken() {
             .cltr-action-submit {
                 width: 100%;
                 padding: 16px;
-                background: #5C1414;
+                background: #7A1C29;
                 color: #FFFFFF;
                 border: none;
                 font-family: 'JetBrains Mono', monospace;
@@ -559,7 +559,7 @@ export function renderToken() {
                 gap: 16px;
             }
             .cltr-burn-period-card {
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 12px 14px;
@@ -589,7 +589,7 @@ export function renderToken() {
                 margin-bottom: 20px;
             }
             .cltr-rep-stat {
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 14px 16px;
@@ -614,7 +614,7 @@ export function renderToken() {
             .cltr-rep-score-box {
                 background: #1C0A0A;
                 color: #FFFFFF;
-                border: 1px solid #5C1414;
+                border: 1px solid #7A1C29;
                 border-radius: 4px;
                 padding: 24px 20px;
                 margin-bottom: 20px;
@@ -647,7 +647,7 @@ export function renderToken() {
                 font-size: 9px;
                 font-weight: 700;
                 padding: 6px 12px;
-                background: #5C1414;
+                background: #7A1C29;
                 color: #FFFFFF;
                 border-radius: 2px;
                 text-transform: uppercase;
@@ -661,7 +661,7 @@ export function renderToken() {
                 border-radius: 4px;
                 padding: 20px;
                 margin-bottom: 16px;
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
             }
             .cltr-trust-card-hdr {
                 display: flex;
@@ -677,7 +677,7 @@ export function renderToken() {
             .cltr-trust-alloc {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #5C1414;
+                color: #7A1C29;
                 font-weight: 700;
             }
             .cltr-trust-progress-bg {
@@ -689,7 +689,7 @@ export function renderToken() {
             }
             .cltr-trust-progress-fill {
                 height: 100%;
-                background: #5C1414;
+                background: #7A1C29;
                 width: 0%;
                 transition: width 0.3s ease;
             }
@@ -705,7 +705,7 @@ export function renderToken() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 border: 1px solid #E5E5E5;
                 padding: 12px 16px;
                 border-radius: 4px;
@@ -721,10 +721,10 @@ export function renderToken() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 13px;
                 font-weight: 700;
-                color: #5C1414;
+                color: #7A1C29;
             }
             .cltr-trust-claim-btn {
-                background: #111111;
+                background: #0E1420;
                 color: #FFFFFF;
                 border: none;
                 padding: 8px 14px;
@@ -737,7 +737,7 @@ export function renderToken() {
                 transition: all 0.15s ease;
             }
             .cltr-trust-claim-btn:hover:not(:disabled) {
-                background: #5C1414;
+                background: #7A1C29;
             }
             .cltr-trust-claim-btn:disabled {
                 background: #E5E5E5;
@@ -799,7 +799,7 @@ export function renderToken() {
                 margin-top: 2px;
             }
             .cltr-feed-txlink {
-                color: #5C1414;
+                color: #7A1C29;
                 text-decoration: underline;
                 margin-left: 6px;
             }
@@ -811,7 +811,7 @@ export function renderToken() {
                 gap: 16px;
             }
             .cltr-health-stat {
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 14px 16px;
@@ -862,12 +862,12 @@ export function renderToken() {
             }
             .cltr-progress-bar-mini-fill {
                 height: 100%;
-                background: #5C1414;
+                background: #7A1C29;
                 width: 0%;
             }
 
             .cltr-unstake-btn {
-                background: #111111;
+                background: #0E1420;
                 color: #FFFFFF;
                 border: none;
                 padding: 4px 10px;
@@ -899,7 +899,7 @@ export function renderToken() {
                 display: flex;
             }
             .cltr-modal-box {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border-radius: 4px;
                 border: 1px solid #E5E5E5;
                 padding: 32px;
@@ -912,7 +912,7 @@ export function renderToken() {
                 width: 32px;
                 height: 32px;
                 border: 3px solid #F0F0F0;
-                border-top-color: #5C1414;
+                border-top-color: #7A1C29;
                 border-radius: 50%;
                 animation: spin 0.8s linear infinite;
                 margin: 0 auto 16px;
@@ -1144,8 +1144,8 @@ export function renderToken() {
                 color: #111;
             }
             .cltr-subnav-btn.active {
-                color: #5C1414;
-                border-bottom-color: #5C1414;
+                color: #7A1C29;
+                border-bottom-color: #7A1C29;
             }
             .cltr-tab-panel {
                 animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -1220,7 +1220,7 @@ export function renderToken() {
                 letter-spacing: -0.8px;
             }
             .wp-box {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 24px;
@@ -1230,7 +1230,7 @@ export function renderToken() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
-                color: #5C1414;
+                color: #7A1C29;
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 margin-bottom: 12px;
@@ -1252,7 +1252,7 @@ export function renderToken() {
                 overflow-x: auto;
                 color: #111;
                 margin-bottom: 20px;
-                border-left: 3px solid #5C1414;
+                border-left: 3px solid #7A1C29;
             }
             .wp-math-vars {
                 font-family: 'JetBrains Mono', monospace;
@@ -1285,7 +1285,7 @@ export function renderToken() {
             
             /* --- ECONOMICS STYLES --- */
             .econ-hero {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 40px;
@@ -1329,7 +1329,7 @@ export function renderToken() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 24px 20px;
@@ -1352,7 +1352,7 @@ export function renderToken() {
                 border-radius: 50%;
                 background: rgba(92, 20, 20, 0.04);
                 border: 1.5px solid rgba(92, 20, 20, 0.15);
-                color: #5C1414;
+                color: #7A1C29;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1363,9 +1363,9 @@ export function renderToken() {
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .flow-step:hover .flow-step-dot {
-                background: #5C1414;
+                background: #7A1C29;
                 color: #FFFFFF;
-                border-color: #5C1414;
+                border-color: #7A1C29;
                 box-shadow: 0 0 12px rgba(92, 20, 20, 0.25);
                 transform: scale(1.08);
             }
@@ -1388,7 +1388,7 @@ export function renderToken() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
-                color: #5C1414;
+                color: #7A1C29;
                 text-transform: uppercase;
                 letter-spacing: 2px;
                 margin-bottom: 24px;
@@ -1409,7 +1409,7 @@ export function renderToken() {
                 margin-bottom: 48px;
             }
             .pillar-card {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 28px;
@@ -1431,7 +1431,7 @@ export function renderToken() {
                 height: 40px;
                 border-radius: 6px;
                 background: rgba(92, 20, 20, 0.04);
-                color: #5C1414;
+                color: #7A1C29;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1439,7 +1439,7 @@ export function renderToken() {
                 transition: all 0.3s ease;
             }
             .pillar-card:hover .pillar-card-icon {
-                background: #5C1414;
+                background: #7A1C29;
                 color: #FFFFFF;
             }
             .pillar-card-title {
@@ -1461,7 +1461,7 @@ export function renderToken() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
-                color: #5C1414;
+                color: #7A1C29;
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 display: inline-flex;
@@ -1477,7 +1477,7 @@ export function renderToken() {
                 margin-bottom: 48px;
             }
             .benefit-card {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 24px;
@@ -1503,7 +1503,7 @@ export function renderToken() {
 
             /* --- LIVE NETWORK SNAPSHOT --- */
             .snapshot-panel {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 32px;
@@ -1547,7 +1547,7 @@ export function renderToken() {
             }
             .cltr-callout {
                 background: rgba(92, 20, 20, 0.02);
-                border-left: 3px solid #5C1414;
+                border-left: 3px solid #7A1C29;
                 border-radius: 0 4px 4px 0;
                 padding: 20px;
                 margin: 24px 0;
@@ -1564,7 +1564,7 @@ export function renderToken() {
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 32px;
@@ -1578,7 +1578,7 @@ export function renderToken() {
             }
             .flywheel-node {
                 flex: 1;
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 16px;
@@ -1587,7 +1587,7 @@ export function renderToken() {
                 min-width: 0;
             }
             .flywheel-node:hover {
-                border-color: #5C1414;
+                border-color: #7A1C29;
                 background: rgba(92, 20, 20, 0.01);
                 transform: translateY(-1px);
             }
@@ -1624,13 +1624,13 @@ export function renderToken() {
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
-                background: #FAFAFA;
+                background: var(--paper, #F7F4ED);
                 padding: 0 12px;
-                color: #5C1414;
+                color: #7A1C29;
                 font-size: 10px;
             }
             .vis-diag-container {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 24px;
@@ -1652,10 +1652,10 @@ export function renderToken() {
                 font-family: 'Sora', sans-serif;
                 font-size: 18px;
                 font-weight: 600;
-                color: #5C1414;
+                color: #7A1C29;
                 line-height: 1.45;
                 font-style: italic;
-                border-left: 3px solid #5C1414;
+                border-left: 3px solid #7A1C29;
                 padding-left: 20px;
                 margin: 36px 0;
                 max-width: 720px;
@@ -1668,7 +1668,7 @@ export function renderToken() {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 20px;
                 margin-bottom: 48px;
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 32px 24px;
@@ -1703,7 +1703,7 @@ export function renderToken() {
 
             /* --- TRUST NETWORK VISUALIZATION --- */
             .trust-network-panel {
-                background: #FFFFFF;
+                background: var(--plate, #FFFDF9);
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 40px;
@@ -1725,7 +1725,7 @@ export function renderToken() {
                 transition: fill 0.3s, r 0.3s;
             }
             .trust-network-node:hover {
-                fill: #5C1414 !important;
+                fill: #7A1C29 !important;
             }
 
             /* --- ANIMATION KEYFRAMES --- */
@@ -1758,7 +1758,7 @@ export function renderToken() {
                             <path d="M 55.310,56.810 L 51.060,61.060 L 60.757,70.757 Q 65.000,75.000 69.243,70.757 L 85.757,54.243 Q 90.000,50.000 85.757,45.757 L 69.243,29.243 Q 65.000,25.000 60.757,29.243 L 44.243,45.757 Q 40.000,50.000 44.243,54.243 L 44.690,54.690 L 48.940,50.440 L 48.500,50.000 Q 46.379,47.879 48.500,45.757 L 60.757,33.500 Q 62.879,31.379 65.000,33.500 L 77.257,45.757 Q 79.379,47.879 77.257,50.000 L 65.000,62.257 Q 62.879,64.379 60.757,62.257 Z" />
                         </svg>
                         <div class="cltr-hdr-title-group">
-                            <h1 class="cltr-title-text">Collateral <span style="color:#5C1414;">Protocol</span></h1>
+                            <h1 class="cltr-title-text">Collateral <span style="color:#7A1C29;">Protocol</span></h1>
                             <p class="cltr-title-desc">The world's first Proof of Execution network</p>
                             <p style="font-size: 13px; color: #555; margin: 8px 0 0; line-height: 1.5; font-weight: 500; max-width: 650px;">Turning promises into programmable financial contracts. A decentralized protocol where capital, reputation, and conviction guarantee that commitments are actually kept.</p>
                         </div>
@@ -1812,13 +1812,13 @@ export function renderToken() {
                             <path d="M300 150 L350 220" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
                             
                             <!-- Central Node (Protocol Core) -->
-                            <circle cx="300" cy="150" r="28" fill="#5C1414" stroke="#FFF" stroke-width="2" class="trust-network-node" />
+                            <circle cx="300" cy="150" r="28" fill="#7A1C29" stroke="#FFF" stroke-width="2" class="trust-network-node" />
                             <text x="300" y="154" font-family="JetBrains Mono" font-size="9" fill="#FFF" font-weight="bold" text-anchor="middle">CLTR</text>
                             
                             <!-- Outer Nodes (Role Play) -->
                             <!-- Client -->
                             <circle cx="100" cy="150" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
-                            <circle cx="100" cy="150" r="4" fill="#5C1414" class="pulse-dot" />
+                            <circle cx="100" cy="150" r="4" fill="#7A1C29" class="pulse-dot" />
                             <text x="100" y="125" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">CLIENT</text>
                             
                             <!-- Executor -->
@@ -1827,12 +1827,12 @@ export function renderToken() {
                             
                             <!-- Validator Node 1 -->
                             <circle cx="350" cy="80" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
-                            <circle cx="350" cy="80" r="4" fill="#5C1414" class="pulse-dot" />
+                            <circle cx="350" cy="80" r="4" fill="#7A1C29" class="pulse-dot" />
                             <text x="350" y="55" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">VALIDATOR 01</text>
                             
                             <!-- API Adapter -->
-                            <circle cx="500" cy="150" r="16" fill="#FFF" stroke="#5C1414" stroke-width="1.5" class="trust-network-node" />
-                            <text x="500" y="125" font-family="JetBrains Mono" font-size="8" fill="#5C1414" font-weight="bold" text-anchor="middle">STRIPE API</text>
+                            <circle cx="500" cy="150" r="16" fill="#FFF" stroke="#7A1C29" stroke-width="1.5" class="trust-network-node" />
+                            <text x="500" y="125" font-family="JetBrains Mono" font-size="8" fill="#7A1C29" font-weight="bold" text-anchor="middle">STRIPE API</text>
                             
                             <!-- Validator Node 2 -->
                             <circle cx="350" cy="220" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
@@ -1840,7 +1840,7 @@ export function renderToken() {
                             
                             <!-- Staker -->
                             <circle cx="200" cy="220" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
-                            <circle cx="200" cy="220" r="4" fill="#5C1414" class="pulse-dot" />
+                            <circle cx="200" cy="220" r="4" fill="#7A1C29" class="pulse-dot" />
                             <text x="200" y="250" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">STAKER</text>
                         </svg>
                     </div>
@@ -2011,14 +2011,14 @@ export function renderToken() {
                                     <rect x="10" y="35" width="60" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
                                     <text x="40" y="53" font-family="JetBrains Mono" font-size="8" fill="#111" text-anchor="middle">LOCKED ESCROW</text>
                                     
-                                    <path d="M 75 50 L 95 50" stroke="#5C1414" stroke-width="1.5"/>
-                                    <polygon points="95,50 90,47 90,53" fill="#5C1414"/>
+                                    <path d="M 75 50 L 95 50" stroke="#7A1C29" stroke-width="1.5"/>
+                                    <polygon points="95,50 90,47 90,53" fill="#7A1C29"/>
                                     
-                                    <rect x="100" y="35" width="40" height="30" rx="3" fill="#FFF" stroke="#5C1414" stroke-width="1.5"/>
-                                    <text x="120" y="53" font-family="JetBrains Mono" font-size="8" fill="#5C1414" text-anchor="middle" font-weight="bold">VERIFY</text>
+                                    <rect x="100" y="35" width="40" height="30" rx="3" fill="#FFF" stroke="#7A1C29" stroke-width="1.5"/>
+                                    <text x="120" y="53" font-family="JetBrains Mono" font-size="8" fill="#7A1C29" text-anchor="middle" font-weight="bold">VERIFY</text>
                                     
-                                    <path d="M 145 50 L 165 50" stroke="#5C1414" stroke-width="1.5"/>
-                                    <polygon points="165,50 160,47 160,53" fill="#5C1414"/>
+                                    <path d="M 145 50 L 165 50" stroke="#7A1C29" stroke-width="1.5"/>
+                                    <polygon points="165,50 160,47 160,53" fill="#7A1C29"/>
                                     
                                     <rect x="170" y="35" width="60" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
                                     <text x="200" y="53" font-family="JetBrains Mono" font-size="8" fill="#111" text-anchor="middle">RELEASED</text>
@@ -2043,7 +2043,7 @@ export function renderToken() {
                                     <text x="45" y="42" font-family="JetBrains Mono" font-size="7" fill="#888">ExID LEVEL</text>
                                     <text x="45" y="62" font-family="JetBrains Mono" font-size="16" fill="#FFF" font-weight="bold">920 <tspan font-size="9" fill="#10B981" font-weight="normal">▲ +35</tspan></text>
                                     <rect x="135" y="45" width="60" height="8" rx="4" fill="#222"/>
-                                    <rect x="135" y="45" width="48" height="8" rx="4" fill="#5C1414"/>
+                                    <rect x="135" y="45" width="48" height="8" rx="4" fill="#7A1C29"/>
                                 </svg>
                             </div>
                             <p class="vis-card-p">
@@ -2057,7 +2057,7 @@ export function renderToken() {
                             <div class="vis-diag-container">
                                 <svg width="240" height="100" viewBox="0 0 240 100" fill="none">
                                     <!-- Central Node -->
-                                    <circle cx="120" cy="50" r="16" fill="#5C1414" stroke="#FFF" stroke-width="1.5"/>
+                                    <circle cx="120" cy="50" r="16" fill="#7A1C29" stroke="#FFF" stroke-width="1.5"/>
                                     <text x="120" y="53" font-family="JetBrains Mono" font-size="8" fill="#FFF" text-anchor="middle" font-weight="bold">CLTR</text>
                                     
                                     <!-- Platform spokes -->
@@ -2202,7 +2202,7 @@ export function renderToken() {
                                 <button class="cltr-action-submit" id="stake-btn" disabled>STAKE CLTR</button>
                                 <div style="display:flex; justify-content:center; gap: 6px; margin-top: 14px; font-family:'JetBrains Mono', monospace; font-size:10px;">
                                     <span style="color:#666;">Need CLTR?</span>
-                                    <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" style="color:#5C1414; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+                                    <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" style="color:#7A1C29; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
                                         <span>Buy on Uniswap</span>
                                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                                     </a>
@@ -2254,17 +2254,17 @@ export function renderToken() {
                                         <div class="cltr-chart-grid-line"></div>
                                     </div>
                                     <svg class="cltr-chart-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
-                                        <path d="M 0,2 L 15,3 L 30,5 L 45,9 L 60,14 L 75,18 L 90,23 L 100,26" fill="none" stroke="#5C1414" stroke-width="2"/>
+                                        <path d="M 0,2 L 15,3 L 30,5 L 45,9 L 60,14 L 75,18 L 90,23 L 100,26" fill="none" stroke="#7A1C29" stroke-width="2"/>
                                     </svg>
                                 </div>
                                 <div class="cltr-burn-period-grid">
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">Today</span>
-                                        <span class="cltr-burn-period-num" id="burn-today">🔥 —</span>
+                                        <span class="cltr-burn-period-num" id="burn-today">—</span>
                                     </div>
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">This Week</span>
-                                        <span class="cltr-burn-period-num" id="burn-week">🔥 —</span>
+                                        <span class="cltr-burn-period-num" id="burn-week">—</span>
                                     </div>
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">Burn Rate</span>
@@ -2272,7 +2272,7 @@ export function renderToken() {
                                     </div>
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">Proof Burn</span>
-                                        <span class="cltr-burn-period-num" id="burn-total" style="color:#5C1414;">—</span>
+                                        <span class="cltr-burn-period-num" id="burn-total" style="color:#7A1C29;">—</span>
                                     </div>
                                 </div>
                             </div>
@@ -2416,7 +2416,7 @@ export function renderToken() {
                             <p class="vis-subtitle">The formal design specification of the Collateral Network and CLTR conviction-bonding primitives.</p>
                             
                             <!-- Flow Diagram -->
-                            <div class="flow-container" style="margin-top: 32px; margin-bottom: 0; background: #FFFFFF;">
+                            <div class="flow-container" style="margin-top: 32px; margin-bottom: 0; background: var(--plate, #FFFDF9);">
                                 <div class="flow-step">
                                     <div class="flow-step-dot" style="font-family: 'JetBrains Mono', monospace; font-size: 8px;">MONEY</div>
                                     <span style="font-size: 9px; color: #666; font-family: 'JetBrains Mono', monospace;">1. Cash Escrow</span>
@@ -2478,7 +2478,7 @@ export function renderToken() {
                             
                             <div class="wp-box">
                                 <div class="wp-box-title">Technical Design</div>
-                                <p class="wp-box-desc" style="margin-bottom:16px;">Execution Credit ($EC$) is calculated by multiplying your earned reputation track record ($R_p$) by a logarithmic function of bonded CLTR conviction ($C_{cltr}$):</p>
+                                <p class="wp-box-desc" style="margin-bottom:16px;">Execution Credit EC is calculated by multiplying your earned reputation track record R_p by a logarithmic function of bonded CLTR conviction C_cltr:</p>
                                 <div class="wp-math">
                                     EC = R_p * ln( e + C_cltr / (0.05 * R_p + 100) )
                                 </div>
@@ -2616,17 +2616,17 @@ export function renderToken() {
                     </div>
 
                     <!-- Acquire CLTR Card -->
-                    <div style="margin-top: 40px; background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 4px; padding: 32px;">
+                    <div style="margin-top: 40px; background: var(--plate, #FFFDF9); border: 1px solid #E5E5E5; border-radius: 4px; padding: 32px;">
                         <h3 class="vis-card-title" style="margin-top:0; font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;">ACQUIRING &amp; TRADING CLTR</h3>
                         <p class="vis-card-p" style="margin-bottom: 24px;">
                             The Collateral token (CLTR) is a utility asset deployed on the **Robinhood Chain**. You can trade, buy, or sell CLTR directly on Uniswap, or bridge assets to obtain it.
                         </p>
                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                            <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #5C1414; color: #FFFFFF; padding: 12px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(92,20,20,0.15); transition: all 0.2s;">
+                            <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #7A1C29; color: #FFFFFF; padding: 12px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(92,20,20,0.15); transition: all 0.2s;">
                                 <span>Trade CLTR on Uniswap</span>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                             </a>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #111111; border: 1px solid #E5E5E5; padding: 12px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s;">
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" style="display: inline-flex; align-items: center; gap: 8px; background: var(--plate, #FFFDF9); color: #111111; border: 1px solid #E5E5E5; padding: 12px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s;">
                                 <span>View Bridging Guide</span>
                             </a>
                         </div>
@@ -2739,7 +2739,7 @@ export function initToken() {
             </div>
             <div style="border-right: 1px solid #E5E5E5; padding-right:24px;">
                 <span style="font-family:'JetBrains Mono', monospace; font-size:8px; color:#888; text-transform:uppercase; display:block; letter-spacing:0.5px;">Network</span>
-                <span style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700; color:#5C1414; display:block; margin-top:2px;">Robinhood Mainnet</span>
+                <span style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700; color:#7A1C29; display:block; margin-top:2px;">Robinhood Mainnet</span>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
@@ -2756,7 +2756,7 @@ export function initToken() {
         if (!el) return;
         const indicator = el.querySelector('.step-indicator');
         if (status === 'pending') {
-            el.style.color = '#5C1414';
+            el.style.color = '#7A1C29';
             el.style.fontWeight = '700';
             if (indicator) indicator.innerText = '[/]';
         } else if (status === 'success') {
@@ -2899,12 +2899,12 @@ export function initToken() {
                 // Health card aggregates
                 healthActiveContracts.innerText = s.activeContracts.toString();
                 healthEscrowLocked.innerText = formatNumber(s.capitalCommitted) + ' CLTR';
-                healthBurnedToday.innerText = '🔥 14,210 CLTR'; // Daily Burn constant target
+                healthBurnedToday.innerText = '14,210 CLTR'; // Daily Burn constant target
                 healthCirculating.innerText = formatNumber(s.circulatingSupply) + ' CLTR';
 
                 // Burn period grid
-                burnToday.innerText = '🔥 14,210';
-                burnWeek.innerText = '🔥 98,420';
+                burnToday.innerText = '14,210';
+                burnWeek.innerText = '98,420';
                 burnTotal.innerText = formatNumber(s.totalBurned);
 
                 // Update Overview snapshot if elements exist
@@ -2939,7 +2939,7 @@ export function initToken() {
 
                     return `
                         <div class="cltr-feed-item">
-                            <span class="cltr-feed-icon">${ev.eventType === 'BURN' ? '🔥' : '✓'}</span>
+                            <span class="cltr-feed-icon">${ev.eventType === 'BURN' ? '' : '✓'}</span>
                             <div class="cltr-feed-details">
                                 <span class="cltr-feed-text">${text}</span>
                                 <span class="cltr-feed-time">${dateStr} UTC <a href="${expLink}" target="_blank" class="cltr-feed-txlink">View</a></span>

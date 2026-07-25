@@ -1,4 +1,4 @@
-// Header Component - Structural Nav/Drawer Split & Account Health Balance Block
+// Header Component - Simplified Single-Surface Nav Drawer & Location Indicator
 export function renderHeader(currentRoute = '') {
     const isRoot = currentRoute === '/' || currentRoute === '' || currentRoute === '/market';
     const isMarket = isRoot || currentRoute.startsWith('/market/');
@@ -12,20 +12,37 @@ export function renderHeader(currentRoute = '') {
     const isReferrals = currentRoute === '/referrals';
     const isFunding = currentRoute === '/funding';
 
-    // Desktop top-bar nav links
-    const topNavItems = [
-        { path: '/market', label: 'MARKET', active: isMarket },
-        { path: '/my-contracts', label: 'ACTIVE', active: isActiveContracts },
-        { path: '/ledger', label: 'LEDGER', active: isLedger },
-        { path: '/sources', label: 'SOURCES', active: isSources },
-        { path: '/protocol', label: 'PROTOCOL', active: isProtocol },
-        { path: '/protocol?tab=terminal', label: 'CUSTODY TERMINAL', active: isCustodyTerminal }
-    ].map(route => `<a href="#" onclick="window.router.navigate('${route.path}'); return false;" class="nav-link ${route.active ? 'active' : ''}" ${route.active ? 'aria-current="page"' : ''}>${route.label}</a>`).join('');
+    // Route to Current-Section Label Mapping (Static location indicator)
+    let sectionLabel = '';
+    if (currentRoute === '/market' || currentRoute.startsWith('/market/')) {
+        sectionLabel = 'MARKET';
+    } else if (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')) {
+        sectionLabel = 'ACTIVE';
+    } else if (currentRoute === '/ledger') {
+        sectionLabel = 'LEDGER';
+    } else if (currentRoute === '/sources') {
+        sectionLabel = 'SOURCES';
+    } else if (currentRoute === '/protocol?tab=terminal') {
+        sectionLabel = 'CUSTODY TERMINAL';
+    } else if (currentRoute === '/protocol' || currentRoute.startsWith('/protocol')) {
+        sectionLabel = 'PROTOCOL';
+    } else if (currentRoute === '/profile') {
+        sectionLabel = 'PROFILE';
+    } else if (currentRoute === '/referrals') {
+        sectionLabel = 'REFERRALS';
+    } else if (currentRoute === '/funding') {
+        sectionLabel = 'ACCOUNT CAPITAL';
+    } else if (currentRoute === '/docs') {
+        sectionLabel = 'DOCUMENTATION';
+    } else if (currentRoute === '/' || currentRoute === '') {
+        // Signed in on root: show MARKET. Signed out on homepage: omit label & rule entirely.
+        sectionLabel = (typeof appState !== 'undefined' && appState.isLoggedIn) ? 'MARKET' : '';
+    }
 
     return `
         <style>
             /* ══════════════════════════════════════════════════════════════
-               UNIVERSAL STICKY HEADER & RESPONSIVE ACCOUNT PANEL
+               SIMPLIFIED STICKY HEADER & SINGLE-SURFACE NAVIGATION DRAWER
                ══════════════════════════════════════════════════════════════ */
             .ch-header {
                 width: 100%;
@@ -55,8 +72,13 @@ export function renderHeader(currentRoute = '') {
                 height: 100%;
                 display: flex;
                 align-items: center;
-                gap: 36px;
+                justify-content: space-between;
                 box-sizing: border-box;
+            }
+
+            .ch-left {
+                display: flex;
+                align-items: center;
             }
 
             /* Signature Wordmark */
@@ -78,61 +100,27 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 4px;
             }
 
-            /* Desktop Navigation Bar */
-            .ch-nav {
+            /* Current-Section Divider Rule & Label (Desktop only) */
+            .ch-section-divider {
+                width: 1px;
+                height: 14px;
+                background: var(--rule, #DCD5C6);
+                margin: 0 16px;
                 display: none;
-                align-items: center;
-                gap: 24px;
-                flex: 1;
             }
-            @media (min-width: 768px) {
-                .ch-nav { display: flex; }
-            }
-
-            .nav-link {
+            .ch-section-label {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.12em;
-                color: var(--ink-3, #6E7686);
-                text-decoration: none;
-                padding: 8px 0;
-                position: relative;
-                transition: color 150ms ease;
+                font-weight: 700;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--blood, #7A1C29);
+                user-select: none;
+                display: none;
             }
-            @media (hover: hover) {
-                .nav-link:not(.active):hover {
-                    color: var(--ink, #0E1420);
-                }
-                .nav-link:not(.active):hover::after {
-                    content: '';
-                    position: absolute;
-                    bottom: -2px;
-                    left: 0;
-                    right: 0;
-                    height: 2px;
-                    background: var(--blood, #7A1C29);
-                    opacity: 0.5;
-                    transition: opacity 150ms ease;
-                }
-            }
-            .nav-link.active {
-                color: var(--blood, #7A1C29) !important;
-                font-weight: 700 !important;
-            }
-            .nav-link.active::after {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background: var(--blood, #7A1C29);
-                opacity: 1 !important;
-            }
-            .nav-link:focus-visible {
-                outline: 2px solid var(--blood, #7A1C29);
-                outline-offset: 4px;
+            @media (min-width: 768px) {
+                .ch-section-divider { display: block; }
+                .ch-section-label { display: inline-block; }
             }
 
             /* Right Controls Group */
@@ -140,13 +128,12 @@ export function renderHeader(currentRoute = '') {
                 display: flex;
                 align-items: center;
                 gap: 16px;
-                margin-left: auto;
                 height: 100%;
             }
 
-            /* Balance & Health Block (Explicit HEALTH 98.4% micro-label, No ambiguous dots) */
+            /* Balance Block (Desktop only, Explicit HEALTH 98.4% text label, Tabular Nums) */
             .ch-capital-btn {
-                display: flex;
+                display: none;
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-end;
@@ -156,6 +143,9 @@ export function renderHeader(currentRoute = '') {
                 border-radius: var(--r, 2px);
                 transition: background 150ms ease;
                 user-select: none;
+            }
+            @media (min-width: 768px) {
+                .ch-capital-btn { display: flex; }
             }
             @media (hover: hover) {
                 .ch-capital-btn:hover {
@@ -167,7 +157,7 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: -2px;
             }
 
-            /* Micro-label: Explicit text health status without ambiguous dots (WCAG AA compliant) */
+            /* Micro-label: Explicit text health status without ambiguous dots */
             .ch-cap-label {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 8.5px;
@@ -176,9 +166,6 @@ export function renderHeader(currentRoute = '') {
                 text-transform: uppercase;
                 color: #333F51;
                 white-space: nowrap;
-                display: flex;
-                align-items: center;
-                gap: 4px;
             }
 
             /* Numeric Value: Integer formatting ($2,500 no cents) & Tabular Nums */
@@ -214,18 +201,20 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 2px;
             }
 
-            /* Squared Account Trigger / Avatar Button (Matching 2px square geometry + Chevron Affordance) */
+            /* Menu Trigger: MENU Text Label + Hamburger Icon morph to X (Unboxed, min 44x44px touch area) */
             .ch-account-trigger {
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 8px;
                 background: transparent;
-                border: none;
-                padding: 4px 6px;
+                border: none; /* UNBOXED: No border or box around trigger */
+                min-height: 44px;
+                padding: 10px 14px;
                 cursor: pointer;
                 color: var(--ink, #0E1420);
                 border-radius: var(--r, 2px);
-                transition: background 150ms ease, opacity 150ms ease;
+                transition: background 150ms ease;
+                user-select: none;
             }
             @media (hover: hover) {
                 .ch-account-trigger:hover {
@@ -237,34 +226,41 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 2px;
             }
 
-            /* Squared Avatar Badge (2px system crop) */
-            .ch-trigger-avatar {
-                width: 30px;
-                height: 30px;
-                border-radius: var(--r, 2px); /* Squared system crop */
-                background: var(--ink, #0E1420);
-                color: #FFF8F5;
-                font-family: var(--display, 'Archivo', sans-serif);
-                font-size: 13px;
-                font-weight: 800;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-            }
-            .ch-trigger-img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: none;
+            /* Visible MENU Text Label */
+            .ch-menu-label {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--ink, #0E1420);
             }
 
-            .ch-trigger-chevron {
-                color: var(--ink-3, #6E7686);
-                transition: transform 150ms ease, color 150ms ease;
+            /* Hamburger Icon Morph to X */
+            .ch-hamburger-icon {
+                width: 16px;
+                height: 12px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
-            .ch-account-trigger:hover .ch-trigger-chevron {
-                color: var(--blood, #7A1C29);
+            .ch-hamburger-icon span {
+                display: block;
+                width: 100%;
+                height: 1.5px;
+                background: var(--ink, #0E1420);
+                transition: transform 150ms ease, opacity 150ms ease;
+                transform-origin: center;
+            }
+            .ch-account-trigger.open .ch-hamburger-icon span:nth-child(1) {
+                transform: translateY(5.25px) rotate(45deg);
+            }
+            .ch-account-trigger.open .ch-hamburger-icon span:nth-child(2) {
+                opacity: 0;
+            }
+            .ch-account-trigger.open .ch-hamburger-icon span:nth-child(3) {
+                transform: translateY(-5.25px) rotate(-45deg);
             }
 
             /* ════════ SCRIM OVERLAY ════════ */
@@ -284,7 +280,7 @@ export function renderHeader(currentRoute = '') {
                 .pnl-overlay { display: none !important; }
             }
 
-            /* ════════ RIGHT-ANCHORED DRAWER / ACCOUNT PANEL ════════ */
+            /* ════════ RIGHT-ANCHORED SINGLE-SURFACE DRAWER ════════ */
             .pnl-drawer {
                 position: fixed;
                 top: 0;
@@ -321,10 +317,8 @@ export function renderHeader(currentRoute = '') {
                 .pnl-drawer.open { transform: translateX(0); }
             }
 
-            /* Responsive Drawer Contents: On Desktop (>=768px), hide NAVIGATION group from drawer */
-            @media (min-width: 768px) {
-                #drawer-nav-group { display: none !important; }
-            }
+            /* Drawer is the SINGLE navigation surface across ALL breakpoints */
+            #drawer-nav-group { display: block !important; }
 
             /* Panel Header */
             .pnl-header {
@@ -683,7 +677,7 @@ export function renderHeader(currentRoute = '') {
             .pnl-legal a:hover { color: var(--blood, #7A1C29); }
 
             @media (prefers-reduced-motion: reduce) {
-                .pnl-drawer, .pnl-overlay, .pnl-subnav, .pnl-chevron, .pnl-scroll-mask {
+                .pnl-drawer, .pnl-overlay, .pnl-subnav, .pnl-chevron, .pnl-scroll-mask, .ch-hamburger-icon span {
                     transition: none !important;
                     animation: none !important;
                 }
@@ -692,19 +686,20 @@ export function renderHeader(currentRoute = '') {
 
         <header class="ch-header">
             <div class="ch-header-inner">
-                <!-- Signature Logo Wordmark -->
-                <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo-wordmark">
-                    COLLATERAL
-                </a>
+                <!-- Left Group: Signature Wordmark + Current-Section Location Indicator -->
+                <div class="ch-left">
+                    <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo-wordmark">
+                        COLLATERAL
+                    </a>
+                    ${sectionLabel ? `
+                        <div class="ch-section-divider"></div>
+                        <span class="ch-section-label">${sectionLabel}</span>
+                    ` : ''}
+                </div>
 
-                <!-- Primary Navigation (Desktop: Owned by Header) -->
-                <nav class="ch-nav" aria-label="Top Navigation">
-                    ${topNavItems}
-                </nav>
-
-                <!-- Right Controls: Balance Block + Squared Avatar Trigger / Sign In -->
+                <!-- Right Group: Balance Block (Desktop) + Sign In + Unboxed Menu Trigger -->
                 <div class="ch-right">
-                    <!-- Balance & Explicit Health Block (Interactive link to /funding) -->
+                    <!-- Balance & Health Block (Interactive link to /funding, Desktop only) -->
                     <div class="ch-capital-btn" 
                          id="header-capital-area" 
                          onclick="window.router.navigate('/funding')" 
@@ -722,18 +717,19 @@ export function renderHeader(currentRoute = '') {
                     <!-- Signed-Out Header Sign-In Button -->
                     <button class="ch-connect-btn" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
 
-                    <!-- Squared Account Trigger / Avatar Button (System 2px Square Crop + Chevron Affordance) -->
+                    <!-- Unboxed Menu Trigger (MENU Text Label + Hamburger Icon Morph to X) -->
                     <button id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
                             class="ch-account-trigger" 
-                            aria-label="Toggle Account Panel"
+                            aria-label="Toggle Navigation & Account Menu"
                             aria-expanded="false"
                             aria-controls="mobile-menu">
-                        <div class="ch-trigger-avatar" id="header-avatar-trigger">
-                            <span id="header-avatar-initial">U</span>
-                            <img id="header-avatar-img" class="ch-trigger-img" alt="" />
+                        <span class="ch-menu-label">MENU</span>
+                        <div class="ch-hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                        <svg class="ch-trigger-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
                 </div>
             </div>
@@ -742,15 +738,15 @@ export function renderHeader(currentRoute = '') {
         <!-- Scrim Overlay -->
         <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
 
-        <!-- Universal Account Panel / Navigation Drawer -->
+        <!-- Universal Single-Surface Navigation Drawer -->
         <aside id="mobile-menu" 
                class="pnl-drawer" 
                role="dialog" 
                aria-modal="true" 
-               aria-label="Account Menu">
+               aria-label="Navigation & Account Menu">
             
             <div class="pnl-header">
-                <span class="pnl-header-title">Account</span>
+                <span class="pnl-header-title">Menu</span>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close menu">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
@@ -794,9 +790,9 @@ export function renderHeader(currentRoute = '') {
             <!-- Body Wrapper -->
             <div class="pnl-body-wrap">
                 <div class="pnl-body" id="pnl-body-scroll">
-                    <nav aria-label="Account Navigation">
+                    <nav aria-label="Navigation & Account Menu">
                         
-                        <!-- NAVIGATION Group (Mobile <768px only; hidden on Desktop >=768px) -->
+                        <!-- NAVIGATION Group (Single surface across ALL screen sizes) -->
                         <div id="drawer-nav-group">
                             <div class="pnl-section-label">NAVIGATION</div>
 
@@ -845,7 +841,7 @@ export function renderHeader(currentRoute = '') {
                             <div class="pnl-divider"></div>
                         </div>
 
-                        <!-- Account Group (Desktop primary drawer content) -->
+                        <!-- ACCOUNT Group -->
                         <div id="mobile-account-links" style="display:none;">
                             <div class="pnl-section-label">ACCOUNT</div>
                             <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="pnl-acct-link ${isProfile ? 'active' : ''}" ${isProfile ? 'aria-current="page"' : ''}>PROFILE</a>

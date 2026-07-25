@@ -48,12 +48,19 @@ export function renderHeader(currentRoute = '') {
                 gap: 36px;
             }
             .ch-logo-wordmark {
-                font-family: var(--display, 'Archivo', sans-serif);
-                font-size: 16px;
+                font-family: var(--wordmark, var(--display, 'Archivo', sans-serif));
+                font-size: 18px;
                 font-weight: 800;
-                letter-spacing: 0.18em;
-                color: var(--ink, #0E1420);
+                letter-spacing: 0.22em;
+                color: #0F172A !important;
                 text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                text-transform: uppercase;
+                transition: opacity 0.2s ease;
+            }
+            .ch-logo-wordmark:hover {
+                opacity: 0.85;
             }
 
             .ch-nav {

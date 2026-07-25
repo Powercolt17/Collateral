@@ -16,24 +16,7 @@ export function renderLanding() {
         <div class="lp cl-root">
             <div class="cl-grain" aria-hidden="true"></div>
 
-            <!-- ═════ NAV HEADER ═════ -->
-            <nav class="ln">
-                <div class="ln-in">
-                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;">
-                        <span class="logo-wordmark">COLLATERAL</span>
-                    </a>
-                    <div class="ln-right-group">
-                        <button class="ln-cta" id="lp-nav-cta" type="button" style="background:transparent;color:#0E1420;border:1px solid #0E1420;" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
-                        <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
-                            <div class="ch-hamburger-lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </nav>
+            
 
             <!-- ═════ 1 · HERO + LIVE TAPE ═════ -->
             <section class="hero section">

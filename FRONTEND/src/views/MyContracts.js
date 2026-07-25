@@ -3,6 +3,36 @@ import { collateralFullLoader } from '../components/CollateralLoader.js';
 export function renderMyContracts() {
     return `
         <style>
+            :root {
+              --paper: #F7F4ED;
+              --paper-alt: #EFEAE0;
+              --paper-deep: #E7E1D4;
+              --plate: #FFFDF9;
+              --notch: #F7F4ED;
+              --ink: #0E1420;
+              --ink-2: #4A5464;
+              --ink-3: #6E7686;
+              --ink-4: #9AA0AC;
+              --blood: #7A1C29;
+              --blood-deep: #54111B;
+              --blood-mid: #9B3341;
+              --blood-tint: #F5E6E8;
+              --blood-wash: #FBF3F4;
+              --win: #186B4A;
+              --win-tint: #E6F1EA;
+              --win-wash: #F2F8F4;
+              --gilt: #A8854E;
+              --rule: #DCD5C6;
+              --rule-soft: #EAE4D8;
+              --rule-strong: #BDB3A0;
+              --display: "Archivo", system-ui, sans-serif;
+              --wordmark: "Archivo", system-ui, sans-serif;
+              --body: "Public Sans", system-ui, sans-serif;
+              --mono: "IBM Plex Mono", ui-monospace, monospace;
+              --r: 2px;
+              --lift: 0 1px 2px rgba(14,20,32,.04), 0 12px 28px -18px rgba(14,20,32,.22);
+            }
+
             .myc {
                 background: #fbfbf9;
                 min-height: calc(100vh - 72px);
@@ -40,17 +70,17 @@ export function renderMyContracts() {
             }
             .myc-btn-secondary {
                 padding: 10px 18px;
-                background: #fff;
-                border: 1px solid rgba(0,0,0,0.08);
-                border-radius: 6px;
+                background: transparent !important;
+                border: 1px solid #0E1420 !important;
+                border-radius: var(--r, 2px);
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
-                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+                color: #0E1420 !important;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                transition: all 0.2s ease;
             }
             .myc-btn-secondary:hover {
                 border-color: rgba(92, 20, 20, 0.25);
@@ -60,8 +90,7 @@ export function renderMyContracts() {
             }
             .myc-btn-primary {
                 padding: 10px 18px;
-                background: #111111;
-                color: #ffffff;
+                background: #7A1C29 !important; color: #FFF8F5 !important; border: 1px solid #7A1C29 !important;
                 border: none;
                 border-radius: 6px;
                 font-size: 11px;
@@ -75,11 +104,7 @@ export function renderMyContracts() {
                 overflow: hidden;
                 box-shadow: 0 4px 12px rgba(92, 20, 20, 0.1);
             }
-            .myc-btn-primary:hover {
-                background: #5C1414;
-                transform: translateY(-1px);
-                box-shadow: 0 6px 18px rgba(92, 20, 20, 0.25);
-            }
+            .myc-btn-primary:hover { background: #54111B !important; border-color: #54111B !important; transform: translateY(-1px); }
             .myc-btn-primary::before {
                 content: '';
                 position: absolute;

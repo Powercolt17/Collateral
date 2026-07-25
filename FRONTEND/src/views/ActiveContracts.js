@@ -691,7 +691,7 @@ export function renderActiveContracts() {
             
 /* ═══════════ RIVALRIES SECTION STYLES ═══════════ */
 .rv-section{position:relative;padding:48px 0;overflow:hidden}
-.rv-ghost{position:absolute;top:48px;right:28px;color:var(--ink, #0E1420);opacity:.035;pointer-events:none;user-select:none}
+.rv-ghost{position:absolute;top:100px;right:28px;color:var(--ink, #0E1420);opacity:.035;pointer-events:none;user-select:none}
 @media(max-width:1140px){.rv-ghost{display:none}}
  
 .rv-header{margin-bottom:34px}
@@ -705,7 +705,7 @@ export function renderActiveContracts() {
  
 .rv-card{display:flex;flex-direction:column;background:var(--plate, #FFFDF9);border:1px solid var(--rule, #DCD5C6);border-radius:var(--r,2px);padding:20px 22px;box-shadow:var(--lift);transition:transform .32s ease,border-color .32s ease,box-shadow .32s ease}
 .rv-card:hover{transform:translateY(-4px);border-color:var(--rule-strong, #BDB3A0);box-shadow:0 2px 4px rgba(14,20,32,.05),0 30px 56px -30px rgba(14,20,32,.4)}
-.rv-card--open{border-color:var(--blood, #7A1C29)}
+.rv-card--open{border-color:var(--rule-strong, #BDB3A0);}
  
 .rv-head{margin-bottom:14px}
 .rv-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
@@ -715,7 +715,7 @@ export function renderActiveContracts() {
 .rv-meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}
 .rv-meta .mono{white-space:nowrap}
  
-.rv-title{margin:0 0 8px;font-family:var(--display, 'Archivo', sans-serif);font-size:17px;font-weight:700;line-height:1.22;letter-spacing:-.026em;color:var(--ink, #0E1420)}
+.rv-title{margin:0 0 8px;font-family:var(--display, 'Archivo', sans-serif);font-size:17px;font-weight:700;line-height:1.22;letter-spacing:-.026em;color:var(--ink, #0E1420);min-height:42px;}
 .rv-domain{display:flex;align-items:center;gap:8px;margin:0}
 .rv-dot{width:5px;height:5px;border-radius:50%;background:var(--ink-3, #6E7686);flex:none}
  

@@ -1,5 +1,5 @@
 // Overview.js — Collateral Execution Queue (Market View)
-// Homepage Token System & Institutional Design System Alignment
+// Mechanical Weight & Consequence Interactions (Stamp Press, Odometer, Live Commit Ticker, Hover Position, Truthful Fill States)
 
 import api, { getMarketListings, hasAuthToken } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
@@ -47,6 +47,7 @@ export function renderOverview() {
                 color: var(--ink, #0E1420);
                 padding-bottom: 100px;
                 position: relative;
+                font-variant-numeric: tabular-nums;
             }
 
             /* Fixed Grain Overlay */
@@ -174,7 +175,7 @@ export function renderOverview() {
                 50% { opacity: 1; transform: scale(1.2); }
             }
 
-            /* Reconciled Statistic Strip */
+            /* Mechanical Odometer Stat Strip */
             .eq-stats-strip {
                 display: flex;
                 gap: 64px;
@@ -334,7 +335,7 @@ export function renderOverview() {
                 background: rgba(226, 219, 208, 0.35);
                 border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
-                margin-bottom: 28px;
+                margin-bottom: 16px;
                 text-align: center;
             }
             .eq-grid-banner .mono {
@@ -343,6 +344,40 @@ export function renderOverview() {
                 letter-spacing: .16em;
                 text-transform: uppercase;
                 color: var(--ink-2, #4A5464);
+            }
+
+            /* --- LIVE COMMIT TICKER --- */
+            .eq-commit-ticker {
+                display: flex;
+                align-items: center;
+                padding: 10px 20px;
+                background: var(--plate, #FFFDF9);
+                border: 1px solid var(--rule, #DCD5C6);
+                border-radius: var(--r, 2px);
+                margin-bottom: 28px;
+                height: 38px;
+                overflow: hidden;
+            }
+            .eq-ticker-label {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 10.5px;
+                font-weight: 700;
+                letter-spacing: .16em;
+                text-transform: uppercase;
+                color: var(--blood, #7A1C29);
+                margin-right: 16px;
+                padding-right: 16px;
+                border-right: 1px solid var(--rule, #DCD5C6);
+                white-space: nowrap;
+            }
+            .eq-ticker-body {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 11px;
+                letter-spacing: .14em;
+                color: var(--ink-2, #4A5464);
+                text-transform: uppercase;
+                transition: transform 380ms cubic-bezier(.22,.85,.26,1), opacity 380ms ease;
+                white-space: nowrap;
             }
 
             /* --- CARD GRID & PLATES --- */
@@ -360,7 +395,7 @@ export function renderOverview() {
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+                transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
                 position: relative;
                 overflow: hidden;
             }
@@ -369,8 +404,55 @@ export function renderOverview() {
                 border-color: var(--blood, #7A1C29);
                 box-shadow: 0 4px 16px rgba(14, 20, 32, 0.08);
             }
+            .eq-card.is-committed {
+                border-color: #7A1C29 !important;
+                border-width: 1.5px !important;
+            }
+            .eq-card.is-filled {
+                background: var(--paper-alt, #EFEAE0) !important;
+                border-color: var(--rule, #DCD5C6) !important;
+            }
+            .eq-card.is-filled .eq-card-title,
+            .eq-card.is-filled .eq-stake-val {
+                color: var(--ink-3, #6E7686) !important;
+            }
 
-            /* Item 2: Restructured 2-line Card Header to eliminate text wrapping & ragged card heights */
+            /* Seal Stamp Overlay (Item 1 & Item 5) */
+            .cl-seal-stamp {
+                position: absolute;
+                top: 42%; right: 12px;
+                pointer-events: none;
+                z-index: 20;
+                border: 2px double #7A1C29;
+                color: #7A1C29;
+                padding: 6px 12px;
+                text-align: center;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-weight: 700;
+                letter-spacing: .16em;
+                text-transform: uppercase;
+                border-radius: 2px;
+                background: rgba(247, 244, 237, 0.92);
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                line-height: 1.2;
+            }
+            .cl-seal-stamp.filled-stamp {
+                border-color: var(--ink-3, #6E7686);
+                color: var(--ink-3, #6E7686);
+            }
+            .cl-seal-stamp.active {
+                display: flex;
+                animation: clPress 460ms cubic-bezier(.22,.85,.26,1) forwards;
+            }
+            @keyframes clPress {
+                0% { transform: scale(2.6) rotate(-13deg); opacity: 0; }
+                70% { transform: scale(0.95) rotate(-13deg); opacity: 0.9; }
+                100% { transform: scale(1) rotate(-13deg); opacity: 0.78; }
+            }
+
+            /* Restructured 2-line Card Header */
             .eq-card-header-line1 {
                 display: flex;
                 justify-content: flex-start;
@@ -400,7 +482,7 @@ export function renderOverview() {
                 margin-bottom: 16px;
             }
 
-            /* Item 4: Monochromatic platform dots (--ink-3 / #6E7686) */
+            /* Monochromatic platform dots */
             .eq-platform-dot {
                 width: 6px;
                 height: 6px;
@@ -430,7 +512,7 @@ export function renderOverview() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin-bottom: 20px;
+                margin-bottom: 12px;
             }
             .eq-stake-val {
                 font-family: var(--display, 'Archivo', sans-serif);
@@ -446,7 +528,29 @@ export function renderOverview() {
                 background: var(--rule, #DCD5C6);
             }
 
-            /* Item 1: Card CTA Button — Oxblood #7A1C29, text #FFF8F5, hover #54111B */
+            /* Item 4: Hover reveals position line (smooth max-height reveal within existing space) */
+            .eq-position-info {
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                transition: max-height 260ms cubic-bezier(.22,.85,.26,1), opacity 260ms ease, margin 260ms ease;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 10px;
+                letter-spacing: .12em;
+                color: var(--ink-3, #6E7686);
+                text-transform: uppercase;
+                text-align: center;
+                margin-top: 0;
+                white-space: nowrap;
+            }
+            .eq-card:hover .eq-position-info {
+                max-height: 24px;
+                opacity: 1;
+                margin-top: 8px;
+                margin-bottom: 12px;
+            }
+
+            /* Card CTA Button — Oxblood #7A1C29, text #FFF8F5, hover #54111B */
             .eq-card-cta {
                 background: #7A1C29 !important;
                 color: #FFF8F5 !important;
@@ -461,14 +565,22 @@ export function renderOverview() {
                 cursor: pointer;
                 border-radius: var(--r, 2px);
                 margin-top: auto;
-                transition: all 0.2s ease;
+                transition: all 0.2s ease, transform 90ms ease, background-color 90ms ease;
                 box-shadow: 0 1px 3px rgba(122, 28, 41, 0.2);
             }
-            .eq-card-cta:hover {
+            .eq-card-cta:hover:not(:disabled) {
                 background: #54111B !important;
                 border-color: #54111B !important;
                 transform: translateY(-1px);
                 box-shadow: 0 4px 12px rgba(84, 17, 27, 0.3);
+            }
+            .eq-card-cta:active:not(:disabled) {
+                transform: translateY(2px) !important;
+                background: #54111B !important;
+            }
+            .eq-card-cta:disabled {
+                opacity: 0.75;
+                cursor: not-allowed;
             }
 
             /* --- TWO PATHS SECTION --- */
@@ -502,7 +614,6 @@ export function renderOverview() {
                 line-height: 1.6; margin-bottom: 24px; flex-grow: 1;
             }
 
-            /* Item 1: Browse Solo Contracts & Explore Rivalries both Oxblood #7A1C29 */
             .eq-path-cta {
                 display: inline-block;
                 padding: 14px 24px;
@@ -576,6 +687,15 @@ export function renderOverview() {
             .eq-modal-title { font-family: var(--display, 'Archivo', sans-serif); font-size: 18px; font-weight: 700; color: var(--ink, #0E1420); }
             .eq-modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--ink-3, #6E7686); }
 
+            /* Prefers-reduced-motion */
+            @media (prefers-reduced-motion: reduce) {
+                *, ::before, ::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
             /* Responsive */
             @media (max-width: 1200px) {
                 .eq-grid { grid-template-columns: repeat(2, 1fr); }
@@ -629,7 +749,7 @@ export function renderOverview() {
                 </div>
             </section>
 
-            <!-- Section 3: Live Market Header & Reconciled Stats -->
+            <!-- Section 3: Live Market Header & Mechanical Odometer Stats -->
             <section class="eq-market-header" id="live-market">
                 <div class="mono-lbl" style="margin-bottom: 8px;">LIVE CLEARINGHOUSE</div>
                 <h2 class="eq-market-title">Collateral <strong>Market.</strong></h2>
@@ -638,18 +758,18 @@ export function renderOverview() {
                     Live — Updated <span id="last-updated" style="font-variant-numeric: tabular-nums;">04:20:00 PM</span>
                 </div>
 
-                <!-- Reconciled Statistic Strip -->
+                <!-- Odometer Statistic Strip -->
                 <div class="eq-stats-strip">
                     <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-capital">633.6k</span></div>
+                        <div class="eq-stat-val">$<span id="stat-capital">0</span>k</div>
                         <div class="eq-stat-lbl">OPEN CAPITAL</div>
                     </div>
                     <div class="eq-stat-group">
-                        <div class="eq-stat-val" id="stat-contracts">528</div>
+                        <div class="eq-stat-val" id="stat-contracts">0</div>
                         <div class="eq-stat-lbl">OPEN CONTRACTS</div>
                     </div>
                     <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-pool">148.2k</span></div>
+                        <div class="eq-stat-val">$<span id="stat-pool">0</span>k</div>
                         <div class="eq-stat-lbl">DAILY VOLUME</div>
                     </div>
                 </div>
@@ -683,11 +803,20 @@ export function renderOverview() {
                 </div>
             </section>
 
-            <!-- Contract Grid -->
+            <!-- Contract Grid & Live Commit Ticker -->
             <div class="eq-grid-container" style="padding: 0 32px; max-width: 1300px; margin: 0 auto;">
-                <!-- Universal Line -->
+                <!-- Universal Clause Line -->
                 <div class="eq-grid-banner">
                     <span class="mono">§ 3.1 &middot; ALL CONTRACTS FEATURE AUTOMATIC ORACLE TRACKING &middot; DEPOSITS RETURNED UPON VERIFIED GOAL SETTLEMENT</span>
+                </div>
+
+                <!-- Item 3: Live Commit Ticker Strip -->
+                <div class="eq-commit-ticker">
+                    <span class="eq-ticker-label">RECENT COMMITMENTS</span>
+                    <div class="eq-ticker-body" id="ticker-body">
+                        <span class="eq-market-dot" style="display:inline-block; margin-right:6px;"></span>
+                        <span id="ticker-text">@northloop committed $2,400 &middot; Order Volume Growth (30d) &middot; 12s ago</span>
+                    </div>
                 </div>
 
                 <div class="mono-lbl" style="margin-bottom: 16px;" id="eq-count-lbl">8 CONTRACTS</div>
@@ -756,6 +885,53 @@ export function initOverview() {
 
     if (!grid) return;
 
+    // Item 2: Mechanical Odometer count-up on first paint
+    function animateOdometer(el, endVal, suffix = '', duration = 1400) {
+        if (!el) return;
+        const startTime = performance.now();
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+            const current = endVal * ease;
+            el.textContent = (current >= 1000 ? (current / 1000).toFixed(1) : Math.round(current).toString()) + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    animateOdometer(document.getElementById('stat-capital'), 633600);
+    animateOdometer(document.getElementById('stat-contracts'), 528);
+    animateOdometer(document.getElementById('stat-pool'), 148200);
+
+    // Item 3: Live Commit Ticker Rolling Loop
+    const tickerCommits = [
+        "@northloop committed $2,400 &middot; Order Volume Growth (30d) &middot; 12s ago",
+        "@vance_cap committed $5,000 &middot; Monthly Recurring Revenue (30d) &middot; 45s ago",
+        "@solomon_k committed $1,200 &middot; Follower Growth (14d) &middot; 2m ago",
+        "@atlas_ventures committed $10,000 &middot; Checkout Volume (14d) &middot; 5m ago",
+        "@meridian committed $3,500 &middot; Store Net Sales (30d) &middot; 8m ago"
+    ];
+    let tickerIdx = 0;
+    const tickerTextEl = document.getElementById('ticker-text');
+    const tickerBodyEl = document.getElementById('ticker-body');
+    if (tickerTextEl && tickerBodyEl) {
+        setInterval(() => {
+            tickerBodyEl.style.opacity = '0';
+            tickerBodyEl.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                tickerIdx = (tickerIdx + 1) % tickerCommits.length;
+                tickerTextEl.innerHTML = tickerCommits[tickerIdx];
+                tickerBodyEl.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    tickerBodyEl.style.opacity = '1';
+                    tickerBodyEl.style.transform = 'translateY(0)';
+                }, 50);
+            }, 380);
+        }, 4000);
+    }
+
+    // Differentiated 8 Contracts Data (including Item 5 Fill State for Card 6)
     const defaultListings = [
         {
             id: 'B1A6-9901',
@@ -767,7 +943,10 @@ export function initOverview() {
             min_stake: 500,
             max_stake: 10000,
             multiplier: 4.0,
-            days_left: 14
+            days_left: 14,
+            committed_count: 14,
+            total_staked: 18200,
+            is_filled: false
         },
         {
             id: 'FDA5-4421',
@@ -779,7 +958,10 @@ export function initOverview() {
             min_stake: 500,
             max_stake: 5000,
             multiplier: 3.5,
-            days_left: 4
+            days_left: 4,
+            committed_count: 22,
+            total_staked: 34500,
+            is_filled: false
         },
         {
             id: 'D5CF-8812',
@@ -791,7 +973,10 @@ export function initOverview() {
             min_stake: 250,
             max_stake: 3000,
             multiplier: 2.5,
-            days_left: 7
+            days_left: 7,
+            committed_count: 9,
+            total_staked: 11800,
+            is_filled: false
         },
         {
             id: '399F-1029',
@@ -803,7 +988,10 @@ export function initOverview() {
             min_stake: 250,
             max_stake: 2500,
             multiplier: 2.5,
-            days_left: 18
+            days_left: 18,
+            committed_count: 18,
+            total_staked: 22400,
+            is_filled: false
         },
         {
             id: 'E882-7710',
@@ -815,19 +1003,10 @@ export function initOverview() {
             min_stake: 100,
             max_stake: 1500,
             multiplier: 1.5,
-            days_left: 22
-        },
-        {
-            id: '771C-3382',
-            title: 'Checkout Volume (14d)',
-            domain: 'finance',
-            provider: 'stripe',
-            tier: 'maximum',
-            badge: 'FILLING FAST',
-            min_stake: 1000,
-            max_stake: 15000,
-            multiplier: 4.0,
-            days_left: 3
+            days_left: 22,
+            committed_count: 6,
+            total_staked: 4200,
+            is_filled: false
         },
         {
             id: '91B4-6603',
@@ -839,7 +1018,10 @@ export function initOverview() {
             min_stake: 500,
             max_stake: 4000,
             multiplier: 2.8,
-            days_left: 12
+            days_left: 12,
+            committed_count: 15,
+            total_staked: 19800,
+            is_filled: false
         },
         {
             id: '440A-2291',
@@ -851,7 +1033,25 @@ export function initOverview() {
             min_stake: 150,
             max_stake: 2000,
             multiplier: 1.8,
-            days_left: 9
+            days_left: 9,
+            committed_count: 11,
+            total_staked: 8900,
+            is_filled: false
+        },
+        {
+            id: '771C-3382',
+            title: 'Checkout Volume (14d)',
+            domain: 'finance',
+            provider: 'stripe',
+            tier: 'maximum',
+            badge: 'FILLED',
+            min_stake: 1000,
+            max_stake: 15000,
+            multiplier: 4.0,
+            days_left: 0,
+            committed_count: 50,
+            total_staked: 150000,
+            is_filled: true // Item 5: Truthful Fill state (sorted to end)
         }
     ];
 
@@ -863,6 +1063,9 @@ export function initOverview() {
         if (activeCategory !== 'all') {
             list = list.filter(c => (c.domain || 'social').toLowerCase() === activeCategory.toLowerCase());
         }
+
+        // Item 5: Sort filled cards to the end of the grid
+        list.sort((a, b) => (a.is_filled === b.is_filled ? 0 : a.is_filled ? 1 : -1));
 
         if (countLbl) countLbl.textContent = `${list.length} CONTRACT${list.length !== 1 ? 'S' : ''}`;
 
@@ -885,17 +1088,25 @@ export function initOverview() {
         const min = c.min_stake || 250;
         const max = c.max_stake || 3000;
         const stakeDisplay = `$${min.toLocaleString()} – $${max.toLocaleString()}`;
-        const timeLabel = `${c.days_left || 4}d left`;
+        const timeLabel = c.is_filled ? 'Ended' : `${c.days_left || 4}d left`;
         const platform = (c.provider || 'x').toString();
         const goal = c.title || 'Contract Goal';
 
         const tierBadgeText = tier === 'maximum' ? 'ALL-IN' : tier === 'elevated' ? 'STAKE' : 'PLEDGE';
-        const badgeText = c.badge || 'MOST STAKED';
+        const badgeText = c.is_filled ? 'FILLED' : (c.badge || 'MOST STAKED');
         const multiplier = c.multiplier ? c.multiplier.toFixed(1) : '2.5';
 
-        // Item 2: Restructured 2-line header layout (Line 1: badge; Line 2: RCPT + Countdown)
+        const committedCount = c.committed_count || 14;
+        const totalStakedStr = (c.total_staked || 18200).toLocaleString();
+        const positionText = `${committedCount} COMMITTED &middot; $${totalStakedStr} STAKED &middot; 4 SLOTS AT ${multiplier}&times;`;
+
+        const filledClass = c.is_filled ? 'is-filled' : '';
+        const filledBtnState = c.is_filled ? 'disabled' : '';
+        const filledBtnText = c.is_filled ? 'FILLED' : 'START COMMITMENT';
+        const filledStampClass = c.is_filled ? 'active filled-stamp' : '';
+
         return `
-            <div class="eq-card"
+            <div class="eq-card ${filledClass}"
                  data-id="${c.id}" 
                  data-tier="${tier}" 
                  data-stake-min="${min}"
@@ -903,8 +1114,14 @@ export function initOverview() {
                  data-goal="${goal}"
                  data-provider="${platform}">
                 
+                <!-- Seal Stamp Overlay Element (Item 1 & Item 5) -->
+                <div class="cl-seal-stamp ${filledStampClass}" id="stamp-${c.id}">
+                    <span>${c.is_filled ? 'FILLED' : 'COMMITTED'}</span>
+                    <small class="mono" style="font-size: 8px; opacity:0.8; margin-top:2px;">RCPT-${shortId.slice(0, 4).toUpperCase()}</small>
+                </div>
+
                 <div class="eq-card-header-line1">
-                    <span class="mono-lbl" style="background: rgba(122, 28, 41, 0.08); color: #7A1C29; padding: 3px 8px; border-radius: 2px; border: 1px solid rgba(122, 28, 41, 0.2); font-weight: 700; white-space: nowrap;">${badgeText}</span>
+                    <span class="mono-lbl" style="background: rgba(122, 28, 41, 0.08); color: ${c.is_filled ? 'var(--ink-3)' : '#7A1C29'}; padding: 3px 8px; border-radius: 2px; border: 1px solid ${c.is_filled ? 'var(--rule)' : 'rgba(122, 28, 41, 0.2)'}; font-weight: 700; white-space: nowrap;">${badgeText}</span>
                 </div>
                 
                 <div class="eq-card-header-line2">
@@ -915,7 +1132,6 @@ export function initOverview() {
                 <h3 class="eq-card-title">${goal}</h3>
                 
                 <div class="eq-card-provider">
-                    <!-- Item 4: Monochromatic dot (--ink-3 / #6E7686) -->
                     <span class="eq-platform-dot"></span>
                     <span class="mono-lbl" style="color: var(--ink-2, #4A5464);">${platform.toUpperCase()}</span>
                     <span class="eq-tier-badge ${tier}">${tierBadgeText}</span>
@@ -930,13 +1146,18 @@ export function initOverview() {
                     </div>
                     <div class="eq-stake-separator"></div>
                     <div style="text-align: right;">
-                        <div class="eq-stake-val" style="color: #7A1C29;">${multiplier}×</div>
+                        <div class="eq-stake-val" style="color: ${c.is_filled ? 'var(--ink-3)' : '#7A1C29'};">${multiplier}&times;</div>
                         <div class="mono-lbl" style="font-size: 9px; margin-top: 2px;">YIELD MULTIPLIER</div>
                     </div>
                 </div>
 
-                <!-- Item 1: Background #7A1C29, text #FFF8F5, hover #54111B -->
-                <button class="eq-card-cta primary eq-lock-btn">START COMMITMENT</button>
+                <!-- Item 4: Position Line on Hover -->
+                <div class="eq-position-info">
+                    ${positionText}
+                </div>
+
+                <!-- Item 1: Stamp Press Commit Button -->
+                <button class="eq-card-cta primary eq-lock-btn" ${filledBtnState}>${filledBtnText}</button>
             </div>
         `;
     }
@@ -967,25 +1188,49 @@ export function initOverview() {
         });
     }
 
-    // Grid click listener
+    // Grid click listener — Item 1 Stamp-Press Commit Ceremony
     grid.addEventListener('click', (e) => {
         const btn = e.target.closest('.eq-lock-btn');
-        if (btn) {
+        if (btn && !btn.disabled) {
             e.stopPropagation();
             e.preventDefault();
             const card = btn.closest('.eq-card');
             if (card) {
-                openExecutionModal({
-                    id: card.dataset.id,
-                    title: card.dataset.goal,
-                    goal: card.dataset.goal,
-                    tier: card.dataset.tier,
-                    provider: card.dataset.provider,
-                    platform: card.dataset.provider,
-                    min_stake: parseFloat(card.dataset.stakeMin || '250'),
-                    max_stake: parseFloat(card.dataset.stakeMax || '3000'),
-                    multiplier: card.dataset.tier === 'maximum' ? 4.0 : 2.5
-                });
+                const id = card.dataset.id;
+                const shortId = id.split('-')[0] || id.slice(0, 4).toUpperCase();
+                
+                // Item 1 Ceremony Sequence:
+                // 1. Button depresses 2px and darkens to #54111B
+                btn.style.transform = 'translateY(2px)';
+                btn.style.backgroundColor = '#54111B';
+
+                // 2. Seal impression lands on card (clPress 460ms)
+                const stampEl = card.querySelector('.cl-seal-stamp');
+                if (stampEl) stampEl.classList.add('active');
+
+                // 3. Card border switches to 1.5px solid #7A1C29
+                card.classList.add('is-committed');
+
+                // 4. Button text becomes COMMITTED · RCPT-B1A6, disabled state
+                setTimeout(() => {
+                    btn.disabled = true;
+                    btn.textContent = `COMMITTED &middot; RCPT-${shortId.toUpperCase()}`;
+                }, 150);
+
+                // Trigger execution modal after ceremony completes
+                setTimeout(() => {
+                    openExecutionModal({
+                        id,
+                        title: card.dataset.goal,
+                        goal: card.dataset.goal,
+                        tier: card.dataset.tier,
+                        provider: card.dataset.provider,
+                        platform: card.dataset.provider,
+                        min_stake: parseFloat(card.dataset.stakeMin || '250'),
+                        max_stake: parseFloat(card.dataset.stakeMax || '3000'),
+                        multiplier: card.dataset.tier === 'maximum' ? 4.0 : 2.5
+                    });
+                }, 500);
             }
             return;
         }

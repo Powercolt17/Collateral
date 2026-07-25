@@ -1972,7 +1972,7 @@ footer .logo-wordmark-light,
 }
 
 .lead { color: var(--win); }
-.trail { color: var(--blood); }
+.trail { color: var(--ink); }
 
 .duel-mid { font-family: var(--mono); font-size: 9px; letter-spacing: .22em; color: var(--ink-4); padding-bottom: 5px; }
 
@@ -2005,7 +2005,9 @@ footer .logo-wordmark-light,
 .duel-cta span { transition: transform .3s var(--ease); }
 
 /* ═══════════ SIGNATURE ═══════════ */
-.sign { padding: clamp(32px, 5vw, 68px); text-align: center; }
+.sign { padding: clamp(32px, 5vw, 68px); text-align: center; display: flex; flex-direction: column; align-items: center; }
+.sign svg { display: block; margin: 0 auto 24px; }
+.sign .btn { display: inline-flex; margin: 0 auto; }
 
 .sign-title {
   margin: 26px 0 14px;

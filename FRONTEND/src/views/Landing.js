@@ -696,9 +696,9 @@ export function renderLanding() {
             <section class="section alt reveal" id="manifesto" style="padding-top:0">
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
-                    <div class="sign plate ticks r-plate" style="--i:0">
-                        <svg class="r-item" style="--i:0" width="70" height="70" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
-                             style="margin:0 auto" fill="none" stroke="#7A1C29">
+                    <div class="sign plate ticks r-plate">
+                        <svg width="70" height="70" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
+                             style="display:block; margin:0 auto 24px;" fill="none" stroke="#7A1C29">
                             <circle cx="38" cy="38" r="35" stroke-width="1"/>
                             <circle cx="38" cy="38" r="30" stroke-width=".6"/>
                             <circle cx="38" cy="38" r="17" stroke-width=".6"/>
@@ -708,15 +708,15 @@ export function renderLanding() {
                             <text x="38" y="43" text-anchor="middle" font-family="Archivo, sans-serif"
                                   font-size="17" font-weight="700" fill="#7A1C29" stroke="none">C</text>
                         </svg>
-                        <h2 class="sign-title r-item" style="--i:1">Sign it, and the week reorders itself</h2>
-                        <p class="sign-copy r-item" style="--i:2">You will know within about four days whether you meant it. That is
+                        <h2 class="sign-title">Sign it, and the week reorders itself</h2>
+                        <p class="sign-copy">You will know within about four days whether you meant it. That is
                             the fastest honest answer anyone has ever given you about your own goal.</p>
-                        <button class="btn btn-fill r-item" style="--i:3" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
-                        <div class="sign-lines r-item" style="--i:4">
+                        <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
+                        <div class="sign-lines">
                             <div class="sign-line"><p class="sign-script">&nbsp;</p><span class="mono">Counterparty signature</span></div>
                             <div class="sign-line"><p class="sign-script">Collateral</p><span class="mono">Custodian, countersigned</span></div>
                         </div>
-                        <p class="disclosure r-item" style="--i:5">Deposits are held by a third-party custodian via Stripe Connect and
+                        <p class="disclosure">Deposits are held by a third-party custodian via Stripe Connect and
                             are not held by Collateral. Outcomes are determined solely by read-only telemetry from
                             the connected platform API named in the contract. Matching yield is funded from
                             forfeited deposits and sponsor contributions, is not interest, and is not guaranteed.

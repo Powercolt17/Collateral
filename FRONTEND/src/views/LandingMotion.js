@@ -26,7 +26,7 @@ class MotionController {
             if (this.isReduced) this.pauseAll();
         });
 
-        // NO-JS Fallback Mandatory — add js-motion-active class ONLY after JS confirms runtime support
+        // Add js-motion-active class ONLY after JS confirms runtime support
         if (!this.isReduced && document.documentElement) {
             document.documentElement.classList.add('js-motion-active');
         }
@@ -143,36 +143,51 @@ export function animateValue(element, start, end, duration = 400, formatter = (n
     motionController.requestAnimationFrame(step);
 }
 
-// Universal Entrance Observers for Scroll Animations
+// Robust Entrance Observers for Scroll Animations (Safe initial viewport check)
 export function initEntranceObservers() {
     motionController.init();
 
-    if (!('IntersectionObserver' in window)) return;
-
-    const revealObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-in');
-                entry.target.querySelectorAll('.r-item, .r-plate, .r-rule').forEach(child => {
-                    child.classList.add('is-in');
-                });
-                obs.unobserve(entry.target);
-            }
+    const revealElement = (el) => {
+        if (!el) return;
+        el.classList.add('is-in');
+        el.querySelectorAll('.r-item, .r-plate, .r-rule').forEach(child => {
+            child.classList.add('is-in');
         });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    };
 
     const targets = document.querySelectorAll(
-        '.reveal, .r-item, .r-plate, .receipt-card, .rc-card, .leaf, .reg, .cmp, .faq-item, .calc-card, section.section'
+        '.reveal, .r-item, .r-plate, .receipt-card, .rc-card, .leaf, .reg, .cmp, .faq-item, .calc-card'
     );
-    
+
+    const vh = window.innerHeight || 800;
+
     targets.forEach((el, idx) => {
         if (!el.style.getPropertyValue('--i')) {
             el.style.setProperty('--i', (idx % 6).toString());
         }
-        revealObserver.observe(el);
-    });
 
-    motionController.registerObserver(revealObserver);
+        // Bounding rect pre-check: reveal elements already in/near viewport on load
+        const rect = el.getBoundingClientRect();
+        if (rect.top < vh * 0.95 && rect.bottom > 0) {
+            revealElement(el);
+            return;
+        }
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        revealElement(entry.target);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+            observer.observe(el);
+            motionController.registerObserver(observer);
+        } else {
+            revealElement(el);
+        }
+    });
 }
 
 export const revealStyles = '';

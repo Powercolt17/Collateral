@@ -688,8 +688,9 @@ export function renderLanding() {
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
                     <div class="sign plate ticks r-plate">
-                        <img src="/assets/images/solo-seal.png" 
-                             alt="Collateral Official Wax Seal" 
+                        <img src="/assets/images/official-collateral-seal.png" 
+                             onerror="this.onerror=null; this.src='/assets/images/circular-wax-seal.png';" 
+                             alt="Collateral Official Wax Seal Stamp" 
                              class="sign-seal-img" 
                              width="96" 
                              height="96" />

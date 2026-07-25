@@ -2124,16 +2124,6 @@ footer .logo-wordmark-light,
   .stage-col { padding: 24px 18px; }
 }
 
-@media(prefers-reduced-motion:reduce){
-  .cl-root * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-  .js-load .rise, .js-load .draw, .js-load .seat {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
-  .pulse::after { opacity: 0; }
-  .stamp { transform: translateY(-50%) rotate(-11deg); opacity: .78; }
-  .coin { display: none; }
 
 /* ═══════════════════════════════════════════════════════════
    Collateral — schematic tracer
@@ -2200,6 +2190,17 @@ footer .logo-wordmark-light,
   .sch .tracer-group,
   .sch .win-box-pulse{ display:none !important; animation:none !important }
 }
+
+@media(prefers-reduced-motion:reduce){
+  .cl-root * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .js-load .rise, .js-load .draw, .js-load .seat {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .pulse::after { opacity: 0; }
+  .stamp { transform: translateY(-50%) rotate(-11deg); opacity: .78; }
+  .coin { display: none; }
 
 ${revealStyles}
 `;

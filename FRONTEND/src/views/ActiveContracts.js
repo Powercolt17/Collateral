@@ -1,5 +1,5 @@
 // ActiveContracts.js — Collateral Execution Queue (Market View)
-// Adopted homepage token system & clerical design system
+// Pass 1: Root Token Block, Oxblood Buttons (#7A1C29 / #54111B), Dark Ink Pills (#0E1420), & Reconciled Stats ($634k / 528 / $148.2k)
 
 import api, { getMarketListings, hasAuthToken } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
@@ -8,35 +8,45 @@ export function renderActiveContracts() {
     return `
         <style>
             /* ══════════════════════════════════════════════════════════════
-               HOMEPAGE DESIGN TOKEN ADOPTION & CLERICAL VOICE
+               ROOT DESIGN TOKEN BLOCK (HOMEPAGE PARITY)
                ══════════════════════════════════════════════════════════════ */
+            :root {
+              --paper: #F7F4ED;
+              --paper-alt: #EFEAE0;
+              --paper-deep: #E7E1D4;
+              --plate: #FFFDF9;
+              --notch: #F7F4ED;
+              --ink: #0E1420;
+              --ink-2: #4A5464;
+              --ink-3: #6E7686;
+              --ink-4: #9AA0AC;
+              --blood: #7A1C29;
+              --blood-deep: #54111B;
+              --blood-mid: #9B3341;
+              --blood-tint: #F5E6E8;
+              --blood-wash: #FBF3F4;
+              --win: #186B4A;
+              --win-tint: #E6F1EA;
+              --win-wash: #F2F8F4;
+              --gilt: #A8854E;
+              --rule: #DCD5C6;
+              --rule-soft: #EAE4D8;
+              --rule-strong: #BDB3A0;
+              --display: "Archivo", system-ui, sans-serif;
+              --wordmark: "Archivo", system-ui, sans-serif;
+              --body: "Public Sans", system-ui, sans-serif;
+              --mono: "IBM Plex Mono", ui-monospace, monospace;
+              --r: 2px;
+              --lift: 0 1px 2px rgba(14,20,32,.04), 0 12px 28px -18px rgba(14,20,32,.22);
+            }
+
             .eq {
                 background: var(--paper, #F7F4ED);
                 min-height: 100vh;
-                font-family: var(--body, 'Inter', -apple-system, sans-serif);
+                font-family: var(--body, 'Public Sans', sans-serif);
                 color: var(--ink, #0E1420);
                 padding-bottom: 100px;
                 position: relative;
-                font-variant-numeric: tabular-nums;
-            }
-
-            /* Fixed Grain Overlay */
-            .cl-grain {
-                position: fixed;
-                inset: 0;
-                pointer-events: none;
-                z-index: 9999;
-                opacity: .035;
-                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            }
-
-            /* Clerical Mono Label Utility */
-            .mono-lbl {
-                font-family: var(--mono, 'JetBrains Mono', monospace);
-                font-size: 10.5px;
-                letter-spacing: .16em;
-                text-transform: uppercase;
-                color: var(--ink-3, #6E7686);
             }
 
             /* --- HERO SECTION --- */
@@ -73,27 +83,27 @@ export function renderActiveContracts() {
                 gap: 20px;
             }
 
-            /* Primary Oxblood Button */
+            /* Pass 1 Button Requirement: Oxblood #7A1C29, text #FFF8F5, hover #54111B */
             .eq-btn-primary {
-                background: var(--blood, #7A1C29);
-                color: #FFF8F5;
+                background: #7A1C29 !important;
+                color: #FFF8F5 !important;
                 padding: 14px 28px;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
                 letter-spacing: .16em;
                 text-transform: uppercase;
-                border: 1px solid var(--blood, #7A1C29);
+                border: 1px solid #7A1C29 !important;
                 cursor: pointer;
                 border-radius: var(--r, 2px);
                 transition: all 0.2s ease;
                 box-shadow: 0 1px 3px rgba(122, 28, 41, 0.2);
             }
             .eq-btn-primary:hover {
-                background: #5C1414;
-                border-color: #5C1414;
+                background: #54111B !important;
+                border-color: #54111B !important;
                 transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(122, 28, 41, 0.3);
+                box-shadow: 0 4px 12px rgba(84, 17, 27, 0.3);
             }
             .eq-link-more {
                 color: var(--ink-3, #6E7686);
@@ -104,7 +114,7 @@ export function renderActiveContracts() {
             }
             .eq-link-more:hover { color: var(--ink, #0E1420); }
 
-            /* --- MARKET SECTION HEADER & STATS --- */
+            /* --- MARKET SECTION HEADER & RECONCILED STATS --- */
             .eq-market-header {
                 padding: 40px 32px 24px;
                 max-width: 1300px;
@@ -123,7 +133,7 @@ export function renderActiveContracts() {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10.5px;
                 color: var(--ink-3, #6E7686);
                 text-transform: uppercase;
@@ -132,7 +142,7 @@ export function renderActiveContracts() {
             }
             .eq-market-dot {
                 width: 6px; height: 6px;
-                background: #186B4A;
+                background: var(--win, #186B4A);
                 border-radius: 50%;
                 animation: dotPulse 2s ease-in-out infinite;
             }
@@ -141,16 +151,16 @@ export function renderActiveContracts() {
                 50% { opacity: 1; transform: scale(1.2); }
             }
 
-            /* Reconciled Stat Strip — Tabular & Clerical Voice */
+            /* Pass 1 Reconciled Statistics Strip */
             .eq-stats-strip {
                 display: flex;
                 gap: 64px;
                 margin-bottom: 40px;
                 padding: 20px 32px;
                 background: var(--plate, #FFFDF9);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
-                box-shadow: var(--lift, 0 1px 3px rgba(14, 20, 32, 0.04));
+                box-shadow: var(--lift);
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 6px; }
             .eq-stat-val {
@@ -162,26 +172,26 @@ export function renderActiveContracts() {
                 font-variant-numeric: tabular-nums;
             }
             .eq-stat-lbl {
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10.5px;
                 text-transform: uppercase;
                 letter-spacing: .16em;
                 color: var(--ink-3, #6E7686);
             }
 
-            /* --- CONTROLS --- */
+            /* --- CONTROLS & TABS --- */
             .eq-controls {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding-bottom: 14px;
-                border-bottom: 1px solid var(--rule, #E2DBD0);
+                border-bottom: 1px solid var(--rule, #DCD5C6);
                 margin-bottom: 24px;
             }
             .eq-tabs { display: flex; gap: 24px; }
             .eq-tab {
                 padding: 8px 0;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
                 color: var(--ink-3, #6E7686);
@@ -194,8 +204,8 @@ export function renderActiveContracts() {
                 transition: all 0.2s ease;
             }
             .eq-tab.active {
-                color: var(--ink, #0E1420);
-                border-bottom-color: var(--blood, #7A1C29);
+                color: var(--ink, #0E1420) !important;
+                border-bottom-color: var(--blood, #7A1C29) !important;
             }
             .eq-tab:hover { color: var(--ink, #0E1420); }
 
@@ -206,13 +216,13 @@ export function renderActiveContracts() {
             }
             .eq-search-box {
                 background: var(--plate, #FFFDF9);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
                 padding: 10px 16px;
                 font-size: 13px;
                 width: 320px;
                 max-width: 100%;
-                font-family: var(--body, 'Inter', sans-serif);
+                font-family: var(--body, 'Public Sans', sans-serif);
                 color: var(--ink, #0E1420);
                 transition: border-color 0.2s ease;
             }
@@ -222,10 +232,10 @@ export function renderActiveContracts() {
             }
             .eq-btn-rules {
                 background: var(--plate, #FFFDF9);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
                 padding: 10px 18px;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -248,7 +258,7 @@ export function renderActiveContracts() {
             }
             .eq-pills { display: flex; align-items: center; gap: 8px; }
             .eq-filter-lbl {
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10.5px;
                 color: var(--ink-3, #6E7686);
                 text-transform: uppercase;
@@ -257,22 +267,23 @@ export function renderActiveContracts() {
             }
             .eq-pill {
                 padding: 6px 16px;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10.5px;
                 font-weight: 600;
                 letter-spacing: .12em;
                 text-transform: uppercase;
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
                 background: var(--plate, #FFFDF9);
                 cursor: pointer;
                 color: var(--ink-2, #4A5464);
                 transition: all 0.2s ease;
             }
+            /* Pass 1 Pill Requirement: Active "All" pill is #0E1420, NOT black */
             .eq-pill.active {
-                background: var(--ink, #0E1420);
-                color: #FFFDF9;
-                border-color: var(--ink, #0E1420);
+                background: #0E1420 !important;
+                color: #FFFDF9 !important;
+                border-color: #0E1420 !important;
             }
             .eq-pill:hover:not(.active) {
                 border-color: var(--ink-3, #6E7686);
@@ -283,33 +294,13 @@ export function renderActiveContracts() {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: .16em;
                 color: var(--ink-3, #6E7686);
             }
-            .eq-status-operational .dot { width: 5px; height: 5px; background: #186B4A; border-radius: 50%; }
-
-            /* --- UNIVERSAL GRID BANNER --- */
-            .eq-grid-banner {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 12px 24px;
-                background: rgba(226, 219, 208, 0.35);
-                border: 1px solid var(--rule, #E2DBD0);
-                border-radius: var(--r, 2px);
-                margin-bottom: 28px;
-                text-align: center;
-            }
-            .eq-grid-banner .mono {
-                font-family: var(--mono, 'JetBrains Mono', monospace);
-                font-size: 10.5px;
-                letter-spacing: .16em;
-                text-transform: uppercase;
-                color: var(--ink-2, #4A5464);
-            }
+            .eq-status-operational .dot { width: 5px; height: 5px; background: var(--win, #186B4A); border-radius: 50%; }
 
             /* --- CARD GRID & PLATES --- */
             .eq-grid {
@@ -319,9 +310,9 @@ export function renderActiveContracts() {
             }
             .eq-card {
                 background: var(--plate, #FFFDF9);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
-                box-shadow: var(--lift, 0 1px 3px rgba(14, 20, 32, 0.04), 0 4px 12px rgba(14, 20, 32, 0.03));
+                box-shadow: var(--lift);
                 padding: 28px 24px 24px;
                 display: flex;
                 flex-direction: column;
@@ -362,16 +353,15 @@ export function renderActiveContracts() {
                 font-weight: 700;
                 border-radius: 2px;
                 text-transform: uppercase;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 letter-spacing: .12em;
             }
             .eq-tier-badge.controlled { background: rgba(24, 107, 74, 0.08); color: #186B4A; border: 1px solid rgba(24, 107, 74, 0.2); }
             .eq-tier-badge.elevated { background: rgba(154, 52, 18, 0.08); color: #9A3412; border: 1px solid rgba(154, 52, 18, 0.2); }
             .eq-tier-badge.maximum { background: rgba(122, 28, 41, 0.08); color: #7A1C29; border: 1px solid rgba(122, 28, 41, 0.2); }
 
-            /* Hairline Dotted Rule */
             .eq-card-divider {
-                border-bottom: 1px dotted var(--rule, #E2DBD0);
+                border-bottom: 1px dotted var(--rule, #DCD5C6);
                 margin: 16px 0;
             }
 
@@ -392,16 +382,16 @@ export function renderActiveContracts() {
             .eq-stake-separator {
                 width: 1px;
                 height: 28px;
-                background: var(--rule, #E2DBD0);
+                background: var(--rule, #DCD5C6);
             }
 
-            /* Card CTA — Oxblood btn-fill (NO BLACK) */
+            /* Pass 1 Button Requirement: All 8 "START COMMITMENT" buttons render background #7A1C29, text #FFF8F5, hover #54111B */
             .eq-card-cta {
-                background: var(--blood, #7A1C29);
-                color: #FFF8F5;
-                border: 1px solid var(--blood, #7A1C29);
+                background: #7A1C29 !important;
+                color: #FFF8F5 !important;
+                border: 1px solid #7A1C29 !important;
                 padding: 14px 20px;
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -414,17 +404,17 @@ export function renderActiveContracts() {
                 box-shadow: 0 1px 3px rgba(122, 28, 41, 0.2);
             }
             .eq-card-cta:hover {
-                background: #5C1414;
-                border-color: #5C1414;
+                background: #54111B !important;
+                border-color: #54111B !important;
                 transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(122, 28, 41, 0.3);
+                box-shadow: 0 4px 12px rgba(84, 17, 27, 0.3);
             }
 
             /* --- TWO PATHS SECTION --- */
             .eq-paths {
                 max-width: 1300px; margin: 0 auto;
                 padding: 60px 32px;
-                border-top: 1px solid var(--rule, #E2DBD0);
+                border-top: 1px solid var(--rule, #DCD5C6);
             }
             .eq-paths-grid {
                 display: grid;
@@ -433,10 +423,10 @@ export function renderActiveContracts() {
             }
             .eq-path-card {
                 background: var(--plate, #FFFDF9);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
                 padding: 36px 32px;
-                box-shadow: var(--lift, 0 1px 3px rgba(14, 20, 32, 0.04));
+                box-shadow: var(--lift);
                 display: flex; flex-direction: column;
             }
             .eq-path-title {
@@ -453,11 +443,11 @@ export function renderActiveContracts() {
             .eq-path-cta {
                 display: inline-block;
                 padding: 14px 24px;
-                background: var(--blood, #7A1C29);
-                color: #FFF8F5;
-                border: 1px solid var(--blood, #7A1C29);
+                background: #7A1C29 !important;
+                color: #FFF8F5 !important;
+                border: 1px solid #7A1C29 !important;
                 border-radius: var(--r, 2px);
-                font-family: var(--mono, 'JetBrains Mono', monospace);
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px; font-weight: 700;
                 letter-spacing: .16em; text-transform: uppercase;
                 text-decoration: none; text-align: center;
@@ -465,8 +455,8 @@ export function renderActiveContracts() {
                 transition: all 0.2s ease;
             }
             .eq-path-cta:hover {
-                background: #5C1414;
-                border-color: #5C1414;
+                background: #54111B !important;
+                border-color: #54111B !important;
                 transform: translateY(-1px);
             }
 
@@ -474,7 +464,7 @@ export function renderActiveContracts() {
             .eq-mechanism {
                 max-width: 1300px; margin: 0 auto;
                 padding: 60px 32px;
-                border-top: 1px solid var(--rule, #E2DBD0);
+                border-top: 1px solid var(--rule, #DCD5C6);
             }
             .eq-mechanism-grid {
                 display: grid;
@@ -484,7 +474,7 @@ export function renderActiveContracts() {
             .eq-mech-card {
                 padding: 36px 24px;
                 background: var(--plate, #FFFDF9);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
             }
             .eq-mech-num {
@@ -511,7 +501,7 @@ export function renderActiveContracts() {
             .eq-modal-backdrop.open { display: flex; }
             .eq-modal {
                 background: var(--paper, #F7F4ED);
-                border: 1px solid var(--rule, #E2DBD0);
+                border: 1px solid var(--rule, #DCD5C6);
                 border-radius: var(--r, 2px);
                 width: 540px; max-width: 90vw; max-height: 85vh;
                 overflow-y: auto; padding: 32px;
@@ -537,8 +527,6 @@ export function renderActiveContracts() {
                 .eq-stats-strip { flex-direction: column; gap: 20px; padding: 20px; }
             }
         </style>
-
-        <div class="cl-grain" aria-hidden="true"></div>
 
         <div class="eq">
             <!-- Section 1: Hero -->
@@ -576,7 +564,7 @@ export function renderActiveContracts() {
                 </div>
             </section>
 
-            <!-- Section 3: Live Market Header & Stats -->
+            <!-- Section 3: Live Market Header & Reconciled Stats -->
             <section class="eq-market-header" id="live-market">
                 <div class="mono-lbl" style="margin-bottom: 8px;">LIVE CLEARINGHOUSE</div>
                 <h2 class="eq-market-title">Collateral <strong>Market.</strong></h2>
@@ -585,7 +573,7 @@ export function renderActiveContracts() {
                     Live — Updated <span id="last-updated" style="font-variant-numeric: tabular-nums;">04:20:00 PM</span>
                 </div>
 
-                <!-- Reconciled Stat Strip -->
+                <!-- Pass 1 Change 2: Reconciled Statistic Strip -->
                 <div class="eq-stats-strip">
                     <div class="eq-stat-group">
                         <div class="eq-stat-val">$<span id="stat-capital">633.6k</span></div>
@@ -632,11 +620,6 @@ export function renderActiveContracts() {
 
             <!-- Contract Grid -->
             <div class="eq-grid-container" style="padding: 0 32px; max-width: 1300px; margin: 0 auto;">
-                <!-- Universal Line (Moved out of cards) -->
-                <div class="eq-grid-banner">
-                    <span class="mono">§ 3.1 &middot; ALL CONTRACTS FEATURE AUTOMATIC ORACLE TRACKING &middot; DEPOSITS RETURNED UPON VERIFIED GOAL SETTLEMENT</span>
-                </div>
-
                 <div class="mono-lbl" style="margin-bottom: 16px;" id="eq-count-lbl">8 CONTRACTS</div>
                 <div class="eq-grid" id="eq-grid">
                     <!-- Dynamic cards go here -->
@@ -683,7 +666,7 @@ export function renderActiveContracts() {
                     <button class="eq-modal-close" onclick="document.getElementById('rules-modal').classList.remove('open')">✕</button>
                 </div>
 
-                <div class="mono-lbl" style="margin-bottom: 12px; border-bottom: 1px solid var(--rule, #E2DBD0); padding-bottom: 6px;">ENFORCEMENT</div>
+                <div class="mono-lbl" style="margin-bottom: 12px; border-bottom: 1px solid var(--rule, #DCD5C6); padding-bottom: 6px;">ENFORCEMENT</div>
                 <div style="font-size: 13px; color: var(--ink-2); display: flex; flex-direction: column; gap: 8px;">
                     <div>✓ Verified Only (Fail-Closed)</div>
                     <div>✓ Immutable Terms</div>
@@ -703,7 +686,6 @@ export function initActiveContracts() {
 
     if (!grid) return;
 
-    // Differentiated 8 Contracts Data (Part 5 Requirements)
     const defaultListings = [
         {
             id: 'B1A6-9901',
@@ -735,7 +717,7 @@ export function initActiveContracts() {
             domain: 'social',
             provider: 'x',
             tier: 'elevated',
-            badge: '§ POPULAR',
+            badge: 'POPULAR',
             min_stake: 250,
             max_stake: 3000,
             multiplier: 2.5,
@@ -759,7 +741,7 @@ export function initActiveContracts() {
             domain: 'social',
             provider: 'youtube',
             tier: 'controlled',
-            badge: '§ POPULAR',
+            badge: 'POPULAR',
             min_stake: 100,
             max_stake: 1500,
             multiplier: 1.5,
@@ -855,7 +837,7 @@ export function initActiveContracts() {
                  data-goal="${goal}"
                  data-provider="${platform}">
                 <div class="eq-card-meta">
-                    <span class="mono-lbl" style="background: rgba(122, 28, 41, 0.08); color: var(--blood, #7A1C29); padding: 3px 8px; border-radius: 2px; border: 1px solid rgba(122, 28, 41, 0.2); font-weight: 700;">${badgeText}</span>
+                    <span class="mono-lbl" style="background: rgba(122, 28, 41, 0.08); color: #7A1C29; padding: 3px 8px; border-radius: 2px; border: 1px solid rgba(122, 28, 41, 0.2); font-weight: 700;">${badgeText}</span>
                     <span class="mono-lbl">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
                     <span class="mono-lbl" style="font-variant-numeric: tabular-nums;">○ ${timeLabel}</span>
                 </div>
@@ -877,11 +859,12 @@ export function initActiveContracts() {
                     </div>
                     <div class="eq-stake-separator"></div>
                     <div style="text-align: right;">
-                        <div class="eq-stake-val" style="color: var(--blood, #7A1C29);">${multiplier}×</div>
+                        <div class="eq-stake-val" style="color: #7A1C29;">${multiplier}×</div>
                         <div class="mono-lbl" style="font-size: 9px; margin-top: 2px;">YIELD MULTIPLIER</div>
                     </div>
                 </div>
 
+                <!-- Pass 1 Button Requirement: Background #7A1C29, text #FFF8F5, hover #54111B -->
                 <button class="eq-card-cta primary eq-lock-btn">START COMMITMENT</button>
             </div>
         `;

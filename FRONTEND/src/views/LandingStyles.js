@@ -2126,8 +2126,9 @@ footer .logo-wordmark-light,
 
 
 /* ═══════════════════════════════════════════════════════════
-   Collateral — schematic tracer
+   Collateral — schematic tracer (Sequential 6s Timeline)
    ═══════════════════════════════════════════════════════════ */
+/* Base: invisible unless animating. */
 .sch .tracer{
   fill:none;
   stroke-linecap:round;
@@ -2135,60 +2136,71 @@ footer .logo-wordmark-light,
   pointer-events:none;
   stroke-dasharray:14 100;
   stroke-dashoffset:14;
+  animation-duration:6s;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
 }
-@keyframes cl-trace{
-  0%     { stroke-dashoffset:14;   opacity:0 }
-  6%     { opacity:1 }
-  94%    { opacity:1 }
-  100%   { stroke-dashoffset:-100; opacity:0 }
-}
-.sch .tracer{
-  animation:cl-trace .72s cubic-bezier(.45,0,.55,1) infinite;
-  animation-duration:.72s;
-}
-.sch .t1{ animation-delay:0s;    animation-duration:.72s }
-.sch .t2{ animation-delay:.62s;  animation-duration:.72s }
-.sch .t3{ animation-delay:1.24s; animation-duration:.72s }
 
+/* Leg 1 — Deposit → Escrow : 0–14% */
+.sch .t1{ animation-name:cl-t1 }
+@keyframes cl-t1{
+  0%              { stroke-dashoffset:14;   opacity:0 }
+  1%              { opacity:1 }
+  13%             { opacity:1 }
+  14%             { stroke-dashoffset:-100; opacity:0 }
+  14.01%,100%     { stroke-dashoffset:14;   opacity:0 }
+}
+
+/* Leg 2 — Escrow → Oracle : 16–30% */
+.sch .t2{ animation-name:cl-t2 }
+@keyframes cl-t2{
+  0%,16%          { stroke-dashoffset:14;   opacity:0 }
+  17%             { opacity:1 }
+  29%             { opacity:1 }
+  30%             { stroke-dashoffset:-100; opacity:0 }
+  30.01%,100%     { stroke-dashoffset:14;   opacity:0 }
+}
+
+/* Leg 3 — Oracle → junction : 32–46% */
+.sch .t3{ animation-name:cl-t3 }
+@keyframes cl-t3{
+  0%,32%          { stroke-dashoffset:14;   opacity:0 }
+  33%             { opacity:1 }
+  45%             { opacity:1 }
+  46%             { stroke-dashoffset:-100; opacity:0 }
+  46.01%,100%     { stroke-dashoffset:14;   opacity:0 }
+}
+
+/* Leg 4 — junction → win box : 48–70%, slower and heavier */
 .sch .t-win{
-  animation-delay:1.86s;
-  animation-duration:1.05s;
+  animation-name:cl-twin;
   stroke-dasharray:18 100;
   stroke-dashoffset:18;
 }
-@keyframes cl-trace-win{
-  0%   { stroke-dashoffset:18;   opacity:0 }
-  8%   { opacity:1 }
-  88%  { opacity:1 }
-  100% { stroke-dashoffset:-100; opacity:0 }
-}
-.sch .t-win{ animation-name:cl-trace-win }
-
-.sch .tracer-group{
-  animation:cl-trace-cycle 5s linear infinite;
-}
-@keyframes cl-trace-cycle{
-  0%,62%   { opacity:1 }
-  62.01%,100% { opacity:0 }
+@keyframes cl-twin{
+  0%,48%          { stroke-dashoffset:18;   opacity:0 }
+  49%             { opacity:1 }
+  68%             { opacity:1 }
+  70%             { stroke-dashoffset:-100; opacity:0 }
+  70.01%,100%     { stroke-dashoffset:18;   opacity:0 }
 }
 
+/* Win box pulse as the tracer lands : 70–78% */
 .sch .win-box-pulse{
   fill:none;
   stroke:#186B4A;
   opacity:0;
-  animation:cl-win-land 5s linear infinite;
+  animation:cl-win-land 6s linear infinite;
 }
 @keyframes cl-win-land{
-  0%,56%    { opacity:0; stroke-width:1 }
-  58%       { opacity:.9; stroke-width:2.6 }
-  66%       { opacity:.5; stroke-width:1.6 }
-  72%,100%  { opacity:0; stroke-width:1 }
+  0%,69%     { opacity:0;  stroke-width:1 }
+  71%        { opacity:.9; stroke-width:2.6 }
+  76%        { opacity:.4; stroke-width:1.6 }
+  80%,100%   { opacity:0;  stroke-width:1 }
 }
 
 @media(prefers-reduced-motion:reduce){
-  .sch .tracer,
-  .sch .tracer-group,
-  .sch .win-box-pulse{ display:none !important; animation:none !important }
+  .sch .tracer,.sch .win-box-pulse{ display:none !important; animation:none !important }
 }
 
 @media(prefers-reduced-motion:reduce){

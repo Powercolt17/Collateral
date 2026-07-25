@@ -1,4 +1,4 @@
-// Header Component - Paired Capital & Health Columns with Signed-In Indicator
+// Header Component - Full-Bleed Viewport Layout, Left-Aligned Terminal Columns & Separated Menu Cluster
 export function renderHeader(currentRoute = '') {
     const isRoot = currentRoute === '/' || currentRoute === '' || currentRoute === '/market';
     const isMarket = isRoot || currentRoute.startsWith('/market/');
@@ -42,7 +42,7 @@ export function renderHeader(currentRoute = '') {
     return `
         <style>
             /* ══════════════════════════════════════════════════════════════
-               SIMPLIFIED STICKY HEADER & PAIRED CAPITAL/HEALTH COLUMNS
+               FULL-BLEED STICKY HEADER & SEPARATED MENU CLUSTER
                ══════════════════════════════════════════════════════════════ */
             .ch-header {
                 width: 100%;
@@ -63,17 +63,22 @@ export function renderHeader(currentRoute = '') {
                 border-bottom-color: var(--rule-strong, #BDB3A0);
             }
 
-            /* Header Inner: Constrained to 1280px grid matching hero and content */
+            /* Full-Bleed Viewport Layout: Wordmark and Menu sit flush to edge gutters */
             .ch-header-inner {
-                max-width: 1280px;
-                margin: 0 auto;
                 width: 100%;
+                max-width: none !important;
+                margin: 0 !important;
                 padding: 0 24px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 box-sizing: border-box;
+            }
+            @media (max-width: 767px) {
+                .ch-header-inner {
+                    padding: 0 16px;
+                }
             }
 
             .ch-left {
@@ -131,12 +136,12 @@ export function renderHeader(currentRoute = '') {
                 height: 100%;
             }
 
-            /* Paired Capital & Health Block (Desktop only) */
+            /* Paired Capital & Health Block (Desktop only, Left-Aligned Terminal Format) */
             .ch-capital-btn {
                 display: none;
                 flex-direction: row;
                 align-items: center;
-                gap: 16px;
+                gap: 18px;
                 cursor: pointer;
                 padding: 6px 14px;
                 border-right: 1px solid var(--rule, #DCD5C6);
@@ -157,14 +162,15 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: -2px;
             }
 
+            /* Left-Aligned Terminal Columns */
             .ch-cap-col {
                 display: flex;
                 flex-direction: column;
-                align-items: flex-end;
+                align-items: flex-start; /* Left-aligned label and value */
                 gap: 2px;
             }
 
-            /* Micro-label: Darkened to #333F51 for WCAG AA 4.5:1 Contrast */
+            /* Micro-labels: Darkened to #333F51 for WCAG AA 4.5:1 Contrast */
             .ch-cap-lbl {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 8.5px;
@@ -175,7 +181,7 @@ export function renderHeader(currentRoute = '') {
                 white-space: nowrap;
             }
 
-            /* Values: Tabular Nums & Integer formatting */
+            /* Values: Left-aligned Tabular Nums & Integer formatting */
             .ch-cap-val {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 13.5px;
@@ -184,7 +190,7 @@ export function renderHeader(currentRoute = '') {
                 color: var(--ink, #0E1420);
                 white-space: nowrap;
                 min-width: 4ch;
-                text-align: right;
+                text-align: left;
             }
 
             /* Health Value State Color: Green >=80% */
@@ -213,7 +219,36 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 2px;
             }
 
-            /* Unboxed Menu Trigger + Signed-In Avatar Badge Indicator */
+            /* Separated Avatar Status Indicator */
+            .ch-trigger-avatar-indicator {
+                width: 22px;
+                height: 22px;
+                border-radius: var(--r, 2px);
+                background: var(--ink, #0E1420);
+                color: #FFF8F5;
+                font-family: var(--display, 'Archivo', sans-serif);
+                font-size: 10.5px;
+                font-weight: 800;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+            .ch-trigger-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: none;
+            }
+
+            .ch-avatar-divider {
+                width: 1px;
+                height: 14px;
+                background: var(--rule, #DCD5C6);
+                margin: 0 2px;
+            }
+
+            /* Unboxed Menu Trigger (MENU Label + Hamburger Icon Morph to X, Min 44x44px Hit Target) */
             .ch-account-trigger {
                 display: flex;
                 align-items: center;
@@ -236,28 +271,6 @@ export function renderHeader(currentRoute = '') {
             .ch-account-trigger:focus-visible {
                 outline: 2px solid var(--blood, #7A1C29);
                 outline-offset: 2px;
-            }
-
-            /* Header Signed-In Avatar Badge Indicator */
-            .ch-trigger-avatar-indicator {
-                width: 22px;
-                height: 22px;
-                border-radius: var(--r, 2px);
-                background: var(--ink, #0E1420);
-                color: #FFF8F5;
-                font-family: var(--display, 'Archivo', sans-serif);
-                font-size: 10.5px;
-                font-weight: 800;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-            }
-            .ch-trigger-img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: none;
             }
 
             /* Visible MENU Text Label */
@@ -731,7 +744,7 @@ export function renderHeader(currentRoute = '') {
                     ` : ''}
                 </div>
 
-                <!-- Right Group: Paired Columns (AVAILABLE & HEALTH) + Sign In + Unboxed Menu Trigger -->
+                <!-- Right Group: Left-Aligned Paired Columns + Sign In + Separated Menu Cluster -->
                 <div class="ch-right">
                     <!-- Paired Capital & Health Columns (Interactive link to /funding, Desktop only) -->
                     <div class="ch-capital-btn" 
@@ -739,11 +752,11 @@ export function renderHeader(currentRoute = '') {
                          onclick="window.router.navigate('/funding')" 
                          tabindex="0"
                          role="button"
-                         aria-label="View Account Capital: $2,500 Available, Health 98.4% Healthy"
+                         aria-label="View Account Capital: $2,500 Available Balance, Health 98.4% Healthy"
                          title="Margin Threshold: 80% min health required"
                          style="${isFunding ? 'display: none !important;' : ''}">
                         <div class="ch-cap-col">
-                            <span class="ch-cap-lbl">AVAILABLE</span>
+                            <span class="ch-cap-lbl">AVAILABLE BALANCE</span>
                             <span id="header-avail-cap" class="ch-cap-val">$2,500</span>
                         </div>
                         <div class="ch-cap-col">
@@ -755,17 +768,20 @@ export function renderHeader(currentRoute = '') {
                     <!-- Signed-Out Header Sign-In Button -->
                     <button class="ch-connect-btn" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
 
-                    <!-- Unboxed Menu Trigger with Signed-In Avatar Badge Indicator -->
+                    <!-- Signed-In Avatar Status Indicator (Separated by Thin Rule) -->
+                    <div class="ch-trigger-avatar-indicator" id="header-avatar-trigger" style="display:none;" title="Signed In Account">
+                        <span id="header-avatar-initial">U</span>
+                        <img id="header-avatar-img" class="ch-trigger-img" alt="" />
+                    </div>
+                    <div class="ch-avatar-divider" id="header-avatar-divider" style="display:none;"></div>
+
+                    <!-- Unboxed Menu Trigger Button -->
                     <button id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
                             class="ch-account-trigger" 
                             aria-label="Toggle Navigation & Account Menu"
                             aria-expanded="false"
                             aria-controls="mobile-menu">
-                        <div class="ch-trigger-avatar-indicator" id="header-avatar-trigger" style="display:none;">
-                            <span id="header-avatar-initial">U</span>
-                            <img id="header-avatar-img" class="ch-trigger-img" alt="" />
-                        </div>
                         <span class="ch-menu-label">MENU</span>
                         <div class="ch-hamburger-icon">
                             <span></span>

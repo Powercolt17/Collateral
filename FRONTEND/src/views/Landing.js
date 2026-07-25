@@ -480,27 +480,42 @@ export function renderLanding() {
                               <!-- Deposit in → Escrow vault -->
                               <line class="tracer t1" pathLength="100"
                                     x1="204" y1="193" x2="282" y2="193"
-                                    fill="none" stroke="#0E1420" stroke-width="2.4" />
+                                    fill="none" stroke="#0E1420" stroke-width="3.5" />
+
+                              <!-- Escrow Vault Impact Pulse -->
+                              <rect class="vault-box-pulse"
+                                    x="290" y="150" width="180" height="86" rx="2"
+                                    fill="none" stroke="#7A1C29" />
 
                               <!-- Escrow vault → Oracle API stream -->
                               <line class="tracer t2" pathLength="100"
                                     x1="474" y1="193" x2="552" y2="193"
-                                    fill="none" stroke="#0E1420" stroke-width="2.4" />
+                                    fill="none" stroke="#0E1420" stroke-width="3.5" />
+
+                              <!-- Oracle Stream Impact Pulse -->
+                              <rect class="oracle-box-pulse"
+                                    x="560" y="150" width="180" height="86" rx="2"
+                                    fill="none" stroke="#0E1420" />
 
                               <!-- Oracle API stream → junction -->
                               <line class="tracer t3" pathLength="100"
                                     x1="744" y1="193" x2="800" y2="193"
-                                    fill="none" stroke="#0E1420" stroke-width="2.4" />
+                                    fill="none" stroke="#0E1420" stroke-width="3.5" />
 
                               <!-- Junction → win box (the payoff leg) -->
                               <path class="tracer t-win" pathLength="100"
                                     d="M800 193 L800 78 L856 78"
-                                    fill="none" stroke="#186B4A" stroke-width="2.8" />
+                                    fill="none" stroke="#186B4A" stroke-width="4.2" />
 
                               <!-- Win box receives the pulse -->
                               <rect class="win-box-pulse"
                                     x="860" y="40" width="200" height="76" rx="2"
                                     fill="none" stroke="#186B4A" />
+
+                              <!-- Forfeited Recirculation Loop (Crimson Tracer) -->
+                              <path class="tracer t-forfeit" pathLength="100"
+                                    d="M960 235 L960 372 L380 372 L380 240"
+                                    fill="none" stroke="#7A1C29" stroke-width="3.4" />
                             </g>
                         </svg>
                         <dl class="sch-mobile">

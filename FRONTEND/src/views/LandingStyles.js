@@ -2126,81 +2126,139 @@ footer .logo-wordmark-light,
 
 
 /* ═══════════════════════════════════════════════════════════
-   Collateral — schematic tracer (Sequential 6s Timeline)
+   Collateral — Dramatic Schematic Tracer & Impact Pulses
    ═══════════════════════════════════════════════════════════ */
-/* Base: invisible unless animating. */
 .sch .tracer{
   fill:none;
   stroke-linecap:round;
   opacity:0;
   pointer-events:none;
-  stroke-dasharray:14 100;
-  stroke-dashoffset:14;
-  animation-duration:6s;
-  animation-timing-function:linear;
+  stroke-dasharray:22 100;
+  stroke-dashoffset:22;
+  animation-duration:6.5s;
+  animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);
   animation-iteration-count:infinite;
 }
 
 /* Leg 1 — Deposit → Escrow : 0–14% */
-.sch .t1{ animation-name:cl-t1 }
+.sch .t1{
+  animation-name:cl-t1;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 0 3px rgba(14, 20, 32, 0.35));
+}
 @keyframes cl-t1{
-  0%              { stroke-dashoffset:14;   opacity:0 }
+  0%              { stroke-dashoffset:22;   opacity:0 }
   1%              { opacity:1 }
   13%             { opacity:1 }
   14%             { stroke-dashoffset:-100; opacity:0 }
-  14.01%,100%     { stroke-dashoffset:14;   opacity:0 }
+  14.01%,100%     { stroke-dashoffset:22;   opacity:0 }
 }
 
-/* Leg 2 — Escrow → Oracle : 16–30% */
-.sch .t2{ animation-name:cl-t2 }
+/* Escrow Vault Arrival Flash : 13–18% */
+.sch .vault-box-pulse{
+  fill:none;
+  stroke:#7A1220;
+  opacity:0;
+  animation:cl-vault-land 6.5s linear infinite;
+}
+@keyframes cl-vault-land{
+  0%,13%     { opacity:0; stroke-width:1; }
+  15%        { opacity:0.85; stroke-width:2.8; }
+  18%        { opacity:0; stroke-width:1; }
+  18.01%,100%{ opacity:0; stroke-width:1; }
+}
+
+/* Leg 2 — Escrow → Oracle : 18–32% */
+.sch .t2{
+  animation-name:cl-t2;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 0 3px rgba(14, 20, 32, 0.35));
+}
 @keyframes cl-t2{
-  0%,16%          { stroke-dashoffset:14;   opacity:0 }
-  17%             { opacity:1 }
-  29%             { opacity:1 }
-  30%             { stroke-dashoffset:-100; opacity:0 }
-  30.01%,100%     { stroke-dashoffset:14;   opacity:0 }
+  0%,18%          { stroke-dashoffset:22;   opacity:0 }
+  19%             { opacity:1 }
+  31%             { opacity:1 }
+  32%             { stroke-dashoffset:-100; opacity:0 }
+  32.01%,100%     { stroke-dashoffset:22;   opacity:0 }
 }
 
-/* Leg 3 — Oracle → junction : 32–46% */
-.sch .t3{ animation-name:cl-t3 }
+/* Oracle API Arrival Flash : 31–36% */
+.sch .oracle-box-pulse{
+  fill:none;
+  stroke:#0E1420;
+  opacity:0;
+  animation:cl-oracle-land 6.5s linear infinite;
+}
+@keyframes cl-oracle-land{
+  0%,31%     { opacity:0; stroke-width:1; }
+  33%        { opacity:0.8; stroke-width:2.8; }
+  36%        { opacity:0; stroke-width:1; }
+  36.01%,100%{ opacity:0; stroke-width:1; }
+}
+
+/* Leg 3 — Oracle → Junction : 36–48% */
+.sch .t3{
+  animation-name:cl-t3;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 0 3px rgba(14, 20, 32, 0.35));
+}
 @keyframes cl-t3{
-  0%,32%          { stroke-dashoffset:14;   opacity:0 }
-  33%             { opacity:1 }
-  45%             { opacity:1 }
-  46%             { stroke-dashoffset:-100; opacity:0 }
-  46.01%,100%     { stroke-dashoffset:14;   opacity:0 }
+  0%,36%          { stroke-dashoffset:22;   opacity:0 }
+  37%             { opacity:1 }
+  47%             { opacity:1 }
+  48%             { stroke-dashoffset:-100; opacity:0 }
+  48.01%,100%     { stroke-dashoffset:22;   opacity:0 }
 }
 
-/* Leg 4 — junction → win box : 48–70%, slower and heavier */
+/* Leg 4 — Junction → Win Box : 48–70% (Bolder Green + Glow) */
 .sch .t-win{
   animation-name:cl-twin;
-  stroke-dasharray:18 100;
-  stroke-dashoffset:18;
+  stroke-dasharray:26 100;
+  stroke-dashoffset:26;
+  stroke-width: 4.2px;
+  filter: drop-shadow(0 0 6px rgba(24, 107, 74, 0.7));
 }
 @keyframes cl-twin{
-  0%,48%          { stroke-dashoffset:18;   opacity:0 }
+  0%,48%          { stroke-dashoffset:26;   opacity:0 }
   49%             { opacity:1 }
   68%             { opacity:1 }
   70%             { stroke-dashoffset:-100; opacity:0 }
-  70.01%,100%     { stroke-dashoffset:18;   opacity:0 }
+  70.01%,100%     { stroke-dashoffset:26;   opacity:0 }
 }
 
-/* Win box pulse as the tracer lands : 70–78% */
+/* Win Box Impact Pulse : 70–82% */
 .sch .win-box-pulse{
   fill:none;
   stroke:#186B4A;
   opacity:0;
-  animation:cl-win-land 6s linear infinite;
+  animation:cl-win-land 6.5s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(24, 107, 74, 0.5));
 }
 @keyframes cl-win-land{
   0%,69%     { opacity:0;  stroke-width:1 }
-  71%        { opacity:.9; stroke-width:2.6 }
-  76%        { opacity:.4; stroke-width:1.6 }
-  80%,100%   { opacity:0;  stroke-width:1 }
+  72%        { opacity:1;  stroke-width:3.6 }
+  78%        { opacity:0.4; stroke-width:2.0 }
+  82%,100%   { opacity:0;  stroke-width:1 }
+}
+
+/* Leg 5 — Forfeited Recirculation Loop : 72–90% (Crimson Dashed Pulse) */
+.sch .t-forfeit{
+  animation-name:cl-tforfeit;
+  stroke-dasharray:24 100;
+  stroke-dashoffset:24;
+  stroke-width: 3.4px;
+  filter: drop-shadow(0 0 4px rgba(122, 28, 41, 0.6));
+}
+@keyframes cl-tforfeit{
+  0%,72%          { stroke-dashoffset:24;   opacity:0 }
+  73%             { opacity:1 }
+  89%             { opacity:1 }
+  90%             { stroke-dashoffset:-100; opacity:0 }
+  90.01%,100%     { stroke-dashoffset:24;   opacity:0 }
 }
 
 @media(prefers-reduced-motion:reduce){
-  .sch .tracer,.sch .win-box-pulse{ display:none !important; animation:none !important }
+  .sch .tracer, .sch .win-box-pulse, .sch .vault-box-pulse, .sch .oracle-box-pulse{ display:none !important; animation:none !important }
 }
 
 @media(prefers-reduced-motion:reduce){

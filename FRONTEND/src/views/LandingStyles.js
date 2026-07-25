@@ -2134,6 +2134,73 @@ footer .logo-wordmark-light,
   .pulse::after { opacity: 0; }
   .stamp { transform: translateY(-50%) rotate(-11deg); opacity: .78; }
   .coin { display: none; }
+
+/* ═══════════════════════════════════════════════════════════
+   Collateral — schematic tracer
+   ═══════════════════════════════════════════════════════════ */
+.sch .tracer{
+  fill:none;
+  stroke-linecap:round;
+  opacity:0;
+  pointer-events:none;
+  stroke-dasharray:14 100;
+  stroke-dashoffset:14;
+}
+@keyframes cl-trace{
+  0%     { stroke-dashoffset:14;   opacity:0 }
+  6%     { opacity:1 }
+  94%    { opacity:1 }
+  100%   { stroke-dashoffset:-100; opacity:0 }
+}
+.sch .tracer{
+  animation:cl-trace .72s cubic-bezier(.45,0,.55,1) infinite;
+  animation-duration:.72s;
+}
+.sch .t1{ animation-delay:0s;    animation-duration:.72s }
+.sch .t2{ animation-delay:.62s;  animation-duration:.72s }
+.sch .t3{ animation-delay:1.24s; animation-duration:.72s }
+
+.sch .t-win{
+  animation-delay:1.86s;
+  animation-duration:1.05s;
+  stroke-dasharray:18 100;
+  stroke-dashoffset:18;
+}
+@keyframes cl-trace-win{
+  0%   { stroke-dashoffset:18;   opacity:0 }
+  8%   { opacity:1 }
+  88%  { opacity:1 }
+  100% { stroke-dashoffset:-100; opacity:0 }
+}
+.sch .t-win{ animation-name:cl-trace-win }
+
+.sch .tracer-group{
+  animation:cl-trace-cycle 5s linear infinite;
+}
+@keyframes cl-trace-cycle{
+  0%,62%   { opacity:1 }
+  62.01%,100% { opacity:0 }
+}
+
+.sch .win-box-pulse{
+  fill:none;
+  stroke:#186B4A;
+  opacity:0;
+  animation:cl-win-land 5s linear infinite;
+}
+@keyframes cl-win-land{
+  0%,56%    { opacity:0; stroke-width:1 }
+  58%       { opacity:.9; stroke-width:2.6 }
+  66%       { opacity:.5; stroke-width:1.6 }
+  72%,100%  { opacity:0; stroke-width:1 }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .sch .tracer,
+  .sch .tracer-group,
+  .sch .win-box-pulse{ display:none !important; animation:none !important }
+}
+
 ${revealStyles}
 `;
 

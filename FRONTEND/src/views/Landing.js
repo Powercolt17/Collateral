@@ -479,27 +479,28 @@ export function renderLanding() {
                             <g class="tracer-group" aria-hidden="true">
                               <!-- Deposit in → Escrow vault -->
                               <line class="tracer t1" pathLength="100"
-                                    x1="204" y1="193" x2="290" y2="193"
-                                    stroke="#0E1420" stroke-width="2.4" />
+                                    x1="204" y1="193" x2="282" y2="193"
+                                    fill="none" stroke="#0E1420" stroke-width="2.4" />
 
                               <!-- Escrow vault → Oracle API stream -->
                               <line class="tracer t2" pathLength="100"
-                                    x1="474" y1="193" x2="560" y2="193"
-                                    stroke="#0E1420" stroke-width="2.4" />
+                                    x1="474" y1="193" x2="552" y2="193"
+                                    fill="none" stroke="#0E1420" stroke-width="2.4" />
 
                               <!-- Oracle API stream → junction -->
                               <line class="tracer t3" pathLength="100"
                                     x1="744" y1="193" x2="800" y2="193"
-                                    stroke="#0E1420" stroke-width="2.4" />
+                                    fill="none" stroke="#0E1420" stroke-width="2.4" />
 
                               <!-- Junction → win box (the payoff leg) -->
                               <path class="tracer t-win" pathLength="100"
                                     d="M800 193 L800 78 L856 78"
-                                    stroke="#186B4A" stroke-width="2.8" />
+                                    fill="none" stroke="#186B4A" stroke-width="2.8" />
 
                               <!-- Win box receives the pulse -->
                               <rect class="win-box-pulse"
-                                    x="860" y="40" width="200" height="76" rx="2" />
+                                    x="860" y="40" width="200" height="76" rx="2"
+                                    fill="none" stroke="#186B4A" />
                             </g>
                         </svg>
                         <dl class="sch-mobile">

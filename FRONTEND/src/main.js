@@ -1789,7 +1789,13 @@ function updateAuthUI() {
             window.api.getBillingStatus().then(res => {
                 const availCents = res?.balances?.availableBalanceUsdCents || 0;
                 const capEl = document.getElementById('header-avail-cap');
-                if (capEl) capEl.textContent = '$' + (availCents / 100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                if (capEl) {
+                    if (!availCents || availCents <= 300) {
+                        capEl.textContent = '— ADD FUNDS';
+                    } else {
+                        capEl.textContent = '$' + (availCents / 100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                    }
+                }
             }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
         }
         console.log('[Auth] UI updated, showing:', appState.username);

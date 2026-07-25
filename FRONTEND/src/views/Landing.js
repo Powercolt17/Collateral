@@ -688,13 +688,11 @@ export function renderLanding() {
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
                     <div class="sign plate ticks r-plate">
-                        <img src="/assets/images/wax-seal-official.png" 
-                             onerror="this.onerror=null; this.src='/wax-seal-official.png';" 
+                        <img src="/assets/images/solo-seal.png" 
                              alt="Collateral Official Wax Seal" 
                              class="sign-seal-img" 
-                             width="84" 
-                             height="84" 
-                             style="display: block; margin: 0 auto 20px auto; width: 84px; height: 84px; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(122, 28, 41, 0.28)); transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);" />
+                             width="96" 
+                             height="96" />
                         <h2 class="sign-title">Sign it, and the week reorders itself</h2>
                         <p class="sign-copy">You will know within about four days whether you meant it. That is
                             the fastest honest answer anyone has ever given you about your own goal.</p>

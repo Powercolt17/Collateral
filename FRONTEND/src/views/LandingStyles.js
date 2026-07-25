@@ -2521,6 +2521,15 @@ html.js-motion-active .reveal.is-in .r-rule {
         animation: none !important;
     }
 }
+.sign-seal-img {
+  display: block !important;
+  width: 96px !important;
+  height: 96px !important;
+  margin: 0 auto 24px auto !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 6px 16px rgba(122, 28, 41, 0.22)) !important;
+}
+
 `;
 
 export default landingCSS;

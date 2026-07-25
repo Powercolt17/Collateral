@@ -688,6 +688,74 @@ export function renderActiveContracts() {
             .eq-modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--ink-3, #6E7686); }
 
             /* Prefers-reduced-motion */
+            
+/* ═══════════ RIVALRIES SECTION STYLES ═══════════ */
+.rv-section{position:relative;padding:48px 0;overflow:hidden}
+.rv-ghost{position:absolute;top:48px;right:28px;color:var(--ink, #0E1420);opacity:.035;pointer-events:none;user-select:none}
+@media(max-width:1140px){.rv-ghost{display:none}}
+ 
+.rv-header{margin-bottom:34px}
+.rv-eyebrow{display:flex;align-items:center;gap:11px;margin:0 0 22px;font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--blood, #7A1C29)}
+ 
+.rv-stats{display:flex;flex-wrap:wrap;gap:20px 56px;padding:22px 26px;background:var(--plate, #FFFDF9);border:1px solid var(--rule, #DCD5C6);border-radius:var(--r,2px);box-shadow:var(--lift);margin-bottom:26px}
+.rv-stat-val{margin:0 0 7px;font-family:var(--display, 'Archivo', sans-serif);font-size:30px;font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink, #0E1420)}
+.rv-stat-val--win{color:var(--win, #186B4A)}
+ 
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(276px,1fr));gap:22px}
+ 
+.rv-card{display:flex;flex-direction:column;background:var(--plate, #FFFDF9);border:1px solid var(--rule, #DCD5C6);border-radius:var(--r,2px);padding:20px 22px;box-shadow:var(--lift);transition:transform .32s ease,border-color .32s ease,box-shadow .32s ease}
+.rv-card:hover{transform:translateY(-4px);border-color:var(--rule-strong, #BDB3A0);box-shadow:0 2px 4px rgba(14,20,32,.05),0 30px 56px -30px rgba(14,20,32,.4)}
+.rv-card--open{border-color:var(--blood, #7A1C29)}
+ 
+.rv-head{margin-bottom:14px}
+.rv-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.rv-badge--open{background:var(--blood-wash, #FBF3F4);color:var(--blood, #7A1C29);border:1px solid var(--blood-tint, #F5E6E8)}
+.rv-badge--live{background:var(--win-wash, #F2F8F4);color:var(--win, #186B4A);border:1px solid var(--win-tint, #E6F1EA)}
+ 
+.rv-meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}
+.rv-meta .mono{white-space:nowrap}
+ 
+.rv-title{margin:0 0 8px;font-family:var(--display, 'Archivo', sans-serif);font-size:17px;font-weight:700;line-height:1.22;letter-spacing:-.026em;color:var(--ink, #0E1420)}
+.rv-domain{display:flex;align-items:center;gap:8px;margin:0}
+.rv-dot{width:5px;height:5px;border-radius:50%;background:var(--ink-3, #6E7686);flex:none}
+ 
+.rv-vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;margin:20px 0 12px;padding-top:16px;border-top:1px dotted var(--rule, #DCD5C6)}
+.rv-side{min-width:0;display:flex;flex-direction:column;gap:4px}
+.rv-handle{font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:12px;letter-spacing:.02em;color:var(--ink, #0E1420);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rv-handle--empty{color:var(--ink-4, #9AA0AC)}
+.rv-delta{font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:17px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.rv-delta--lead{color:var(--win, #186B4A)}
+.rv-delta--trail{color:var(--ink, #0E1420)}
+.rv-delta--empty{color:var(--ink-4, #9AA0AC)}
+ 
+.rv-divider{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none}
+.rv-vs-rule{width:1px;height:10px;background:var(--rule-strong, #BDB3A0)}
+.rv-vs-label{font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:8.5px;letter-spacing:.2em;color:var(--ink-4, #9AA0AC)}
+ 
+.rv-bar{display:flex;height:4px;overflow:hidden;background:var(--paper-deep,#E7E1D4)}
+.rv-bar-a{background:var(--win, #186B4A)}
+.rv-bar-gap{width:2px;background:var(--plate, #FFFDF9);flex:none}
+.rv-bar-b{flex:1;background:var(--blood, #7A1C29)}
+.rv-card--open .rv-bar-b{background:var(--paper-deep,#E7E1D4)}
+ 
+.rv-stake{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:16px;padding-top:14px;border-top:1px dotted var(--rule, #DCD5C6)}
+.rv-per{margin:0;font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink, #0E1420);white-space:nowrap}
+.rv-per span{font-size:12px;color:var(--ink-3, #6E7686)}
+.rv-pool{margin:4px 0 0;white-space:nowrap;font-family:var(--mono, 'IBM Plex Mono', monospace);font-size:10px;color:var(--ink-3, #6E7686);text-transform:uppercase;letter-spacing:.08em}
+.rv-rail{flex:none;padding:4px 9px;border:1px solid var(--rule, #DCD5C6);border-radius:var(--r,2px);font-size:9px;font-family:var(--mono, 'IBM Plex Mono', monospace);letter-spacing:.12em;white-space:nowrap;color:var(--ink-3, #6E7686)}
+ 
+.rv-cta{width:100%;margin-top:auto;padding-top:0;min-height:44px;margin-block-start:18px}
+.rv-issue{width:100%;margin-top:22px;min-height:56px}
+ 
+@media(max-width:480px){
+  .rv-vs{gap:8px}
+  .rv-delta{font-size:15px}
+  .rv-handle{font-size:11px}
+  .rv-stake{flex-direction:column;gap:10px}
+  .rv-rail{align-self:flex-start}
+  .rv-stats{gap:18px 32px;padding:18px 20px}
+}
+
             @media (prefers-reduced-motion: reduce) {
                 *, ::before, ::after {
                     animation-duration: 0.01ms !important;
@@ -1193,72 +1261,74 @@ export function initActiveContracts() {
 
         list.forEach(r => {
             const card = document.createElement('div');
-            card.className = 'eq-card';
-            card.style.position = 'relative';
+            const isOpen = r.state === 'open';
+            card.className = 'rv-card ' + (isOpen ? 'rv-card--open' : '');
 
-            // Bug 4 Fix: State badge reads "LIVE DUEL" without duplicating countdown (header line 2 carries 10d left)
-            const stateBadge = r.state === 'open' 
-                ? '<span class="mono-lbl" style="background: rgba(122,28,41,0.08); color: #7A1C29; border: 1px solid rgba(122,28,41,0.2); padding: 3px 8px; border-radius: 2px;">OPEN CHALLENGE</span>'
-                : '<span class="mono-lbl" style="background: rgba(24,107,74,0.08); color: #186B4A; border: 1px solid rgba(24,107,74,0.2); padding: 3px 8px; border-radius: 2px;">LIVE DUEL</span>';
+            const badgeClass = isOpen ? 'rv-badge--open' : 'rv-badge--live';
+            const badgeText = isOpen ? 'OPEN CHALLENGE' : 'LIVE DUEL';
 
-            const ctaBtn = r.state === 'open'
-                ? '<button class="eq-card-cta" style="background:#7A1C29 !important; color:#FFF8F5 !important;">ACCEPT CHALLENGE</button>'
-                : '<button class="eq-card-cta" style="background:transparent !important; color:#0E1420 !important; border:1px solid #0E1420 !important;">VIEW DUEL &rarr;</button>';
+            // Calculate Leader vs Trailer dynamically from numeric delta
+            const d1 = parseFloat(r.op1.delta) || 0;
+            const d2 = parseFloat(r.op2.delta) || 0;
+            const op1IsLead = d1 >= d2;
+            const op2IsLead = d2 > d1;
 
-            // Bug 2 Fix: Leader is --win (#186B4A), Trailer is --ink (#0E1420)
-            const op1Color = r.op1.is_leader ? 'var(--win, #186B4A)' : 'var(--ink, #0E1420)';
-            const op2Color = r.state === 'open' ? 'var(--ink-3, #6E7686)' : (r.op2.is_leader ? 'var(--win, #186B4A)' : 'var(--ink, #0E1420)');
+            const op1DeltaClass = isOpen ? 'rv-delta--lead' : (op1IsLead ? 'rv-delta--lead' : 'rv-delta--trail');
+            const op2DeltaClass = isOpen ? 'rv-delta--empty' : (op2IsLead ? 'rv-delta--lead' : 'rv-delta--trail');
 
-            // Bug 1 Fix: Line art Crossing Swords SVG divider centered between competitor names
-            const swordsDividerSvg = `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3, #6E7686)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-                    <path d="M14.5 17.5L3 6V3h3l11.5 11.5" />
-                    <path d="M13 19l6-6" />
-                    <path d="M16 16l4 4" />
-                    <path d="M19 13l2 2" />
-                    <path d="M9.5 17.5L21 6V3h-3L6.5 14.5" />
-                    <path d="M11 19l-6-6" />
-                    <path d="M8 16l-4 4" />
-                    <path d="M5 13l-2 2" />
-                </svg>
-            `;
+            const op2HandleText = isOpen ? 'Open slot' : r.op2.handle;
+            const op2HandleClass = isOpen ? 'rv-handle--empty' : '';
+            const op2DeltaText = isOpen ? '—' : r.op2.delta;
+
+            const ctaBtn = isOpen
+                ? '<button class="eq-card-cta rv-cta" style="background:#7A1C29 !important; color:#FFF8F5 !important;">ACCEPT CHALLENGE</button>'
+                : '<button class="eq-card-cta rv-cta" style="background:transparent !important; color:#0E1420 !important; border:1px solid #0E1420 !important;">VIEW DUEL &rarr;</button>';
 
             card.innerHTML = `
-                <div class="eq-card-header-line1">
-                    ${stateBadge}
+                <div class="rv-head">
+                    <span class="rv-badge ${badgeClass}">${badgeText}</span>
                 </div>
-                <div class="eq-card-header-line2">
+                <div class="rv-meta">
                     <span class="mono-lbl">${r.receipt}</span>
                     <span class="mono-lbl" style="font-variant-numeric: tabular-nums;">${r.days_left}d left</span>
                 </div>
-                <h3 class="eq-card-title" style="font-size:16px;">${r.title}</h3>
-                <div class="eq-card-provider">
-                    <span class="eq-platform-dot"></span>
+                <h3 class="rv-title">${r.title}</h3>
+                <div class="rv-domain">
+                    <span class="rv-dot"></span>
                     <span class="mono-lbl">${r.domain.toUpperCase()} &middot; ${r.platform}</span>
                 </div>
-                <div class="eq-card-divider"></div>
 
-                <!-- Dual Competitor & Proportional Bar -->
-                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px; font-weight:700; gap:6px;">
-                        <span style="color:${op1Color}; white-space:nowrap;">${r.op1.handle} ${r.op1.delta !== '—' ? '(' + r.op1.delta + ')' : ''}</span>
-                        ${swordsDividerSvg}
-                        <span style="color:${op2Color}; white-space:nowrap; text-align:right;">${r.op2.handle} ${r.op2.delta !== '—' ? '(' + r.op2.delta + ')' : ''}</span>
+                <!-- 3-Column VS Competitor Grid (Fixes Text Truncation & Overlap) -->
+                <div class="rv-vs">
+                    <div class="rv-side">
+                        <span class="rv-handle">${r.op1.handle}</span>
+                        <span class="rv-delta ${op1DeltaClass}">${r.op1.delta}</span>
                     </div>
-                    <!-- Proportional Share Bar -->
-                    <div style="height:6px; width:100%; background:var(--paper-alt, #EFEAE0); border-radius:3px; overflow:hidden; display:flex;">
-                        <div style="width:${r.state === 'open' ? '50%' : '60%'}; background:var(--win, #186B4A);"></div>
-                        <div style="width:${r.state === 'open' ? '50%' : '40%'}; background:var(--rule-strong, #BDB3A0);"></div>
+                    <div class="rv-divider">
+                        <div class="rv-vs-rule"></div>
+                        <span class="rv-vs-label">VS</span>
+                        <div class="rv-vs-rule"></div>
+                    </div>
+                    <div class="rv-side" style="text-align:right;">
+                        <span class="rv-handle ${op2HandleClass}">${op2HandleText}</span>
+                        <span class="rv-delta ${op2DeltaClass}">${op2DeltaText}</span>
                     </div>
                 </div>
 
-                <!-- Bug 3 Fix: Currency symbols ($) added to all stake and pool figures -->
-                <div class="eq-card-stake-info" style="margin-bottom:16px;">
+                <!-- Proportional Share Bar -->
+                <div class="rv-bar">
+                    <div class="rv-bar-a" style="width: ${isOpen ? '50%' : (op1IsLead ? '60%' : '40%')};"></div>
+                    <div class="rv-bar-gap"></div>
+                    <div class="rv-bar-b" style="width: ${isOpen ? '50%' : (op2IsLead ? '60%' : '40%')};"></div>
+                </div>
+
+                <!-- Stake & Pool Info with $ prefix -->
+                <div class="rv-stake">
                     <div>
-                        <div class="eq-stake-val" style="font-size:16px;">${r.stake_per_side.toLocaleString()} / side</div>
-                        <div class="mono-lbl" style="font-size:9px;">${r.total_pool.toLocaleString()} TOTAL POOL</div>
+                        <p class="rv-per">${r.stake_per_side.toLocaleString()} <span>/ side</span></p>
+                        <p class="rv-pool">${r.total_pool.toLocaleString()} TOTAL POOL</p>
                     </div>
-                    <span style="font-family:var(--mono, 'IBM Plex Mono', monospace); font-size:9.5px; font-weight:700; background:var(--paper-alt, #EFEAE0); border:1px solid var(--rule, #DCD5C6); padding:2px 6px; border-radius:2px; color:var(--ink, #0E1420);">${r.rail}</span>
+                    <span class="rv-rail">${r.rail}</span>
                 </div>
 
                 ${ctaBtn}

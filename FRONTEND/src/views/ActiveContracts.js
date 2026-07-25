@@ -831,7 +831,35 @@ export function renderActiveContracts() {
             <!-- Open Rivalries Section -->
             <section style="max-width: 1300px; margin: 64px auto 0; padding: 0 32px;">
                 <div style="border-top: 1px solid var(--rule, #DCD5C6); padding-top: 40px; margin-bottom: 24px;">
-                    <div class="mono-lbl" style="margin-bottom: 8px;">— OPEN RIVALRIES</div>
+                    
+<div style="position:relative;">
+    <!-- Ghosted Background Mark (~120px, 3% opacity) -->
+    <div style="position:absolute; right:0; top:-20px; pointer-events:none; opacity:0.03; color:var(--blood, #7A1C29);">
+        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 17.5L3 6V3h3l11.5 11.5" />
+            <path d="M13 19l6-6" />
+            <path d="M16 16l4 4" />
+            <path d="M19 13l2 2" />
+            <path d="M9.5 17.5L21 6V3h-3L6.5 14.5" />
+            <path d="M11 19l-6-6" />
+            <path d="M8 16l-4 4" />
+            <path d="M5 13l-2 2" />
+        </svg>
+    </div>
+    <div class="mono-lbl" style="margin-bottom: 8px; display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blood, #7A1C29)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 17.5L3 6V3h3l11.5 11.5" />
+            <path d="M13 19l6-6" />
+            <path d="M16 16l4 4" />
+            <path d="M19 13l2 2" />
+            <path d="M9.5 17.5L21 6V3h-3L6.5 14.5" />
+            <path d="M11 19l-6-6" />
+            <path d="M8 16l-4 4" />
+            <path d="M5 13l-2 2" />
+        </svg>
+        OPEN RIVALRIES
+    </div>
+</div>
                     <h2 class="eq-market-title" style="font-size: 32px; margin-bottom: 8px;">Somebody has to <strong>lose.</strong></h2>
                     <p style="font-size: 14.5px; color: var(--ink-2, #4A5464); max-width: 580px; line-height: 1.6; margin: 0 0 24px;">Two operators, matched capital, one oracle. Join an open challenge or issue your own.</p>
                 </div>
@@ -1168,16 +1196,32 @@ export function initActiveContracts() {
             card.className = 'eq-card';
             card.style.position = 'relative';
 
+            // Bug 4 Fix: State badge reads "LIVE DUEL" without duplicating countdown (header line 2 carries 10d left)
             const stateBadge = r.state === 'open' 
                 ? '<span class="mono-lbl" style="background: rgba(122,28,41,0.08); color: #7A1C29; border: 1px solid rgba(122,28,41,0.2); padding: 3px 8px; border-radius: 2px;">OPEN CHALLENGE</span>'
-                : '<span class="mono-lbl" style="background: rgba(24,107,74,0.08); color: #186B4A; border: 1px solid rgba(24,107,74,0.2); padding: 3px 8px; border-radius: 2px;">LIVE DUEL &middot; ' + r.days_left + 'd left</span>';
+                : '<span class="mono-lbl" style="background: rgba(24,107,74,0.08); color: #186B4A; border: 1px solid rgba(24,107,74,0.2); padding: 3px 8px; border-radius: 2px;">LIVE DUEL</span>';
 
             const ctaBtn = r.state === 'open'
                 ? '<button class="eq-card-cta" style="background:#7A1C29 !important; color:#FFF8F5 !important;">ACCEPT CHALLENGE</button>'
                 : '<button class="eq-card-cta" style="background:transparent !important; color:#0E1420 !important; border:1px solid #0E1420 !important;">VIEW DUEL &rarr;</button>';
 
+            // Bug 2 Fix: Leader is --win (#186B4A), Trailer is --ink (#0E1420)
             const op1Color = r.op1.is_leader ? 'var(--win, #186B4A)' : 'var(--ink, #0E1420)';
             const op2Color = r.state === 'open' ? 'var(--ink-3, #6E7686)' : (r.op2.is_leader ? 'var(--win, #186B4A)' : 'var(--ink, #0E1420)');
+
+            // Bug 1 Fix: Line art Crossing Swords SVG divider centered between competitor names
+            const swordsDividerSvg = `
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3, #6E7686)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                    <path d="M14.5 17.5L3 6V3h3l11.5 11.5" />
+                    <path d="M13 19l6-6" />
+                    <path d="M16 16l4 4" />
+                    <path d="M19 13l2 2" />
+                    <path d="M9.5 17.5L21 6V3h-3L6.5 14.5" />
+                    <path d="M11 19l-6-6" />
+                    <path d="M8 16l-4 4" />
+                    <path d="M5 13l-2 2" />
+                </svg>
+            `;
 
             card.innerHTML = `
                 <div class="eq-card-header-line1">
@@ -1195,10 +1239,11 @@ export function initActiveContracts() {
                 <div class="eq-card-divider"></div>
 
                 <!-- Dual Competitor & Proportional Bar -->
-                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
-                    <div style="display:flex; justify-space-between; align-items:center; font-size:13px; font-weight:700;">
-                        <span style="color:${op1Color}">${r.op1.handle} (${r.op1.delta})</span>
-                        <span style="color:${op2Color}">${r.op2.handle} (${r.op2.delta})</span>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px; font-weight:700; gap:6px;">
+                        <span style="color:${op1Color}; white-space:nowrap;">${r.op1.handle} ${r.op1.delta !== '—' ? '(' + r.op1.delta + ')' : ''}</span>
+                        ${swordsDividerSvg}
+                        <span style="color:${op2Color}; white-space:nowrap; text-align:right;">${r.op2.handle} ${r.op2.delta !== '—' ? '(' + r.op2.delta + ')' : ''}</span>
                     </div>
                     <!-- Proportional Share Bar -->
                     <div style="height:6px; width:100%; background:var(--paper-alt, #EFEAE0); border-radius:3px; overflow:hidden; display:flex;">
@@ -1207,6 +1252,7 @@ export function initActiveContracts() {
                     </div>
                 </div>
 
+                <!-- Bug 3 Fix: Currency symbols ($) added to all stake and pool figures -->
                 <div class="eq-card-stake-info" style="margin-bottom:16px;">
                     <div>
                         <div class="eq-stake-val" style="font-size:16px;">${r.stake_per_side.toLocaleString()} / side</div>

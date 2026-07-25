@@ -1,364 +1,118 @@
-// Header Component - Premium Clearinghouse Terminal Nav
-export function renderHeader(currentRoute) {
+// Header Component - Refactored Navigation Drawer & Responsive Panel
+export function renderHeader(currentRoute = '') {
+    const isMarket = currentRoute === '/market' || currentRoute.startsWith('/market/');
+    const isActiveContracts = currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/');
+    const isLedger = currentRoute === '/ledger';
+    const isSources = currentRoute === '/sources';
+    const isProtocol = currentRoute === '/protocol' || currentRoute.startsWith('/protocol');
+    const isCustodyTerminal = currentRoute === '/protocol?tab=terminal';
+    const isDocs = currentRoute === '/docs';
+    const isProfile = currentRoute === '/profile';
+    const isReferrals = currentRoute === '/referrals';
+    const isFunding = currentRoute === '/funding';
+
     const routes = [
         { path: '/market', label: 'MARKET', hasDropdown: true },
         { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' },
-        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true }
+        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true },
+        { path: '/protocol?tab=terminal', label: 'CUSTODY TERMINAL' }
     ];
 
-    const navItems = routes.map(route => {
-        const isActive = currentRoute === route.path ||
-            (route.path === '/market' && (currentRoute === '/market' || currentRoute.startsWith('/market/'))) ||
-            (route.path === '/my-contracts' && (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')));
+    // Desktop top-bar nav links
+    const topNavItems = [
+        { path: '/market', label: 'MARKET' },
+        { path: '/my-contracts', label: 'ACTIVE' },
+        { path: '/ledger', label: 'LEDGER' },
+        { path: '/sources', label: 'SOURCES' },
+        { path: '/protocol', label: 'PROTOCOL' },
+        { path: '/protocol?tab=terminal', label: 'CUSTODY TERMINAL' }
+    ].map(route => {
+        const active = currentRoute === route.path || 
+            (route.path === '/market' && isMarket) ||
+            (route.path === '/my-contracts' && isActiveContracts) ||
+            (route.path === '/protocol' && isProtocol && !isCustodyTerminal);
 
-        if (route.hasDropdown) {
-            let dropdownItems = '';
-            if (route.path === '/market') {
-                dropdownItems = `
-                    <a href="#" onclick="window.router.navigate('/market'); return false;">Solo Contracts</a>
-                    <a href="#" onclick="window.router.navigate('/market?type=rivalry'); return false;">Rivalry Contracts</a>
-                `;
-            } else if (route.path === '/protocol') {
-                dropdownItems = `
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=overview'); return false;">Overview</a>
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=vision'); return false;">Vision</a>
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=whitepaper'); return false;">Whitepaper</a>
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=economics'); return false;">Economics</a>
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=terminal'); return false;">Custody Terminal</a>
-                `;
-            } else if (route.path === '/docs') {
-                dropdownItems = `
-                    <a href="#" onclick="window.router.navigate('/docs#api-endpoints'); return false;">Developer Hub</a>
-                    <a href="#" onclick="window.router.navigate('/docs#api-auth'); return false;">APIs</a>
-                    <a href="#" onclick="window.router.navigate('/docs#sdk-setup'); return false;">SDK</a>
-                    <a href="#" onclick="window.router.navigate('/docs#contract-addresses'); return false;">Smart Contracts</a>
-                `;
-            }
-
-            return `
-                <div class="nav-dropdown-wrap">
-                    <a href="#" 
-                        onclick="window.router.navigate('${route.path}'); return false;" 
-                        class="nav-link ${isActive ? 'active' : ''}"
-                        data-target="${route.path}" 
-                        data-active="${isActive}">
-                        ${route.label}
-                    </a>
-                    <div class="nav-dropdown">
-                        ${dropdownItems}
-                    </div>
-                </div>
-            `;
-        }
-
-        return `
-            <a href="#" 
-                onclick="window.router.navigate('${route.path}'); return false;" 
-                class="nav-link ${isActive ? 'active' : ''}"
-                data-target="${route.path}" 
-                data-active="${isActive}">
-                ${route.label}
-            </a>
-        `;
+        return `<a href="#" onclick="window.router.navigate('${route.path}'); return false;" class="nav-link ${active ? 'active' : ''}" ${active ? 'aria-current="page"' : ''}>${route.label}</a>`;
     }).join('');
-
-    const panelNavItems = routes.map((route, i) => {
-        const isActive = currentRoute === route.path ||
-            (route.path === '/market' && (currentRoute === '/market' || currentRoute.startsWith('/market/'))) ||
-            (route.path === '/my-contracts' && (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')));
-
-        let itemHTML = `
-            <a href="#" 
-                onclick="window.app.closeMobileMenu(); window.router.navigate('${route.path}'); return false;" 
-                class="pnl-nav-link ${isActive ? 'active' : ''}"
-                style="animation-delay: ${0.06 + i * 0.03}s">
-                <span class="pnl-nav-indicator"></span>
-                ${route.label}
-            </a>
-        `;
-
-        if (route.hasDropdown) {
-            let subnavItems = '';
-            if (route.path === '/market') {
-                subnavItems = `
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' && !window.location.search.includes('type=rivalry')) ? 'active' : ''}">Solo Contracts</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market?type=rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' && window.location.search.includes('type=rivalry')) ? 'active' : ''}">Rivalry Contracts</a>
-                `;
-            } else if (route.path === '/protocol') {
-                subnavItems = `
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=overview'); return false;" class="pnl-subnav-link">Overview</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=vision'); return false;" class="pnl-subnav-link">Vision</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=whitepaper'); return false;" class="pnl-subnav-link">Whitepaper</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=economics'); return false;" class="pnl-subnav-link">Economics</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=terminal'); return false;" class="pnl-subnav-link">Custody Terminal</a>
-                `;
-            } else if (route.path === '/docs') {
-                subnavItems = `
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#api-endpoints'); return false;" class="pnl-subnav-link">Developer Hub</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#api-auth'); return false;" class="pnl-subnav-link">APIs</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#sdk-setup'); return false;" class="pnl-subnav-link">SDK</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#contract-addresses'); return false;" class="pnl-subnav-link">Smart Contracts</a>
-                `;
-            }
-
-            itemHTML = `
-                <div class="pnl-nav-group" style="animation-delay: ${0.06 + i * 0.03}s">
-                    <a href="#" 
-                        onclick="this.parentElement.classList.toggle('expanded'); return false;" 
-                        class="pnl-nav-link ${isActive ? 'active' : ''}">
-                        <span class="pnl-nav-indicator"></span>
-                        <span style="flex: 1;">${route.label}</span>
-                        <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                    </a>
-                    <div class="pnl-subnav">
-                        ${subnavItems}
-                    </div>
-                </div>
-            `;
-        }
-
-        return itemHTML;
-    }).join('');
-
-    const accountLinks = [
-        { path: '/profile', label: 'Profile', icon: 'user' },
-        { path: '/referrals', label: 'Referrals', icon: 'gift' },
-        { path: '/funding', label: 'Account Capital', icon: 'wallet' },
-        { path: '/docs', label: 'Documentation', icon: 'file-text' },
-    ];
-
-    const panelAccountItems = accountLinks.map((link, i) => `
-        <a href="#" 
-            onclick="window.app.closeMobileMenu(); window.router.navigate('${link.path}'); return false;" 
-            class="pnl-acct-link"
-            style="animation-delay: ${0.18 + i * 0.03}s">
-            <i data-lucide="${link.icon}" style="width:14px;height:14px;opacity:0.5;"></i>
-            ${link.label}
-        </a>
-    `).join('');
 
     return `
         <style>
             /* ══════════════════════════════════════════════════════════════
-               HEADER — INSTITUTIONAL CLEARINGHOUSE
+               NAVIGATION DRAWER & PANEL STYLES
                ══════════════════════════════════════════════════════════════ */
             .ch-header {
                 width: 100%;
-                border-bottom: 1px solid #e5e5e5;
-                background: #FAF8F5 !important;
+                border-bottom: 1px solid var(--rule, #DCD5C6);
+                background: var(--paper, #FFFDF9) !important;
                 position: fixed;
-                top: 32px;
-                z-index: 50;
-                transition: background 0.4s ease,
-                            border-color 0.4s ease,
-                            box-shadow 0.4s ease,
-                            backdrop-filter 0.4s ease,
-                            top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            }
-            .ch-header.nav-scrolled {
-                top: 0px !important;
-                background: rgba(250, 248, 245, 0.95) !important;
-                backdrop-filter: blur(18px) saturate(180%);
-                -webkit-backdrop-filter: blur(18px) saturate(180%);
-                border-bottom-color: rgba(229, 229, 229, 0.35) !important;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.03);
-            }
-            .ch-header::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
+                top: 0;
                 left: 0;
-                width: 100%;
-                height: 2px;
-                background: linear-gradient(90deg, transparent 0%, #5C1414 50%, transparent 100%);
-                opacity: 0;
-                transition: opacity 0.5s ease;
+                right: 0;
+                z-index: 50;
+                height: 64px;
             }
-            .ch-header.nav-scrolled::after { opacity: 1; }
-
-            /* ── Global Scroll Reveal ── */
-            [data-reveal] {
-                opacity: 0;
-                transform: translateY(28px);
-                transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                            transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-            }
-            [data-reveal].revealed {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            [data-reveal-delay="1"] { transition-delay: 0.1s; }
-            [data-reveal-delay="2"] { transition-delay: 0.2s; }
-            [data-reveal-delay="3"] { transition-delay: 0.3s; }
-
             .ch-header-inner {
                 width: 100%;
-                padding: 0 32px;
-                height: 72px;
+                padding: 0 28px;
+                height: 100%;
                 display: flex;
                 align-items: center;
-                gap: 64px;
-            }
-
-            .ch-logo {
-                display: inline-flex;
-                align-items: center;
-                text-decoration: none;
-                flex-shrink: 0;
-                transition: transform 0.2s ease;
-            }
-            .ch-logo:hover {
-                transform: scale(1.04);
-            }
-            .ch-logo-svg {
-                width: 32px;
-                height: 32px;
-                color: #5C1414;
-                margin-right: 12px;
-                fill: currentColor;
-                flex-shrink: 0;
+                gap: 40px;
             }
             .ch-logo-wordmark {
-                font-size: 18px;
+                font-family: var(--display, 'Archivo', sans-serif);
+                font-size: 16px;
                 font-weight: 800;
-                color: #0F172A !important;
-                letter-spacing: 0.22em;
-                font-family: 'Sora', 'IBM Plex Sans', 'Helvetica Neue', -apple-system, sans-serif;
-                text-transform: uppercase;
-                line-height: 1;
-                margin: 0;
-            }
-
-            /* ── Premium Nav Dropdown ── */
-            .nav-dropdown-wrap { 
-                position: relative; 
-                display: flex; 
-                height: 100%; 
-                align-items: center; 
-            }
-            .nav-dropdown {
-                position: absolute;
-                top: 60px;
-                left: 50%;
-                transform: translateX(-50%) translateY(16px) scale(0.96);
-                background: rgba(250, 248, 245, 0.98);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(229, 229, 229, 0.6);
-                box-shadow: 0 16px 40px -8px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.03);
-                padding: 12px 0;
-                min-width: 200px;
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                            transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                            visibility 0.25s;
-                z-index: 100;
-                border-radius: 8px;
-            }
-            .nav-dropdown-wrap:hover .nav-dropdown {
-                opacity: 1;
-                visibility: visible;
-                transform: translateX(-50%) translateY(0) scale(1);
-            }
-            .nav-dropdown a {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 14px 24px;
-                color: #475569;
+                letter-spacing: 0.18em;
+                color: var(--ink, #0E1420);
                 text-decoration: none;
-                font-family: 'Sora', 'Inter', sans-serif;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            }
-            .nav-dropdown a::after {
-                content: '→';
-                opacity: 0;
-                transform: translateX(-8px);
-                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-                color: #5C1414;
-            }
-            .nav-dropdown a:hover {
-                background: rgba(248, 250, 252, 0.8);
-                color: #111;
-                padding-left: 28px;
-            }
-            .nav-dropdown a:hover::after {
-                opacity: 1;
-                transform: translateX(0);
             }
 
-            /* ── Nav Links (desktop center) ── */
             .ch-nav {
                 display: none;
                 align-items: center;
-                justify-content: center;
                 gap: 24px;
                 flex: 1;
             }
-            @media (min-width: 768px) {
+            @media (min-width: 1024px) {
                 .ch-nav { display: flex; }
             }
+
             .nav-link {
-                padding: 26px 4px;
-                font-size: 13px;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 11px;
                 font-weight: 600;
-                color: #333333;
+                letter-spacing: 0.12em;
+                color: var(--ink-3, #6E7686);
                 text-decoration: none;
-                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                letter-spacing: 0.1px;
-                transition: color 0.12s;
+                padding: 8px 0;
                 position: relative;
-                border-bottom: 2px solid transparent;
+                transition: color 150ms ease;
             }
-            .nav-link::after {
+            .nav-link:hover { color: var(--ink, #0E1420); }
+            .nav-link.active {
+                color: var(--blood, #7A1C29);
+                font-weight: 700;
+            }
+            .nav-link.active::after {
                 content: '';
                 position: absolute;
-                bottom: 0;
-                left: 50%;
-                width: 0;
+                bottom: -2px;
+                left: 0;
+                right: 0;
                 height: 2px;
-                background: #5C1414;
-                transition: width 0.3s ease, left 0.3s ease;
+                background: var(--blood, #7A1C29);
             }
-            .nav-link:hover::after { width: 100%; left: 0; }
-            .nav-link:hover { color: #000000; }
-            .nav-link.active {
-                color: #111111;
-                font-weight: 700;
-                border-bottom-color: #5C1414;
-            }
-            .nav-link.active::after { width: 100%; left: 0; }
 
-            /* ── Right section ── */
             .ch-right {
                 display: flex;
                 align-items: center;
-                gap: 20px;
+                gap: 16px;
                 margin-left: auto;
             }
 
-            /* Search bar (desktop only) */
-            .ch-capital {
-                display: none;
-                flex-direction: column;
-                align-items: flex-end;
-                cursor: pointer;
-                padding-right: 28px;
-                border-right: 1px solid #eaeaea;
-                margin-right: 16px;
-            }
-            @media (min-width: 1024px) {
-                .ch-capital { display: flex; }
-            }
-
-            /* ── Hamburger Button — Always Visible ── */
             .ch-hamburger {
                 width: 40px;
                 height: 40px;
@@ -366,19 +120,23 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 justify-content: center;
                 background: transparent;
-                border: 1px solid transparent;
+                border: 1px solid var(--rule, #DCD5C6);
+                border-radius: var(--r, 2px);
                 cursor: pointer;
-                position: relative;
-                transition: border-color 0.2s, background 0.2s;
-                flex-shrink: 0;
+                color: var(--ink, #0E1420);
+                transition: background 150ms ease, border-color 150ms ease;
             }
             .ch-hamburger:hover {
-                border-color: #e5e5e5;
-                background: #fafafa;
+                background: var(--paper-deep, #E7E1D4);
+                border-color: var(--rule-strong, #BDB3A0);
+            }
+            .ch-hamburger:focus-visible {
+                outline: 2px solid var(--blood, #7A1C29);
+                outline-offset: -2px;
             }
             .ch-hamburger-lines {
                 width: 18px;
-                height: 14px;
+                height: 12px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -387,627 +145,532 @@ export function renderHeader(currentRoute) {
                 display: block;
                 width: 100%;
                 height: 1.5px;
-                background: #333;
-                transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+                background: var(--ink, #0E1420);
+                transition: transform 200ms ease, opacity 200ms ease;
                 transform-origin: center;
             }
-            .ch-hamburger-lines span:nth-child(2) { width: 12px; margin-left: auto; }
-            .ch-hamburger.open .ch-hamburger-lines span:nth-child(1) {
-                transform: translateY(6.25px) rotate(45deg);
-            }
-            .ch-hamburger.open .ch-hamburger-lines span:nth-child(2) {
-                opacity: 0;
-                width: 0;
-            }
-            .ch-hamburger.open .ch-hamburger-lines span:nth-child(3) {
-                transform: translateY(-6.25px) rotate(-45deg);
-            }
+            .ch-hamburger.open .ch-hamburger-lines span:nth-child(1) { transform: translateY(5.25px) rotate(45deg); }
+            .ch-hamburger.open .ch-hamburger-lines span:nth-child(2) { opacity: 0; }
+            .ch-hamburger.open .ch-hamburger-lines span:nth-child(3) { transform: translateY(-5.25px) rotate(-45deg); }
 
-            /* Connect button (header) — hidden when logged in or on mobile */
-            .ch-connect {
-                padding: 8px 16px;
-                font-size: 11px;
-                font-weight: 700;
-                color: #fff;
-                background: #111111;
-                border: none;
-                cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                transition: background 0.12s;
-            }
-            .ch-connect:hover { background: #5C1414; }
-
-            /* Notification dropdown — desktop only */
-            .ch-notif-wrap { position: relative; }
-            .ch-notif-panel {
-                position: absolute;
-                right: 0;
-                top: 100%;
-                margin-top: 6px;
-                width: 320px;
-                background: #fff;
-                border: 1px solid #E5E5E5;
-                box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-                display: none;
-                z-index: 100;
-                max-height: 360px;
-                overflow-y: auto;
-            }
-            .ch-notif-wrap.open .ch-notif-panel { display: block; }
-            .ch-notif-hd {
-                padding: 10px 14px;
-                border-bottom: 1px solid #f0f0f0;
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #888;
-                font-family: 'JetBrains Mono', monospace;
-            }
-            .ch-notif-item {
-                padding: 10px 14px;
-                border-bottom: 1px solid #f5f5f5;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                cursor: pointer;
-                transition: background 0.1s;
-                font-size: 12px;
-            }
-            .ch-notif-item:hover { background: #fafafa; }
-            .ch-notif-item:last-child { border-bottom: none; }
-            .ch-notif-icon {
-                width: 28px; height: 28px;
-                border-radius: 6px;
-                display: flex; align-items: center; justify-content: center;
-                flex-shrink: 0; font-size: 11px;
-            }
-            .ch-notif-icon.exec { background: #fef2f2; color: #752122; }
-            .ch-notif-icon.settle { background: #f0fdf4; color: #166534; }
-            .ch-notif-icon.forfeit { background: #fef2f2; color: #991b1b; }
-            .ch-notif-text { flex: 1; color: #444; font-weight: 500; }
-            .ch-notif-time { font-size: 10px; color: #999; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
-            .ch-notif-empty {
-                padding: 24px 14px;
-                text-align: center;
-                font-size: 11px;
-                color: #999;
-                font-family: 'JetBrains Mono', monospace;
-            }
-            .ch-notif-badge {
-                position: absolute;
-                top: 4px; right: 4px;
-                width: 7px; height: 7px;
-                background: #752122;
-                border-radius: 50%;
-                display: none;
-            }
-            .ch-notif-wrap.has-items .ch-notif-badge { display: block; }
-            .ch-icon-btn {
-                width: 36px;
-                height: 36px;
-                display: none;
-                align-items: center;
-                justify-content: center;
-                color: #666;
-                background: transparent;
-                border: none;
-                cursor: pointer;
-                transition: color 0.15s;
-            }
-            @media (min-width: 768px) {
-                .ch-icon-btn { display: flex; }
-            }
-            .ch-icon-btn:hover { color: #0a0a0a; }
-
-            /* ══════════════════════════════════════════════════════════════
-               SLIDE-OUT PANEL — UNIVERSAL (DESKTOP + MOBILE)
-               ══════════════════════════════════════════════════════════════ */
+            /* ════════ SCRIM / OVERLAY (Mobile <768px only) ════════ */
             .pnl-overlay {
                 position: fixed;
                 inset: 0;
-                background: rgba(10, 10, 10, 0.35);
-                backdrop-filter: blur(6px);
-                -webkit-backdrop-filter: blur(6px);
+                background: rgba(14, 20, 32, 0.4);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
                 z-index: 90;
                 opacity: 0;
                 visibility: hidden;
-                transition: opacity 0.35s ease, visibility 0.35s ease;
+                transition: opacity 250ms ease, visibility 250ms ease;
             }
             .pnl-overlay.open {
                 opacity: 1;
                 visibility: visible;
             }
+            @media (min-width: 768px) {
+                .pnl-overlay { display: none !important; }
+            }
 
+            /* ════════ UNIVERSAL PANEL CONTAINER ════════ */
             .pnl-drawer {
                 position: fixed;
                 top: 0;
-                right: 0;
-                width: 380px;
-                max-width: 90vw;
-                height: 100%;
-                background: rgba(255, 255, 255, 0.88);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
+                left: 0;
+                bottom: 0;
+                height: 100vh;
+                background: var(--paper, #FFFDF9);
+                border-right: 1px solid var(--rule, #DCD5C6);
                 z-index: 100;
-                transform: translateX(100%);
-                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 display: flex;
                 flex-direction: column;
-                box-shadow: -16px 0 48px rgba(92, 20, 20, 0.08);
-                border-left: 1px solid rgba(229, 229, 229, 0.5);
-            }
-            .pnl-drawer.open {
-                transform: translateX(0);
+                box-shadow: 12px 0 36px rgba(14, 20, 32, 0.08);
+                box-sizing: border-border;
             }
 
-            /* Panel header */
+            /* Mobile (<768px): overlay drawer 85vw max 360px */
+            @media (max-width: 767px) {
+                .pnl-drawer {
+                    width: 85vw;
+                    max-width: 360px;
+                    transform: translateX(-100%);
+                    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .pnl-drawer.open {
+                    transform: translateX(0);
+                }
+            }
+
+            /* Desktop (>=768px): 280px fixed panel flush to edge */
+            @media (min-width: 768px) {
+                .pnl-drawer {
+                    width: 280px;
+                    transform: translateX(-100%);
+                    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .pnl-drawer.open {
+                    transform: translateX(0);
+                }
+            }
+
+            /* Header row inside panel */
             .pnl-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 24px 28px 20px;
-                border-bottom: 1px solid rgba(229, 229, 229, 0.4);
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--rule, #DCD5C6);
                 flex-shrink: 0;
-            }
-            .pnl-header-left {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            .pnl-header-logo {
-                width: 20px;
-                height: 20px;
-                opacity: 0.6;
+                height: 64px;
+                box-sizing: border-box;
             }
             .pnl-header-title {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 3px;
-                color: #5C1414;
+                letter-spacing: 0.16em;
+                color: var(--blood, #7A1C29);
             }
             .pnl-close {
-                width: 36px;
-                height: 36px;
+                width: 32px;
+                height: 32px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: transparent;
-                border: 1px solid transparent;
-                border-radius: 50%;
+                border: 1px solid var(--rule, #DCD5C6);
+                border-radius: var(--r, 2px);
                 cursor: pointer;
-                color: #888;
-                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+                color: var(--ink-3, #6E7686);
+                transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
             }
             .pnl-close:hover {
-                background: rgba(92, 20, 20, 0.05);
-                color: #5C1414;
-                transform: rotate(90deg);
+                color: var(--blood, #7A1C29);
+                border-color: var(--blood, #7A1C29);
+                background: rgba(122, 28, 41, 0.04);
+            }
+            .pnl-close:focus-visible {
+                outline: 2px solid var(--blood, #7A1C29);
+                outline-offset: -2px;
             }
 
-            /* User identity card */
+            /* User identity card (No left border, accent means location only) */
             .pnl-user {
                 display: none;
                 align-items: center;
-                gap: 16px;
-                padding: 24px 28px;
-                background: linear-gradient(135deg, rgba(92, 20, 20, 0.03) 0%, rgba(255, 255, 255, 0.8) 100%);
-                border-bottom: 1px solid rgba(229, 229, 229, 0.5);
-                border-left: 4px solid #5C1414;
+                gap: 14px;
+                padding: 16px 20px;
+                background: var(--paper-deep, #E7E1D4);
+                border-bottom: 1px solid var(--rule, #DCD5C6);
                 flex-shrink: 0;
             }
             .pnl-user.visible { display: flex; }
             .pnl-user-badge {
-                width: 48px;
-                height: 48px;
+                width: 40px;
+                height: 40px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: #111;
-                border: 2px solid rgba(92, 20, 20, 0.1);
+                background: var(--ink, #0E1420);
                 flex-shrink: 0;
                 overflow: hidden;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             }
             .pnl-user-initial {
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                font-size: 16px;
+                font-family: var(--display, 'Archivo', sans-serif);
+                font-size: 15px;
                 font-weight: 800;
-                color: #fff;
+                color: #FFF8F5;
             }
             .pnl-user-avatar {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                border-radius: 50%;
                 display: none;
             }
             .pnl-user-info {
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
                 min-width: 0;
             }
             .pnl-user-name {
-                font-size: 15px;
+                font-family: var(--display, 'Archivo', sans-serif);
+                font-size: 14px;
                 font-weight: 700;
-                color: #111;
-                font-family: 'Plus Jakarta Sans', sans-serif;
+                color: var(--ink, #0E1420);
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-            .pnl-user-role {
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #888;
-                font-family: 'JetBrains Mono', monospace;
+            .pnl-user-handle {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 11px;
+                color: var(--ink-3, #6E7686);
             }
 
-            /* Panel scrollable body */
-            .pnl-body {
-                flex: 1;
-                overflow-y: auto;
-                padding: 0;
+            /* Capital Summary Block (Two columns directly under profile) */
+            .pnl-capital-summary {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                padding: 14px 20px;
+                background: var(--plate, #FFFDF9);
+                border-bottom: 1px solid var(--rule, #DCD5C6);
+                cursor: pointer;
+                transition: background 150ms ease;
             }
-            .pnl-body::-webkit-scrollbar { width: 3px; }
-            .pnl-body::-webkit-scrollbar-track { background: transparent; }
-            .pnl-body::-webkit-scrollbar-thumb { background: #e5e5e5; }
-
-            /* Section label */
-            .pnl-section-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                color: #888;
-                padding: 24px 28px 12px;
+            .pnl-capital-summary:hover {
+                background: var(--paper-deep, #E7E1D4);
+            }
+            .pnl-cap-col {
                 display: flex;
-                align-items: center;
-                gap: 8px;
+                flex-direction: column;
+                gap: 3px;
             }
-            .pnl-section-label::after {
-                content: '';
-                flex: 1;
-                height: 1px;
-                background: rgba(229, 229, 229, 0.3);
+            .pnl-cap-lbl {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 9px;
+                font-weight: 500;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--ink-3, #6E7686);
+            }
+            .pnl-cap-val {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 13px;
+                font-weight: 700;
+                font-variant-numeric: tabular-nums;
+                color: var(--ink, #0E1420);
             }
 
-            /* Navigation links */
-            .pnl-nav-link {
-                display: flex;
-                align-items: center;
-                gap: 14px;
-                padding: 16px 28px;
-                font-size: 15px;
-                font-weight: 600;
-                color: #444;
-                text-decoration: none;
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                letter-spacing: -0.2px;
-                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Body wrapper with scroll affordance mask */
+            .pnl-body-wrap {
                 position: relative;
-                opacity: 0;
-                transform: translateX(12px);
-                animation: pnlSlideIn 0.35s ease forwards;
-                border-left: 3px solid transparent;
-            }
-            .pnl-nav-link:hover {
-                background: rgba(92, 20, 20, 0.02);
-                color: #5C1414;
-                border-left-color: rgba(92, 20, 20, 0.2);
-                padding-left: 36px;
-            }
-            .pnl-nav-link.active {
-                color: #5C1414;
-                font-weight: 700;
-                background: linear-gradient(90deg, rgba(92, 20, 20, 0.04) 0%, rgba(255, 255, 255, 0.5) 100%);
-                border-left-color: #5C1414;
-            }
-            .pnl-nav-indicator {
-                width: 5px;
-                height: 5px;
-                background: #d4d4d4;
-                border-radius: 50%;
-                flex-shrink: 0;
-                transition: all 0.25s ease;
-            }
-            .pnl-nav-link.active .pnl-nav-indicator {
-                background: #5C1414;
-                box-shadow: 0 0 8px rgba(92, 20, 20, 0.6);
-            }
-            .pnl-nav-link:hover .pnl-nav-indicator {
-                background: #5C1414;
-                transform: scale(1.3);
-            }
-
-            .pnl-nav-group {
+                flex: 1;
+                min-height: 0;
                 display: flex;
                 flex-direction: column;
             }
+            .pnl-body {
+                flex: 1;
+                overflow-y: auto;
+                padding: 12px 0;
+                box-sizing: border-box;
+            }
+            .pnl-body::-webkit-scrollbar { width: 4px; }
+            .pnl-body::-webkit-scrollbar-track { background: transparent; }
+            .pnl-body::-webkit-scrollbar-thumb { background: var(--rule, #DCD5C6); }
+
+            .pnl-scroll-mask {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 32px;
+                background: linear-gradient(to bottom, transparent, var(--paper, #FFFDF9));
+                pointer-events: none;
+                transition: opacity 200ms ease;
+                z-index: 10;
+            }
+            .pnl-scroll-mask.at-bottom { opacity: 0; }
+
+            /* Group labels */
+            .pnl-section-label {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.16em;
+                color: var(--ink-3, #6E7686);
+                padding: 14px 20px 6px;
+            }
+
+            /* Sticky parent group header */
+            .pnl-nav-group-header {
+                position: sticky;
+                top: 0;
+                z-index: 5;
+                background: var(--paper, #FFFDF9);
+                border-bottom: 1px solid var(--rule-light, #EFECE6);
+            }
+
+            /* Navigation Rows (Mobile >=44px, Desktop >=36px) */
+            .pnl-nav-link, .pnl-acct-link {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                box-sizing: border-box;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                text-decoration: none;
+                background: transparent;
+                border: none;
+                border-left: 3px solid transparent;
+                color: var(--ink, #0E1420);
+                cursor: pointer;
+                transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+                outline: none;
+            }
+            @media (max-width: 767px) {
+                .pnl-nav-link, .pnl-acct-link {
+                    min-height: 44px;
+                    padding: 10px 20px;
+                    font-size: 12px;
+                }
+            }
+            @media (min-width: 768px) {
+                .pnl-nav-link, .pnl-acct-link {
+                    min-height: 36px;
+                    padding: 8px 20px;
+                    font-size: 11.5px;
+                }
+            }
+
+            @media (hover: hover) {
+                .pnl-nav-link:hover, .pnl-acct-link:hover {
+                    background: rgba(122, 28, 41, 0.025);
+                    color: var(--blood, #7A1C29);
+                }
+            }
+
+            /* Parent Active State: 3px accent left rail + fill + accent text */
+            .pnl-nav-link.active, .pnl-acct-link.active {
+                border-left-color: var(--blood, #7A1C29) !important;
+                background: rgba(122, 28, 41, 0.05) !important;
+                color: var(--blood, #7A1C29) !important;
+                font-weight: 700;
+            }
+
+            .pnl-nav-link:focus-visible, .pnl-acct-link:focus-visible, .pnl-subnav-link:focus-visible {
+                outline: 2px solid var(--blood, #7A1C29);
+                outline-offset: -2px;
+            }
+
+            /* Subnav Children */
+            .pnl-subnav {
+                display: none;
+                flex-direction: column;
+                background: rgba(14, 20, 32, 0.015);
+                padding: 4px 0;
+            }
+            .pnl-nav-group.expanded .pnl-subnav {
+                display: flex;
+            }
             .pnl-chevron {
-                opacity: 0.4;
-                transition: transform 0.25s ease;
+                transition: transform 200ms ease;
+                color: var(--ink-3, #6E7686);
             }
             .pnl-nav-group.expanded .pnl-chevron {
                 transform: rotate(180deg);
             }
 
-            .pnl-subnav {
-                display: none;
-                flex-direction: column;
-                background: rgba(92, 20, 20, 0.01);
-                padding-bottom: 8px;
-            }
-            .pnl-nav-group.expanded .pnl-subnav {
-                display: flex;
-            }
+            /* Child Active State: Accent text + 1px accent rail on indent guide only */
             .pnl-subnav-link {
                 display: flex;
                 align-items: center;
-                padding: 12px 28px 12px 48px;
-                font-size: 14px;
-                font-weight: 600;
-                color: #666;
+                padding: 8px 20px 8px 36px;
+                min-height: 36px;
+                font-family: var(--display, 'Archivo', sans-serif);
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--ink-2, #4A5464);
                 text-decoration: none;
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                border-left: 2px solid rgba(229, 229, 229, 0.6);
-                margin-left: 34px;
-                transition: all 0.2s ease;
+                border-left: 1px solid var(--rule, #DCD5C6);
+                margin-left: 20px;
+                transition: color 150ms ease, border-color 150ms ease;
+                box-sizing: border-box;
             }
-            .pnl-subnav-link:hover, .pnl-subnav-link.active {
-                color: #5C1414;
-                border-left-color: #5C1414;
-                background: rgba(92, 20, 20, 0.03);
+            @media (hover: hover) {
+                .pnl-subnav-link:hover {
+                    color: var(--blood, #7A1C29);
+                    border-left-color: var(--blood, #7A1C29);
+                }
+            }
+            .pnl-subnav-link.active {
+                color: var(--blood, #7A1C29) !important;
+                font-weight: 700 !important;
+                border-left: 1px solid var(--blood, #7A1C29) !important;
+                background: transparent !important;
             }
 
             /* Divider */
             .pnl-divider {
                 height: 1px;
-                background: rgba(229, 229, 229, 0.4);
-                margin: 4px 28px;
+                background: var(--rule, #DCD5C6);
+                margin: 12px 20px;
             }
 
-            /* Account links */
-            .pnl-acct-link {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 14px 28px;
-                font-size: 14px;
-                font-weight: 600;
-                color: #555;
-                text-decoration: none;
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                transition: all 0.2s ease;
-                opacity: 0;
-                transform: translateX(12px);
-                animation: pnlSlideIn 0.35s ease forwards;
-            }
-            .pnl-acct-link:hover {
-                background: rgba(92, 20, 20, 0.02);
-                color: #5C1414;
-                padding-left: 36px;
-            }
-
-            /* Sign out */
+            /* Sign out button */
             .pnl-signout {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                width: calc(100% - 56px);
-                margin: 16px 28px 8px;
-                padding: 14px 20px;
+                width: calc(100% - 40px);
+                margin: 14px 20px 6px;
+                min-height: 40px;
+                padding: 10px 16px;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
-                color: #5C1414;
-                background: rgba(92, 20, 20, 0.04);
-                border: 1px solid rgba(92, 20, 20, 0.12);
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.08em;
+                letter-spacing: 0.12em;
                 text-transform: uppercase;
+                color: var(--blood, #7A1C29);
+                background: rgba(122, 28, 41, 0.04);
+                border: 1px solid rgba(122, 28, 41, 0.2);
+                border-radius: var(--r, 2px);
                 cursor: pointer;
-                text-align: left;
-                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                transition: background 150ms ease, border-color 150ms ease;
             }
             .pnl-signout:hover {
-                background: rgba(92, 20, 20, 0.08);
-                border-color: rgba(92, 20, 20, 0.2);
-                color: #6B1212;
-                transform: translateY(-1px);
+                background: rgba(122, 28, 41, 0.08);
+                border-color: var(--blood, #7A1C29);
+            }
+            .pnl-signout:focus-visible {
+                outline: 2px solid var(--blood, #7A1C29);
+                outline-offset: -2px;
             }
 
-            /* Connect card in panel */
+            /* Connect promo block */
             .pnl-connect-section {
-                padding: 28px;
-                flex-shrink: 0;
-                border-top: 1px solid rgba(229, 229, 229, 0.4);
-                background: linear-gradient(to bottom, #ffffff, #faf9f6);
-            }
-            .pnl-connect-card {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-            }
-            .pnl-connect-title {
-                font-family: 'Plus Jakarta Sans', 'Sora', sans-serif;
-                font-size: 15px;
-                font-weight: 700;
-                color: #0f172a;
-                letter-spacing: -0.2px;
-                line-height: 1.25;
-            }
-            .pnl-connect-desc {
-                font-family: 'Inter', sans-serif;
-                font-size: 12.5px;
-                font-weight: 500;
-                color: #64748b;
-                line-height: 1.45;
+                padding: 16px 20px;
+                border-top: 1px solid var(--rule, #DCD5C6);
+                background: var(--paper-deep, #E7E1D4);
             }
             .pnl-connect-btn {
                 width: 100%;
-                height: 48px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                background: #5C1414;
-                color: #ffffff;
+                min-height: 44px;
+                background: var(--blood, #7A1C29);
+                color: #FFF8F5;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 1px;
+                letter-spacing: 0.12em;
                 text-transform: uppercase;
-                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                position: relative;
-                overflow: hidden;
+                border: none;
+                border-radius: var(--r, 2px);
+                cursor: pointer;
+                transition: background 150ms ease;
             }
             .pnl-connect-btn:hover {
-                background: #6B1212;
-                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.25);
-            }
-            .pnl-connect-arrow {
-                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                display: inline-block;
-            }
-            .pnl-connect-btn:hover .pnl-connect-arrow {
-                transform: translateX(4px);
+                background: #54111B;
             }
 
-            /* Panel footer */
+            /* Footer (Mobile collapsed <60px vs Desktop full grid) */
             .pnl-footer {
-                border-top: 1px solid #f0f0f0;
-                padding: 20px 28px;
-                background: #fafafa;
+                border-top: 1px solid var(--rule, #DCD5C6);
+                padding: 14px 20px;
+                background: var(--paper-deep, #E7E1D4);
                 flex-shrink: 0;
             }
-            .pnl-status {
+            .pnl-status-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                user-select: none;
+            }
+            .pnl-status-left {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                margin-bottom: 16px;
             }
             .pnl-status-dot {
-                width: 5px;
-                height: 5px;
+                width: 6px;
+                height: 6px;
                 border-radius: 50%;
-                background: #22c55e;
-                box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+                background: var(--win, #186B4A);
             }
             .pnl-status-text {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 10px;
-                font-weight: 500;
-                color: #aaa;
-                font-family: 'JetBrains Mono', monospace;
+                font-weight: 700;
+                letter-spacing: 0.12em;
                 text-transform: uppercase;
-                letter-spacing: 0.1em;
+                color: var(--ink, #0E1420);
             }
             .pnl-meta {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                margin-bottom: 16px;
+                gap: 8px 16px;
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px dotted var(--rule, #DCD5C6);
+                transition: max-height 200ms ease, opacity 200ms ease;
             }
+            @media (max-width: 767px) {
+                .pnl-meta.collapsed {
+                    display: none;
+                }
+            }
+
             .pnl-meta-item {
                 display: flex;
                 flex-direction: column;
                 gap: 2px;
             }
             .pnl-meta-label {
-                font-size: 8px;
-                font-weight: 700;
-                color: #ccc;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 8.5px;
+                font-weight: 500;
                 letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--ink-3, #6E7686);
             }
             .pnl-meta-value {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
-                font-weight: 500;
-                color: #777;
-                font-family: 'Sora', 'IBM Plex Sans', sans-serif;
+                font-weight: 600;
+                color: var(--ink, #0E1420);
             }
+
             .pnl-legal {
                 display: flex;
-                gap: 16px;
-                padding-top: 12px;
-                border-top: 1px solid #eee;
+                gap: 14px;
+                margin-top: 12px;
+                padding-top: 10px;
+                border-top: 1px solid var(--rule, #DCD5C6);
             }
             .pnl-legal a {
-                font-size: 10px;
-                color: #ccc;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 9.5px;
+                color: var(--ink-3, #6E7686);
                 text-decoration: none;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.04em;
-                transition: color 0.12s;
             }
-            .pnl-legal a:hover { color: #888; }
+            .pnl-legal a:hover { color: var(--blood, #7A1C29); }
 
-            @keyframes pnlSlideIn {
-                to { opacity: 1; transform: translateX(0); }
-            }
-
-            /* ── Mobile overrides ── */
-            @media (max-width: 767px) {
-                .ch-header-inner { padding: 0 16px; gap: 0; }
-                .ch-icon-btn { display: none !important; }
-                .ch-notif-wrap { display: none !important; }
-                #btn-auth { display: none !important; }
-                .pnl-drawer { width: 100%; max-width: 100%; border-left: none; }
-            }
-            @media (max-width: 480px) {
-                .ch-logo-wordmark { font-size: 11px; letter-spacing: 0.18em; }
+            /* Honor prefers-reduced-motion */
+            @media (prefers-reduced-motion: reduce) {
+                .pnl-drawer, .pnl-overlay, .pnl-subnav, .pnl-chevron, .pnl-scroll-mask {
+                    transition: none !important;
+                    animation: none !important;
+                }
             }
         </style>
 
         <header class="ch-header">
             <div class="ch-header-inner">
                 <!-- Logo -->
-                <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo">
-                    <span class="logo-wordmark">COLLATERAL</span>
+                <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo-wordmark">
+                    COLLATERAL
                 </a>
 
-                <!-- Nav Links (desktop) -->
-                <nav class="ch-nav">
-                    ${navItems}
+                <!-- Nav Links (Desktop Top-Bar) -->
+                <nav class="ch-nav" aria-label="Top Navigation">
+                    ${topNavItems}
                 </nav>
 
-                <!-- Right Section -->
+                <!-- Right Controls -->
                 <div class="ch-right">
-                    <!-- Capital Display (logged in) / Connect Button (logged out) -->
-                    <div class="ch-capital" id="header-capital-area" onclick="window.router.navigate('/funding')" style="${currentRoute === '/funding' ? 'display: none !important;' : ''}">
-                        <span style="font-size: 10px; color: var(--ink-3, #6E7686); font-family: var(--mono, 'IBM Plex Mono', monospace); letter-spacing: 0.16em; text-transform: uppercase;">Your Balance</span>
-                        <span id="header-avail-cap" style="font-size: 14px; font-weight: 700; color: var(--ink, #0E1420); font-variant-numeric: tabular-nums; font-family: var(--mono, 'IBM Plex Mono', monospace);">$2,500.00</span>
-                    </div>
-                    <button class="ch-connect" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
-
-                    <!-- Notification Bell (desktop only) -->
-                    <div class="ch-notif-wrap" id="notif-wrap">
-                        <button class="ch-icon-btn" onclick="window.app.toggleNotifications(event)">
-                            <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
-                            <div class="ch-notif-badge"></div>
-                        </button>
-                        <div class="ch-notif-panel" id="notif-panel">
-                            <div class="ch-notif-hd">Recent Activity</div>
-                            <div id="notif-list">
-                                <div class="ch-notif-empty">Loading...</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hamburger — Always Visible -->
-                    <button id="mobile-menu-btn" onclick="window.app.toggleMobileMenu()" class="ch-hamburger" aria-label="Menu">
+                    <button id="mobile-menu-btn" 
+                            onclick="window.app.toggleMobileMenu()" 
+                            class="ch-hamburger" 
+                            aria-label="Toggle Navigation Menu"
+                            aria-expanded="false"
+                            aria-controls="mobile-menu">
                         <div class="ch-hamburger-lines">
                             <span></span>
                             <span></span>
@@ -1018,69 +681,136 @@ export function renderHeader(currentRoute) {
             </div>
         </header>
 
-        <!-- Panel Overlay -->
+        <!-- Scrim Overlay (Mobile <768px) -->
         <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
 
-        <!-- Slide-Out Panel -->
-        <div id="mobile-menu" class="pnl-drawer">
+        <!-- Universal Navigation Panel -->
+        <aside id="mobile-menu" 
+               class="pnl-drawer" 
+               role="dialog" 
+               aria-modal="true" 
+               aria-label="Navigation Menu">
+            
             <div class="pnl-header">
-                <div class="pnl-header-left">
-                    <span class="pnl-header-title">Menu</span>
-                </div>
-                <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span class="pnl-header-title">Menu</span>
+                <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close menu">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
 
-            <!-- User Identity (shown when logged in) -->
+            <!-- Profile Row (No accent left rail) -->
             <div id="mobile-user-section" class="pnl-user">
                 <div class="pnl-user-badge">
                     <span class="pnl-user-initial" id="mobile-menu-initial">U</span>
                     <img class="pnl-user-avatar" id="mobile-menu-avatar" alt="" />
                 </div>
                 <div class="pnl-user-info">
-                    <span class="pnl-user-name" id="mobile-menu-username">@user</span>
+                    <span class="pnl-user-name" id="mobile-menu-username">User</span>
+                    <span class="pnl-user-handle" id="mobile-menu-handle">@user</span>
                 </div>
             </div>
 
-            <div class="pnl-body">
-                <!-- Navigation -->
-                <div class="pnl-section-label">Navigation</div>
-                ${panelNavItems}
-
-                <!-- Account Links (shown when logged in) -->
-                <div id="mobile-account-links" style="display:none;">
-                    <div class="pnl-divider"></div>
-                    <div class="pnl-section-label">Account</div>
-                    ${panelAccountItems}
-
-                    <!-- Sign Out -->
-                    <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                        Sign Out
-                    </button>
+            <!-- Capital Summary Block (Tapping routes to /funding) -->
+            <div id="mobile-capital-summary" class="pnl-capital-summary" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding');">
+                <div class="pnl-cap-col">
+                    <span class="pnl-cap-lbl">AVAILABLE BALANCE</span>
+                    <span class="pnl-cap-val">$2,500.00</span>
                 </div>
-
-                <!-- Connect (shown when NOT logged in) -->
-                <div id="mobile-connect-section" class="pnl-connect-section">
-                    <div class="pnl-connect-badge">
-                        <span class="pnl-connect-badge-dot"></span>
-                        $250 Match Active
-                    </div>
-                    <div class="pnl-connect-promo">Lock capital. Force execution.</div>
-                    <div class="pnl-connect-promo-sub">Connect your account to lock performance contracts and match up to $250.</div>
-                    <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
-                        Sign In
-                    </button>
+                <div class="pnl-cap-col">
+                    <span class="pnl-cap-lbl">OPEN EXPOSURE</span>
+                    <span class="pnl-cap-val">$633,600.00</span>
                 </div>
             </div>
 
+            <!-- Body Wrapper with Bottom Scroll Affordance Mask -->
+            <div class="pnl-body-wrap">
+                <div class="pnl-body" id="pnl-body-scroll">
+                    <nav aria-label="Sidebar Navigation">
+                        <div class="pnl-section-label">NAVIGATION</div>
+
+                        <!-- MARKET Group -->
+                        <div class="pnl-nav-group ${isMarket ? 'expanded' : ''}">
+                            <div class="pnl-nav-group-header">
+                                <button class="pnl-nav-link ${isMarket ? 'active' : ''}" 
+                                        onclick="window.app.toggleNavSection(this); return false;"
+                                        aria-expanded="${isMarket ? 'true' : 'false'}"
+                                        aria-controls="subnav-market">
+                                    <span>MARKET</span>
+                                    <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+                                </button>
+                            </div>
+                            <div class="pnl-subnav" id="subnav-market">
+                                <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' && !window.location.search.includes('type=rivalry')) ? 'active' : ''}">Solo Contracts</a>
+                                <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market?type=rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' && window.location.search.includes('type=rivalry')) ? 'active' : ''}">Rivalry Contracts</a>
+                            </div>
+                        </div>
+
+                        <!-- Top-Level Items -->
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts'); return false;" class="pnl-nav-link ${isActiveContracts ? 'active' : ''}" ${isActiveContracts ? 'aria-current="page"' : ''}>ACTIVE</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/ledger'); return false;" class="pnl-nav-link ${isLedger ? 'active' : ''}" ${isLedger ? 'aria-current="page"' : ''}>LEDGER</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/sources'); return false;" class="pnl-nav-link ${isSources ? 'active' : ''}" ${isSources ? 'aria-current="page"' : ''}>SOURCES</a>
+
+                        <!-- PROTOCOL Group (Overview, Vision, Whitepaper, Economics) -->
+                        <div class="pnl-nav-group ${(isProtocol && !isCustodyTerminal) ? 'expanded' : ''}">
+                            <div class="pnl-nav-group-header">
+                                <button class="pnl-nav-link ${(isProtocol && !isCustodyTerminal) ? 'active' : ''}" 
+                                        onclick="window.app.toggleNavSection(this); return false;"
+                                        aria-expanded="${(isProtocol && !isCustodyTerminal) ? 'true' : 'false'}"
+                                        aria-controls="subnav-protocol">
+                                    <span>PROTOCOL</span>
+                                    <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+                                </button>
+                            </div>
+                            <div class="pnl-subnav" id="subnav-protocol">
+                                <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=overview'); return false;" class="pnl-subnav-link ${window.location.search.includes('tab=overview') ? 'active' : ''}">Overview</a>
+                                <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=vision'); return false;" class="pnl-subnav-link ${window.location.search.includes('tab=vision') ? 'active' : ''}">Vision</a>
+                                <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=whitepaper'); return false;" class="pnl-subnav-link ${window.location.search.includes('tab=whitepaper') ? 'active' : ''}">Whitepaper</a>
+                                <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=economics'); return false;" class="pnl-subnav-link ${window.location.search.includes('tab=economics') ? 'active' : ''}">Economics</a>
+                            </div>
+                        </div>
+
+                        <!-- Promoted Custody Terminal Top-Level Item -->
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=terminal'); return false;" class="pnl-nav-link ${isCustodyTerminal ? 'active' : ''}" ${isCustodyTerminal ? 'aria-current="page"' : ''}>CUSTODY TERMINAL</a>
+
+                        <!-- Account Group (Normalized uppercase without icons) -->
+                        <div id="mobile-account-links" style="display:none;">
+                            <div class="pnl-divider"></div>
+                            <div class="pnl-section-label">ACCOUNT</div>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="pnl-acct-link ${isProfile ? 'active' : ''}">PROFILE</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="pnl-acct-link ${isReferrals ? 'active' : ''}">REFERRALS</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="pnl-acct-link ${isFunding ? 'active' : ''}">ACCOUNT CAPITAL</a>
+                            <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="pnl-acct-link ${isDocs ? 'active' : ''}">DOCUMENTATION</a>
+
+                            <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                SIGN OUT
+                            </button>
+                        </div>
+
+                        <!-- Connect Section (Logged out state) -->
+                        <div id="mobile-connect-section" class="pnl-connect-section">
+                            <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                                SIGN IN
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+                
+                <!-- Bottom Scroll Affordance Mask -->
+                <div id="pnl-scroll-mask" class="pnl-scroll-mask"></div>
+            </div>
+
+            <!-- Footer (Collapsed on mobile, expanded on desktop) -->
             <div class="pnl-footer">
-                <div class="pnl-status">
-                    <div class="pnl-status-dot"></div>
-                    <span class="pnl-status-text">All systems operational</span>
+                <div class="pnl-status-bar" onclick="window.app.toggleFooterMeta()">
+                    <div class="pnl-status-left">
+                        <div class="pnl-status-dot"></div>
+                        <span class="pnl-status-text">ALL SYSTEMS OPERATIONAL</span>
+                    </div>
+                    <svg id="pnl-footer-chevron" class="pnl-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </div>
-                <div class="pnl-meta">
+
+                <div id="pnl-footer-meta" class="pnl-meta collapsed">
                     <div class="pnl-meta-item">
                         <span class="pnl-meta-label">Protocol</span>
                         <span class="pnl-meta-value">v1.0</span>
@@ -1098,27 +828,18 @@ export function renderHeader(currentRoute) {
                         <span class="pnl-meta-value">99.9%</span>
                     </div>
                 </div>
+
                 <div class="pnl-legal">
                     <a href="/terms" onclick="window.app.closeMobileMenu()">Terms</a>
                     <a href="/docs" onclick="window.app.closeMobileMenu()">Docs</a>
-                    <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>
+                    <a href="https://x.com/collaboralcap" target="_blank" rel="noopener">X / Twitter</a>
                 </div>
             </div>
-        </div>
+        </aside>
     `;
 }
 
-/**
- * Initialize scroll effects:
- * 1. Transparent glass navbar on scroll
- * 2. IntersectionObserver scroll-reveal animations
- * Call this AFTER the header HTML is injected into the DOM.
- */
 export function initScrollEffects() {
-    // ── Scroll-Transparent Navbar ──
-    // Handled globally in main.js to avoid duplicate listeners and memory leaks
-
-    // ── Scroll Reveal (IntersectionObserver) ──
     const revealEls = document.querySelectorAll('[data-reveal]');
     if (revealEls.length) {
         const observer = new IntersectionObserver((entries) => {
@@ -1128,10 +849,7 @@ export function initScrollEffects() {
                     observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         revealEls.forEach(el => observer.observe(el));
     }
 }

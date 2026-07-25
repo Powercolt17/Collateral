@@ -1380,24 +1380,57 @@ window.app = {
         btn.onclick = () => window.app.addCard();
     },
     // Panel Menu Functions (universal — desktop + mobile)
+    // Panel Menu Functions (Universal Desktop + Mobile Navigation Drawer)
     toggleMobileMenu: function () {
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('mobile-menu-overlay');
         const btn = document.getElementById('mobile-menu-btn');
 
-        if (!menu || !overlay) return;
-
+        if (!menu) return;
         const isOpen = menu.classList.contains('open');
 
         if (isOpen) {
             window.app.closeMobileMenu();
         } else {
             menu.classList.add('open');
-            overlay.classList.add('open');
-            if (btn) btn.classList.add('open');
-            document.body.style.overflow = 'hidden';
-            // Re-init lucide icons in panel
-            if (window.lucide) setTimeout(() => window.lucide.createIcons(), 50);
+            if (overlay) overlay.classList.add('open');
+            if (btn) {
+                btn.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                document.body.style.overflow = 'hidden';
+                menu.setAttribute('role', 'dialog');
+                menu.setAttribute('aria-modal', 'true');
+            } else {
+                menu.setAttribute('role', 'region');
+                menu.removeAttribute('aria-modal');
+            }
+
+            // Setup scroll affordance listener
+            const bodyScroll = document.getElementById('pnl-body-scroll');
+            const mask = document.getElementById('pnl-scroll-mask');
+            if (bodyScroll && mask) {
+                const checkScroll = () => {
+                    const atBottom = bodyScroll.scrollTop + bodyScroll.clientHeight >= bodyScroll.scrollHeight - 4;
+                    mask.classList.toggle('at-bottom', atBottom);
+                };
+                bodyScroll.onscroll = checkScroll;
+                checkScroll();
+            }
+
+            // Expand footer meta on desktop by default
+            if (!isMobile) {
+                const meta = document.getElementById('pnl-footer-meta');
+                if (meta) meta.classList.remove('collapsed');
+            }
+
+            // Trap focus on mobile dialog
+            if (isMobile) {
+                window.app._trapFocus(menu);
+            }
         }
     },
     closeMobileMenu: function () {
@@ -1405,12 +1438,71 @@ window.app = {
         const overlay = document.getElementById('mobile-menu-overlay');
         const btn = document.getElementById('mobile-menu-btn');
 
-        if (!menu || !overlay) return;
+        if (!menu) return;
 
         menu.classList.remove('open');
-        overlay.classList.remove('open');
-        if (btn) btn.classList.remove('open');
+        if (overlay) overlay.classList.remove('open');
+        if (btn) {
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.focus();
+        }
         document.body.style.overflow = '';
+        if (window.app._focusHandler) {
+            document.removeEventListener('keydown', window.app._focusHandler);
+            window.app._focusHandler = null;
+        }
+    },
+    toggleNavSection: function (btnEl) {
+        const group = btnEl.closest('.pnl-nav-group');
+        if (!group) return;
+
+        const isMobile = window.innerWidth < 768;
+        const isExpanded = group.classList.contains('expanded');
+
+        if (isMobile && !isExpanded) {
+            // Single-open accordion on mobile: collapse all other groups first
+            document.querySelectorAll('.pnl-nav-group').forEach(g => {
+                g.classList.remove('expanded');
+                const b = g.querySelector('.pnl-nav-link');
+                if (b) b.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        group.classList.toggle('expanded', !isExpanded);
+        btnEl.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
+    },
+    toggleFooterMeta: function () {
+        const meta = document.getElementById('pnl-footer-meta');
+        if (meta) {
+            meta.classList.toggle('collapsed');
+        }
+    },
+    _trapFocus: function (container) {
+        if (window.app._focusHandler) document.removeEventListener('keydown', window.app._focusHandler);
+        
+        window.app._focusHandler = function (e) {
+            if (e.key === 'Escape') {
+                window.app.closeMobileMenu();
+                return;
+            }
+            if (e.key !== 'Tab') return;
+
+            const focusables = container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+            if (!focusables.length) return;
+
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('keydown', window.app._focusHandler);
     },
     updateMobileAuthUI: function () {
         const mobileUserSection = document.getElementById('mobile-user-section');

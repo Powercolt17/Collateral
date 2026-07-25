@@ -1896,7 +1896,33 @@ function updateAuthUI() {
                 const capEl = document.getElementById('header-avail-cap');
                 if (capEl) {
                     const dollars = (!availCents || availCents <= 300) ? 2500 : Math.round(availCents / 100);
-                    capEl.textContent = '$'
+                    capEl.textContent = '$' + dollars.toLocaleString();
+                }
+            }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
+        }
+
+        if (headerAvatarInitial && appState.displayName) {
+            headerAvatarInitial.textContent = appState.displayName.charAt(0).toUpperCase();
+        }
+        if (appState.photoUrl && headerAvatarImg) {
+            headerAvatarImg.src = appState.photoUrl;
+            headerAvatarImg.style.display = 'block';
+            if (headerAvatarInitial) headerAvatarInitial.style.display = 'none';
+        } else {
+            if (headerAvatarImg) headerAvatarImg.style.display = 'none';
+            if (headerAvatarInitial) headerAvatarInitial.style.display = '';
+        }
+
+        console.log('[Auth] UI updated, showing:', appState.username);
+    } else {
+        if (btnAuth) btnAuth.style.display = 'inline-block';
+        if (capitalArea) capitalArea.style.display = 'none';
+    }
+
+    if (window.app && window.app.updateMobileAuthUI) {
+        window.app.updateMobileAuthUI();
+    }
+}
 const protectedRoutes = ['/market', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources', '/rivalry', '/ledger', '/contract'];
 
 // Route change handler
@@ -2121,32 +2147,3 @@ function runDecoderAnimation() {
     });
 }
 setInterval(runDecoderAnimation, 500);
- + dollars.toLocaleString();
-                }
-            }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
-        }
-
-        // Header Avatar Trigger Sync
-        if (headerAvatarInitial && appState.displayName) {
-            headerAvatarInitial.textContent = appState.displayName.charAt(0).toUpperCase();
-        }
-        if (appState.photoUrl && headerAvatarImg) {
-            headerAvatarImg.src = appState.photoUrl;
-            headerAvatarImg.style.display = 'block';
-            if (headerAvatarInitial) headerAvatarInitial.style.display = 'none';
-        } else {
-            if (headerAvatarImg) headerAvatarImg.style.display = 'none';
-            if (headerAvatarInitial) headerAvatarInitial.style.display = '';
-        }
-
-        console.log('[Auth] UI updated, showing:', appState.username);
-    } else {
-        if (btnAuth) btnAuth.style.display = 'inline-block';
-        if (capitalArea) capitalArea.style.display = 'none';
-    }
-
-    if (window.app && window.app.updateMobileAuthUI) {
-        window.app.updateMobileAuthUI();
-    }
-}
-

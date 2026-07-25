@@ -474,6 +474,33 @@ export function renderLanding() {
                             <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#7A1C29" text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
                             <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180"/></g>
                             <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1.4" fill="#6E7686" text-anchor="middle">STRIPE CONNECT CUSTODY</text>
+                        
+                            <!-- ═══ SCHEMATIC TRACER OVERLAY ═══ -->
+                            <g class="tracer-group" aria-hidden="true">
+                              <!-- Deposit in → Escrow vault -->
+                              <line class="tracer t1" pathLength="100"
+                                    x1="204" y1="193" x2="290" y2="193"
+                                    stroke="#0E1420" stroke-width="2.4" />
+
+                              <!-- Escrow vault → Oracle API stream -->
+                              <line class="tracer t2" pathLength="100"
+                                    x1="474" y1="193" x2="560" y2="193"
+                                    stroke="#0E1420" stroke-width="2.4" />
+
+                              <!-- Oracle API stream → junction -->
+                              <line class="tracer t3" pathLength="100"
+                                    x1="744" y1="193" x2="800" y2="193"
+                                    stroke="#0E1420" stroke-width="2.4" />
+
+                              <!-- Junction → win box (the payoff leg) -->
+                              <path class="tracer t-win" pathLength="100"
+                                    d="M800 193 L800 78 L856 78"
+                                    stroke="#186B4A" stroke-width="2.8" />
+
+                              <!-- Win box receives the pulse -->
+                              <rect class="win-box-pulse"
+                                    x="860" y="40" width="200" height="76" rx="2" />
+                            </g>
                         </svg>
                         <dl class="sch-mobile">
                             <div class="sm-row"><dt>Deposits in</dt><span class="dots"></span><dd>$8,700,000</dd></div>

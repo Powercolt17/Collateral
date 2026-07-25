@@ -1967,6 +1967,10 @@ footer .logo-wordmark-light,
   font-size: 22px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -.026em;
+}
+
 .lead { color: var(--win); }
 .trail { color: var(--ink); }
 
@@ -2001,92 +2005,53 @@ footer .logo-wordmark-light,
 .duel-cta span { transition: transform .3s var(--ease); }
 
 /* ═══════════ SIGNATURE ═══════════ */
-.sign {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: clamp(36px, 6vw, 72px) clamp(24px, 5vw, 64px);
-  text-align: center;
-}
-
-.sign svg {
-  display: block;
-  margin: 0 auto 24px;
-}
+.sign { padding: clamp(32px, 5vw, 68px); text-align: center; }
+.sign svg { display: block; margin: 0 auto 24px; }
+.sign .btn { display: inline-flex; margin: 0 auto; }
 
 .sign-title {
-  margin: 0 auto 14px;
+  margin: 26px 0 14px;
   font-family: var(--display);
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -.036em;
-  text-align: center;
   text-wrap: balance;
 }
 
-.sign-copy {
-  margin: 0 auto 34px;
-  max-width: 45ch;
-  color: var(--ink-2);
-  font-size: 17px;
-  text-align: center;
-}
-
-.sign .btn {
-  display: inline-flex;
-  margin: 0 auto;
-}
+.sign-copy { margin: 0 auto 34px; max-width: 45ch; color: var(--ink-2); font-size: 17px; }
 
 .sign-lines {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  width: 100%;
-  max-width: 720px;
-  margin: 52px auto 0;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 36px;
+  max-width: 640px;
+  margin: 48px auto 0;
   text-align: left;
 }
 
-.sign-line {
-  border-top: 1px solid var(--ink);
-  padding-top: 12px;
-  display: flex;
-  flex-direction: column;
-}
+.sign-line { border-top: 1px solid var(--ink); padding-top: 11px; }
 
 .sign-script {
-  height: 32px;
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 8px;
+  margin-bottom: 9px;
+  min-height: 28px;
   font-family: var(--display);
   font-size: 19px;
   font-weight: 600;
-  line-height: 1;
   letter-spacing: .02em;
 }
 
-.sign-line .mono {
-  display: block;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  line-height: 1;
-}
-
 .disclosure {
-  width: 100%;
-  max-width: 720px;
-  margin: 44px auto 0;
+  max-width: 640px;
+  margin: 46px auto 0;
   font-family: var(--mono);
   font-size: 10px;
-  line-height: 1.85;
+  line-height: 1.9;
   color: var(--ink-4);
   text-align: left;
   letter-spacing: .02em;
 }
+
 
 /* ═══════════ MARGINALIA ═══════════ */
 .marg { display: flex; gap: 16px; align-items: flex-start; max-width: 660px; margin: 0; }

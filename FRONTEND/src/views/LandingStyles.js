@@ -2403,6 +2403,125 @@ footer .logo-wordmark-light,
   .coin { display: none; }
 
 ${revealStyles}
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INSTITUTIONAL MOTION SYSTEM STYLES (PHASE 1)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Rule 6: Numeric stability — tabular nums & fixed alignment */
+.meter-val, .row-amt, .demo-amt, .demo-ledger dd, #m-escrow, #m-settled, #m-count, #clock {
+    font-variant-numeric: tabular-nums !important;
+    display: inline-block;
+}
+
+/* Rule 1: LIVE status dot pulses ONCE for 500ms when a settlement resolves */
+.pulse { position: relative; }
+.pulse::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--win, #186B4A);
+    opacity: 0;
+    transform: scale(.6);
+    pointer-events: none;
+}
+.pulse.pulse-flash::after {
+    animation: cl-ring-once 500ms ease-out forwards;
+}
+@keyframes cl-ring-once {
+    0% { transform: scale(.6); opacity: .95; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Rule 5: NO-JS FALLBACK — default CSS state is 100% VISIBLE (opacity 1, transform none) */
+.reveal .r-item, .reveal .r-plate, .reveal tbody tr, .receipt-card {
+    opacity: 1;
+    transform: none;
+}
+
+/* Start states ONLY apply when html has .js-motion-active class */
+html.js-motion-active .reveal .r-item {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 350ms cubic-bezier(.22,.85,.26,1) calc(var(--i,0) * 60ms),
+                transform 350ms cubic-bezier(.22,.85,.26,1) calc(var(--i,0) * 60ms);
+    will-change: opacity, transform;
+}
+html.js-motion-active .reveal.is-in .r-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+html.js-motion-active .reveal .r-plate {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 400ms cubic-bezier(.22,.85,.26,1) calc(var(--i,0) * 60ms),
+                transform 400ms cubic-bezier(.22,.85,.26,1) calc(var(--i,0) * 60ms);
+    will-change: opacity, transform;
+}
+html.js-motion-active .reveal.is-in .r-plate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Rule 2: Decorative rules draw on entry */
+html.js-motion-active .reveal .r-rule {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms cubic-bezier(.65,0,.35,1) calc(var(--i,0) * 60ms);
+}
+html.js-motion-active .reveal.is-in .r-rule {
+    transform: scaleX(1);
+}
+
+/* Rule 9: Hover States gated behind @media (hover: hover) */
+@media (hover: hover) {
+    .card-inner, .r-plate-inner {
+        transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+    }
+    .card-inner:hover, .r-plate-inner:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px rgba(14, 20, 32, 0.08);
+    }
+    .btn {
+        transition: transform 120ms ease, background 120ms ease;
+    }
+    .btn:active {
+        transform: translateY(1px);
+    }
+    .link::after {
+        transition: transform 150ms ease;
+    }
+}
+
+/* Rule 10: Universal Focus-Visible (2px accent outline with offset) */
+.cl-root :where(a, button, input, [tabindex]):focus-visible {
+    outline: 2px solid var(--blood, #7A1C29) !important;
+    outline-offset: -2px !important;
+}
+
+/* Table Row Hover & Value Flash */
+.table-row-flash {
+    animation: cell-flash 400ms ease-out;
+}
+@keyframes cell-flash {
+    0% { background: rgba(24, 107, 74, 0.12); }
+    100% { background: transparent; }
+}
+
+/* Prefers Reduced Motion override */
+@media (prefers-reduced-motion: reduce) {
+    .reveal .r-item, .reveal .r-plate, .reveal .r-rule, .pulse::after, .row {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
 `;
 
 export default landingCSS;

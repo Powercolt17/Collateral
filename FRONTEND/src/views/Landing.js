@@ -1,7 +1,7 @@
 // Landing Page — Collateral Financial Document System with Paper Grain & Scoped Styling
 import api from '../api.js';
 import { landingCSS } from './LandingStyles.js';
-import { useReveal, useCountUp, revealStyles } from './LandingMotion.js';
+import { motionController, animateValue, initEntranceObservers, revealStyles } from './LandingMotion.js';
 
 // Inject LandingCSS once into document head
 if (!document.getElementById('lp-injected-styles')) {
@@ -58,7 +58,7 @@ export function renderLanding() {
                     <div class="tape seat ticks" style="--d:260ms">
                         <div class="tape-head">
                             <span class="dot pulse"></span>
-                            <span class="mono">Settlement queue &middot; live</span>
+                            <span class="mono">Settlement queue &middot; DEMO FEED</span>
                             <span class="mono" style="margin-left:auto" id="clock">--:--:--</span>
                         </div>
                         <div class="tape-meters">

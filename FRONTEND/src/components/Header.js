@@ -1,4 +1,4 @@
-// Header Component - Simplified Single-Surface Nav Drawer & Location Indicator
+// Header Component - Paired Capital & Health Columns with Signed-In Indicator
 export function renderHeader(currentRoute = '') {
     const isRoot = currentRoute === '/' || currentRoute === '' || currentRoute === '/market';
     const isMarket = isRoot || currentRoute.startsWith('/market/');
@@ -42,7 +42,7 @@ export function renderHeader(currentRoute = '') {
     return `
         <style>
             /* ══════════════════════════════════════════════════════════════
-               SIMPLIFIED STICKY HEADER & SINGLE-SURFACE NAVIGATION DRAWER
+               SIMPLIFIED STICKY HEADER & PAIRED CAPITAL/HEALTH COLUMNS
                ══════════════════════════════════════════════════════════════ */
             .ch-header {
                 width: 100%;
@@ -131,12 +131,12 @@ export function renderHeader(currentRoute = '') {
                 height: 100%;
             }
 
-            /* Balance Block (Desktop only, Explicit HEALTH 98.4% text label, Tabular Nums) */
+            /* Paired Capital & Health Block (Desktop only) */
             .ch-capital-btn {
                 display: none;
-                flex-direction: column;
-                justify-content: center;
-                align-items: flex-end;
+                flex-direction: row;
+                align-items: center;
+                gap: 16px;
                 cursor: pointer;
                 padding: 6px 14px;
                 border-right: 1px solid var(--rule, #DCD5C6);
@@ -157,8 +157,15 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: -2px;
             }
 
-            /* Micro-label: Explicit text health status without ambiguous dots */
-            .ch-cap-label {
+            .ch-cap-col {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
+            }
+
+            /* Micro-label: Darkened to #333F51 for WCAG AA 4.5:1 Contrast */
+            .ch-cap-lbl {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 8.5px;
                 font-weight: 600;
@@ -168,7 +175,7 @@ export function renderHeader(currentRoute = '') {
                 white-space: nowrap;
             }
 
-            /* Numeric Value: Integer formatting ($2,500 no cents) & Tabular Nums */
+            /* Values: Tabular Nums & Integer formatting */
             .ch-cap-val {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 13.5px;
@@ -176,8 +183,13 @@ export function renderHeader(currentRoute = '') {
                 font-variant-numeric: tabular-nums !important;
                 color: var(--ink, #0E1420);
                 white-space: nowrap;
-                min-width: 5ch;
+                min-width: 4ch;
                 text-align: right;
+            }
+
+            /* Health Value State Color: Green >=80% */
+            .ch-cap-val--health {
+                color: var(--win, #186B4A) !important;
             }
 
             /* Sign In Button */
@@ -201,7 +213,7 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 2px;
             }
 
-            /* Menu Trigger: MENU Text Label + Hamburger Icon morph to X (Unboxed, min 44x44px touch area) */
+            /* Unboxed Menu Trigger + Signed-In Avatar Badge Indicator */
             .ch-account-trigger {
                 display: flex;
                 align-items: center;
@@ -209,7 +221,7 @@ export function renderHeader(currentRoute = '') {
                 background: transparent;
                 border: none; /* UNBOXED: No border or box around trigger */
                 min-height: 44px;
-                padding: 10px 14px;
+                padding: 10px 12px;
                 cursor: pointer;
                 color: var(--ink, #0E1420);
                 border-radius: var(--r, 2px);
@@ -224,6 +236,28 @@ export function renderHeader(currentRoute = '') {
             .ch-account-trigger:focus-visible {
                 outline: 2px solid var(--blood, #7A1C29);
                 outline-offset: 2px;
+            }
+
+            /* Header Signed-In Avatar Badge Indicator */
+            .ch-trigger-avatar-indicator {
+                width: 22px;
+                height: 22px;
+                border-radius: var(--r, 2px);
+                background: var(--ink, #0E1420);
+                color: #FFF8F5;
+                font-family: var(--display, 'Archivo', sans-serif);
+                font-size: 10.5px;
+                font-weight: 800;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+            .ch-trigger-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: none;
             }
 
             /* Visible MENU Text Label */
@@ -697,33 +731,41 @@ export function renderHeader(currentRoute = '') {
                     ` : ''}
                 </div>
 
-                <!-- Right Group: Balance Block (Desktop) + Sign In + Unboxed Menu Trigger -->
+                <!-- Right Group: Paired Columns (AVAILABLE & HEALTH) + Sign In + Unboxed Menu Trigger -->
                 <div class="ch-right">
-                    <!-- Balance & Health Block (Interactive link to /funding, Desktop only) -->
+                    <!-- Paired Capital & Health Columns (Interactive link to /funding, Desktop only) -->
                     <div class="ch-capital-btn" 
                          id="header-capital-area" 
                          onclick="window.router.navigate('/funding')" 
                          tabindex="0"
                          role="button"
-                         aria-label="View Account Capital: $2,500 Available, Health 98.4%"
+                         aria-label="View Account Capital: $2,500 Available, Health 98.4% Healthy"
                          title="Margin Threshold: 80% min health required"
                          style="${isFunding ? 'display: none !important;' : ''}">
-                        <span class="ch-cap-label">
-                            AVAILABLE BALANCE &middot; HEALTH 98.4%
-                        </span>
-                        <span id="header-avail-cap" class="ch-cap-val">$2,500</span>
+                        <div class="ch-cap-col">
+                            <span class="ch-cap-lbl">AVAILABLE</span>
+                            <span id="header-avail-cap" class="ch-cap-val">$2,500</span>
+                        </div>
+                        <div class="ch-cap-col">
+                            <span class="ch-cap-lbl">HEALTH</span>
+                            <span id="header-health-cap" class="ch-cap-val ch-cap-val--health">98.4%</span>
+                        </div>
                     </div>
 
                     <!-- Signed-Out Header Sign-In Button -->
                     <button class="ch-connect-btn" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
 
-                    <!-- Unboxed Menu Trigger (MENU Text Label + Hamburger Icon Morph to X) -->
+                    <!-- Unboxed Menu Trigger with Signed-In Avatar Badge Indicator -->
                     <button id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
                             class="ch-account-trigger" 
                             aria-label="Toggle Navigation & Account Menu"
                             aria-expanded="false"
                             aria-controls="mobile-menu">
+                        <div class="ch-trigger-avatar-indicator" id="header-avatar-trigger" style="display:none;">
+                            <span id="header-avatar-initial">U</span>
+                            <img id="header-avatar-img" class="ch-trigger-img" alt="" />
+                        </div>
                         <span class="ch-menu-label">MENU</span>
                         <div class="ch-hamburger-icon">
                             <span></span>

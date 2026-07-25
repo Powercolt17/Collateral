@@ -1884,6 +1884,7 @@ function updateAuthUI() {
 
     const btnAuth = document.getElementById('btn-auth');
     const capitalArea = document.getElementById('header-capital-area');
+    const headerAvatarTrigger = document.getElementById('header-avatar-trigger');
     const headerAvatarInitial = document.getElementById('header-avatar-initial');
     const headerAvatarImg = document.getElementById('header-avatar-img');
 
@@ -1901,6 +1902,8 @@ function updateAuthUI() {
             }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
         }
 
+        // Header Avatar Indicator Sync
+        if (headerAvatarTrigger) headerAvatarTrigger.style.display = 'flex';
         if (headerAvatarInitial && appState.displayName) {
             headerAvatarInitial.textContent = appState.displayName.charAt(0).toUpperCase();
         }
@@ -1917,6 +1920,7 @@ function updateAuthUI() {
     } else {
         if (btnAuth) btnAuth.style.display = 'inline-block';
         if (capitalArea) capitalArea.style.display = 'none';
+        if (headerAvatarTrigger) headerAvatarTrigger.style.display = 'none';
     }
 
     if (window.app && window.app.updateMobileAuthUI) {

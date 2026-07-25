@@ -46,13 +46,17 @@ export function renderHeader(currentRoute = '') {
                 border-bottom-color: var(--rule-strong, #BDB3A0);
             }
 
+            /* Header Inner: Constrained to 1280px grid matching hero and content */
             .ch-header-inner {
+                max-width: 1280px;
+                margin: 0 auto;
                 width: 100%;
-                padding: 0 28px;
+                padding: 0 24px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 gap: 36px;
+                box-sizing: border-box;
             }
 
             /* Signature Wordmark */
@@ -135,12 +139,12 @@ export function renderHeader(currentRoute = '') {
             .ch-right {
                 display: flex;
                 align-items: center;
-                gap: 18px;
+                gap: 16px;
                 margin-left: auto;
                 height: 100%;
             }
 
-            /* Balance Block (Optically Centered, WCAG AA Compliant, No Cents, Tabular Nums) */
+            /* Balance & Health Block (Explicit HEALTH 98.4% micro-label, No ambiguous dots) */
             .ch-capital-btn {
                 display: flex;
                 flex-direction: column;
@@ -163,7 +167,7 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: -2px;
             }
 
-            /* Micro-label: Darkened to #333F51 for WCAG AA 4.5:1 Contrast */
+            /* Micro-label: Explicit text health status without ambiguous dots (WCAG AA compliant) */
             .ch-cap-label {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 8.5px;
@@ -174,15 +178,7 @@ export function renderHeader(currentRoute = '') {
                 white-space: nowrap;
                 display: flex;
                 align-items: center;
-                gap: 6px;
-            }
-
-            .ch-cap-health-dot {
-                display: inline-block;
-                width: 5px;
-                height: 5px;
-                border-radius: 50%;
-                background: var(--win, #186B4A);
+                gap: 4px;
             }
 
             /* Numeric Value: Integer formatting ($2,500 no cents) & Tabular Nums */
@@ -218,32 +214,34 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 2px;
             }
 
-            /* Unboxed Account Trigger / Avatar Button (No Heavy Box Border) */
+            /* Squared Account Trigger / Avatar Button (Matching 2px square geometry + Chevron Affordance) */
             .ch-account-trigger {
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                gap: 6px;
                 background: transparent;
-                border: none; /* UNBOXED: No border chrome */
-                padding: 4px;
+                border: none;
+                padding: 4px 6px;
                 cursor: pointer;
                 color: var(--ink, #0E1420);
-                border-radius: 50%;
-                transition: opacity 150ms ease;
+                border-radius: var(--r, 2px);
+                transition: background 150ms ease, opacity 150ms ease;
             }
             @media (hover: hover) {
-                .ch-account-trigger:hover { opacity: 0.8; }
+                .ch-account-trigger:hover {
+                    background: rgba(14, 20, 32, 0.04);
+                }
             }
             .ch-account-trigger:focus-visible {
                 outline: 2px solid var(--blood, #7A1C29);
                 outline-offset: 2px;
             }
 
-            /* Trigger Avatar Badge */
+            /* Squared Avatar Badge (2px system crop) */
             .ch-trigger-avatar {
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                border-radius: var(--r, 2px); /* Squared system crop */
                 background: var(--ink, #0E1420);
                 color: #FFF8F5;
                 font-family: var(--display, 'Archivo', sans-serif);
@@ -261,19 +259,12 @@ export function renderHeader(currentRoute = '') {
                 display: none;
             }
 
-            /* Hamburger icon for mobile view */
-            .ch-hamburger-icon {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                width: 18px;
-                height: 12px;
+            .ch-trigger-chevron {
+                color: var(--ink-3, #6E7686);
+                transition: transform 150ms ease, color 150ms ease;
             }
-            .ch-hamburger-icon span {
-                display: block;
-                width: 100%;
-                height: 1.5px;
-                background: var(--ink, #0E1420);
+            .ch-account-trigger:hover .ch-trigger-chevron {
+                color: var(--blood, #7A1C29);
             }
 
             /* ════════ SCRIM OVERLAY ════════ */
@@ -390,7 +381,7 @@ export function renderHeader(currentRoute = '') {
             .pnl-user-badge {
                 width: 40px;
                 height: 40px;
-                border-radius: 50%;
+                border-radius: var(--r, 2px);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -711,20 +702,19 @@ export function renderHeader(currentRoute = '') {
                     ${topNavItems}
                 </nav>
 
-                <!-- Right Controls: Balance Block + Unboxed Account Trigger / Sign In -->
+                <!-- Right Controls: Balance Block + Squared Avatar Trigger / Sign In -->
                 <div class="ch-right">
-                    <!-- Balance & Account Health Block (Interactive link to /funding) -->
+                    <!-- Balance & Explicit Health Block (Interactive link to /funding) -->
                     <div class="ch-capital-btn" 
                          id="header-capital-area" 
                          onclick="window.router.navigate('/funding')" 
                          tabindex="0"
                          role="button"
-                         aria-label="View Account Capital"
+                         aria-label="View Account Capital: $2,500 Available, Health 98.4%"
                          title="Margin Threshold: 80% min health required"
                          style="${isFunding ? 'display: none !important;' : ''}">
                         <span class="ch-cap-label">
-                            AVAILABLE BALANCE
-                            <span class="ch-cap-health-dot"></span>
+                            AVAILABLE BALANCE &middot; HEALTH 98.4%
                         </span>
                         <span id="header-avail-cap" class="ch-cap-val">$2,500</span>
                     </div>
@@ -732,7 +722,7 @@ export function renderHeader(currentRoute = '') {
                     <!-- Signed-Out Header Sign-In Button -->
                     <button class="ch-connect-btn" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN IN</button>
 
-                    <!-- Unboxed Account Trigger Button (Avatar Icon on Desktop / Hamburger on Mobile) -->
+                    <!-- Squared Account Trigger / Avatar Button (System 2px Square Crop + Chevron Affordance) -->
                     <button id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
                             class="ch-account-trigger" 
@@ -743,6 +733,7 @@ export function renderHeader(currentRoute = '') {
                             <span id="header-avatar-initial">U</span>
                             <img id="header-avatar-img" class="ch-trigger-img" alt="" />
                         </div>
+                        <svg class="ch-trigger-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
                 </div>
             </div>

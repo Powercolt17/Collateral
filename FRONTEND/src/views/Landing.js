@@ -713,12 +713,14 @@ export function renderLanding() {
                             the fastest honest answer anyone has ever given you about your own goal.</p>
                         <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
                         <div class="sign-lines">
-                            <div class="sign-line">
+                            <div class="sign-cell">
                                 <div class="sign-script" aria-hidden="true">&nbsp;</div>
+                                <div class="sign-rule"></div>
                                 <span class="mono">Counterparty signature</span>
                             </div>
-                            <div class="sign-line">
+                            <div class="sign-cell">
                                 <div class="sign-script">Collateral</div>
+                                <div class="sign-rule"></div>
                                 <span class="mono">Custodian, countersigned</span>
                             </div>
                         </div>

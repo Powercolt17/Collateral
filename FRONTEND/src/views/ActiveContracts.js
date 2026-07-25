@@ -1325,8 +1325,8 @@ export function initActiveContracts() {
                 <!-- Stake & Pool Info with $ prefix -->
                 <div class="rv-stake">
                     <div>
-                        <p class="rv-per">${r.stake_per_side.toLocaleString()} <span>/ side</span></p>
-                        <p class="rv-pool">${r.total_pool.toLocaleString()} TOTAL POOL</p>
+                        <p class="rv-per">$\${r.stake_per_side.toLocaleString()} <span>/ side</span></p>
+                        <p class="rv-pool">$\${r.total_pool.toLocaleString()} TOTAL POOL</p>
                     </div>
                     <span class="rv-rail">${r.rail}</span>
                 </div>

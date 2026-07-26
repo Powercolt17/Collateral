@@ -2158,7 +2158,7 @@ footer .logo-wordmark-light,
 
 .custodian-seal-stamp {
   position: absolute;
-  right: 12px;
+  left: 116px;
   bottom: -11px;
   width: 32px;
   height: 32px;
@@ -2196,7 +2196,7 @@ footer .logo-wordmark-light,
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--blood, #7A1C29);
+  color: var(--ink-3, #6E7686);
 }
 
 .sign .disclosure {

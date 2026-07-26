@@ -105,6 +105,14 @@ export default function SigningSection({
       bottom: 292,
       width: stampSize,
       height: stampSize,
+      minHeight: stampSize,
+      maxHeight: "none",
+      flex: "none",
+      aspectRatio: "auto",
+      backgroundImage: "url(" + sealSrc + ")",
+      backgroundSize: "contain",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
       transform: "translateX(" + stampX + "px) rotate(-9deg)",
       pointerEvents: "none",
       userSelect: "none",
@@ -209,12 +217,11 @@ export default function SigningSection({
 
   return (
     <section style={s.section} aria-labelledby="cs-heading">
-      <img
+      <div
         style={s.stamp}
-        src={sealSrc}
-        alt=""
+        role="img"
+        aria-label="Wax seal stamp"
         aria-hidden="true"
-        draggable="false"
       />
 
       <div style={s.inner}>

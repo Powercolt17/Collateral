@@ -684,38 +684,38 @@ export function renderLanding() {
             </section>
 
                         <!-- ═════ 8 · SIGNATURE ═════ -->
-            <section class="cs" id="manifesto" aria-labelledby="cs-heading">
-                <img class="cs-stamp" src="/assets/images/official-collateral-seal.png" onerror="this.onerror=null; this.src='/assets/images/circular-wax-seal.png';" alt="" aria-hidden="true" draggable="false" />
-                <div class="cs-inner">
-                    <h2 id="cs-heading" class="cs-heading">
+            <section class="cs" id="manifesto" aria-labelledby="cs-heading" style="position:relative; background:#FDFBF7; padding:124px 24px 132px; box-sizing:border-box; width:100%; overflow:hidden; isolation:isolate;">
+                <img class="cs-stamp" src="/assets/images/official-collateral-seal.png" onerror="this.onerror=null; this.src='/assets/images/circular-wax-seal.png';" alt="" aria-hidden="true" draggable="false" style="position:absolute; z-index:1; left:50%; bottom:178px; width:148px; height:148px; transform:translateX(352px) rotate(-9deg); pointer-events:none; user-select:none;" />
+                <div class="cs-inner" style="position:relative; z-index:2; max-width:660px; margin:0 auto;">
+                    <h2 id="cs-heading" class="cs-heading" style="margin:0; text-align:center; color:#1A1A18; font-size:clamp(34px, 4.6vw, 50px); font-weight:700; line-height:1.14; letter-spacing:-0.02em;">
                         Sign it, and<br />the week reorders itself
                     </h2>
 
-                    <p class="cs-body">
+                    <p class="cs-body" style="max-width:480px; margin:22px auto 0; text-align:center; color:#55534E; font-size:17px; line-height:1.62; text-wrap:balance;">
                         You will know within about four days whether you meant it. That is the fastest honest answer anyone has ever given you about your own goal.
                     </p>
 
-                    <button type="button" class="cs-cta" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">
+                    <button type="button" class="cs-cta" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;" style="display:block; margin:38px auto 0; padding:17px 34px; border:0; border-radius:0; background:#7A1F2B; color:#FFFFFF; font:inherit; font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; box-shadow:none;">
                         WRITE A CONTRACT
                     </button>
 
-                    <div class="cs-signatures" id="cs-sig-block">
-                        <div class="cs-col">
-                            <div class="cs-rule"></div>
-                            <div class="cs-label">Counterparty signature</div>
+                    <div class="cs-signatures" id="cs-sig-block" style="display:grid; grid-template-columns:1fr 1fr; column-gap:48px; margin-top:92px;">
+                        <div class="cs-col" style="min-width:0;">
+                            <div class="cs-rule" style="display:flex; align-items:flex-end; min-height:46px; border-bottom:1px solid #D5CFC3;"></div>
+                            <div class="cs-label" style="margin-top:12px; color:#6B6862; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:11px; letter-spacing:0.11em; text-transform:uppercase; line-height:1.5;">Counterparty signature</div>
                         </div>
 
-                        <div class="cs-col">
-                            <div class="cs-rule">
-                                <span class="cs-mark" id="cs-mark-el">Collateral</span>
+                        <div class="cs-col" style="min-width:0;">
+                            <div class="cs-rule" style="display:flex; align-items:flex-end; min-height:46px; border-bottom:1px solid #D5CFC3;">
+                                <span class="cs-mark" id="cs-mark-el" style="color:#1A1A18; font-size:27px; font-weight:700; letter-spacing:-0.01em; line-height:1.05; padding-bottom:4px; white-space:nowrap;">Collateral</span>
                             </div>
-                            <div class="cs-label cs-label--signed" id="cs-label-el">
+                            <div class="cs-label cs-label--signed" id="cs-label-el" style="margin-top:12px; color:#6B6862; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:11px; letter-spacing:0.11em; text-transform:uppercase; line-height:1.5;">
                                 Custodian, countersigned &middot; 25 JUL 2026
                             </div>
                         </div>
                     </div>
 
-                    <p class="cs-disclaimer">
+                    <p class="cs-disclaimer" style="max-width:660px; margin:54px auto 0; color:#55534E; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:12px; line-height:1.75; letter-spacing:0.01em;">
                         Deposits are held by a third-party custodian via Stripe Connect and are not held by Collateral. Outcomes are determined solely by read-only telemetry from the connected platform API named in the contract. Matching yield is funded from forfeited deposits and sponsor contributions, is not interest, and is not guaranteed. Collateral is not a broker, dealer, exchange, investment adviser, or deposit institution. Forfeited capital is not recoverable. The settlement feed shows recently settled contracts and may be delayed. Figures shown are book totals as of 25 July 2026.
                     </p>
                 </div>

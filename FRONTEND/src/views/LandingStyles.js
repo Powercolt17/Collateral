@@ -2086,6 +2086,37 @@ footer .logo-wordmark-light,
 .duel-cta span { transition: transform .3s var(--ease); }
 
 /* ═══════════ REFACTORED SIGNATURE SECTION ═══════════ */
+
+/* ═══════════ BLIND-EMBOSSED DEEP PAPER IMPRESSION ═══════════ */
+.blind-emboss-seal {
+  position: absolute;
+  top: 60%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  max-width: 90%;
+  height: auto;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  filter: none !important;
+  mix-blend-mode: multiply;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .blind-emboss-seal {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .blind-emboss-seal {
+    display: none !important;
+  }
+}
+
 .sign {
   position: relative;
   padding: clamp(48px, 6vw, 76px) clamp(24px, 4vw, 56px);

@@ -688,6 +688,12 @@ export function renderLanding() {
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
                     <div class="sign plate ticks r-plate">
+                        <!-- Blind-Embossed Paper Seal (Decorative Depth Element) -->
+                        <img src="/assets/images/blind-emboss-seal.png" 
+                             onerror="this.onerror=null; this.src='/assets/blind-emboss-seal.png';" 
+                             alt="" 
+                             aria-hidden="true" 
+                             class="blind-emboss-seal" />
                         <!-- Headline: Forced break after "and" -->
                         <h2 class="sign-title">Sign it, and<br>the week reorders itself</h2>
                         

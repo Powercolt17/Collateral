@@ -2088,40 +2088,47 @@ footer .logo-wordmark-light,
 /* ═══════════ SIGNATURE ═══════════ */
 .sign {
   position: relative;
-  padding: clamp(36px, 5vw, 68px);
+  padding: clamp(48px, 6vw, 80px) clamp(24px, 4vw, 56px);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.sign svg {
-  display: block;
-  margin: 0 auto 24px;
+.sign-seal-img {
+  display: block !important;
+  width: 96px !important;
+  height: 96px !important;
+  margin: 0 auto 28px auto !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 8px 20px rgba(122, 28, 41, 0.22)) !important;
+  flex-shrink: 0 !important;
 }
 
 .sign-title {
-  margin: 0 auto 14px;
-  font-family: var(--display);
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -.036em;
-  text-align: center;
-  text-wrap: balance;
+  margin: 0 auto 20px auto !important;
+  font-family: var(--display) !important;
+  font-size: clamp(32px, 4.5vw, 44px) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.03em !important;
+  text-align: center !important;
+  text-wrap: balance !important;
+  max-width: 22ch !important;
 }
 
 .sign-copy {
-  margin: 0 auto 34px;
-  max-width: 45ch;
-  color: var(--ink-2);
-  font-size: 17px;
-  text-align: center;
+  margin: 0 auto 36px auto !important;
+  max-width: 520px !important;
+  color: var(--ink-2, #4A5464) !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  text-align: center !important;
 }
 
 .sign .btn {
-  display: inline-flex;
-  margin: 0 auto;
+  display: inline-flex !important;
+  margin: 0 auto 48px auto !important;
 }
 
 .sign-lines {
@@ -2521,14 +2528,7 @@ html.js-motion-active .reveal.is-in .r-rule {
         animation: none !important;
     }
 }
-.sign-seal-img {
-  display: block !important;
-  width: 96px !important;
-  height: 96px !important;
-  margin: 0 auto 24px auto !important;
-  object-fit: contain !important;
-  filter: drop-shadow(0 6px 16px rgba(122, 28, 41, 0.22)) !important;
-}
+
 
 `;
 

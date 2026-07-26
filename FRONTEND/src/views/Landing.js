@@ -688,35 +688,43 @@ export function renderLanding() {
                 <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
                     <div class="sign plate ticks r-plate">
-                        <img src="/assets/images/official-collateral-seal.png" 
-                             onerror="this.onerror=null; this.src='/assets/images/circular-wax-seal.png';" 
-                             alt="Collateral Official Wax Seal Stamp" 
-                             class="sign-seal-img" 
-                             width="96" 
-                             height="96" />
-                        <h2 class="sign-title">Sign it, and the week reorders itself</h2>
-                        <p class="sign-copy">You will know within about four days whether you meant it. That is
-                            the fastest honest answer anyone has ever given you about your own goal.</p>
-                        <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
+                        <!-- Headline: Forced break after "and" -->
+                        <h2 class="sign-title">Sign it, and<br>the week reorders itself</h2>
+                        
+                        <!-- Body Copy: Balanced lines without single-word orphan -->
+                        <p class="sign-copy">You will know within about four days whether you meant it. That is the fastest honest answer anyone has ever given you about your own goal.</p>
+                        
+                        <!-- Button: Flat button, no drop shadow -->
+                        <button class="btn btn-fill btn-flat" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">WRITE A CONTRACT</button>
+                        
+                        <!-- Signature Block -->
                         <div class="sign-lines">
+                            <!-- Left Column: Counterparty (Empty above rule) -->
                             <div class="sign-cell">
-                                <div class="sign-script" aria-hidden="true">&nbsp;</div>
+                                <div class="sign-script-area">&nbsp;</div>
                                 <div class="sign-rule"></div>
-                                <span class="mono">Counterparty signature</span>
+                                <span class="mono sign-sub-label">COUNTERPARTY SIGNATURE</span>
                             </div>
-                            <div class="sign-cell">
-                                <div class="sign-script">Collateral</div>
+                            
+                            <!-- Right Column: Custodian (Signed + Rotated Wax Seal overlapping rule by ~1/3) -->
+                            <div class="sign-cell sign-cell--custodian">
+                                <div class="sign-script-area">
+                                    <span class="sign-script">Collateral</span>
+                                    <img src="/assets/images/circular-wax-seal.png" 
+                                         onerror="this.onerror=null; this.src='/assets/images/official-collateral-seal.png';" 
+                                         alt="Collateral Custodian Seal" 
+                                         class="custodian-seal-stamp" />
+                                </div>
                                 <div class="sign-rule"></div>
-                                <span class="mono">Custodian, countersigned</span>
+                                <div class="sign-custodian-meta">
+                                    <span class="mono sign-sub-label">CUSTODIAN, COUNTERSIGNED</span>
+                                    <span class="mono sign-date-stamp">&middot; 25 JUL 2026</span>
+                                </div>
                             </div>
                         </div>
-                        <p class="disclosure">Deposits are held by a third-party custodian via Stripe Connect and
-                            are not held by Collateral. Outcomes are determined solely by read-only telemetry from
-                            the connected platform API named in the contract. Matching yield is funded from
-                            forfeited deposits and sponsor contributions, is not interest, and is not guaranteed.
-                            Collateral is not a broker, dealer, exchange, investment adviser, or deposit
-                            institution. Forfeited capital is not recoverable. The settlement feed shows recently
-                            settled contracts and may be delayed. Figures shown are book totals as of 24 July 2026.</p>
+                        
+                        <!-- Disclaimer: 48px clearance, 640px max-width, aligned left, 12px, 1.75 line-height, #333F51 contrast -->
+                        <p class="disclosure">Deposits are held by a third-party custodian via Stripe Connect and are not held by Collateral. Outcomes are determined solely by read-only telemetry from the connected platform API named in the contract. Matching yield is funded from forfeited deposits and sponsor contributions, is not interest, and is not guaranteed. Collateral is not a broker, dealer, exchange, investment adviser, or deposit institution. Forfeited capital is not recoverable. The settlement feed shows recently settled contracts and may be delayed. Figures shown are book totals as of 24 July 2026.</p>
                     </div>
                 </div>
             </section>
@@ -1033,15 +1041,22 @@ export function initLanding() {
         runFlow();
     }
 
-    /* ── Seal Strike Observer ── */
-    var seal = document.querySelector('.sign-seal-img') || document.querySelector('.sign svg');
-    if (seal && 'IntersectionObserver' in window && !reduce) {
-        var sealed = false;
-        new IntersectionObserver(function(en){
-            en.forEach(function(e){
-                if (e.isIntersecting && !sealed) { sealed = true; seal.classList.add('strike'); }
+    /* ── Custodian Seal Observer ── */
+    var custodianSeal = document.querySelector('.custodian-seal-stamp');
+    if (custodianSeal && 'IntersectionObserver' in window && !reduce) {
+        custodianSeal.classList.add('seal-pressing');
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    setTimeout(function() {
+                        custodianSeal.classList.remove('seal-pressing');
+                        custodianSeal.classList.add('seal-pressed');
+                    }, 50);
+                    observer.unobserve(custodianSeal);
+                }
             });
-        }, {threshold:0.6}).observe(seal);
+        }, { threshold: 0.4 });
+        observer.observe(custodianSeal);
     }
 }
 

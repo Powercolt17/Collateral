@@ -2085,24 +2085,14 @@ footer .logo-wordmark-light,
 
 .duel-cta span { transition: transform .3s var(--ease); }
 
-/* ═══════════ SIGNATURE ═══════════ */
+/* ═══════════ REFACTORED SIGNATURE SECTION ═══════════ */
 .sign {
   position: relative;
-  padding: clamp(48px, 6vw, 80px) clamp(24px, 4vw, 56px);
+  padding: clamp(48px, 6vw, 76px) clamp(24px, 4vw, 56px);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.sign-seal-img {
-  display: block !important;
-  width: 96px !important;
-  height: 96px !important;
-  margin: 0 auto 28px auto !important;
-  object-fit: contain !important;
-  filter: drop-shadow(0 8px 20px rgba(122, 28, 41, 0.22)) !important;
-  flex-shrink: 0 !important;
 }
 
 .sign-title {
@@ -2113,21 +2103,23 @@ footer .logo-wordmark-light,
   line-height: 1.25 !important;
   letter-spacing: -0.03em !important;
   text-align: center !important;
-  text-wrap: balance !important;
   max-width: 22ch !important;
 }
 
 .sign-copy {
   margin: 0 auto 36px auto !important;
-  max-width: 520px !important;
+  max-width: 460px !important;
   color: var(--ink-2, #4A5464) !important;
-  font-size: 17px !important;
+  font-size: 16px !important;
   line-height: 1.6 !important;
   text-align: center !important;
+  text-wrap: balance !important;
 }
 
-.sign .btn {
-  display: inline-flex !important;
+.sign .btn-fill,
+.sign .btn-flat {
+  box-shadow: none !important;
+  filter: none !important;
   margin: 0 auto 48px auto !important;
 }
 
@@ -2137,56 +2129,105 @@ footer .logo-wordmark-light,
   gap: 40px;
   width: 100%;
   max-width: 640px;
-  margin: 48px auto 0;
+  margin: 0 auto;
   text-align: left;
 }
 
 .sign-cell {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
 
-.sign-script {
-  height: 36px;
+.sign-script-area {
+  height: 48px;
   display: flex;
   align-items: flex-end;
-  font-family: var(--display);
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: .02em;
-  color: var(--ink);
+  position: relative;
+}
+
+.sign-script {
+  font-family: var(--wordmark, var(--display, 'Archivo', sans-serif));
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ink, #0E1420);
+  line-height: 1;
   padding-bottom: 4px;
+}
+
+.custodian-seal-stamp {
+  position: absolute;
+  right: 12px;
+  bottom: -11px;
+  width: 32px;
+  height: 32px;
+  transform: rotate(4deg);
+  filter: none !important;
+  background: transparent !important;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), opacity 400ms ease;
 }
 
 .sign-rule {
   width: 100%;
   height: 1px;
-  background: var(--ink);
-  margin-bottom: 10px;
+  background: var(--rule, #DCD5C6);
+  margin: 0 0 8px 0;
 }
 
-.sign-cell .mono {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 500;
-  letter-spacing: .16em;
+.sign-custodian-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.sign-sub-label {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-3);
-  line-height: 1;
+  color: var(--ink-3, #6E7686);
+}
+.sign-date-stamp {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--blood, #7A1C29);
 }
 
-.disclosure {
+.sign .disclosure {
   width: 100%;
   max-width: 640px;
-  margin: 44px auto 0;
-  font-family: var(--mono);
-  font-size: 10px;
-  line-height: 1.85;
-  color: var(--ink-4);
+  margin: 48px auto 0 auto !important;
   text-align: left;
-  letter-spacing: .02em;
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 12px !important;
+  line-height: 1.75 !important;
+  color: #333F51 !important;
+  opacity: 1 !important;
 }
 
+.custodian-seal-stamp.seal-pressing {
+  opacity: 0;
+  transform: scale(1.06) rotate(4deg);
+}
+.custodian-seal-stamp.seal-pressed {
+  opacity: 1;
+  transform: scale(1) rotate(4deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custodian-seal-stamp, .custodian-seal-stamp.seal-pressing, .custodian-seal-stamp.seal-pressed {
+    opacity: 1 !important;
+    transform: rotate(4deg) !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
 /* ═══════════ MARGINALIA ═══════════ */
 .marg { display: flex; gap: 16px; align-items: flex-start; max-width: 660px; margin: 0; }
 .marg-mark {

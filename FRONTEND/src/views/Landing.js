@@ -65,86 +65,60 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 2 · MODES ═════ -->
-            <section class="section alt reveal" id="modes">
+            <section class="section alt reveal" id="modes-section">
                 <span class="idx-mark" aria-hidden="true">02</span>
                 <div class="shell">
                     <p class="eyebrow r-item" style="--i:0">Contract execution modes</p>
                     <h2 class="title r-item" style="--i:1">Two ways to make quitting expensive</h2>
-                    <p class="lede r-item" style="--i:2">Stake against your own record, or against somebody who wants it as badly as
-                        you claim to. Both settle the same way, and neither asks your opinion.</p>
+                    <p class="lede r-item" style="--i:2">Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.</p>
 
-                    <div class="modes">
-                        <div class="plates plate ticks r-plate" style="--i:3">
-                            <!-- Cream Panel: Solo Contract -->
-                            <article class="leaf leaf--cream r-plate" style="--i:3">
-                                <div class="leaf-art">
-                                    <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
-                                </div>
-                                <div class="leaf-body">
-                                    <div class="leaf-head-row">
-                                        <span class="mono leaf-mode-tag">MODE 01 &middot; SOLO</span>
-                                        <span class="mono leaf-form-ref">FORM S&ndash;01</span>
-                                    </div>
-                                    <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
-                                    <p class="mono leaf-spec-line">ONE OPERATOR &middot; ONE ORACLE &middot; NO EXCUSES</p>
-                                    <ul class="leaf-list">
-                                        <li>You set the target. You don't get to move it</li>
-                                        <li>Hit it and every dollar comes back, plus yield</li>
-                                        <li>Miss it and the money goes to someone who didn't</li>
-                                    </ul>
-                                    <a class="link leaf-cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
-                                </div>
-                            </article>
+                    <div class="modes" id="modes" aria-label="Contract modes">
+                        <button class="panel panel--solo" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen">
+                            <span class="panel-img" aria-hidden="true">
+                                <img src="/assets/images/solo-seal.png" alt="" class="leaf-img" loading="lazy" style="max-height:80%; object-fit:contain;" />
+                            </span>
+                            <span class="panel-body">
+                                <span class="meta"><span>MODE 01 &middot; SOLO</span><span>FORM S-01</span></span>
+                                <h3>The only opponent is the version of you who quits</h3>
+                                <span class="spec">ONE OPERATOR &middot; ONE ORACLE &middot; NO EXCUSES</span>
+                                <ul class="points">
+                                    <li>You set the target. You don't get to move it</li>
+                                    <li>Hit it and every dollar comes back, plus yield</li>
+                                    <li>Miss it and the money goes to someone who didn't</li>
+                                </ul>
+                                <a class="cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
+                            </span>
+                        </button>
 
-                            <div class="vrule" aria-hidden="true"></div>
+                        <button class="panel panel--rivalry" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen">
+                            <span class="panel-img" aria-hidden="true">
+                                <img src="/assets/images/rivalry-seal.png" alt="" class="leaf-img" loading="lazy" style="max-height:80%; object-fit:contain;" />
+                            </span>
+                            <span class="panel-body">
+                                <span class="meta"><span>MODE 02 &middot; RIVALRY</span><span>FORM R-01</span></span>
+                                <h3>Someone else is counting on you to fail</h3>
+                                <span class="spec">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</span>
+                                <ul class="points">
+                                    <li>Equal capital, same metric, same clock</li>
+                                    <li>One oracle decides. Neither of you gets a vote</li>
+                                    <li>The winner takes the escrow. There is no draw</li>
+                                </ul>
+                                <a class="cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
+                            </span>
+                        </button>
 
-                            <!-- Maroon Panel: Rivalry Contract -->
-                            <article class="leaf leaf--dark r-plate" style="--i:4">
-                                <div class="leaf-art">
-                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
-                                </div>
-                                <div class="leaf-body">
-                                    <div class="leaf-head-row">
-                                        <span class="mono leaf-mode-tag">MODE 02 &middot; RIVALRY</span>
-                                        <span class="mono leaf-form-ref">FORM R&ndash;01</span>
-                                    </div>
-                                    <h3 class="leaf-name">Someone else is counting on you to fail</h3>
-                                    <p class="mono leaf-spec-line">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
-                                    <ul class="leaf-list">
-                                        <li>Equal capital, same metric, same clock</li>
-                                        <li>One oracle decides. Neither of you gets a vote</li>
-                                        <li>The winner takes the escrow. There is no draw</li>
-                                    </ul>
-                                    <a class="link leaf-cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
-                                </div>
-                            </article>
+                        <div class="specimen" id="specimen" role="tabpanel" aria-labelledby="tab-solo">
+                            <div class="spec-head">
+                                <span>SPECIMEN</span><span class="spec-fade" data-f="kind">SOLO CONTRACT</span>
+                            </div>
+                            <div class="versus spec-fade" data-f="versus">
+                                <b data-f="a">YOU</b><i>V S</i><b data-f="b">YOU</b>
+                                <div class="amount" data-f="amount">$1,000</div>
+                                <div class="under" data-f="under">LOCKED BY YOU, AGAINST YOU</div>
+                            </div>
+                            <dl class="rows spec-fade" data-f="rows"></dl>
+                            <div class="foot">SPECIMEN &middot; NOT A LIVE CONTRACT</div>
                         </div>
-
-                        <!-- Specimen Panel -->
-                        <aside class="demo plate-quiet ticks r-plate" style="--i:5">
-                            <div class="demo-top">
-                                <span class="mono">SPECIMEN</span>
-                                <span class="mono">SOLO CONTRACT</span>
-                            </div>
-                            <div class="demo-center-block">
-                                <p class="demo-you">You</p>
-                                <p class="demo-vs">VS</p>
-                                <p class="demo-you">You</p>
-                                <p class="demo-amt">$1,000</p>
-                                <p class="mono demo-sub">Locked by you, against you</p>
-                            </div>
-
-                            <dl class="demo-ledger">
-                                <div class="t-row"><dt>DEPOSIT</dt><span class="dots"></span><dd>$1,000</dd></div>
-                                <div class="t-row"><dt>WINDOW</dt><span class="dots"></span><dd>30 days</dd></div>
-                                <div class="t-row"><dt>ON SUCCESS</dt><span class="dots"></span><dd class="win">$2,500</dd></div>
-                                <div class="t-row"><dt>ON MISS</dt><span class="dots"></span><dd class="blood">&minus;$1,000</dd></div>
-                            </dl>
-
-                            <div class="demo-foot-bar">
-                                <span class="mono">SPECIMEN &middot; NOT A LIVE CONTRACT</span>
-                            </div>
-                        </aside>
                     </div>
                 </div>
             </section>
@@ -1058,5 +1032,113 @@ export function initLanding() {
         }
     }
 }
+
+
+    /* ── Modes Section Switcher ── */
+    (function initModesSection() {
+        var MODES = {
+            solo: {
+                kind: "SOLO CONTRACT", a: "YOU", b: "YOU", amount: "$1,000",
+                under: "LOCKED BY YOU, AGAINST YOU",
+                rows: [["DEPOSIT","$1,000",""],["WINDOW","30 days",""],
+                       ["ON SUCCESS","$2,500","pos"],["ON MISS","\u2212$1,000","neg"]]
+            },
+            rivalry: {
+                kind: "RIVALRY CONTRACT", a: "YOU", b: "THEM", amount: "$1,000",
+                under: "MATCHED BY COUNTERPARTY",
+                rows: [["DEPOSIT","$1,000",""],["WINDOW","30 days",""],
+                       ["ON WIN","$2,000","pos"],["ON LOSS","\u2212$1,000","neg"]]
+            }
+        };
+        var ORDER = ["solo","rivalry"], INTERVAL = 7000, FADE = 320;
+
+        var root = document.getElementById("modes"),
+            card = document.getElementById("specimen"),
+            tabs = { solo: document.getElementById("tab-solo"),
+                     rivalry: document.getElementById("tab-rivalry") };
+
+        if (!root || !card || !tabs.solo || !tabs.rivalry) return;
+
+        var rowsEl = card.querySelector('[data-f="rows"]');
+        if (!rowsEl) return;
+
+        var current = "solo", timer = null, stopped = false, paused = false;
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function paint(key) {
+            var m = MODES[key];
+            if (!m) return;
+            var kindEl = card.querySelector('[data-f="kind"]');
+            var aEl = card.querySelector('[data-f="a"]');
+            var bEl = card.querySelector('[data-f="b"]');
+            var amtEl = card.querySelector('[data-f="amount"]');
+            var underEl = card.querySelector('[data-f="under"]');
+
+            if (kindEl) kindEl.textContent = m.kind;
+            if (aEl) aEl.textContent = m.a;
+            if (bEl) bEl.textContent = m.b;
+            if (amtEl) amtEl.textContent = m.amount;
+            if (underEl) underEl.textContent = m.under;
+
+            rowsEl.innerHTML = m.rows.map(function (r) {
+                return '<div class="row"><dt>' + r[0] + '</dt><span class="dots"></span>' +
+                       '<dd class="' + r[2] + '">' + r[1] + '</dd></div>';
+            }).join("");
+            ORDER.forEach(function (k) {
+                if (tabs[k]) tabs[k].setAttribute("aria-selected", String(k === key));
+            });
+            card.setAttribute("aria-labelledby", "tab-" + key);
+            current = key;
+        }
+
+        function show(key) {
+            if (key === current) return;
+            if (reduce) { paint(key); return; }
+            card.classList.add("is-swapping");
+            setTimeout(function () {
+                paint(key);
+                card.classList.remove("is-swapping");
+            }, FADE);
+        }
+
+        function tick() {
+            if (paused || stopped || document.hidden) return;
+            show(current === "solo" ? "rivalry" : "solo");
+        }
+        function start() { if (!stopped && !reduce && !timer) timer = setInterval(tick, INTERVAL); }
+        function halt()  { clearInterval(timer); timer = null; }
+
+        ORDER.forEach(function (k) {
+            if (!tabs[k]) return;
+            tabs[k].addEventListener("click", function (e) {
+                if (e.target.closest("a")) return;
+                stopped = true; halt(); show(k);
+            });
+            tabs[k].addEventListener("keydown", function (e) {
+                if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+                e.preventDefault();
+                var next = k === "solo" ? "rivalry" : "solo";
+                stopped = true; halt(); show(next); tabs[next].focus();
+            });
+        });
+
+        root.addEventListener("mouseenter", function () { paused = true; });
+        root.addEventListener("mouseleave", function () { paused = false; });
+        root.addEventListener("focusin",   function () { paused = true; });
+        root.addEventListener("focusout",  function () {
+            if (!root.contains(document.activeElement)) paused = false;
+        });
+        document.addEventListener("visibilitychange", function () {
+            document.hidden ? halt() : start();
+        });
+
+        // lock the card height to the taller state so switching never reflows
+        paint("rivalry");
+        var h1 = card.offsetHeight;
+        paint("solo");
+        card.style.setProperty("--spec-h", Math.max(h1, card.offsetHeight) + "px");
+
+        start();
+    })();
 
 export const initLandingEvents = initLanding;

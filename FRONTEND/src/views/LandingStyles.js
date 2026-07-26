@@ -2158,16 +2158,16 @@ footer .logo-wordmark-light,
 
 .custodian-seal-stamp {
   position: absolute;
-  left: 116px;
-  bottom: -11px;
-  width: 32px;
-  height: 32px;
+  left: 156px; /* 28px clearance after final 'l' of Collateral */
+  bottom: -15px; /* Overlaps continuous rule by ~1/3 of seal height */
+  width: 48px; /* 1.5x larger: crisp legible C mark and wax texture */
+  height: 48px;
   transform: rotate(4deg);
   filter: none !important;
   background: transparent !important;
   object-fit: contain;
   pointer-events: none;
-  z-index: 2;
+  z-index: 10;
   transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), opacity 400ms ease;
 }
 

@@ -191,18 +191,16 @@ export function renderLanding() {
                             <p class="lede r-item" style="--i:2">Collateral does not score you. It reads the same numbers your platform
                                 already reports, on a fixed schedule, and settles on whatever it finds there.</p>
                         </div>
+                        <aside class="marg-note-top r-item" style="--i:3">
+                            <span class="mono mono-b" style="color:var(--blood)">&sect; 3.4</span>
+                            <p class="mono">Read-only scopes only. Collateral cannot post, message, refund, or change a single
+                                setting on any account you connect, and the token can be revoked from your side at any
+                                time without affecting an open contract's settlement.</p>
+                        </aside>
                     </div>
 
                     <div class="oracles-table-wrap">
-                        <div class="oracles-top-meta">
-                            <p class="reg-caption mono r-item" style="--i:3">Register of accepted oracles &middot; read-only scopes</p>
-                            <aside class="marg-note-top r-item" style="--i:3">
-                                <span class="mono mono-b" style="color:var(--blood)">&sect; 3.4</span>
-                                <p class="mono">Read-only scopes only. Collateral cannot post, message, refund, or change a single
-                                    setting on any account you connect, and the token can be revoked from your side at any
-                                    time without affecting an open contract's settlement.</p>
-                            </aside>
-                        </div>
+                        <p class="reg-caption mono r-item" style="--i:3">Register of accepted oracles &middot; read-only scopes</p>
 
                         <table class="reg plate r-plate" style="--i:4">
                             <caption>Accepted verification oracles and reading parameters</caption>

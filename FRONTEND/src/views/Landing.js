@@ -682,42 +682,19 @@ export function renderLanding() {
                 </div>
             </section>
 
-                        <!-- ═════ 8 · SIGNATURE ═════ -->
-            <section class="cs" id="manifesto" aria-labelledby="cs-heading" style="position:relative; background:#FDFBF7; padding:124px 24px 132px; box-sizing:border-box; width:100%; overflow:hidden; isolation:isolate;">
-                                <div class="cs-inner" style="position:relative; z-index:2; max-width:660px; margin:0 auto;">
-                    <h2 id="cs-heading" class="cs-heading" style="margin:0; text-align:center; color:#1A1A18; font-size:clamp(34px, 4.6vw, 50px); font-weight:700; line-height:1.14; letter-spacing:-0.02em;">
-                        Sign it, and<br />the week reorders itself
-                    </h2>
-
-                    <p class="cs-body" style="max-width:480px; margin:22px auto 0; text-align:center; color:#55534E; font-size:17px; line-height:1.62; text-wrap:balance;">
-                        You will know within about four days whether you meant it. That is the fastest honest answer anyone has ever given you about your own goal.
-                    </p>
-
-                    <button type="button" class="cs-cta" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;" style="display:block; margin:38px auto 0; padding:17px 34px; border:0; border-radius:0; background:#7A1F2B; color:#FFFFFF; font:inherit; font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; box-shadow:none;">
-                        WRITE A CONTRACT
-                    </button>
-
-                    <div class="cs-signatures" id="cs-sig-block" style="display:grid; grid-template-columns:1fr 1fr; column-gap:48px; margin-top:92px;">
-                        <div class="cs-col" style="min-width:0;">
-                            <div class="cs-rule" style="display:flex; align-items:flex-end; min-height:46px; border-bottom:1px solid #D5CFC3;"></div>
-                            <div class="cs-label" style="margin-top:12px; color:#6B6862; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:11px; letter-spacing:0.11em; text-transform:uppercase; line-height:1.5;">Counterparty signature</div>
-                        </div>
-
-                        <div class="cs-col" style="min-width:0;">
-                            <div class="cs-rule" style="display:flex; align-items:flex-end; min-height:46px; border-bottom:1px solid #D5CFC3;">
-                                <span class="cs-mark" id="cs-mark-el" style="color:#1A1A18; font-size:27px; font-weight:700; letter-spacing:-0.01em; line-height:1.05; padding-bottom:4px; white-space:nowrap;">Collateral</span>
-                            </div>
-                            <div class="cs-label cs-label--signed" id="cs-label-el" style="margin-top:12px; color:#6B6862; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:11px; letter-spacing:0.11em; text-transform:uppercase; line-height:1.5;">
-                                Custodian, countersigned &middot; 25 JUL 2026
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="cs-disclaimer" style="max-width:660px; margin:54px auto 0; color:#55534E; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:12px; line-height:1.75; letter-spacing:0.01em;">
+                        <!-- ═════ SITE FOOTER ═════ -->
+            <footer class="site-footer" style="background:var(--bg, #FAF7F1); border-top:1px solid var(--rule, #D8D2C6); padding:64px 24px 72px; text-align:center; box-sizing:border-box; width:100%;">
+                <div class="footer-inner" style="max-width:720px; margin:0 auto;">
+                    <p class="footer-disclaimer" style="margin:0 0 28px; color:#55534E; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:12px; line-height:1.75; letter-spacing:0.01em; text-align:center;">
                         Deposits are held by a third-party custodian via Stripe Connect and are not held by Collateral. Outcomes are determined solely by read-only telemetry from the connected platform API named in the contract. Matching yield is funded from forfeited deposits and sponsor contributions, is not interest, and is not guaranteed. Collateral is not a broker, dealer, exchange, investment adviser, or deposit institution. Forfeited capital is not recoverable. The settlement feed shows recently settled contracts and may be delayed. Figures shown are book totals as of 25 July 2026.
                     </p>
+                    <div class="footer-meta mono" style="font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:11px; letter-spacing:0.12em; color:#6B6862; text-transform:uppercase; display:flex; justify-content:center; align-items:center; gap:24px; flex-wrap:wrap;">
+                        <span>&copy; 2026 COLLATERAL MARKET INC.</span>
+                        <span>ALL RIGHTS RESERVED</span>
+                        <a href="/docs/terms" style="color:#7A1F2B; text-decoration:none; border-bottom:1px solid currentColor; padding-bottom:1px;">TERMS OF SERVICE</a>
+                    </div>
                 </div>
-            </section>
+            </footer>
         </div>
     `;
 }
@@ -1031,31 +1008,7 @@ export function initLanding() {
         runFlow();
     }
 
-    /* ── Signing Section Observer ── */
-    var sigBlock = document.getElementById('cs-sig-block');
-    var markEl = document.getElementById('cs-mark-el');
-    var labelEl = document.getElementById('cs-label-el');
-    if (sigBlock && markEl && labelEl) {
-        if (!reduce) {
-            markEl.setAttribute('data-armed', '1');
-            labelEl.setAttribute('data-armed', '1');
-            if ('IntersectionObserver' in window) {
-                var sigIo = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(e) {
-                        if (e.isIntersecting) {
-                            markEl.setAttribute('data-pressed', '1');
-                            labelEl.setAttribute('data-pressed', '1');
-                            sigIo.disconnect();
-                        }
-                    });
-                }, { threshold: 0.35 });
-                sigIo.observe(sigBlock);
-            } else {
-                markEl.setAttribute('data-pressed', '1');
-                labelEl.setAttribute('data-pressed', '1');
-            }
-        }
-    }
+    
 }
 
 

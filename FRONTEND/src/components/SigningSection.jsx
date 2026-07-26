@@ -1,19 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import SEAL from "./seal";
 
 /**
  * Closing signature section.
  *
- * No CSS file, no <style> tag, no class names — every rule is an inline style
- * object. Earlier versions used a <style> tag and the host environment dropped
- * it, rendering the section completely unstyled. Inline styles cannot be
- * dropped by a bundler, a renderer, or a CSS reset.
- *
- * Media queries are resolved with matchMedia in JS, since inline styles cannot
- * express them.
- *
- * The seal is stamped in the right margin, level with the signature block —
- * off the signature line, rotated, like a die pressed onto the page.
+ * Self-contained component for the contract countersignature ceremony.
  */
 
 const C = {
@@ -45,12 +35,7 @@ function useMedia(query) {
   return match;
 }
 
-export default function SigningSection({
-  onWriteContract,
-  date = "25 JUL 2026",
-  bookTotalDate = "25 July 2026",
-  sealSrc = SEAL,
-}) {
+export default function SigningSection({ onWriteContract, date = "25 JUL 2026", bookTotalDate = "25 July 2026",  }) {
   const blockRef = useRef(null);
   const [shown, setShown] = useState(true);
   const [hover, setHover] = useState(false);
@@ -58,9 +43,7 @@ export default function SigningSection({
   const [down, setDown] = useState(false);
 
   const isMobile = useMedia("(max-width: 760px)");
-  const wide = useMedia("(min-width: 1160px)");
-  const extraWide = useMedia("(min-width: 1400px)");
-  const reduce = useMedia("(prefers-reduced-motion: reduce)");
+      const reduce = useMedia("(prefers-reduced-motion: reduce)");
 
   useLayoutEffect(() => {
     if (!reduce) setShown(false);
@@ -87,9 +70,7 @@ export default function SigningSection({
     return () => io.disconnect();
   }, [reduce, shown]);
 
-  const stampSize = extraWide ? 186 : 168;
-  const stampX = extraWide ? 390 : 348;
-
+    
   const s = {
     section: {
       position: "relative",
@@ -98,27 +79,7 @@ export default function SigningSection({
       boxSizing: "border-box",
       width: "100%",
     },
-    stamp: {
-      position: "absolute",
-      zIndex: 1,
-      left: "50%",
-      bottom: 292,
-      width: stampSize,
-      height: stampSize,
-      minHeight: stampSize,
-      maxHeight: "none",
-      flex: "none",
-      aspectRatio: "auto",
-      backgroundImage: "url(" + sealSrc + ")",
-      backgroundSize: "contain",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      transform: "translateX(" + stampX + "px) rotate(-9deg)",
-      pointerEvents: "none",
-      userSelect: "none",
-      display: wide ? "block" : "none",
-    },
-    inner: {
+        inner: {
       position: "relative",
       zIndex: 2,
       maxWidth: 660,
@@ -217,12 +178,7 @@ export default function SigningSection({
 
   return (
     <section style={s.section} aria-labelledby="cs-heading">
-      <div
-        style={s.stamp}
-        role="img"
-        aria-label="Wax seal stamp"
-        aria-hidden="true"
-      />
+      
 
       <div style={s.inner}>
         <h2 id="cs-heading" style={s.heading}>

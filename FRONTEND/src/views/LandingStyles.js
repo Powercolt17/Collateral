@@ -2622,22 +2622,7 @@ html.js-motion-active .reveal.is-in .r-rule {
   isolation: isolate;
 }
 
-.cs-stamp {
-    position: absolute; z-index: 1; left: 50%; bottom: 292px;
-    width: 168px; height: 168px; min-height: 168px; max-height: none;
-    flex: none; aspect-ratio: auto;
-    background-image: url("/assets/images/official-collateral-seal.png");
-    background-size: contain; background-position: center; background-repeat: no-repeat;
-    transform: translateX(348px) rotate(-9deg);
-    pointer-events: none; user-select: none; display: none;
-  }
-  @media (min-width: 1160px) { .cs-stamp { display: block; } }
-  @media (min-width: 1400px) {
-    .cs-stamp {
-      width: 186px; height: 186px; min-height: 186px;
-      transform: translateX(390px) rotate(-9deg);
-    }
-  }
+
 }
 
 .cs-inner {

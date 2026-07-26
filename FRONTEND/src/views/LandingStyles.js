@@ -2626,10 +2626,9 @@ html.js-motion-active .reveal.is-in .r-rule {
   position: absolute;
   z-index: 1;
   left: 50%;
-  bottom: 178px;
-  width: 148px;
-  height: 148px;
-  transform: translateX(352px) rotate(-9deg);
+  bottom: 292px;
+    width: 168px; height: 168px;
+    transform: translateX(348px) rotate(-9deg);
   pointer-events: none;
   user-select: none;
   display: none;
@@ -2638,7 +2637,8 @@ html.js-motion-active .reveal.is-in .r-rule {
 }
 @media (min-width: 1160px) { .cs-stamp { display: block; } }
 @media (min-width: 1400px) {
-  .cs-stamp { width: 168px; height: 168px; transform: translateX(392px) rotate(-9deg); }
+  .cs-stamp { width: 186px; height: 186px;
+    transform: translateX(390px) rotate(-9deg); }
 }
 
 .cs-inner {

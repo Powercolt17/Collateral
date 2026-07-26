@@ -87,8 +87,8 @@ export default function SigningSection({
     return () => io.disconnect();
   }, [reduce, shown]);
 
-  const stampSize = extraWide ? 168 : 148;
-  const stampX = extraWide ? 392 : 352;
+  const stampSize = extraWide ? 186 : 168;
+  const stampX = extraWide ? 390 : 348;
 
   const s = {
     section: {
@@ -102,7 +102,7 @@ export default function SigningSection({
       position: "absolute",
       zIndex: 1,
       left: "50%",
-      bottom: 178,
+      bottom: 292,
       width: stampSize,
       height: stampSize,
       transform: "translateX(" + stampX + "px) rotate(-9deg)",

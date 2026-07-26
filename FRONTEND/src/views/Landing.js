@@ -685,7 +685,7 @@ export function renderLanding() {
 
                         <!-- ═════ 8 · SIGNATURE ═════ -->
             <section class="cs" id="manifesto" aria-labelledby="cs-heading" style="position:relative; background:#FDFBF7; padding:124px 24px 132px; box-sizing:border-box; width:100%; overflow:hidden; isolation:isolate;">
-                <img class="cs-stamp" src="/assets/images/official-collateral-seal.png" onerror="this.onerror=null; this.src='/assets/images/circular-wax-seal.png';" alt="" aria-hidden="true" draggable="false" style="position:absolute; z-index:1; left:50%; bottom:178px; width:148px; height:148px; transform:translateX(352px) rotate(-9deg); pointer-events:none; user-select:none;" />
+                <img class="cs-stamp" src="/assets/images/official-collateral-seal.png" onerror="this.onerror=null; this.src='/assets/images/circular-wax-seal.png';" alt="" aria-hidden="true" draggable="false" style="position:absolute; z-index:1; left:50%; bottom:292px; width:168px; height:168px; transform:translateX(348px) rotate(-9deg); pointer-events:none; user-select:none;" />
                 <div class="cs-inner" style="position:relative; z-index:2; max-width:660px; margin:0 auto;">
                     <h2 id="cs-heading" class="cs-heading" style="margin:0; text-align:center; color:#1A1A18; font-size:clamp(34px, 4.6vw, 50px); font-weight:700; line-height:1.14; letter-spacing:-0.02em;">
                         Sign it, and<br />the week reorders itself

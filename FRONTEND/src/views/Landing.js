@@ -72,53 +72,75 @@ export function renderLanding() {
                     <h2 class="title r-item" style="--i:1">Two ways to make quitting expensive</h2>
                     <p class="lede r-item" style="--i:2">Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.</p>
 
-                    <div class="modes" id="modes" aria-label="Contract modes">
-                        <button class="panel panel--solo" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen">
-                            <span class="panel-img" aria-hidden="true">
-                                <img src="/assets/images/solo-seal.png" alt="" class="leaf-img" loading="lazy" style="max-height:80%; object-fit:contain;" />
-                            </span>
-                            <span class="panel-body">
-                                <span class="meta"><span>MODE 01 &middot; SOLO</span><span>FORM S-01</span></span>
-                                <h3>The only opponent is the version of you who quits</h3>
-                                <span class="spec">ONE OPERATOR &middot; ONE ORACLE &middot; NO EXCUSES</span>
-                                <ul class="points">
-                                    <li>You set the target. You don't get to move it</li>
-                                    <li>Hit it and every dollar comes back, plus yield</li>
-                                    <li>Miss it and the money goes to someone who didn't</li>
-                                </ul>
-                                <a class="cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
-                            </span>
-                        </button>
+                    <div class="modes" id="modes" aria-label="Contract execution modes">
+                        <div class="plates plate ticks r-plate" style="--i:3">
+                            <!-- Cream Panel: Solo Contract -->
+                            <button class="leaf leaf--cream panel" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen">
+                                <div class="leaf-art" aria-hidden="true">
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
+                                </div>
+                                <div class="leaf-body">
+                                    <div class="leaf-head-row">
+                                        <span class="mono leaf-mode-tag">MODE 01 &middot; SOLO</span>
+                                        <span class="mono leaf-form-ref">FORM S&ndash;01</span>
+                                    </div>
+                                    <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
+                                    <p class="mono leaf-spec-line">ONE OPERATOR &middot; ONE ORACLE &middot; NO EXCUSES</p>
+                                    <ul class="leaf-list">
+                                        <li>You set the target. You don't get to move it</li>
+                                        <li>Hit it and every dollar comes back, plus yield</li>
+                                        <li>Miss it and the money goes to someone who didn't</li>
+                                    </ul>
+                                    <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
+                                </div>
+                            </button>
 
-                        <button class="panel panel--rivalry" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen">
-                            <span class="panel-img" aria-hidden="true">
-                                <img src="/assets/images/rivalry-seal.png" alt="" class="leaf-img" loading="lazy" style="max-height:80%; object-fit:contain;" />
-                            </span>
-                            <span class="panel-body">
-                                <span class="meta"><span>MODE 02 &middot; RIVALRY</span><span>FORM R-01</span></span>
-                                <h3>Someone else is counting on you to fail</h3>
-                                <span class="spec">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</span>
-                                <ul class="points">
-                                    <li>Equal capital, same metric, same clock</li>
-                                    <li>One oracle decides. Neither of you gets a vote</li>
-                                    <li>The winner takes the escrow. There is no draw</li>
-                                </ul>
-                                <a class="cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
-                            </span>
-                        </button>
+                            <div class="vrule" aria-hidden="true"></div>
 
-                        <div class="specimen" id="specimen" role="tabpanel" aria-labelledby="tab-solo">
-                            <div class="spec-head">
-                                <span>SPECIMEN</span><span class="spec-fade" data-f="kind">SOLO CONTRACT</span>
-                            </div>
-                            <div class="versus spec-fade" data-f="versus">
-                                <b data-f="a">YOU</b><i>V S</i><b data-f="b">YOU</b>
-                                <div class="amount" data-f="amount">$1,000</div>
-                                <div class="under" data-f="under">LOCKED BY YOU, AGAINST YOU</div>
-                            </div>
-                            <dl class="rows spec-fade" data-f="rows"></dl>
-                            <div class="foot">SPECIMEN &middot; NOT A LIVE CONTRACT</div>
+                            <!-- Maroon Panel: Rivalry Contract -->
+                            <button class="leaf leaf--dark panel panel--rivalry" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen">
+                                <div class="leaf-art" aria-hidden="true">
+                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
+                                </div>
+                                <div class="leaf-body">
+                                    <div class="leaf-head-row">
+                                        <span class="mono leaf-mode-tag">MODE 02 &middot; RIVALRY</span>
+                                        <span class="mono leaf-form-ref">FORM R&ndash;01</span>
+                                    </div>
+                                    <h3 class="leaf-name">Someone else is counting on you to fail</h3>
+                                    <p class="mono leaf-spec-line">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
+                                    <ul class="leaf-list">
+                                        <li>Equal capital, same metric, same clock</li>
+                                        <li>One oracle decides. Neither of you gets a vote</li>
+                                        <li>The winner takes the escrow. There is no draw</li>
+                                    </ul>
+                                    <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
+                                </div>
+                            </button>
                         </div>
+
+                        <!-- Specimen Panel -->
+                        <aside class="demo plate-quiet ticks r-plate specimen" id="specimen" role="tabpanel" aria-labelledby="tab-solo">
+                            <div class="demo-top">
+                                <span class="mono">SPECIMEN</span>
+                                <span class="mono spec-fade" data-f="kind">SOLO CONTRACT</span>
+                            </div>
+                            <div class="demo-center-block spec-fade" data-f="versus">
+                                <div class="versus-row">
+                                    <span class="demo-you" data-f="a">YOU</span>
+                                    <span class="demo-vs">VS</span>
+                                    <span class="demo-you" data-f="b">YOU</span>
+                                </div>
+                                <p class="demo-amt" data-f="amount">$1,000</p>
+                                <p class="mono demo-sub" data-f="under">LOCKED BY YOU, AGAINST YOU</p>
+                            </div>
+
+                            <dl class="demo-ledger spec-fade" data-f="rows"></dl>
+
+                            <div class="demo-foot-bar">
+                                <span class="mono">SPECIMEN &middot; NOT A LIVE CONTRACT</span>
+                            </div>
+                        </aside>
                     </div>
                 </div>
             </section>
@@ -1041,13 +1063,13 @@ export function initLanding() {
                 kind: "SOLO CONTRACT", a: "YOU", b: "YOU", amount: "$1,000",
                 under: "LOCKED BY YOU, AGAINST YOU",
                 rows: [["DEPOSIT","$1,000",""],["WINDOW","30 days",""],
-                       ["ON SUCCESS","$2,500","pos"],["ON MISS","\u2212$1,000","neg"]]
+                       ["ON SUCCESS","$2,500","win"],["ON MISS","\u2212$1,000","blood"]]
             },
             rivalry: {
                 kind: "RIVALRY CONTRACT", a: "YOU", b: "THEM", amount: "$1,000",
                 under: "MATCHED BY COUNTERPARTY",
                 rows: [["DEPOSIT","$1,000",""],["WINDOW","30 days",""],
-                       ["ON WIN","$2,000","pos"],["ON LOSS","\u2212$1,000","neg"]]
+                       ["ON WIN","$2,000","win"],["ON LOSS","\u2212$1,000","blood"]]
             }
         };
         var ORDER = ["solo","rivalry"], INTERVAL = 7000, FADE = 320;
@@ -1081,11 +1103,15 @@ export function initLanding() {
             if (underEl) underEl.textContent = m.under;
 
             rowsEl.innerHTML = m.rows.map(function (r) {
-                return '<div class="row"><dt>' + r[0] + '</dt><span class="dots"></span>' +
+                return '<div class="t-row"><dt>' + r[0] + '</dt><span class="dots"></span>' +
                        '<dd class="' + r[2] + '">' + r[1] + '</dd></div>';
             }).join("");
+
             ORDER.forEach(function (k) {
-                if (tabs[k]) tabs[k].setAttribute("aria-selected", String(k === key));
+                if (tabs[k]) {
+                    var isSel = (k === key);
+                    tabs[k].setAttribute("aria-selected", String(isSel));
+                }
             });
             card.setAttribute("aria-labelledby", "tab-" + key);
             current = key;
@@ -1136,7 +1162,9 @@ export function initLanding() {
         paint("rivalry");
         var h1 = card.offsetHeight;
         paint("solo");
-        card.style.setProperty("--spec-h", Math.max(h1, card.offsetHeight) + "px");
+        if (h1 > 0) {
+            card.style.setProperty("--spec-h", Math.max(h1, card.offsetHeight) + "px");
+        }
 
         start();
     })();

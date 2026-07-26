@@ -1082,42 +1082,53 @@ export function initLanding() {
             tabs = { solo: document.getElementById("tab-solo"),
                      rivalry: document.getElementById("tab-rivalry") };
 
-        if (!root || !card || !tabs.solo || !tabs.rivalry) return;
+        if (!root || !card || !tabs.solo || !tabs.rivalry) {
+            console.warn("[ModesSwitcher] Missing root or tab elements, aborting switcher init.");
+            return;
+        }
 
         var rowsEl = card.querySelector('[data-f="rows"]');
-        if (!rowsEl) return;
+        if (!rowsEl) {
+            console.warn("[ModesSwitcher] Missing [data-f='rows'] element in specimen card.");
+        }
 
         var current = "solo", timer = null, stopped = false, paused = false;
-        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         function paint(key) {
-            var m = MODES[key];
-            if (!m) return;
-            var kindEl = card.querySelector('[data-f="kind"]');
-            var aEl = card.querySelector('[data-f="a"]');
-            var bEl = card.querySelector('[data-f="b"]');
-            var amtEl = card.querySelector('[data-f="amount"]');
-            var underEl = card.querySelector('[data-f="under"]');
+            try {
+                var m = MODES[key];
+                if (!m) return;
+                var kindEl = card.querySelector('[data-f="kind"]');
+                var aEl = card.querySelector('[data-f="a"]');
+                var bEl = card.querySelector('[data-f="b"]');
+                var amtEl = card.querySelector('[data-f="amount"]');
+                var underEl = card.querySelector('[data-f="under"]');
 
-            if (kindEl) kindEl.textContent = m.kind;
-            if (aEl) aEl.textContent = m.a;
-            if (bEl) bEl.textContent = m.b;
-            if (amtEl) amtEl.textContent = m.amount;
-            if (underEl) underEl.textContent = m.under;
+                if (kindEl) kindEl.textContent = m.kind;
+                if (aEl) aEl.textContent = m.a;
+                if (bEl) bEl.textContent = m.b;
+                if (amtEl) amtEl.textContent = m.amount;
+                if (underEl) underEl.textContent = m.under;
 
-            rowsEl.innerHTML = m.rows.map(function (r) {
-                return '<div class="t-row"><dt>' + r[0] + '</dt><span class="dots"></span>' +
-                       '<dd class="' + r[2] + '">' + r[1] + '</dd></div>';
-            }).join("");
-
-            ORDER.forEach(function (k) {
-                if (tabs[k]) {
-                    var isSel = (k === key);
-                    tabs[k].setAttribute("aria-selected", String(isSel));
+                if (rowsEl) {
+                    rowsEl.innerHTML = m.rows.map(function (r) {
+                        return '<div class="t-row"><dt>' + r[0] + '</dt><span class="dots"></span>' +
+                               '<dd class="' + r[2] + '">' + r[1] + '</dd></div>';
+                    }).join("");
                 }
-            });
-            card.setAttribute("aria-labelledby", "tab-" + key);
-            current = key;
+
+                ORDER.forEach(function (k) {
+                    if (tabs[k]) {
+                        var isSel = (k === key);
+                        tabs[k].setAttribute("aria-selected", String(isSel));
+                    }
+                });
+                card.setAttribute("aria-labelledby", "tab-" + key);
+                current = key;
+            } catch (err) {
+                console.error("[ModesSwitcher] Error during paint:", err);
+            }
         }
 
         function show(key) {
@@ -1134,45 +1145,72 @@ export function initLanding() {
             if (paused || stopped || document.hidden) return;
             show(current === "solo" ? "rivalry" : "solo");
         }
-        function start() { if (!stopped && !reduce && !timer) timer = setInterval(tick, INTERVAL); }
-        function halt()  { clearInterval(timer); timer = null; }
+
+        function start() {
+            if (!stopped && !reduce && !timer) {
+                console.log("[ModesSwitcher] 7s Auto-advance timer started.");
+                timer = setInterval(tick, INTERVAL);
+            }
+        }
+
+        function halt() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
 
         ORDER.forEach(function (k) {
             if (!tabs[k]) return;
             tabs[k].addEventListener("click", function (e) {
                 if (e.target.closest("a")) return;
-                stopped = true; halt(); show(k);
+                stopped = true;
+                halt();
+                show(k);
             });
             tabs[k].addEventListener("keydown", function (e) {
                 if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
                 e.preventDefault();
                 var next = k === "solo" ? "rivalry" : "solo";
-                stopped = true; halt(); show(next); tabs[next].focus();
+                stopped = true;
+                halt();
+                show(next);
+                tabs[next].focus();
             });
         });
 
-        root.addEventListener("mouseenter", function () { paused = true; });
-        root.addEventListener("mouseleave", function () { paused = false; });
-        root.addEventListener("focusin",   function () { paused = true; });
-        root.addEventListener("focusout",  function () {
-            if (!root.contains(document.activeElement)) paused = false;
+        // Pointer & focus event handlers to ensure paused state is robust
+        root.addEventListener("pointerenter",  function () { paused = true; });
+        root.addEventListener("pointerleave",  function () { paused = false; });
+        root.addEventListener("pointercancel", function () { paused = false; });
+        root.addEventListener("focusin",        function () { paused = true; });
+        root.addEventListener("focusout",       function (e) {
+            if (!root.contains(e.relatedTarget)) paused = false;
         });
+        window.addEventListener("blur",         function () { paused = false; });
+
         document.addEventListener("visibilitychange", function () {
             document.hidden ? halt() : start();
         });
 
-        // Paint solo immediately to ensure content exists on load
+        // Initial paint to render default Solo rows
         paint("solo");
 
-        // Measure locked card height
-        paint("rivalry");
-        var h1 = card.offsetHeight;
-        paint("solo");
-        var h2 = card.offsetHeight;
-        var maxH = Math.max(h1, h2);
-        if (maxH > 0) {
-            card.style.setProperty("--spec-h", maxH + "px");
-        }
+        // Asynchronously measure height after layout settles to avoid reflow glitches
+        setTimeout(function() {
+            try {
+                var hSolo = card.offsetHeight;
+                paint("rivalry");
+                var hRivalry = card.offsetHeight;
+                paint("solo");
+                var maxH = Math.max(hSolo, hRivalry);
+                if (maxH > 0) {
+                    card.style.setProperty("--spec-h", maxH + "px");
+                }
+            } catch (e) {
+                console.error("[ModesSwitcher] Height measure error:", e);
+            }
+        }, 100);
 
         start();
     })();

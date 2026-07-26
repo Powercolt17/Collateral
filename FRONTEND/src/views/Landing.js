@@ -125,17 +125,21 @@ export function renderLanding() {
                                 <span class="mono">SPECIMEN</span>
                                 <span class="mono spec-fade" data-f="kind">SOLO CONTRACT</span>
                             </div>
-                            <div class="demo-center-block spec-fade" data-f="versus">
-                                <div class="versus-row">
-                                    <span class="demo-you" data-f="a">YOU</span>
-                                    <span class="demo-vs">VS</span>
-                                    <span class="demo-you" data-f="b">YOU</span>
-                                </div>
+
+                            <div class="demo-center-block spec-fade">
+                                <p class="demo-you" data-f="a">YOU</p>
+                                <p class="demo-vs">VS</p>
+                                <p class="demo-you" data-f="b">YOU</p>
                                 <p class="demo-amt" data-f="amount">$1,000</p>
                                 <p class="mono demo-sub" data-f="under">LOCKED BY YOU, AGAINST YOU</p>
                             </div>
 
-                            <dl class="demo-ledger spec-fade" data-f="rows"></dl>
+                            <dl class="demo-ledger spec-fade" data-f="rows">
+                                <div class="t-row"><dt>DEPOSIT</dt><span class="dots"></span><dd>$1,000</dd></div>
+                                <div class="t-row"><dt>WINDOW</dt><span class="dots"></span><dd>30 days</dd></div>
+                                <div class="t-row"><dt>ON SUCCESS</dt><span class="dots"></span><dd class="win">$2,500</dd></div>
+                                <div class="t-row"><dt>ON MISS</dt><span class="dots"></span><dd class="blood">&minus;$1,000</dd></div>
+                            </dl>
 
                             <div class="demo-foot-bar">
                                 <span class="mono">SPECIMEN &middot; NOT A LIVE CONTRACT</span>
@@ -1157,12 +1161,17 @@ export function initLanding() {
             document.hidden ? halt() : start();
         });
 
-        // lock the card height to the taller state so switching never reflows
+        // Paint solo immediately to ensure content exists on load
+        paint("solo");
+
+        // Measure locked card height
         paint("rivalry");
         var h1 = card.offsetHeight;
         paint("solo");
-        if (h1 > 0) {
-            card.style.setProperty("--spec-h", Math.max(h1, card.offsetHeight) + "px");
+        var h2 = card.offsetHeight;
+        var maxH = Math.max(h1, h2);
+        if (maxH > 0) {
+            card.style.setProperty("--spec-h", maxH + "px");
         }
 
         start();

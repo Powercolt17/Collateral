@@ -849,7 +849,7 @@ footer .logo-wordmark-light,
 }
 
 .cm-band {
-  height: 200px;
+  height: 260px;
   overflow: hidden;
   display: block;
 }
@@ -859,7 +859,7 @@ footer .logo-wordmark-light,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 26%;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1148,7 +1148,7 @@ footer .logo-wordmark-light,
     border-top: none;
   }
   .cm-band {
-    height: 168px;
+    height: 210px;
   }
 }
 

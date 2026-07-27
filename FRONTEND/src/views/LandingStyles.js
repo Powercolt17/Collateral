@@ -1079,6 +1079,118 @@ footer .logo-wordmark-light,
   transform: translateY(0);
 }
 
+/* ═══════════ HERO LINE 4-BEAT ANIMATION SYSTEM ═══════════ */
+@keyframes hl-strike {
+  from { clip-path: inset(0 0 100% 0); transform: translateY(6px); }
+  to   { clip-path: inset(0 0 0 0);    transform: translateY(0); }
+}
+
+@keyframes hl-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes hl-tick {
+  0%   { opacity: 0; transform: translateY(-16px) scaleY(0.5); }
+  62%  { opacity: 1; transform: translateY(3px)  scaleY(1.12); }
+  100% { opacity: 1; transform: translateY(0)    scaleY(1); }
+}
+
+@keyframes hl-fill {
+  from { width: 0%; }
+  to   { width: var(--fill, 66%); }
+}
+
+@keyframes hl-fade {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hl-headline {
+  position: relative;
+  font-family: var(--display, 'Archivo', sans-serif);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: var(--ink, #0E1420);
+  margin: 0 0 1rem 0 !important;
+}
+
+.hl-w {
+  display: inline-block;
+  clip-path: inset(0 0 100% 0);
+  animation: hl-strike 420ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms) forwards;
+}
+
+.hl-anchor {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hl-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.12em;
+  height: 0.085em;
+  background: var(--rule, #DED9CC);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: hl-draw 560ms cubic-bezier(0.22, 1, 0.36, 1) 920ms forwards;
+}
+
+.hl-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--blood, #7A1C29);
+  animation: hl-fill 780ms cubic-bezier(0.22, 1, 0.36, 1) 1580ms forwards;
+}
+
+.hl-tick {
+  position: absolute;
+  right: 0;
+  top: -0.11em;
+  bottom: -0.11em;
+  width: 2px;
+  background: var(--ink, #0E1420);
+  opacity: 0;
+  animation: hl-tick 430ms cubic-bezier(0.34, 1.4, 0.64, 1) 1420ms forwards;
+}
+
+.hl-meta {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--slate, #8C877B);
+  margin: 0 0 24px 0 !important;
+  opacity: 0;
+  animation: hl-fade 540ms cubic-bezier(0.22, 1, 0.36, 1) 2200ms forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hl-w, .hl-rule, .hl-fill, .hl-tick, .hl-meta {
+    animation: none !important;
+  }
+  .hl-w {
+    clip-path: none !important;
+    transform: none !important;
+  }
+  .hl-rule {
+    transform: scaleX(1) !important;
+  }
+  .hl-fill {
+    width: var(--fill, 66%) !important;
+  }
+  .hl-tick, .hl-meta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 .cm-live .cm-hero-title, .reveal.is-in .cm-hero-title {
   opacity: 1;
   clip-path: inset(0 0 0 0);

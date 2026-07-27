@@ -23,18 +23,32 @@ export function renderLanding() {
                 <div class="shell hero-grid">
                     <div>
                         <p class="eyebrow rise is-in" style="--d:40ms">Self-enforcing performance contracts</p>
-                        <h1 class="h1 clip-wipe is-in" style="--d:120ms">Put money on your own deadline</h1>
-                        <p class="lede rise is-in" style="--d:220ms">Lock a deposit against a public goal. If your platform API confirms you hit it on time, your money comes back with matching yield. If you miss, your deposit funds someone who didn't.</p>
-                        <div class="hero-actions rise is-in" style="--d:340ms">
+                        <h1 class="h1 hl-headline">
+                            <span class="hl-w" style="--d:100ms">Put </span>
+                            <span class="hl-w" style="--d:170ms">money </span>
+                            <span class="hl-w" style="--d:240ms">on </span>
+                            <span class="hl-w" style="--d:310ms">your </span>
+                            <span class="hl-w" style="--d:380ms">own </span>
+                            <span class="hl-w hl-anchor" style="--d:470ms">
+                                deadline
+                                <span class="hl-rule" aria-hidden="true">
+                                    <span class="hl-fill" style="--fill:66%;"></span>
+                                    <span class="hl-tick"></span>
+                                </span>
+                            </span>
+                        </h1>
+                        <p class="hl-meta" aria-label="Sample contract telemetry">$1,000 &middot; 30 DAY WINDOW &middot; 11 DAYS LEFT</p>
+                        <p class="lede rise is-in" style="--d:620ms">Lock a deposit against a public goal. If your platform API confirms you hit it on time, your money comes back with matching yield. If you miss, your deposit funds someone who didn't.</p>
+                        <div class="hero-actions rise is-in" style="--d:740ms">
                             <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
                             <a class="btn btn-ghost" href="#flow">Watch forfeiture flow &darr;</a>
                         </div>
-                        <div class="oracles-strip rise is-in" style="--d:480ms">
+                        <div class="oracles-strip rise is-in" style="--d:860ms">
                             <span class="mono" style="opacity:.45">ORACLES</span>
-                            <a class="mono rise is-in" style="--d:570ms" href="#oracles">Stripe</a>
-                            <a class="mono rise is-in" style="--d:600ms" href="#oracles">X</a>
-                            <a class="mono rise is-in" style="--d:630ms" href="#oracles">YouTube</a>
-                            <a class="mono rise is-in" style="--d:660ms" href="#oracles">Shopify</a>
+                            <a class="mono rise is-in" style="--d:920ms" href="#oracles">Stripe</a>
+                            <a class="mono rise is-in" style="--d:950ms" href="#oracles">X</a>
+                            <a class="mono rise is-in" style="--d:980ms" href="#oracles">YouTube</a>
+                            <a class="mono rise is-in" style="--d:1010ms" href="#oracles">Shopify</a>
                         </div>
                     </div>
 

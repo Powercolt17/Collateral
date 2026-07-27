@@ -855,19 +855,12 @@ footer .logo-wordmark-light,
   display: block;
 }
 
-.cm-panel:not(.is-rival) .cm-band {
-  background: #E7E2D6;
-}
-
-.cm-panel.is-rival .cm-band {
-  background: #5E1E2E;
-}
-
 .cm-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 26%;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 

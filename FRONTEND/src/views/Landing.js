@@ -168,37 +168,39 @@ export function renderLanding() {
 
             <!-- ═════ 3 · CASE ═════ -->
             <section class="section reveal" id="case">
-                <div class="shell argue">
-                    <div>
-                        <p class="eyebrow r-item" style="--i:0">Why it works</p>
-                        <h2 class="title r-item" style="--i:1">A plan without stakes is just a comfortable wish</h2>
-                        <p class="lede r-item" style="--i:2; margin-top:18px">You already know what the next step is. You've
-                            known for months. What you don't have is a reason it has to happen this week instead of
-                            some other week, because missing it costs a feeling, and feelings are cheap enough to
-                            absorb forever.</p>
-                        <aside class="argue-note r-item" style="--i:4">
-                            <span class="mono mono-b">Clerk's note</span>
-                            <p>The median contract is opened at 11:40pm on a Sunday. We have theories about why,
-                                and none of them are flattering.</p>
-                        </aside>
-                    </div>
+                <div class="shell">
+                    <div class="argue">
+                        <div>
+                            <p class="eyebrow r-item" style="--i:0">Why it works</p>
+                            <h2 class="title r-item" style="--i:1">A plan without stakes is just a comfortable wish</h2>
+                            <p class="lede r-item" style="--i:2; margin-top:18px; max-width:46ch">You already know what the next step is. You've
+                                known for months. What you don't have is a reason it has to happen this week instead of
+                                some other week, because missing it costs a feeling, and feelings are cheap enough to
+                                absorb forever.</p>
+                            <aside class="argue-note r-item" style="--i:4">
+                                <span class="mono mono-b" style="color:var(--blood)">&sect; 3.1 &middot; Clerk's note</span>
+                                <p class="mono">The median contract is opened at 11:40pm on a Sunday. We have theories about why,
+                                    and none of them are flattering.</p>
+                            </aside>
+                        </div>
 
-                    <div>
-                        <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
-                        <div class="cmp-table-wrap" style="overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;">
-                        <table class="cmp plate-quiet r-plate" style="--i:3">
-                            <thead>
-                                <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>01</td><td class="void">Announce the goal</td><td>Lock the deposit</td></tr>
-                                <tr><td>02</td><td class="void">Something urgent comes up</td><td>Something urgent comes up anyway</td></tr>
-                                <tr><td>03</td><td class="void">Move the deadline, quietly</td><td>The deadline does not move</td></tr>
-                                <tr><td>04</td><td class="void">Decide it wasn't the right time</td><td>Ship it at 2am, badly, on time</td></tr>
-                                <tr><td>&mdash;</td><td class="void">Nothing at risk, nothing changed</td>
-                                    <td class="won-txt">Money back. And the thing exists.</td></tr>
-                            </tbody>
-                        </table>
+                        <div>
+                            <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
+                            <div class="cmp-table-wrap" style="overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;">
+                            <table class="cmp plate-quiet r-plate" style="--i:3">
+                                <thead>
+                                    <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>01</td><td class="void">Announce the goal</td><td>Lock the deposit</td></tr>
+                                    <tr><td>02</td><td class="void">Something urgent comes up</td><td>Something urgent comes up anyway</td></tr>
+                                    <tr><td>03</td><td class="void">Move the deadline, quietly</td><td>The deadline does not move</td></tr>
+                                    <tr><td>04</td><td class="void">Decide it wasn't the right time</td><td>Ship it at 2am, badly, on time</td></tr>
+                                    <tr><td>&mdash;</td><td class="void">Nothing at risk, nothing changed</td>
+                                        <td class="won-txt">Money back. And the thing exists.</td></tr>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                     </div>
                 </div>

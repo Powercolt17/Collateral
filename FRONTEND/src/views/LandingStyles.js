@@ -2661,4 +2661,251 @@ html.js-motion-active .reveal.is-in .r-rule {
   
 }
 
+
+  /* ═══════════ FAQ / SCHEDULE OF COMMON QUESTIONS ═══════════ */
+  .faq {
+    --bg: #FAF7F1;
+    --ink: #1A1A18;
+    --body: #55534E;
+    --muted: #6B6862;
+    --accent: #7A1F2B;
+    --rule: #D8D2C6;
+    --rule-soft: #E4DFD5;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ease: cubic-bezier(.16,.84,.44,1);
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--ink);
+    padding: 118px 24px 126px;
+    border-top: 1px solid var(--rule);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .faq-grid {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 0 88px;
+    align-items: start;
+  }
+
+  /* ---------- left rail ---------- */
+  .faq .rail {
+    position: sticky;
+    top: 104px;
+    text-align: left;
+  }
+  .faq .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    color: var(--accent);
+  }
+  .faq .eyebrow::before {
+    content: "";
+    width: 26px;
+    height: 4px;
+    border-top: 1px solid var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+  .faq .rail h2 {
+    margin: 20px 0 0;
+    font-size: 46px;
+    line-height: 1.1;
+    letter-spacing: -.022em;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .faq .rail p {
+    margin: 22px 0 0;
+    max-width: 34ch;
+    color: var(--body);
+    font-size: 16.5px;
+    line-height: 1.62;
+  }
+  .faq .note {
+    margin-top: 38px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    text-align: left;
+  }
+  .faq .note b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .13em;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .faq .note span {
+    display: block;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.85;
+    color: var(--body);
+  }
+
+  /* ---------- schedule ---------- */
+  .faq .sched {
+    border-top: 1px solid var(--ink);
+    text-align: left;
+  }
+  .faq .group {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .15em;
+    color: var(--muted);
+    padding: 26px 0 10px;
+  }
+  .faq .group:first-of-type {
+    padding-top: 20px;
+  }
+
+  .faq .item {
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .faq .q {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 62px 1fr 22px;
+    align-items: start;
+    gap: 0 16px;
+    text-align: left;
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 19px 10px 19px 0;
+    font: inherit;
+    cursor: pointer;
+    color: inherit;
+    transition: background-color 150ms var(--ease);
+  }
+  @media (hover: hover) {
+    .faq .q:hover {
+      background: rgba(26,26,24,.028);
+    }
+  }
+  .faq .q:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .faq .clause {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    padding-top: 3px;
+  }
+  .faq .qt {
+    font-size: 16.5px;
+    line-height: 1.45;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .faq .sign {
+    position: relative;
+    width: 11px;
+    height: 11px;
+    margin: 6px 0 0 auto;
+  }
+  .faq .sign::before, .faq .sign::after {
+    content: "";
+    position: absolute;
+    background: var(--muted);
+  }
+  .faq .sign::before {
+    left: 0;
+    top: 5px;
+    width: 11px;
+    height: 1px;
+  }
+  .faq .sign::after {
+    left: 5px;
+    top: 0;
+    width: 1px;
+    height: 11px;
+    transition: transform 200ms var(--ease);
+    transform-origin: center;
+  }
+  .faq .q[aria-expanded="true"] .sign::after {
+    transform: scaleY(0);
+  }
+  .faq .q[aria-expanded="true"] .qt {
+    color: var(--accent);
+  }
+
+  .faq .a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 260ms var(--ease);
+  }
+  .faq .item.open .a {
+    grid-template-rows: 1fr;
+  }
+  .faq .a > div {
+    overflow: hidden;
+  }
+  .faq .a p {
+    margin: 0;
+    padding: 0 44px 24px 78px;
+    max-width: 62ch;
+    color: var(--body);
+    font-size: 15.5px;
+    line-height: 1.72;
+    text-align: left;
+  }
+
+  .faq .tail {
+    margin-top: 34px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: left;
+  }
+  .faq .tail a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  @media (max-width: 1000px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 56px 0;
+    }
+    .faq .rail {
+      position: static;
+    }
+    .faq .rail h2 {
+      font-size: 38px;
+    }
+  }
+  @media (max-width: 640px) {
+    .faq {
+      padding: 84px 20px 90px;
+    }
+    .faq .q {
+      grid-template-columns: 50px 1fr 20px;
+      gap: 0 12px;
+    }
+    .faq .a p {
+      padding: 0 22px 22px 62px;
+    }
+    .faq .rail h2 {
+      font-size: 32px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq .a, .faq .sign::after, .faq .q {
+      transition: none;
+    }
+  }
+
 `;

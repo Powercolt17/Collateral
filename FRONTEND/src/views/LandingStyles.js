@@ -956,7 +956,7 @@ footer .logo-wordmark-light,
   font-size: clamp(36px, 6.2vw, 72px);
   letter-spacing: -0.035em;
   line-height: 0.92;
-  margin: 14px 0 10px 0;
+  margin: 14px 0 16px 0;
   opacity: 0;
   clip-path: inset(0 0 100% 0);
   transform: translateY(6px);
@@ -975,7 +975,7 @@ footer .logo-wordmark-light,
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.06em;
-  margin: 0 0 20px 0;
+  margin: 0 0 26px 0;
   opacity: 0;
   transition: opacity 540ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms);
 }

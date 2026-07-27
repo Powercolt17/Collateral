@@ -68,14 +68,14 @@ export function renderLanding() {
             <section class="section alt reveal cm-root" id="modes-section" aria-labelledby="cm-title">
                 <div class="shell" style="max-width: 1060px; margin: 0 auto; padding: 0 24px;">
                     <!-- Real Section Header OUTSIDE the frame -->
-                    <header style="margin-bottom: 40px;">
-                        <p class="cm-rise" style="--d: 0ms; font-size: 10px; letter-spacing: 0.18em; color: #8C877B; margin-bottom: 18px; text-transform: uppercase;">
+                    <header style="margin-bottom: 24px;">
+                        <p class="cm-rise" style="--d: 0ms; font-size: 10px; letter-spacing: 0.18em; color: #8C877B; margin-bottom: 8px; text-transform: uppercase;">
                             STEP 02 &middot; CHOOSE YOUR COUNTERPARTY
                         </p>
-                        <h2 id="cm-title" class="cm-rise" style="--d: 80ms; font-family: var(--display, 'Archivo', sans-serif); font-weight: 700; font-size: clamp(30px, 4.4vw, 46px); letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 18px; color: #1A1A18;">
+                        <h2 id="cm-title" class="cm-rise" style="--d: 80ms; font-family: var(--display, 'Archivo', sans-serif); font-weight: 700; font-size: clamp(24px, 3.4vw, 36px); letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px; color: #1A1A18;">
                             Who holds you to it
                         </h2>
-                        <p class="cm-rise cm-lede" style="--d: 160ms; max-width: 480px; font-size: 14px; line-height: 1.75; color: #8C877B;">
+                        <p class="cm-rise cm-lede" style="--d: 160ms; max-width: 480px; font-size: 13.5px; line-height: 1.6; color: #8C877B;">
                             Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.
                         </p>
                     </header>

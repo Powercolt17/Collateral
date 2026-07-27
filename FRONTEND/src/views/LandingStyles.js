@@ -846,29 +846,37 @@ footer .logo-wordmark-light,
 .cm-root {
   display: block !important;
   width: 100%;
+  padding: 48px 0 56px !important;
 }
 
 .cm-band {
-  height: 260px;
+  height: 165px;
   overflow: hidden;
   display: block;
+}
+
+.cm-panel:not(.is-rival) .cm-band {
+  background: #E7E2D6;
+}
+
+.cm-panel.is-rival .cm-band {
+  background: #5E1E2E;
 }
 
 .cm-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 26%;
+  object-fit: contain;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .cm-term {
   position: relative;
-  padding: 7px 0 7px 20px;
+  padding: 4px 0 4px 18px;
   font-family: var(--mono, 'IBM Plex Mono', monospace);
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12.5px;
+  line-height: 1.5;
 }
 
 /* Staggered Animations */
@@ -889,15 +897,15 @@ footer .logo-wordmark-light,
   font-size: 10px;
   letter-spacing: 0.5em;
   transform: scale(0.7);
-  padding: 5px 0 3px;
+  padding: 2px 0;
 }
 
 .cm-word {
   font-family: var(--display, 'Archivo', sans-serif);
   font-weight: 700;
-  font-size: clamp(38px, 5.4vw, 56px);
+  font-size: clamp(26px, 3.6vw, 36px);
   letter-spacing: -0.035em;
-  line-height: 0.92;
+  line-height: 0.95;
   clip-path: inset(0 0 100% 0);
   transform: translateY(6px);
 }
@@ -959,7 +967,7 @@ footer .logo-wordmark-light,
 }
 
 .cm-panel-body {
-  padding: 22px 24px 0;
+  padding: 16px 20px 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -973,7 +981,7 @@ footer .logo-wordmark-light,
   font-family: var(--mono, 'IBM Plex Mono', monospace);
   font-size: 10px;
   letter-spacing: 0.15em;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .leaf--cream .cm-meta-row span:first-child { color: #2F4370; }
@@ -983,7 +991,7 @@ footer .logo-wordmark-light,
 .leaf--dark .cm-meta-row span:last-child { color: rgba(240, 227, 216, 0.45); }
 
 .cm-vs-block {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   text-align: left;
 }
 
@@ -1006,7 +1014,7 @@ footer .logo-wordmark-light,
 .cm-terms-list {
   list-style: none;
   margin: 0;
-  padding: 14px 0 0;
+  padding: 10px 0 0;
   border-top: 1px solid #D8D3C6;
 }
 
@@ -1017,7 +1025,7 @@ footer .logo-wordmark-light,
 .cm-bullet {
   position: absolute;
   left: 0;
-  top: 7px;
+  top: 4px;
   font-family: var(--mono, 'IBM Plex Mono', monospace);
 }
 
@@ -1026,16 +1034,16 @@ footer .logo-wordmark-light,
 
 .cm-cta-wrap {
   margin-top: auto;
-  padding: 22px 24px 26px;
+  padding: 14px 20px 18px;
 }
 
 .cm-cta-link {
   display: inline-block;
   font-family: var(--mono, 'IBM Plex Mono', monospace);
-  font-size: 13px;
+  font-size: 12.5px;
   text-decoration: none;
   color: #2F4370;
-  padding-bottom: 4px;
+  padding-bottom: 3px;
   border-bottom: 1px solid #2F4370;
   transition: opacity 160ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -1061,7 +1069,7 @@ footer .logo-wordmark-light,
 }
 
 .cm-settle-head {
-  padding: 22px 24px 20px;
+  padding: 14px 20px 12px;
   border-bottom: 1px solid #D8D3C6;
   display: flex;
   justify-content: space-between;
@@ -1073,7 +1081,7 @@ footer .logo-wordmark-light,
 .cm-settle-title {
   font-family: var(--display, 'Archivo', sans-serif);
   font-weight: 600;
-  font-size: 17px;
+  font-size: 15px;
   letter-spacing: -0.01em;
   color: #1A1A18;
 }
@@ -1092,7 +1100,7 @@ footer .logo-wordmark-light,
 }
 
 .cm-step {
-  padding: 24px;
+  padding: 16px 20px;
   border-left: 1px solid #D8D3C6;
   text-align: left;
 }
@@ -1106,22 +1114,22 @@ footer .logo-wordmark-light,
   font-size: 10px;
   letter-spacing: 0.16em;
   color: #2F4370;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .cm-step-title {
   font-family: var(--display, 'Archivo', sans-serif);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: -0.01em;
   color: #1A1A18;
-  margin-bottom: 7px;
+  margin-bottom: 4px;
 }
 
 .cm-step-body {
   font-family: var(--mono, 'IBM Plex Mono', monospace);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.5;
   color: #5F5B52;
 }
 
@@ -1148,7 +1156,7 @@ footer .logo-wordmark-light,
     border-top: none;
   }
   .cm-band {
-    height: 210px;
+    height: 140px;
   }
 }
 

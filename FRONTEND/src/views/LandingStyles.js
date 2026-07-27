@@ -955,8 +955,8 @@ footer .logo-wordmark-light,
   font-weight: 700;
   font-size: clamp(36px, 6.2vw, 72px);
   letter-spacing: -0.035em;
-  line-height: 0.92;
-  margin: 14px 0 16px 0;
+  line-height: 1.05;
+  margin: 14px 0 24px 0 !important;
   opacity: 0;
   clip-path: inset(0 0 100% 0);
   transform: translateY(6px);
@@ -975,7 +975,7 @@ footer .logo-wordmark-light,
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.06em;
-  margin: 0 0 26px 0;
+  margin: 0 0 28px 0 !important;
   opacity: 0;
   transition: opacity 540ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms);
 }
@@ -1078,34 +1078,54 @@ footer .logo-wordmark-light,
 
 .cm-terms-list {
   list-style: none;
-  margin: 0;
-  padding: 10px 0 0;
+  margin: 0 !important;
+  padding: 16px 0 0 !important;
   border-top: 1px solid #D8D3C6;
 }
 
 .leaf--dark .cm-terms-list {
-  border-top-color: rgba(240, 227, 216, 0.20);
+  border-top-color: rgba(240, 227, 216, 0.25);
+}
+
+.cm-term {
+  position: relative;
+  padding: 5px 0 5px 22px;
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 13.5px !important;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.leaf--cream .cm-term {
+  color: #1A1A18 !important;
+}
+
+.leaf--dark .cm-term {
+  color: #FFF8F5 !important;
 }
 
 .cm-bullet {
   position: absolute;
   left: 0;
-  top: 4px;
+  top: 5px;
   font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.leaf--cream .cm-bullet { color: #2F4370; }
-.leaf--dark .cm-bullet { color: #C98F8F; }
+.leaf--cream .cm-bullet { color: #7A1C29 !important; }
+.leaf--dark .cm-bullet { color: #F0C493 !important; }
 
 .cm-cta-wrap {
   margin-top: auto;
-  padding: 14px 20px 18px;
+  padding: 16px 20px 18px;
 }
 
 .cm-cta-link {
   display: inline-block;
   font-family: var(--mono, 'IBM Plex Mono', monospace);
-  font-size: 12.5px;
+  font-size: 13px;
+  font-weight: 600;
   text-decoration: none;
   color: #2F4370;
   padding-bottom: 3px;
@@ -1193,9 +1213,10 @@ footer .logo-wordmark-light,
 
 .cm-step-body {
   font-family: var(--mono, 'IBM Plex Mono', monospace);
-  font-size: 12px;
-  line-height: 1.5;
-  color: #5F5B52;
+  font-size: 13px !important;
+  line-height: 1.6;
+  color: #2D2B26 !important;
+  font-weight: 450;
 }
 
 .cm-lede {

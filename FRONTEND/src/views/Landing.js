@@ -67,112 +67,101 @@ export function renderLanding() {
             <!-- ═════ 2 · MODES ═════ -->
             <section class="section alt reveal cm-root" id="modes-section" aria-labelledby="cm-title">
                 <div class="shell" style="max-width: 1060px; margin: 0 auto; padding: 0 24px;">
-                    <!-- Shared Header ABOVE both panels -->
-                    <div class="cm-block cm-rise" style="--d: 0ms">
-                        <p class="cm-hdr-eyebrow">STEP 02 &middot; CHOOSE YOUR COUNTERPARTY</p>
-                        <h2 id="cm-title" class="cm-hdr-title">Who holds you to it</h2>
-                    </div>
-
-                    <!-- Two-Column Grid: Solo and Rivalry Panels -->
-                    <div class="cm-grid">
-                        <!-- Cream Panel: Solo Contract -->
-                        <article class="cm-panel leaf leaf--cream" style="--d: 140ms">
-                            <div class="cm-band" style="border-bottom: 1px solid #D8D3C6;">
-                                <img class="cm-img" src="/assets/images/solo-seal.png" alt="Solo Contract Engraving" loading="lazy" />
-                            </div>
-                            <div class="cm-panel-body">
-                                <div class="cm-rise cm-meta-row" style="--d: 260ms">
-                                    <span>MODE 01 &middot; SOLO</span>
-                                    <span>FORM S&ndash;01</span>
-                                </div>
-                                <div class="cm-vs-block">
-                                    <p class="cm-word" style="--d: 360ms">YOU</p>
-                                    <p class="cm-vs" style="--d: 520ms">VS</p>
-                                    <p class="cm-word" style="--d: 640ms">YOU</p>
-                                </div>
-                                <ul class="cm-terms-list">
-                                    <li class="cm-rise cm-term" style="--d: 760ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
-                                    <li class="cm-rise cm-term" style="--d: 840ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
-                                    <li class="cm-rise cm-term" style="--d: 920ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
-                                </ul>
-                                <div class="cm-rise cm-cta-wrap" style="--d: 1020ms">
-                                    <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Maroon Panel: Rivalry Contract -->
-                        <article class="cm-panel leaf leaf--dark is-rival" style="--d: 260ms">
-                            <div class="cm-band" style="border-bottom: 1px solid rgba(240,227,216,0.20);">
-                                <img class="cm-img" src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Engraving" loading="lazy" />
-                            </div>
-                            <div class="cm-panel-body">
-                                <div class="cm-rise cm-meta-row" style="--d: 380ms">
-                                    <span>MODE 02 &middot; RIVALRY</span>
-                                    <span>FORM R&ndash;01</span>
-                                </div>
-                                <div class="cm-vs-block">
-                                    <p class="cm-word" style="--d: 480ms">YOU</p>
-                                    <p class="cm-vs" style="--d: 640ms">VS</p>
-                                    <p class="cm-word cm-word-them" style="--d: 760ms">THEM</p>
-                                </div>
-                                <ul class="cm-terms-list">
-                                    <li class="cm-rise cm-term" style="--d: 880ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
-                                    <li class="cm-rise cm-term" style="--d: 960ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
-                                    <li class="cm-rise cm-term" style="--d: 1040ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
-                                </ul>
-                                <div class="cm-rise cm-cta-wrap" style="--d: 1140ms">
-                                    <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Specimen Card: Centered below at 460px max-width -->
-                    <div class="cm-block cm-spec" style="--d: 440ms">
-                        <div class="cm-spec-head">
-                            <span>SPECIMEN</span>
-                            <span>SOLO CONTRACT</span>
-                        </div>
-                        <div class="cm-spec-body">
-                            <p class="cm-word" style="--d: 600ms">YOU</p>
-                            <p class="cm-vs" style="--d: 720ms">VS</p>
-                            <p class="cm-word" style="--d: 840ms">YOU</p>
-                            <p class="cm-rise cm-spec-amt" style="--d: 960ms">$1,000</p>
-                            <p class="cm-rise cm-spec-sub" style="--d: 1030ms">LOCKED BY YOU, AGAINST YOU</p>
-                        </div>
-
-                        <div class="cm-spec-rows">
-                            <div class="cm-rise cm-row" style="--d: 1090ms">
-                                <span class="cm-spec-lbl">DEPOSIT</span>
-                                <span class="cm-dots"></span>
-                                <span class="cm-spec-val">$1,000</span>
-                            </div>
-                            <div class="cm-rise cm-row" style="--d: 1145ms">
-                                <span class="cm-spec-lbl">METRIC</span>
-                                <span class="cm-dots"></span>
-                                <span class="cm-spec-val">MRR &middot; Stripe</span>
-                            </div>
-                            <div class="cm-rise cm-row" style="--d: 1200ms">
-                                <span class="cm-spec-lbl">WINDOW</span>
-                                <span class="cm-dots"></span>
-                                <span class="cm-spec-val">30 days</span>
-                            </div>
-                            <div class="cm-rise cm-row" style="--d: 1255ms">
-                                <span class="cm-spec-lbl">ON SUCCESS</span>
-                                <span class="cm-dots"></span>
-                                <span class="cm-spec-val cm-val-win">Returned</span>
-                            </div>
-                            <div class="cm-rise cm-row" style="--d: 1310ms">
-                                <span class="cm-spec-lbl">ON MISS</span>
-                                <span class="cm-dots"></span>
-                                <span class="cm-spec-val cm-val-loss">Forfeited</span>
-                            </div>
-                        </div>
-
-                        <p class="cm-rise cm-spec-foot" style="--d: 1380ms">
-                            SPECIMEN &middot; NOT A LIVE CONTRACT
+                    <!-- Real Section Header OUTSIDE the frame -->
+                    <header style="margin-bottom: 40px;">
+                        <p class="cm-rise" style="--d: 0ms; font-size: 10px; letter-spacing: 0.18em; color: #8C877B; margin-bottom: 18px; text-transform: uppercase;">
+                            STEP 02 &middot; CHOOSE YOUR COUNTERPARTY
                         </p>
+                        <h2 id="cm-title" class="cm-rise" style="--d: 80ms; font-family: var(--display, 'Archivo', sans-serif); font-weight: 700; font-size: clamp(30px, 4.4vw, 46px); letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 18px; color: #1A1A18;">
+                            Who holds you to it
+                        </h2>
+                        <p class="cm-rise cm-lede" style="--d: 160ms; max-width: 480px; font-size: 14px; line-height: 1.75; color: #8C877B;">
+                            Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.
+                        </p>
+                    </header>
+
+                    <!-- Single Bordered Frame Containing Panels + Settlement Band -->
+                    <div class="cm-frame">
+                        <!-- Two-Column Grid: Solo and Rivalry Panels -->
+                        <div class="cm-grid">
+                            <!-- Cream Panel: Solo Contract -->
+                            <article class="cm-panel leaf leaf--cream" style="--d: 220ms">
+                                <div class="cm-band" style="border-bottom: 1px solid #D8D3C6;">
+                                    <img class="cm-img" src="/assets/images/solo-seal.png" alt="Solo Contract Engraving" loading="lazy" />
+                                </div>
+                                <div class="cm-panel-body">
+                                    <div class="cm-rise cm-meta-row" style="--d: 340ms">
+                                        <span>MODE 01 &middot; SOLO</span>
+                                        <span>FORM S&ndash;01</span>
+                                    </div>
+                                    <div class="cm-vs-block">
+                                        <p class="cm-word" style="--d: 440ms">YOU</p>
+                                        <p class="cm-vs" style="--d: 600ms">VS</p>
+                                        <p class="cm-word" style="--d: 720ms">YOU</p>
+                                    </div>
+                                    <ul class="cm-terms-list">
+                                        <li class="cm-rise cm-term" style="--d: 820ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
+                                        <li class="cm-rise cm-term" style="--d: 900ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
+                                        <li class="cm-rise cm-term" style="--d: 980ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
+                                    </ul>
+                                    <div class="cm-rise cm-cta-wrap" style="--d: 1100ms">
+                                        <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Maroon Panel: Rivalry Contract -->
+                            <article class="cm-panel leaf leaf--dark is-rival" style="--d: 340ms">
+                                <div class="cm-band" style="border-bottom: 1px solid rgba(240,227,216,0.20);">
+                                    <img class="cm-img" src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Engraving" loading="lazy" />
+                                </div>
+                                <div class="cm-panel-body">
+                                    <div class="cm-rise cm-meta-row" style="--d: 460ms">
+                                        <span>MODE 02 &middot; RIVALRY</span>
+                                        <span>FORM R&ndash;01</span>
+                                    </div>
+                                    <div class="cm-vs-block">
+                                        <p class="cm-word" style="--d: 560ms">YOU</p>
+                                        <p class="cm-vs" style="--d: 720ms">VS</p>
+                                        <p class="cm-word cm-word-them" style="--d: 840ms">THEM</p>
+                                    </div>
+                                    <ul class="cm-terms-list">
+                                        <li class="cm-rise cm-term" style="--d: 940ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
+                                        <li class="cm-rise cm-term" style="--d: 1020ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
+                                        <li class="cm-rise cm-term" style="--d: 1100ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
+                                    </ul>
+                                    <div class="cm-rise cm-cta-wrap" style="--d: 1220ms">
+                                        <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Bottom Settlement Band Attached Inside Frame -->
+                        <div class="cm-settle">
+                            <div class="cm-rise cm-settle-head" style="--d: 1120ms">
+                                <span class="cm-settle-title">Both settle the same way</span>
+                                <span class="cm-settle-tag">IDENTICAL FOR S&ndash;01 AND R&ndash;01</span>
+                            </div>
+
+                            <div class="cm-steps">
+                                <div class="cm-rise cm-step" style="--d: 1200ms">
+                                    <div class="cm-step-n">01 &middot; CONNECT</div>
+                                    <div class="cm-step-title">The oracle reads you</div>
+                                    <p class="cm-step-body">Stripe, Shopify, YouTube. Live data at the source. Nothing you type, nothing you upload.</p>
+                                </div>
+                                <div class="cm-rise cm-step" style="--d: 1280ms">
+                                    <div class="cm-step-n">02 &middot; LOCK</div>
+                                    <div class="cm-step-title">The capital is held</div>
+                                    <p class="cm-step-body">Escrowed for the full window. No early exit, no renegotiating the target once the clock starts.</p>
+                                </div>
+                                <div class="cm-rise cm-step" style="--d: 1360ms">
+                                    <div class="cm-step-n">03 &middot; SETTLE</div>
+                                    <div class="cm-step-title">The date decides</div>
+                                    <p class="cm-step-body">On the closing date the oracle reports and the contract settles itself. Neither party gets a vote.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

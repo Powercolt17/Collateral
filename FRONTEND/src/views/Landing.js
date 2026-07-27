@@ -19,22 +19,22 @@ export function renderLanding() {
             
 
             <!-- ═════ 1 · HERO + LIVE TAPE ═════ -->
-            <section class="hero section">
+            <section class="hero section reveal is-in">
                 <div class="shell hero-grid">
                     <div>
-                        <p class="eyebrow rise" style="--d:40ms">Self-enforcing performance contracts</p>
-                        <h1 class="h1 rise" style="--d:120ms">Put money on your own deadline</h1>
-                        <p class="lede rise" style="--d:220ms">Lock a deposit against a public goal. If your platform API confirms you hit it on time, your money comes back with matching yield. If you miss, your deposit funds someone who didn't.</p>
-                        <div class="hero-actions rise" style="--d:340ms">
+                        <p class="eyebrow rise is-in" style="--d:40ms">Self-enforcing performance contracts</p>
+                        <h1 class="h1 clip-wipe is-in" style="--d:120ms">Put money on your own deadline</h1>
+                        <p class="lede rise is-in" style="--d:220ms">Lock a deposit against a public goal. If your platform API confirms you hit it on time, your money comes back with matching yield. If you miss, your deposit funds someone who didn't.</p>
+                        <div class="hero-actions rise is-in" style="--d:340ms">
                             <button class="btn btn-fill" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a contract</button>
                             <a class="btn btn-ghost" href="#flow">Watch forfeiture flow &darr;</a>
                         </div>
-                        <div class="oracles-strip rise" style="--d:480ms">
+                        <div class="oracles-strip rise is-in" style="--d:480ms">
                             <span class="mono" style="opacity:.45">ORACLES</span>
-                            <a class="mono rise" style="--d:570ms" href="#oracles">Stripe</a>
-                            <a class="mono rise" style="--d:600ms" href="#oracles">X</a>
-                            <a class="mono rise" style="--d:630ms" href="#oracles">YouTube</a>
-                            <a class="mono rise" style="--d:660ms" href="#oracles">Shopify</a>
+                            <a class="mono rise is-in" style="--d:570ms" href="#oracles">Stripe</a>
+                            <a class="mono rise is-in" style="--d:600ms" href="#oracles">X</a>
+                            <a class="mono rise is-in" style="--d:630ms" href="#oracles">YouTube</a>
+                            <a class="mono rise is-in" style="--d:660ms" href="#oracles">Shopify</a>
                         </div>
                     </div>
 
@@ -871,6 +871,9 @@ export function initLanding() {
             entries.forEach((e) => {
                 if (e.isIntersecting) {
                     e.target.classList.add('is-in');
+                    e.target.querySelectorAll('.r-item, .r-plate, .r-rule, .clip-wipe, .clip-reveal, .rise, .cm-rise, .card-rise, .item, .duel').forEach(child => {
+                        child.classList.add('is-in');
+                    });
                     revealObserver.unobserve(e.target);
 
                     // Count up book totals when Section 05 becomes active
@@ -880,12 +883,15 @@ export function initLanding() {
                     }
                 }
             });
-        }, { threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
 
-        document.querySelectorAll('.reveal').forEach((sec) => {
+        document.querySelectorAll('section, .reveal, .hero').forEach((sec) => {
             const rect = sec.getBoundingClientRect();
-            if (reduce || (rect.top < window.innerHeight * 0.85 && rect.bottom > 0)) {
+            if (reduce || (rect.top < window.innerHeight * 0.95 && rect.bottom > 0)) {
                 sec.classList.add('is-in');
+                sec.querySelectorAll('.r-item, .r-plate, .r-rule, .clip-wipe, .clip-reveal, .rise, .cm-rise, .card-rise, .item, .duel').forEach(child => {
+                    child.classList.add('is-in');
+                });
                 if (sec.id === 'record') {
                     countUp(document.getElementById('book-total-amt'), 8700000, money);
                 }
@@ -894,7 +900,12 @@ export function initLanding() {
             }
         });
     } else {
-        document.querySelectorAll('.reveal').forEach((sec) => sec.classList.add('is-in'));
+        document.querySelectorAll('section, .reveal, .hero').forEach((sec) => {
+            sec.classList.add('is-in');
+            sec.querySelectorAll('.r-item, .r-plate, .r-rule, .clip-wipe, .clip-reveal, .rise, .cm-rise, .card-rise, .item, .duel').forEach(child => {
+                child.classList.add('is-in');
+            });
+        });
     }
 
     function countUp(el, target, formatFn) {

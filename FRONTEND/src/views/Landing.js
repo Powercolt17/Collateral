@@ -682,7 +682,151 @@ export function renderLanding() {
                 </div>
             </section>
 
-                        <!-- ═════ SITE FOOTER ═════ -->
+                        <!-- ═════ 7b · FAQ / SCHEDULE OF COMMON QUESTIONS ═════ -->
+            <section class="faq reveal" id="terms" aria-labelledby="faq-h">
+                <div class="faq-grid">
+                    <div class="rail">
+                        <div class="eyebrow">SCHEDULE OF COMMON QUESTIONS</div>
+                        <h2 id="faq-h">Everything a contract<br />does to your money</h2>
+                        <p>Nine clauses covering custody, the window, settlement, and what Collateral can see on the accounts you connect.</p>
+                        <div class="note">
+                            <b>CLERK'S NOTE</b>
+                            <span>If a question is not answered here, it is answered in the full terms. Nothing material is kept off this page.</span>
+                        </div>
+                    </div>
+
+                    <div class="sched" id="sched">
+                        <div class="group">&sect; 1 &nbsp;CUSTODY</div>
+
+                        <div class="item open">
+                            <button class="q" aria-expanded="true" aria-controls="a11">
+                                <span class="clause">&sect; 1.1</span>
+                                <span class="qt">What happens to my deposit?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a11" role="region">
+                                <div>
+                                    <p>It moves to a third-party custodian on Stripe Connect the moment the contract opens. Collateral never holds it. Hit your target and it returns to your card with the matched yield. Miss, and it settles to the forfeiture pool.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a12">
+                                <span class="clause">&sect; 1.2</span>
+                                <span class="qt">Who decides whether I hit the target?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a12" role="region">
+                                <div>
+                                    <p>The API you named in the contract. Collateral reads the same numbers your platform already reports, on the cadence listed in the register, and settles on whatever it finds. Nobody here reviews your work, and neither you nor a counterparty gets a vote.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a13">
+                                <span class="clause">&sect; 1.3</span>
+                                <span class="qt">What if the API is down at settlement?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a13" role="region">
+                                <div>
+                                    <p>Settlement waits for the next successful read within a 72-hour grace window. If the platform still has not reported by then, the contract voids and your deposit returns in full. A broken oracle is never treated as a miss.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group">&sect; 2 &nbsp;THE WINDOW</div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a21">
+                                <span class="clause">&sect; 2.1</span>
+                                <span class="qt">Can I move the deadline?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a21" role="region">
+                                <div>
+                                    <p>No. The date is fixed when the contract opens and cannot be extended, paused, or renegotiated by either party. That constraint is the product.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a22">
+                                <span class="clause">&sect; 2.2</span>
+                                <span class="qt">Can I cancel?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a22" role="region">
+                                <div>
+                                    <p>Within one hour of opening, yes, in full. After that the deposit is committed until the window closes.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group">&sect; 3 &nbsp;THE POOL</div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a31">
+                                <span class="clause">&sect; 3.1</span>
+                                <span class="qt">Where does forfeited money go?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a31" role="region">
+                                <div>
+                                    <p>Into the pool that funds matched yield for people who hit their targets in the same period. Your miss pays someone else's win. Collateral takes a fee on settled contracts, disclosed before you sign, and takes nothing from the pool itself.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a32">
+                                <span class="clause">&sect; 3.2</span>
+                                <span class="qt">Is this gambling?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a32" role="region">
+                                <div>
+                                    <p>The outcome depends on your own conduct against a target you set, measured by a source you nominate &mdash; not on chance or on an event outside your control. That is the distinction regulators draw, and it is why Collateral is not a broker, dealer, or exchange. It is also why we cannot promise you a return.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group">&sect; 4 &nbsp;ACCESS</div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a41">
+                                <span class="clause">&sect; 4.1</span>
+                                <span class="qt">What can Collateral see on my accounts?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a41" role="region">
+                                <div>
+                                    <p>Read-only scopes on the specific metrics listed in your contract, and nothing else. Collateral cannot post, message, refund, or change a setting on any account you connect, and you can revoke the token at any time without affecting an open contract's settlement.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <button class="q" aria-expanded="false" aria-controls="a42">
+                                <span class="clause">&sect; 4.2</span>
+                                <span class="qt">What if I disconnect the platform mid-contract?</span>
+                                <span class="sign" aria-hidden="true"></span>
+                            </button>
+                            <div class="a" id="a42" role="region">
+                                <div>
+                                    <p>The contract settles as a miss at the end of its window. Disconnecting removes the only source of truth it has, and an unverifiable target is treated the same as an unmet one. Reconnect before the window closes and settlement proceeds normally.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tail">Full terms and settlement rules &mdash; <a href="/docs/terms">read the instrument</a></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═════ SITE FOOTER ═════ -->
             <footer class="site-footer" style="background:var(--bg, #FAF7F1); border-top:1px solid var(--rule, #D8D2C6); padding:64px 24px 72px; text-align:center; box-sizing:border-box; width:100%;">
                 <div class="footer-inner" style="max-width:720px; margin:0 auto;">
                     <p class="footer-disclaimer" style="margin:0 0 28px; color:#55534E; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:12px; line-height:1.75; letter-spacing:0.01em; text-align:center;">
@@ -1190,5 +1334,22 @@ export function initLanding() {
             cmpTable.classList.add('is-animated');
         }
     })();
+
+
+    /* ── Schedule of Common Questions Accordion Controller ── */
+    (function initFaqAccordion() {
+        var items = document.querySelectorAll("#sched .item");
+        if (!items.length) return;
+        items.forEach(function (item) {
+            var btn = item.querySelector(".q");
+            if (!btn) return;
+            btn.addEventListener("click", function () {
+                var open = item.classList.toggle("open");
+                btn.setAttribute("aria-expanded", String(open));
+            });
+        });
+    })();
+
+
 
 export const initLandingEvents = initLanding;

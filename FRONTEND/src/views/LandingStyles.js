@@ -1242,7 +1242,20 @@ footer .logo-wordmark-light,
     border-top: none;
   }
   .cm-band {
-    height: 140px;
+    height: 155px;
+  }
+  .cm-hero-title {
+    font-size: clamp(34px, 8.5vw, 56px);
+    margin: 12px 0 18px 0 !important;
+  }
+  .cm-vs-line {
+    margin: 0 0 20px 0 !important;
+  }
+  .cm-panel-body {
+    padding: 16px 16px 0;
+  }
+  .cm-cta-wrap {
+    padding: 16px 16px 20px;
   }
 }
 

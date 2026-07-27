@@ -65,25 +65,22 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 2 · MODES ═════ -->
-            <section class="section alt reveal" id="modes-section">
+            <section class="section alt reveal cm-root" id="modes-section" aria-labelledby="cm-title">
                 <span class="idx-mark" aria-hidden="true">02</span>
-                <div class="shell">
-                    <p class="eyebrow r-item" style="--i:0">Contract execution modes</p>
-                    <h2 class="title r-item" style="--i:1">Two ways to make quitting expensive</h2>
-                    <p class="lede r-item" style="--i:2">Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.</p>
+                <div class="shell" style="max-width: 1120px; margin: 0 auto;">
+                    <!-- Shared Header ABOVE both panels, inside same 1px ink border -->
+                    <div class="cm-block cm-rise" style="--d: 0ms">
+                        <p class="cm-hdr-eyebrow">STEP 02 &middot; CHOOSE YOUR COUNTERPARTY</p>
+                        <h2 id="cm-title" class="cm-hdr-title">Who holds you to it</h2>
+                    </div>
 
-                    <div class="modes" id="modes" aria-label="Contract execution modes">
-                        <!-- Shared Header ABOVE both panels, inside same 1px ink border -->
-                        <div class="cm-header cm-rise" style="--d: 0ms">
-                            <p class="cm-hdr-eyebrow">STEP 02 &middot; CHOOSE YOUR COUNTERPARTY</p>
-                            <h2 class="cm-hdr-title">Who holds you to it</h2>
-                        </div>
-
-                        <div class="plates plate ticks r-plate" style="--i:3">
-                            <!-- Cream Panel: Solo Contract -->
-                            <button class="leaf leaf--cream panel cm-panel" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen" style="--d: 140ms">
-                                <div class="leaf-art" aria-hidden="true">
-                                    <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
+                    <!-- Two-Column Grid: Solo and Rivalry Panels -->
+                    <div class="cm-grid">
+                        <!-- Cream Panel: Solo Contract -->
+                        <article class="cm-panel leaf leaf--cream" style="--d: 140ms">
+                            <div class="cm-figure-box" style="background: #E7E2D6; border-bottom: 1px solid #D8D3C6;">
+                                <div class="cm-figure">
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="cm-figure-img" loading="lazy" />
                                     <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
                                         <g stroke="#2F4370" fill="none" stroke-width="1.1">
                                             <path d="M42 78 V44 Q42 34 50 34 Q58 34 58 44 V60" />
@@ -102,34 +99,34 @@ export function renderLanding() {
                                         </g>
                                     </svg>
                                 </div>
-                                <div class="leaf-body">
-                                    <div class="leaf-head-row cm-rise" style="--d: 260ms">
-                                        <span class="mono leaf-mode-tag">MODE 01 &middot; SOLO</span>
-                                        <span class="mono leaf-form-ref">FORM S&ndash;01</span>
-                                    </div>
-                                    <div class="cm-vs-block">
-                                        <p class="cm-word" style="--d: 360ms">YOU</p>
-                                        <p class="cm-vs" style="--d: 520ms">VS</p>
-                                        <p class="cm-word" style="--d: 640ms">YOU</p>
-                                    </div>
-                                    <ul class="leaf-list cm-terms-left">
-                                        <li class="cm-rise" style="--d: 760ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
-                                        <li class="cm-rise" style="--d: 850ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
-                                        <li class="cm-rise" style="--d: 940ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
-                                    </ul>
-                                    <div class="cm-rise" style="--d: 1040ms; margin-top: auto; padding-top: 18px;">
-                                        <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
-                                    </div>
+                            </div>
+                            <div class="cm-panel-body">
+                                <div class="cm-rise cm-meta-row" style="--d: 260ms">
+                                    <span>MODE 01 &middot; SOLO</span>
+                                    <span>FORM S&ndash;01</span>
                                 </div>
-                            </button>
+                                <div class="cm-vs-block">
+                                    <p class="cm-word" style="--d: 360ms">YOU</p>
+                                    <p class="cm-vs" style="--d: 520ms">VS</p>
+                                    <p class="cm-word" style="--d: 640ms">YOU</p>
+                                </div>
+                                <ul class="cm-terms-list">
+                                    <li class="cm-rise" style="--d: 760ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
+                                    <li class="cm-rise" style="--d: 850ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
+                                    <li class="cm-rise" style="--d: 940ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
+                                </ul>
+                                <div class="cm-rise cm-cta-wrap" style="--d: 1040ms">
+                                    <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
+                                </div>
+                            </div>
+                        </article>
 
-                            <div class="vrule" aria-hidden="true"></div>
-
-                            <!-- Maroon Panel: Rivalry Contract -->
-                            <button class="leaf leaf--dark panel panel--rivalry cm-panel" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen" style="--d: 260ms">
-                                <div class="leaf-art" aria-hidden="true">
-                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
-                                    <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
+                        <!-- Maroon Panel: Rivalry Contract -->
+                        <article class="cm-panel leaf leaf--dark" style="--d: 260ms">
+                            <div class="cm-figure-box" style="background: #5E1E2E; border-bottom: 1px solid rgba(240,227,216,0.22);">
+                                <div class="cm-figure">
+                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="cm-figure-img" loading="lazy" />
+                                    <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true">
                                         <g stroke="#F0E3D8" fill="none" stroke-width="1.1">
                                             <path d="M14 76 V50 Q14 42 22 42 Q30 42 30 50 V76" />
                                             <path d="M30 54 Q30 46 38 46 Q46 46 46 54 V76" />
@@ -147,54 +144,74 @@ export function renderLanding() {
                                         </g>
                                     </svg>
                                 </div>
-                                <div class="leaf-body">
-                                    <div class="leaf-head-row cm-rise" style="--d: 380ms">
-                                        <span class="mono leaf-mode-tag">MODE 02 &middot; RIVALRY</span>
-                                        <span class="mono leaf-form-ref">FORM R&ndash;01</span>
-                                    </div>
-                                    <div class="cm-vs-block">
-                                        <p class="cm-word" style="--d: 480ms">YOU</p>
-                                        <p class="cm-vs" style="--d: 640ms">VS</p>
-                                        <p class="cm-word cm-word-them" style="--d: 760ms">THEM</p>
-                                    </div>
-                                    <ul class="leaf-list cm-terms-left">
-                                        <li class="cm-rise" style="--d: 880ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
-                                        <li class="cm-rise" style="--d: 970ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
-                                        <li class="cm-rise" style="--d: 1060ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
-                                    </ul>
-                                    <div class="cm-rise" style="--d: 1160ms; margin-top: auto; padding-top: 18px;">
-                                        <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
-                                    </div>
+                            </div>
+                            <div class="cm-panel-body">
+                                <div class="cm-rise cm-meta-row" style="--d: 380ms">
+                                    <span>MODE 02 &middot; RIVALRY</span>
+                                    <span>FORM R&ndash;01</span>
                                 </div>
-                            </button>
+                                <div class="cm-vs-block">
+                                    <p class="cm-word" style="--d: 480ms">YOU</p>
+                                    <p class="cm-vs" style="--d: 640ms">VS</p>
+                                    <p class="cm-word cm-word-them" style="--d: 760ms">THEM</p>
+                                </div>
+                                <ul class="cm-terms-list">
+                                    <li class="cm-rise" style="--d: 880ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
+                                    <li class="cm-rise" style="--d: 970ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
+                                    <li class="cm-rise" style="--d: 1060ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
+                                </ul>
+                                <div class="cm-rise cm-cta-wrap" style="--d: 1160ms">
+                                    <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Specimen Card: Centered below at 520px max-width -->
+                    <div class="cm-block cm-specimen-card" style="--d: 460ms">
+                        <div class="cm-spec-head">
+                            <span>SPECIMEN</span>
+                            <span>SOLO CONTRACT</span>
+                        </div>
+                        <div class="cm-spec-body">
+                            <p class="cm-word" style="--d: 620ms">YOU</p>
+                            <p class="cm-vs" style="--d: 740ms">VS</p>
+                            <p class="cm-word" style="--d: 860ms">YOU</p>
+                            <p class="cm-rise cm-spec-amt" style="--d: 980ms">$1,000</p>
+                            <p class="cm-rise cm-spec-sub" style="--d: 1060ms">LOCKED BY YOU, AGAINST YOU</p>
                         </div>
 
-                        <!-- Specimen Panel -->
-                        <aside class="demo plate-quiet ticks r-plate specimen" id="specimen" role="tabpanel" aria-labelledby="tab-solo">
-                            <div class="demo-top">
-                                <span class="mono">SPECIMEN</span>
-                                <span class="mono spec-fade" data-f="kind">SOLO CONTRACT</span>
+                        <div class="cm-spec-rows">
+                            <div class="cm-rise cm-spec-row" style="--d: 1120ms">
+                                <span class="cm-spec-lbl">DEPOSIT</span>
+                                <span class="cm-spec-dots"></span>
+                                <span class="cm-spec-val">$1,000</span>
                             </div>
-
-                            <div class="demo-center-block spec-fade">
-                                <p class="demo-you" data-f="a">YOU</p>
-                                <p class="demo-vs">VS</p>
-                                <p class="demo-you" data-f="b">YOU</p>
-                                <p class="demo-amt" data-f="amount">$1,000</p>
-                                <p class="mono demo-sub" data-f="under">LOCKED BY YOU, AGAINST YOU</p>
+                            <div class="cm-rise cm-spec-row" style="--d: 1180ms">
+                                <span class="cm-spec-lbl">METRIC</span>
+                                <span class="cm-spec-dots"></span>
+                                <span class="cm-spec-val">MRR &middot; Stripe</span>
                             </div>
-
-                            <dl class="demo-ledger spec-fade" data-f="rows">
-                                <div class="t-row"><dt>DEPOSIT</dt><span class="dots"></span><dd>$1,000</dd></div>
-                                <div class="t-row"><dt>WINDOW</dt><span class="dots"></span><dd>30 days</dd></div>
-                                <div class="t-row"><dt>ON SUCCESS</dt><span class="dots"></span><dd class="win">$2,500</dd></div>
-                                <div class="t-row"><dt>ON MISS</dt><span class="dots"></span><dd class="blood">&minus;$1,000</dd></div>
-                            </dl>
-
-                            <div class="demo-foot-bar">
-                                <span class="mono">SPECIMEN &middot; NOT A LIVE CONTRACT</span>
+                            <div class="cm-rise cm-spec-row" style="--d: 1240ms">
+                                <span class="cm-spec-lbl">WINDOW</span>
+                                <span class="cm-spec-dots"></span>
+                                <span class="cm-spec-val">30 days</span>
                             </div>
-                        </aside>
+                            <div class="cm-rise cm-spec-row" style="--d: 1300ms">
+                                <span class="cm-spec-lbl">ON SUCCESS</span>
+                                <span class="cm-spec-dots"></span>
+                                <span class="cm-spec-val cm-val-win">Returned</span>
+                            </div>
+                            <div class="cm-rise cm-spec-row" style="--d: 1360ms">
+                                <span class="cm-spec-lbl">ON MISS</span>
+                                <span class="cm-spec-dots"></span>
+                                <span class="cm-spec-val cm-val-loss">Forfeited</span>
+                            </div>
+                        </div>
+
+                        <p class="cm-rise cm-spec-foot" style="--d: 1440ms">
+                            SPECIMEN &middot; NOT A LIVE CONTRACT
+                        </p>
                     </div>
                 </div>
             </section>

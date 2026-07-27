@@ -66,9 +66,8 @@ export function renderLanding() {
 
             <!-- ═════ 2 · MODES ═════ -->
             <section class="section alt reveal cm-root" id="modes-section" aria-labelledby="cm-title">
-                <span class="idx-mark" aria-hidden="true">02</span>
-                <div class="shell" style="max-width: 1120px; margin: 0 auto;">
-                    <!-- Shared Header ABOVE both panels, inside same 1px ink border -->
+                <div class="shell" style="max-width: 1060px; margin: 0 auto; padding: 0 24px;">
+                    <!-- Shared Header ABOVE both panels -->
                     <div class="cm-block cm-rise" style="--d: 0ms">
                         <p class="cm-hdr-eyebrow">STEP 02 &middot; CHOOSE YOUR COUNTERPARTY</p>
                         <h2 id="cm-title" class="cm-hdr-title">Who holds you to it</h2>
@@ -78,27 +77,8 @@ export function renderLanding() {
                     <div class="cm-grid">
                         <!-- Cream Panel: Solo Contract -->
                         <article class="cm-panel leaf leaf--cream" style="--d: 140ms">
-                            <div class="cm-figure-box" style="background: #E7E2D6; border-bottom: 1px solid #D8D3C6;">
-                                <div class="cm-figure">
-                                    <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="cm-figure-img" loading="lazy" />
-                                    <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
-                                        <g stroke="#2F4370" fill="none" stroke-width="1.1">
-                                            <path d="M42 78 V44 Q42 34 50 34 Q58 34 58 44 V60" />
-                                            <path d="M58 52 Q58 42 66 42 Q74 42 74 52 V62" />
-                                            <path d="M74 54 Q74 45 81 45 Q88 45 88 54 V64" />
-                                            <path d="M42 60 Q30 52 26 60 Q23 67 34 74" />
-                                            <path d="M42 78 Q42 90 60 90 Q88 90 88 72 V64" />
-                                            <line x1="30" y1="20" x2="90" y2="20" />
-                                            <line x1="34" y1="14" x2="86" y2="14" />
-                                        </g>
-                                        <g stroke="#2F4370" stroke-width="0.5" opacity="0.45">
-                                            <line x1="46" y1="50" x2="54" y2="50" />
-                                            <line x1="46" y1="56" x2="54" y2="56" />
-                                            <line x1="46" y1="62" x2="54" y2="62" />
-                                            <line x1="62" y1="58" x2="70" y2="58" />
-                                        </g>
-                                    </svg>
-                                </div>
+                            <div class="cm-band" style="border-bottom: 1px solid #D8D3C6;">
+                                <img class="cm-img" src="/assets/images/solo-seal.png" alt="Solo Contract Engraving" loading="lazy" />
                             </div>
                             <div class="cm-panel-body">
                                 <div class="cm-rise cm-meta-row" style="--d: 260ms">
@@ -111,11 +91,11 @@ export function renderLanding() {
                                     <p class="cm-word" style="--d: 640ms">YOU</p>
                                 </div>
                                 <ul class="cm-terms-list">
-                                    <li class="cm-rise" style="--d: 760ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
-                                    <li class="cm-rise" style="--d: 850ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
-                                    <li class="cm-rise" style="--d: 940ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
+                                    <li class="cm-rise cm-term" style="--d: 760ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
+                                    <li class="cm-rise cm-term" style="--d: 840ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
+                                    <li class="cm-rise cm-term" style="--d: 920ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
                                 </ul>
-                                <div class="cm-rise cm-cta-wrap" style="--d: 1040ms">
+                                <div class="cm-rise cm-cta-wrap" style="--d: 1020ms">
                                     <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
                                 </div>
                             </div>
@@ -123,27 +103,8 @@ export function renderLanding() {
 
                         <!-- Maroon Panel: Rivalry Contract -->
                         <article class="cm-panel leaf leaf--dark" style="--d: 260ms">
-                            <div class="cm-figure-box" style="background: #5E1E2E; border-bottom: 1px solid rgba(240,227,216,0.22);">
-                                <div class="cm-figure">
-                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="cm-figure-img" loading="lazy" />
-                                    <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true">
-                                        <g stroke="#F0E3D8" fill="none" stroke-width="1.1">
-                                            <path d="M14 76 V50 Q14 42 22 42 Q30 42 30 50 V76" />
-                                            <path d="M30 54 Q30 46 38 46 Q46 46 46 54 V76" />
-                                            <rect x="10" y="76" width="42" height="9" />
-                                            <path d="M106 76 V50 Q106 42 98 42 Q90 42 90 50 V76" />
-                                            <path d="M90 54 Q90 46 82 46 Q74 46 74 54 V76" />
-                                            <rect x="68" y="76" width="42" height="9" />
-                                            <line x1="10" y1="90" x2="110" y2="90" />
-                                        </g>
-                                        <g stroke="#F0E3D8" stroke-width="0.5" opacity="0.45">
-                                            <line x1="16" y1="56" x2="28" y2="56" />
-                                            <line x1="16" y1="62" x2="28" y2="62" />
-                                            <line x1="92" y1="56" x2="104" y2="56" />
-                                            <line x1="92" y1="62" x2="104" y2="62" />
-                                        </g>
-                                    </svg>
-                                </div>
+                            <div class="cm-band" style="border-bottom: 1px solid rgba(240,227,216,0.20);">
+                                <img class="cm-img" src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Engraving" loading="lazy" />
                             </div>
                             <div class="cm-panel-body">
                                 <div class="cm-rise cm-meta-row" style="--d: 380ms">
@@ -156,60 +117,60 @@ export function renderLanding() {
                                     <p class="cm-word cm-word-them" style="--d: 760ms">THEM</p>
                                 </div>
                                 <ul class="cm-terms-list">
-                                    <li class="cm-rise" style="--d: 880ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
-                                    <li class="cm-rise" style="--d: 970ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
-                                    <li class="cm-rise" style="--d: 1060ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
+                                    <li class="cm-rise cm-term" style="--d: 880ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
+                                    <li class="cm-rise cm-term" style="--d: 960ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
+                                    <li class="cm-rise cm-term" style="--d: 1040ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
                                 </ul>
-                                <div class="cm-rise cm-cta-wrap" style="--d: 1160ms">
+                                <div class="cm-rise cm-cta-wrap" style="--d: 1140ms">
                                     <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
                                 </div>
                             </div>
                         </article>
                     </div>
 
-                    <!-- Specimen Card: Centered below at 520px max-width -->
-                    <div class="cm-block cm-specimen-card" style="--d: 460ms">
+                    <!-- Specimen Card: Centered below at 460px max-width -->
+                    <div class="cm-block cm-spec" style="--d: 440ms">
                         <div class="cm-spec-head">
                             <span>SPECIMEN</span>
                             <span>SOLO CONTRACT</span>
                         </div>
                         <div class="cm-spec-body">
-                            <p class="cm-word" style="--d: 620ms">YOU</p>
-                            <p class="cm-vs" style="--d: 740ms">VS</p>
-                            <p class="cm-word" style="--d: 860ms">YOU</p>
-                            <p class="cm-rise cm-spec-amt" style="--d: 980ms">$1,000</p>
-                            <p class="cm-rise cm-spec-sub" style="--d: 1060ms">LOCKED BY YOU, AGAINST YOU</p>
+                            <p class="cm-word" style="--d: 600ms">YOU</p>
+                            <p class="cm-vs" style="--d: 720ms">VS</p>
+                            <p class="cm-word" style="--d: 840ms">YOU</p>
+                            <p class="cm-rise cm-spec-amt" style="--d: 960ms">$1,000</p>
+                            <p class="cm-rise cm-spec-sub" style="--d: 1030ms">LOCKED BY YOU, AGAINST YOU</p>
                         </div>
 
                         <div class="cm-spec-rows">
-                            <div class="cm-rise cm-spec-row" style="--d: 1120ms">
+                            <div class="cm-rise cm-row" style="--d: 1090ms">
                                 <span class="cm-spec-lbl">DEPOSIT</span>
-                                <span class="cm-spec-dots"></span>
+                                <span class="cm-dots"></span>
                                 <span class="cm-spec-val">$1,000</span>
                             </div>
-                            <div class="cm-rise cm-spec-row" style="--d: 1180ms">
+                            <div class="cm-rise cm-row" style="--d: 1145ms">
                                 <span class="cm-spec-lbl">METRIC</span>
-                                <span class="cm-spec-dots"></span>
+                                <span class="cm-dots"></span>
                                 <span class="cm-spec-val">MRR &middot; Stripe</span>
                             </div>
-                            <div class="cm-rise cm-spec-row" style="--d: 1240ms">
+                            <div class="cm-rise cm-row" style="--d: 1200ms">
                                 <span class="cm-spec-lbl">WINDOW</span>
-                                <span class="cm-spec-dots"></span>
+                                <span class="cm-dots"></span>
                                 <span class="cm-spec-val">30 days</span>
                             </div>
-                            <div class="cm-rise cm-spec-row" style="--d: 1300ms">
+                            <div class="cm-rise cm-row" style="--d: 1255ms">
                                 <span class="cm-spec-lbl">ON SUCCESS</span>
-                                <span class="cm-spec-dots"></span>
+                                <span class="cm-dots"></span>
                                 <span class="cm-spec-val cm-val-win">Returned</span>
                             </div>
-                            <div class="cm-rise cm-spec-row" style="--d: 1360ms">
+                            <div class="cm-rise cm-row" style="--d: 1310ms">
                                 <span class="cm-spec-lbl">ON MISS</span>
-                                <span class="cm-spec-dots"></span>
+                                <span class="cm-dots"></span>
                                 <span class="cm-spec-val cm-val-loss">Forfeited</span>
                             </div>
                         </div>
 
-                        <p class="cm-rise cm-spec-foot" style="--d: 1440ms">
+                        <p class="cm-rise cm-spec-foot" style="--d: 1380ms">
                             SPECIMEN &middot; NOT A LIVE CONTRACT
                         </p>
                     </div>

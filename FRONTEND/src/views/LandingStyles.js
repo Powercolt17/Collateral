@@ -2833,24 +2833,45 @@ html.js-motion-active .reveal.is-in .r-rule {
     transition: transform 200ms var(--ease);
     transform-origin: center;
   }
-  .faq .q[aria-expanded="true"] .sign::after {
+  .faq .q[aria-expanded="true"] .sign::after,
+  .faq .item.open .sign::after {
     transform: scaleY(0);
   }
-  .faq .q[aria-expanded="true"] .qt {
+  .faq .q[aria-expanded="true"] .qt,
+  .faq .item.open .qt {
     color: var(--accent);
   }
 
+  /* Outer: Grid container (0fr / 1fr). ZERO padding, margin, border, min-height */
   .faq .a {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 260ms var(--ease);
+    padding: 0;
+    margin: 0;
+    border: none;
+    min-height: 0;
   }
-  .faq .item.open .a {
+  .faq .item.open .a,
+  .faq .q[aria-expanded="true"] + .a {
     grid-template-rows: 1fr;
   }
+
+  /* Middle: overflow: hidden; min-height: 0; visibility: hidden when closed. ZERO padding */
   .faq .a > div {
     overflow: hidden;
+    min-height: 0;
+    visibility: hidden;
+    transition: visibility 260ms var(--ease);
+    padding: 0;
+    margin: 0;
   }
+  .faq .item.open .a > div,
+  .faq .q[aria-expanded="true"] + .a > div {
+    visibility: visible;
+  }
+
+  /* Inner: ALL PADDING LIVES HERE AND ONLY HERE (~24px below answer paragraph) */
   .faq .a p {
     margin: 0;
     padding: 0 44px 24px 78px;
@@ -2859,6 +2880,15 @@ html.js-motion-active .reveal.is-in .r-rule {
     font-size: 15.5px;
     line-height: 1.72;
     text-align: left;
+  }
+
+  /* Motion — prefers-reduced-motion removes transitions */
+  @media (prefers-reduced-motion: reduce) {
+    .faq .a,
+    .faq .a > div,
+    .faq .sign::after {
+      transition: none !important;
+    }
   }
 
   .faq .tail {

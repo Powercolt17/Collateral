@@ -709,37 +709,54 @@ footer .logo-wordmark-light,
   100% { transform: translateY(-50%) rotate(-11deg) scale(1); opacity: .78; }
 }
 
+@keyframes cl-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 0.85; }
+}
+
 @media(max-width:760px) {
   .row {
     position: relative !important;
-    padding: 12px 14px !important;
+    padding: 13.5px 16px !important;
+    display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
+    justify-content: space-between !important;
+    gap: 4px 12px !important;
   }
   .row-main {
     flex: 1 1 100% !important;
-    margin-bottom: 4px !important;
+    min-width: 0 !important;
   }
   .row-right {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
+    min-width: 0 !important;
     text-align: left !important;
+    margin-top: 2px !important;
   }
-  .stamp {
-    position: relative !important;
+  .row.settled .row-state {
+    display: none !important;
+  }
+  .stamp, .stamp.static {
+    position: static !important;
     right: auto !important;
     top: auto !important;
-    transform: rotate(-6deg) scale(0.9) !important;
-    display: inline-block !important;
-    margin-left: auto !important;
-    font-size: 9.5px !important;
-    padding: 2px 7px !important;
+    bottom: auto !important;
+    margin: 0 0 0 auto !important;
+    transform: rotate(-4deg) !important;
+    animation: cl-fade-in 0.3s ease forwards !important;
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.12em !important;
+    border-width: 1.5px !important;
     flex-shrink: 0 !important;
-  }
-  .stamp.static {
-    transform: rotate(-6deg) scale(0.9) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -1417,6 +1434,18 @@ footer .logo-wordmark-light,
 }
 
 /* ═══════════ CASE ═══════════ */
+#case,
+#case .shell,
+#case .argue,
+#case .argue > div,
+.cmp-table-wrap,
+table.cmp {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
 .argue {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);

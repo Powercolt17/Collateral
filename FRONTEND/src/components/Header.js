@@ -91,7 +91,7 @@ export function renderHeader(currentRoute = '') {
                 font-family: 'Nevera', 'Aquire', 'Cinzel', sans-serif !important;
                 font-size: 21px !important;
                 font-weight: 700 !important;
-                letter-spacing: 0.14em !important;
+                letter-spacing: 0.165em !important;
                 color: #0E1420 !important;
                 text-decoration: none;
                 display: inline-flex;
@@ -105,26 +105,30 @@ export function renderHeader(currentRoute = '') {
                 outline-offset: 4px;
             }
 
-            /* Current-Section Divider Rule & Label (Desktop only) */
+            /* Current-Section Divider Rule & Sub-label (Desktop only) */
             .ch-section-divider {
                 width: 1px;
-                height: 16px;
+                height: 13px;
                 background: #C8C2B4;
-                margin: 0 14px;
+                margin: 0 12px;
                 display: none;
+                align-self: center;
+                transform: translateY(1px);
             }
             .ch-section-label {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.22em;
+                font-size: 10.5px;
+                font-weight: 600;
+                letter-spacing: 0.18em;
                 text-transform: uppercase;
-                color: #7A1C29 !important;
+                color: #8C877B !important;
                 user-select: none;
                 display: none;
+                align-self: center;
+                transform: translateY(0.5px);
             }
             @media (min-width: 768px) {
-                .ch-section-divider { display: block; }
+                .ch-section-divider { display: inline-block; }
                 .ch-section-label { display: inline-block; }
             }
 
@@ -738,10 +742,8 @@ export function renderHeader(currentRoute = '') {
                     <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo-wordmark">
                         COLLATERAL
                     </a>
-                    ${sectionLabel ? `
-                        <div class="ch-section-divider"></div>
-                        <span class="ch-section-label">${sectionLabel}</span>
-                    ` : ''}
+                    <div class="ch-section-divider"></div>
+                    <span class="ch-section-label">${sectionLabel || 'MARKET'}</span>
                 </div>
 
                 <!-- Right Group: Left-Aligned Paired Columns + Sign In + Separated Menu Cluster -->

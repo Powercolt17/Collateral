@@ -875,7 +875,7 @@ footer .logo-wordmark-light,
   color: #1A1A18;
 }
 
-/* Image Band: 176px tall, cover, center 42% */
+/* Image Band: 176px tall, cover, center 30% */
 .cm-band {
   height: 176px;
   overflow: hidden;
@@ -887,8 +887,18 @@ footer .logo-wordmark-light,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center 30%;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cm-panel:not(.is-rival) .cm-img {
+  filter: grayscale(1) contrast(1.45) brightness(1.05);
+  mix-blend-mode: multiply;
+}
+
+.cm-panel.is-rival .cm-img {
+  filter: grayscale(1) invert(1) contrast(1.35);
+  mix-blend-mode: screen;
 }
 
 .cm-panel:hover .cm-img {

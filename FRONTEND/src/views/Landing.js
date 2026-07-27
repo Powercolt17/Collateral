@@ -102,7 +102,7 @@ export function renderLanding() {
                         </article>
 
                         <!-- Maroon Panel: Rivalry Contract -->
-                        <article class="cm-panel leaf leaf--dark" style="--d: 260ms">
+                        <article class="cm-panel leaf leaf--dark is-rival" style="--d: 260ms">
                             <div class="cm-band" style="border-bottom: 1px solid rgba(240,227,216,0.20);">
                                 <img class="cm-img" src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Engraving" loading="lazy" />
                             </div>

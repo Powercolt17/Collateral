@@ -73,9 +73,15 @@ export function renderLanding() {
                     <p class="lede r-item" style="--i:2">Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.</p>
 
                     <div class="modes" id="modes" aria-label="Contract execution modes">
+                        <!-- Shared Header ABOVE both panels, inside same 1px ink border -->
+                        <div class="cm-header cm-rise" style="--d: 0ms">
+                            <p class="cm-hdr-eyebrow">STEP 02 &middot; CHOOSE YOUR COUNTERPARTY</p>
+                            <h2 class="cm-hdr-title">Who holds you to it</h2>
+                        </div>
+
                         <div class="plates plate ticks r-plate" style="--i:3">
                             <!-- Cream Panel: Solo Contract -->
-                            <button class="leaf leaf--cream panel" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen">
+                            <button class="leaf leaf--cream panel cm-panel" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen" style="--d: 140ms">
                                 <div class="leaf-art" aria-hidden="true">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
                                     <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
@@ -97,25 +103,30 @@ export function renderLanding() {
                                     </svg>
                                 </div>
                                 <div class="leaf-body">
-                                    <div class="leaf-head-row">
+                                    <div class="leaf-head-row cm-rise" style="--d: 260ms">
                                         <span class="mono leaf-mode-tag">MODE 01 &middot; SOLO</span>
                                         <span class="mono leaf-form-ref">FORM S&ndash;01</span>
                                     </div>
-                                    <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
-                                    <p class="mono leaf-spec-line">ONE OPERATOR &middot; ONE ORACLE &middot; NO EXCUSES</p>
-                                    <ul class="leaf-list">
-                                        <li>You set the target. You don't get to move it</li>
-                                        <li>Hit it and every dollar comes back, plus yield</li>
-                                        <li>Miss it and the money goes to someone who didn't</li>
+                                    <div class="cm-vs-block">
+                                        <p class="cm-word" style="--d: 360ms">YOU</p>
+                                        <p class="cm-vs" style="--d: 520ms">VS</p>
+                                        <p class="cm-word" style="--d: 640ms">YOU</p>
+                                    </div>
+                                    <ul class="leaf-list cm-terms-left">
+                                        <li class="cm-rise" style="--d: 760ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
+                                        <li class="cm-rise" style="--d: 850ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
+                                        <li class="cm-rise" style="--d: 940ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
                                     </ul>
-                                    <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
+                                    <div class="cm-rise" style="--d: 1040ms; margin-top: auto; padding-top: 18px;">
+                                        <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
+                                    </div>
                                 </div>
                             </button>
 
                             <div class="vrule" aria-hidden="true"></div>
 
                             <!-- Maroon Panel: Rivalry Contract -->
-                            <button class="leaf leaf--dark panel panel--rivalry" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen">
+                            <button class="leaf leaf--dark panel panel--rivalry cm-panel" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen" style="--d: 260ms">
                                 <div class="leaf-art" aria-hidden="true">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
                                     <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
@@ -137,18 +148,23 @@ export function renderLanding() {
                                     </svg>
                                 </div>
                                 <div class="leaf-body">
-                                    <div class="leaf-head-row">
+                                    <div class="leaf-head-row cm-rise" style="--d: 380ms">
                                         <span class="mono leaf-mode-tag">MODE 02 &middot; RIVALRY</span>
                                         <span class="mono leaf-form-ref">FORM R&ndash;01</span>
                                     </div>
-                                    <h3 class="leaf-name">Someone else is counting on you to fail</h3>
-                                    <p class="mono leaf-spec-line">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
-                                    <ul class="leaf-list">
-                                        <li>Equal capital, same metric, same clock</li>
-                                        <li>One oracle decides. Neither of you gets a vote</li>
-                                        <li>The winner takes the escrow. There is no draw</li>
+                                    <div class="cm-vs-block">
+                                        <p class="cm-word" style="--d: 480ms">YOU</p>
+                                        <p class="cm-vs" style="--d: 640ms">VS</p>
+                                        <p class="cm-word cm-word-them" style="--d: 760ms">THEM</p>
+                                    </div>
+                                    <ul class="leaf-list cm-terms-left">
+                                        <li class="cm-rise" style="--d: 880ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
+                                        <li class="cm-rise" style="--d: 970ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
+                                        <li class="cm-rise" style="--d: 1060ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
                                     </ul>
-                                    <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
+                                    <div class="cm-rise" style="--d: 1160ms; margin-top: auto; padding-top: 18px;">
+                                        <a class="link leaf-cta cta" href="/signin" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
+                                    </div>
                                 </div>
                             </button>
                         </div>

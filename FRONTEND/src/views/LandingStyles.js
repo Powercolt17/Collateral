@@ -834,6 +834,201 @@ footer .logo-wordmark-light,
 .leaf--cream .leaf-name { color: var(--ink, #0E1420); }
 .leaf--dark .leaf-name { color: #FFF8F5 !important; }
 
+/* ═══════════ CONTRACT MODES STYLING & ANIMATION ═══════════ */
+.cm-header {
+  border: 1px solid #1A1A18;
+  border-bottom: none;
+  background: #FBFAF6;
+  padding: 40px 24px 34px;
+  text-align: center;
+}
+
+.cm-hdr-eyebrow {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: #8C877B;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.cm-hdr-title {
+  font-family: var(--display, 'Archivo', sans-serif);
+  font-weight: 600;
+  font-size: clamp(24px, 3.4vw, 34px);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: #1A1A18;
+  margin: 0;
+}
+
+/* Versus Block */
+.cm-vs-block {
+  margin: 0 0 24px;
+  text-align: left;
+}
+
+.cm-word {
+  font-family: var(--display, 'Archivo', sans-serif);
+  font-weight: 700;
+  font-size: clamp(30px, 4.6vw, 42px);
+  letter-spacing: -0.03em;
+  line-height: 0.96;
+  margin: 0;
+  display: block;
+}
+
+.leaf--cream .cm-word {
+  color: #1A1A18;
+}
+
+.leaf--dark .cm-word {
+  color: #F0E3D8;
+}
+
+.leaf--dark .cm-word-them {
+  color: #E8B4B4 !important;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.leaf--dark:hover .cm-word-them {
+  transform: translateX(4px);
+}
+
+.cm-vs {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  margin: 7px 0;
+  display: block;
+}
+
+.leaf--cream .cm-vs {
+  color: #8C877B;
+}
+
+.leaf--dark .cm-vs {
+  color: rgba(240, 227, 216, 0.55);
+}
+
+/* Left-aligned terms list */
+.cm-terms-left {
+  list-style: none;
+  margin: 0;
+  padding: 18px 0 0;
+  border-top: 1px solid #D8D3C6;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.leaf--dark .cm-terms-left {
+  border-top-color: rgba(240, 227, 216, 0.22);
+}
+
+.cm-terms-left li {
+  padding: 7px 0 7px 22px;
+  position: relative;
+  text-align: left;
+}
+
+.cm-bullet {
+  position: absolute;
+  left: 0;
+  top: 7px;
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+}
+
+.leaf--cream .cm-bullet {
+  color: #2F4370;
+}
+
+.leaf--dark .cm-bullet {
+  color: #D9A8A8;
+}
+
+/* Hover transitions on CTAs and engravings */
+.leaf-cta {
+  transition: opacity 160ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.leaf:hover .leaf-cta {
+  opacity: 0.7;
+  transform: translateX(4px);
+}
+
+.cm-engraving-svg, .leaf-img {
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.leaf:hover .cm-engraving-svg,
+.leaf:hover .leaf-img {
+  transform: scale(1.045);
+}
+
+/* STAGGERED MOTION ANIMATIONS driven by CSS & IntersectionObserver */
+.cm-rise, .cm-vs, .cm-word, .cm-panel {
+  opacity: 0;
+  transition: opacity 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms),
+              transform 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms),
+              clip-path 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms);
+}
+
+.cm-rise {
+  transform: translateY(12px);
+}
+
+.cm-panel {
+  transform: translateY(26px);
+}
+
+.cm-vs {
+  transform: scale(0.7);
+  letter-spacing: 0.5em;
+}
+
+.cm-word {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(6px);
+}
+
+/* Trigger state on section root (.is-in or .cm-live) */
+.reveal.is-in .cm-rise,
+.reveal.is-in .cm-panel,
+.cm-live .cm-rise,
+.cm-live .cm-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.is-in .cm-vs,
+.cm-live .cm-vs {
+  opacity: 1;
+  transform: scale(1);
+  letter-spacing: 0.26em;
+}
+
+.reveal.is-in .cm-word,
+.cm-live .cm-word {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: translateY(0);
+}
+
+/* Prefers Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .cm-rise, .cm-vs, .cm-word, .cm-panel, .cm-engraving-svg, .leaf-img, .cm-word-them, .leaf-cta {
+    transition: none !important;
+  }
+  .cm-rise, .cm-vs, .cm-word, .cm-panel {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
 /* SPEC SUBLINES MATCHING TYPOGRAPHY */
 .leaf-spec-line {
   font-family: var(--mono, 'IBM Plex Mono', monospace);

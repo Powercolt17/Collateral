@@ -860,7 +860,7 @@ footer .logo-wordmark-light,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 26%;
+  object-position: center center;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 

@@ -165,13 +165,13 @@ export function renderLanding() {
                 <div class="shell">
                     <div class="argue">
                         <div>
-                            <p class="eyebrow r-item" style="--i:0">Why it works</p>
-                            <h2 class="title r-item" style="--i:1">A plan without stakes is just a comfortable wish</h2>
-                            <p class="lede r-item" style="--i:2; margin-top:18px; max-width:46ch">You already know what the next step is. You've
+                            <p class="eyebrow rise" style="--d:40ms">Why it works</p>
+                            <h2 class="title clip-wipe" style="--d:120ms">A plan without stakes is just a comfortable wish</h2>
+                            <p class="lede rise" style="--d:220ms; margin-top:18px; max-width:46ch">You already know what the next step is. You've
                                 known for months. What you don't have is a reason it has to happen this week instead of
                                 some other week, because missing it costs a feeling, and feelings are cheap enough to
                                 absorb forever.</p>
-                            <aside class="argue-note r-item" style="--i:4">
+                            <aside class="argue-note rise" style="--d:340ms">
                                 <span class="mono mono-b" style="color:var(--blood)">&sect; 3.1 &middot; Clerk's note</span>
                                 <p class="mono">The median contract is opened at 11:40pm on a Sunday. We have theories about why,
                                     and none of them are flattering.</p>
@@ -179,9 +179,9 @@ export function renderLanding() {
                         </div>
 
                         <div>
-                            <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
-                            <div class="cmp-table-wrap" style="overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;">
-                            <table class="cmp plate-quiet r-plate" style="--i:3">
+                            <p class="cmp-caption mono rise" style="--d:280ms">Same goal, recorded two ways</p>
+                            <div class="cmp-table-wrap card-rise" style="--d:360ms; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;">
+                            <table class="cmp plate-quiet">
                                 <thead>
                                     <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
                                 </thead>
@@ -205,12 +205,12 @@ export function renderLanding() {
                 <div class="shell">
                     <div class="oracles-head">
                         <div class="oracles-title-block">
-                            <p class="eyebrow r-item" style="--i:0">Verification sources</p>
-                            <h2 class="title r-item" style="--i:1">Four APIs decide every contract</h2>
-                            <p class="lede r-item" style="--i:2">Collateral does not score you. It reads the same numbers your platform
+                            <p class="eyebrow rise" style="--d:40ms">Verification sources</p>
+                            <h2 class="title clip-wipe" style="--d:120ms">Four APIs decide every contract</h2>
+                            <p class="lede rise" style="--d:220ms">Collateral does not score you. It reads the same numbers your platform
                                 already reports, on a fixed schedule, and settles on whatever it finds there.</p>
                         </div>
-                        <aside class="marg-note-top r-item" style="--i:3">
+                        <aside class="marg-note-top rise" style="--d:320ms">
                             <span class="mono mono-b" style="color:var(--blood)">&sect; 3.4</span>
                             <p class="mono">Read-only scopes only. Collateral cannot post, message, refund, or change a single
                                 setting on any account you connect, and the token can be revoked from your side at any
@@ -218,10 +218,10 @@ export function renderLanding() {
                         </aside>
                     </div>
 
-                    <div class="oracles-table-wrap">
-                        <p class="reg-caption mono r-item" style="--i:3">Register of accepted oracles &middot; read-only scopes</p>
+                    <div class="oracles-table-wrap card-rise" style="--d:360ms">
+                        <p class="reg-caption mono rise" style="--d:300ms">Register of accepted oracles &middot; read-only scopes</p>
 
-                        <table class="reg plate r-plate" style="--i:4">
+                        <table class="reg plate">
                             <caption>Accepted verification oracles and reading parameters</caption>
                             <thead>
                                 <tr>
@@ -289,14 +289,14 @@ export function renderLanding() {
             <section class="section alt reveal" id="record" style="padding-bottom: 52px;">
                 <span class="idx-mark" aria-hidden="true">05</span>
                 <div class="shell">
-                    <p class="eyebrow r-item" style="--i:0">Settlement record</p>
-                    <h2 class="title r-item" style="--i:1">The receipts, including the ones that hurt</h2>
-                    <p class="lede r-item" style="--i:2">Most sites show you the wins. Every contract here settles on the same
+                    <p class="eyebrow rise" style="--d:40ms">Settlement record</p>
+                    <h2 class="title clip-wipe" style="--d:120ms">The receipts, including the ones that hurt</h2>
+                    <p class="lede rise" style="--d:220ms">Most sites show you the wins. Every contract here settles on the same
                         telemetry whether it went well or not, and we publish both, because a record with no
                         losses in it isn't a record.</p>
 
                     <div class="receipts">
-                        <article class="receipt r-plate" style="--i:3">
+                        <article class="receipt card-rise" style="--d:320ms">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;34D6</span></div>
                                 <h3 class="r-goal">+20% revenue in 30 days</h3>
@@ -314,7 +314,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt r-plate" style="--i:4">
+                        <article class="receipt card-rise" style="--d:420ms">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;9F21</span></div>
                                 <h3 class="r-goal">50,000 subscribers in 60 days</h3>
@@ -332,7 +332,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt r-plate" style="--i:5">
+                        <article class="receipt card-rise" style="--d:520ms">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;780B</span></div>
                                 <h3 class="r-goal">25,000 followers in 30 days</h3>
@@ -351,7 +351,7 @@ export function renderLanding() {
                         </article>
                     </div>
 
-                    <div class="footing r-plate" style="--i:6">
+                    <div class="footing card-rise" style="--d:500ms">
                         <p class="mono" style="margin:0 0 6px">Book totals &middot; inception to date</p>
                         <dl style="margin:0">
                             <div class="f-row"><dt>Contracts won</dt><span class="dots"></span><dd>74%</dd></div>
@@ -367,12 +367,12 @@ export function renderLanding() {
             <section class="section reveal" id="flow">
                 <span class="idx-mark" aria-hidden="true">06</span>
                 <div class="shell">
-                    <p class="eyebrow r-item" style="--i:0">Where forfeited money goes</p>
-                    <h2 class="title r-item" style="--i:1">Losers pay winners. That is the whole engine.</h2>
-                    <p class="lede r-item" style="--i:2">Marcus's fifteen hundred dollars did not vanish into a house account. Watch
+                    <p class="eyebrow rise" style="--d:40ms">Where forfeited money goes</p>
+                    <h2 class="title clip-wipe" style="--d:120ms">Losers pay winners. That is the whole engine.</h2>
+                    <p class="lede rise" style="--d:220ms">Marcus's fifteen hundred dollars did not vanish into a house account. Watch
                         where it actually went, then read the full path underneath.</p>
 
-                    <div class="flow-wrap plate r-plate" style="--i:3" id="flowwrap">
+                    <div class="flow-wrap plate card-rise" style="--d:320ms" id="flowwrap">
                         <div class="flow-head">
                             <span class="mono">Cycle 2026&ndash;W12 &middot; recirculation</span>
                             <span class="mono">Settled 14 Mar 2026</span>
@@ -410,7 +410,7 @@ export function renderLanding() {
                         </div>
                     </div>
 
-                    <div class="marg marg-strip r-item" style="--i:4; margin-top:34px">
+                    <div class="marg marg-strip rise" style="--d:420ms; margin-top:34px">
                         <span class="marg-mark">&sect; 4.1</span>
                         <p>We take half a percent and nothing else. There is no spread, no rake on the match
                             pool, and no scenario in which Collateral profits more when you miss.</p>
@@ -545,12 +545,12 @@ export function renderLanding() {
             <section class="section alt reveal" id="terms">
                 <span class="idx-mark" aria-hidden="true">07</span>
                 <div class="shell">
-                    <p class="eyebrow r-item" style="--i:0">Price your own contract</p>
-                    <h2 class="title r-item" style="--i:1">Name a number that would actually hurt to lose</h2>
-                    <p class="lede r-item" style="--i:2">Too small and you'll shrug it off in week two. Too large and you'll talk
+                    <p class="eyebrow rise" style="--d:40ms">Price your own contract</p>
+                    <h2 class="title clip-wipe" style="--d:120ms">Name a number that would actually hurt to lose</h2>
+                    <p class="lede rise" style="--d:220ms">Too small and you'll shrug it off in week two. Too large and you'll talk
                         yourself out of signing at all. The right number is the one you flinch at slightly.</p>
 
-                    <div class="calc plate r-plate" style="--i:3">
+                    <div class="calc plate card-rise" style="--d:320ms">
                         <div class="calc-left">
                             <div>
                                 <span class="mono">Contract parameters</span>
@@ -606,7 +606,7 @@ export function renderLanding() {
                     </div>
 
                     <div class="tiers" id="tiers">
-                        <button type="button" class="tier r-plate" style="--i:4" data-tier="14">
+                        <button type="button" class="tier card-rise" style="--d:400ms" data-tier="14">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; All-in</span>
                             <p class="tier-mult">4.0<small>&times;</small></p>
@@ -616,7 +616,7 @@ export function renderLanding() {
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
                         </button>
-                        <button type="button" class="tier r-plate" style="--i:5" data-tier="30" data-active="true">
+                        <button type="button" class="tier card-rise" style="--d:480ms" data-tier="30" data-active="true">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Stake</span>
                             <p class="tier-mult">2.5<small>&times;</small></p>
@@ -626,7 +626,7 @@ export function renderLanding() {
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
                         </button>
-                        <button type="button" class="tier r-plate" style="--i:6" data-tier="60">
+                        <button type="button" class="tier card-rise" style="--d:560ms" data-tier="60">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Pledge</span>
                             <p class="tier-mult">1.5<small>&times;</small></p>
@@ -638,7 +638,7 @@ export function renderLanding() {
                         </button>
                     </div>
 
-                    <div class="marg r-item" style="--i:7; margin-top:34px">
+                    <div class="marg rise" style="--d:620ms; margin-top:34px">
                         <span class="marg-mark">&sect; 6.2</span>
                         <p>Shorter windows pay more because they are harder, not because we are being generous.
                             Fourteen days is chosen by people who have already started.</p>
@@ -650,12 +650,12 @@ export function renderLanding() {
             <section class="section reveal" id="duels">
                 <span class="idx-mark" aria-hidden="true">08</span>
                 <div class="shell">
-                    <p class="eyebrow eyebrow--live r-item" style="--i:0">Live rivalry duels</p>
-                    <h2 class="title r-item" style="--i:1">Open right now, and somebody is behind</h2>
-                    <p class="lede r-item" style="--i:2">Real capital, real clocks, updated every oracle poll. Open a duel to see
+                    <p class="eyebrow eyebrow--live rise" style="--d:40ms">Live rivalry duels</p>
+                    <h2 class="title clip-wipe" style="--d:120ms">Open right now, and somebody is behind</h2>
+                    <p class="lede rise" style="--d:220ms">Real capital, real clocks, updated every oracle poll. Open a duel to see
                         the full position.</p>
 
-                    <div class="duels r-plate" style="--i:3">
+                    <div class="duels card-rise" style="--d:320ms">
                         <button class="duel ticks" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">
                             <span class="duel-head">
                                 <span class="mono">Audience &middot; X API</span>
@@ -701,19 +701,19 @@ export function renderLanding() {
             <section class="faq reveal" id="terms" aria-labelledby="faq-h">
                 <div class="faq-grid">
                     <div class="rail">
-                        <div class="eyebrow">SCHEDULE OF COMMON QUESTIONS</div>
-                        <h2 id="faq-h">Everything a contract<br />does to your money</h2>
-                        <p>Nine clauses covering custody, the window, settlement, and what Collateral can see on the accounts you connect.</p>
-                        <div class="note">
+                        <div class="eyebrow rise" style="--d:40ms">SCHEDULE OF COMMON QUESTIONS</div>
+                        <h2 id="faq-h" class="clip-wipe" style="--d:120ms">Everything a contract<br />does to your money</h2>
+                        <p class="rise" style="--d:220ms">Nine clauses covering custody, the window, settlement, and what Collateral can see on the accounts you connect.</p>
+                        <div class="note rise" style="--d:320ms">
                             <b>CLERK'S NOTE</b>
                             <span>If a question is not answered here, it is answered in the full terms. Nothing material is kept off this page.</span>
                         </div>
                     </div>
 
                     <div class="sched" id="sched">
-                        <div class="group">&sect; 1 &nbsp;CUSTODY</div>
+                        <div class="group rise" style="--d:160ms">&sect; 1 &nbsp;CUSTODY</div>
 
-                        <div class="item open">
+                        <div class="item card-rise open" style="--d:240ms">
                             <button class="q" aria-expanded="true" aria-controls="a11">
                                 <span class="clause">&sect; 1.1</span>
                                 <span class="qt">What happens to my deposit?</span>
@@ -726,7 +726,7 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <div class="item">
+                        <div class="item card-rise" style="--d:320ms">
                             <button class="q" aria-expanded="false" aria-controls="a12">
                                 <span class="clause">&sect; 1.2</span>
                                 <span class="qt">Who decides whether I hit the target?</span>
@@ -739,7 +739,7 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <div class="item">
+                        <div class="item card-rise" style="--d:400ms">
                             <button class="q" aria-expanded="false" aria-controls="a13">
                                 <span class="clause">&sect; 1.3</span>
                                 <span class="qt">What if the API is down at settlement?</span>

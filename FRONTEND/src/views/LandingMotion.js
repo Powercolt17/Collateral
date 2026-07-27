@@ -150,13 +150,13 @@ export function initEntranceObservers() {
     const revealElement = (el) => {
         if (!el) return;
         el.classList.add('is-in');
-        el.querySelectorAll('.r-item, .r-plate, .r-rule').forEach(child => {
+        el.querySelectorAll('.r-item, .r-plate, .r-rule, .clip-wipe, .clip-reveal, .rise, .cm-rise, .card-rise, .item, .duel').forEach(child => {
             child.classList.add('is-in');
         });
     };
 
     const targets = document.querySelectorAll(
-        '.reveal, .r-item, .r-plate, .receipt-card, .rc-card, .leaf, .reg, .cmp, .faq-item, .calc-card'
+        'section, .reveal, .r-item, .r-plate, .receipt-card, .rc-card, .leaf, .reg, .cmp, .faq-item, .item, .duel, .calc-card, .hero'
     );
 
     const vh = window.innerHeight || 800;

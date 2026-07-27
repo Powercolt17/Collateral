@@ -55,12 +55,12 @@
 }
 
 .logo-wordmark {
-    font-family: 'Nevera', sans-serif !important;
-    font-size: 20px !important;
-    letter-spacing: 1px !important;
-    font-weight: normal !important;
+    font-family: 'Nevera', 'Aquire', 'Cinzel', sans-serif !important;
+    font-size: 21px !important;
+    letter-spacing: 0.14em !important;
+    font-weight: 700 !important;
     text-transform: uppercase !important;
-    color: #111111 !important;
+    color: #0E1420 !important;
 }
 /* Override Inter's slashed zero with a clean zero from system fonts */
 @font-face {

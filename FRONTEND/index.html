@@ -161,23 +161,32 @@
 
     <style>
         @font-face {
-            font-family: 'Byte Sharp';
-            src: url('/Byte%20Sharp.otf') format('opentype');
+            font-family: 'Nevera';
+            src: url('/nevera.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
         }
-        .logo-wordmark {
-            font-family: 'Byte Sharp', 'Sora', sans-serif;
-            font-size: 20px;
-            color: #111111;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        @font-face {
+            font-family: 'Aquire';
+            src: url('/aquire.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        .logo-wordmark, .ch-logo-wordmark, .ln-brand {
+            font-family: 'Nevera', 'Aquire', 'Cinzel', sans-serif !important;
+            font-size: 21px !important;
+            letter-spacing: 0.14em !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            color: #0E1420 !important;
             line-height: 1;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
         }
         .logo-wordmark-light {
-            color: #FFFFFF;
+            color: #FFFFFF !important;
             opacity: 0.9;
         }
         .ch-logo { text-decoration: none !important; }

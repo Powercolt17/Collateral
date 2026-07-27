@@ -88,11 +88,11 @@ export function renderHeader(currentRoute = '') {
 
             /* Signature Wordmark */
             .ch-logo-wordmark {
-                font-family: var(--wordmark, var(--display, 'Archivo', sans-serif));
-                font-size: 18px;
-                font-weight: 800;
-                letter-spacing: 0.22em;
-                color: #0F172A !important;
+                font-family: 'Nevera', 'Aquire', 'Cinzel', sans-serif !important;
+                font-size: 21px !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.14em !important;
+                color: #0E1420 !important;
                 text-decoration: none;
                 display: inline-flex;
                 align-items: center;
@@ -108,18 +108,18 @@ export function renderHeader(currentRoute = '') {
             /* Current-Section Divider Rule & Label (Desktop only) */
             .ch-section-divider {
                 width: 1px;
-                height: 14px;
-                background: var(--rule, #DCD5C6);
-                margin: 0 16px;
+                height: 16px;
+                background: #C8C2B4;
+                margin: 0 14px;
                 display: none;
             }
             .ch-section-label {
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
                 font-size: 11px;
                 font-weight: 700;
-                letter-spacing: 0.16em;
+                letter-spacing: 0.22em;
                 text-transform: uppercase;
-                color: var(--blood, #7A1C29);
+                color: #7A1C29 !important;
                 user-select: none;
                 display: none;
             }

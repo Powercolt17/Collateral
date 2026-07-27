@@ -335,11 +335,11 @@ html, body {
 }
 
 .ln-brand {
-  font-family: var(--wordmark);
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: .22em;
-  color: #0F172A !important;
+  font-family: 'Nevera', 'Aquire', 'Cinzel', sans-serif !important;
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  color: #0E1420 !important;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -352,9 +352,10 @@ html, body {
 }
 
 .logo-wordmark {
-  color: #0F172A !important;
-  font-weight: 800 !important;
-  letter-spacing: .22em !important;
+  font-family: 'Nevera', 'Aquire', 'Cinzel', sans-serif !important;
+  color: #0E1420 !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
   text-transform: uppercase !important;
 }
 

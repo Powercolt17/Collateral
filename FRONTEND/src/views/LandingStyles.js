@@ -875,30 +875,27 @@ footer .logo-wordmark-light,
   color: #1A1A18;
 }
 
-/* Image Band: 176px tall, cover, center 30% */
+/* Image Band: 190px tall, contain with matching background colors */
 .cm-band {
-  height: 176px;
+  height: 190px;
   overflow: hidden;
   display: block;
+}
+
+.cm-panel:not(.is-rival) .cm-band {
+  background: #E7E2D6;
+}
+
+.cm-panel.is-rival .cm-band {
+  background: #5E1E2E;
 }
 
 .cm-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
+  object-fit: contain;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.cm-panel:not(.is-rival) .cm-img {
-  filter: grayscale(1) contrast(1.45) brightness(1.05);
-  mix-blend-mode: multiply;
-}
-
-.cm-panel.is-rival .cm-img {
-  filter: grayscale(1) invert(1) contrast(1.35);
-  mix-blend-mode: screen;
 }
 
 .cm-panel:hover .cm-img {

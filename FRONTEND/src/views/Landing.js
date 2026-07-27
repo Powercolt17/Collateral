@@ -78,6 +78,23 @@ export function renderLanding() {
                             <button class="leaf leaf--cream panel" id="tab-solo" role="tab" aria-selected="true" aria-controls="specimen">
                                 <div class="leaf-art" aria-hidden="true">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
+                                    <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
+                                        <g stroke="#2F4370" fill="none" stroke-width="1.1">
+                                            <path d="M42 78 V44 Q42 34 50 34 Q58 34 58 44 V60" />
+                                            <path d="M58 52 Q58 42 66 42 Q74 42 74 52 V62" />
+                                            <path d="M74 54 Q74 45 81 45 Q88 45 88 54 V64" />
+                                            <path d="M42 60 Q30 52 26 60 Q23 67 34 74" />
+                                            <path d="M42 78 Q42 90 60 90 Q88 90 88 72 V64" />
+                                            <line x1="30" y1="20" x2="90" y2="20" />
+                                            <line x1="34" y1="14" x2="86" y2="14" />
+                                        </g>
+                                        <g stroke="#2F4370" stroke-width="0.5" opacity="0.45">
+                                            <line x1="46" y1="50" x2="54" y2="50" />
+                                            <line x1="46" y1="56" x2="54" y2="56" />
+                                            <line x1="46" y1="62" x2="54" y2="62" />
+                                            <line x1="62" y1="58" x2="70" y2="58" />
+                                        </g>
+                                    </svg>
                                 </div>
                                 <div class="leaf-body">
                                     <div class="leaf-head-row">
@@ -101,6 +118,23 @@ export function renderLanding() {
                             <button class="leaf leaf--dark panel panel--rivalry" id="tab-rivalry" role="tab" aria-selected="false" aria-controls="specimen">
                                 <div class="leaf-art" aria-hidden="true">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
+                                    <svg viewBox="0 0 120 100" class="cm-engraving-svg" aria-hidden="true" style="height:100%;width:auto;display:block">
+                                        <g stroke="#F0E3D8" fill="none" stroke-width="1.1">
+                                            <path d="M14 76 V50 Q14 42 22 42 Q30 42 30 50 V76" />
+                                            <path d="M30 54 Q30 46 38 46 Q46 46 46 54 V76" />
+                                            <rect x="10" y="76" width="42" height="9" />
+                                            <path d="M106 76 V50 Q106 42 98 42 Q90 42 90 50 V76" />
+                                            <path d="M90 54 Q90 46 82 46 Q74 46 74 54 V76" />
+                                            <rect x="68" y="76" width="42" height="9" />
+                                            <line x1="10" y1="90" x2="110" y2="90" />
+                                        </g>
+                                        <g stroke="#F0E3D8" stroke-width="0.5" opacity="0.45">
+                                            <line x1="16" y1="56" x2="28" y2="56" />
+                                            <line x1="16" y1="62" x2="28" y2="62" />
+                                            <line x1="92" y1="56" x2="104" y2="56" />
+                                            <line x1="92" y1="62" x2="104" y2="62" />
+                                        </g>
+                                    </svg>
                                 </div>
                                 <div class="leaf-body">
                                     <div class="leaf-head-row">

@@ -91,20 +91,17 @@ export function renderLanding() {
                                 </div>
                                 <div class="cm-panel-body">
                                     <div class="cm-rise cm-meta-row" style="--d: 340ms">
-                                        <span>MODE 01 &middot; SOLO</span>
+                                        <span>MODE 01</span>
                                         <span>FORM S&ndash;01</span>
                                     </div>
-                                    <div class="cm-vs-block">
-                                        <p class="cm-word" style="--d: 440ms">YOU</p>
-                                        <p class="cm-vs" style="--d: 600ms">VS</p>
-                                        <p class="cm-word" style="--d: 720ms">YOU</p>
-                                    </div>
+                                    <h3 class="cm-hero-title" style="--d: 440ms">SOLO</h3>
+                                    <p class="cm-vs-line" style="--d: 620ms">YOU<span class="cm-vs-tag">vs</span>YOU</p>
                                     <ul class="cm-terms-list">
-                                        <li class="cm-rise cm-term" style="--d: 820ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
-                                        <li class="cm-rise cm-term" style="--d: 900ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
-                                        <li class="cm-rise cm-term" style="--d: 980ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
+                                        <li class="cm-rise cm-term" style="--d: 740ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
+                                        <li class="cm-rise cm-term" style="--d: 820ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
+                                        <li class="cm-rise cm-term" style="--d: 900ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
                                     </ul>
-                                    <div class="cm-rise cm-cta-wrap" style="--d: 1100ms">
+                                    <div class="cm-rise cm-cta-wrap" style="--d: 1020ms">
                                         <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
                                     </div>
                                 </div>
@@ -117,20 +114,17 @@ export function renderLanding() {
                                 </div>
                                 <div class="cm-panel-body">
                                     <div class="cm-rise cm-meta-row" style="--d: 460ms">
-                                        <span>MODE 02 &middot; RIVALRY</span>
+                                        <span>MODE 02</span>
                                         <span>FORM R&ndash;01</span>
                                     </div>
-                                    <div class="cm-vs-block">
-                                        <p class="cm-word" style="--d: 560ms">YOU</p>
-                                        <p class="cm-vs" style="--d: 720ms">VS</p>
-                                        <p class="cm-word cm-word-them" style="--d: 840ms">THEM</p>
-                                    </div>
+                                    <h3 class="cm-hero-title cm-hero-rivalry" style="--d: 560ms">RIVALRY</h3>
+                                    <p class="cm-vs-line" style="--d: 740ms">YOU<span class="cm-vs-tag">vs</span><span class="cm-them">THEM</span></p>
                                     <ul class="cm-terms-list">
-                                        <li class="cm-rise cm-term" style="--d: 940ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
-                                        <li class="cm-rise cm-term" style="--d: 1020ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
-                                        <li class="cm-rise cm-term" style="--d: 1100ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
+                                        <li class="cm-rise cm-term" style="--d: 860ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
+                                        <li class="cm-rise cm-term" style="--d: 940ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
+                                        <li class="cm-rise cm-term" style="--d: 1020ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
                                     </ul>
-                                    <div class="cm-rise cm-cta-wrap" style="--d: 1220ms">
+                                    <div class="cm-rise cm-cta-wrap" style="--d: 1140ms">
                                         <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
                                     </div>
                                 </div>

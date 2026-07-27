@@ -859,7 +859,7 @@ footer .logo-wordmark-light,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 18%;
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1120,9 +1120,9 @@ footer .logo-wordmark-light,
 
 .cm-step-body {
   font-family: var(--mono, 'IBM Plex Mono', monospace);
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.6;
-  color: #8C877B;
+  color: #5F5B52;
 }
 
 .cm-lede {

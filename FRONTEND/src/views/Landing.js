@@ -185,6 +185,7 @@ export function renderLanding() {
 
                     <div>
                         <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
+                        <div class="cmp-table-wrap" style="overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;">
                         <table class="cmp plate-quiet r-plate" style="--i:3">
                             <thead>
                                 <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
@@ -198,6 +199,7 @@ export function renderLanding() {
                                     <td class="won-txt">Money back. And the thing exists.</td></tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -597,8 +599,8 @@ export function renderLanding() {
                             </div>
                             <dl class="terms">
                                 <div class="t-row"><dt>Tier</dt><span class="dots"></span><dd id="t-tier">Stake</dd></div>
-                                <div class="t-row"><dt>Return multiple</dt><span class="dots"></span><dd id="t-mult">2.5&times;</dd></div>
-                                <div class="t-row"><dt>Net gain on success</dt><span class="dots"></span><dd id="t-net">+$1,500</dd></div>
+                                <div class="t-row"><dt>Match multiplier</dt><span class="dots"></span><dd id="t-mult">2.5&times;</dd></div>
+                                <div class="t-row"><dt>Est. match on success</dt><span class="dots"></span><dd id="t-net">+$1,500</dd></div>
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd id="t-miss">Full forfeit</dd></div>
                             </dl>
                             <div class="calc-cta">

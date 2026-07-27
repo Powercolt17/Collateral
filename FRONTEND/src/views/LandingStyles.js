@@ -46,6 +46,21 @@ export const landingCSS = `
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+:target, section[id], div[id], .section, [id] {
+  scroll-margin-top: 84px;
+}
+@media (max-width: 760px) {
+  :target, section[id], div[id], .section, [id] {
+    scroll-margin-top: 76px;
+  }
+}
+
 .cl-root {
   position: relative;
   background: var(--paper) !important;
@@ -692,6 +707,40 @@ footer .logo-wordmark-light,
   55% { opacity: .98; }
   80% { transform: translateY(-50%) rotate(-13deg) scale(.93); opacity: .88; }
   100% { transform: translateY(-50%) rotate(-11deg) scale(1); opacity: .78; }
+}
+
+@media(max-width:760px) {
+  .row {
+    position: relative !important;
+    padding: 12px 14px !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+  .row-main {
+    flex: 1 1 100% !important;
+    margin-bottom: 4px !important;
+  }
+  .row-right {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .stamp {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    transform: rotate(-6deg) scale(0.9) !important;
+    display: inline-block !important;
+    margin-left: auto !important;
+    font-size: 9.5px !important;
+    padding: 2px 7px !important;
+    flex-shrink: 0 !important;
+  }
+  .stamp.static {
+    transform: rotate(-6deg) scale(0.9) !important;
+  }
 }
 
 .tape-foot {
@@ -2028,7 +2077,13 @@ footer .logo-wordmark-light,
 
 .replay:hover { border-color: var(--ink); color: var(--ink); }
 
-.sch { margin-top: 36px; padding: clamp(18px, 2.8vw, 32px); }
+.sch {
+  margin-top: 36px;
+  padding: clamp(18px, 2.8vw, 32px);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
 
 .sch-head, .sch-foot {
   display: flex;
@@ -2039,6 +2094,111 @@ footer .logo-wordmark-light,
 
 .sch-head { padding-bottom: 15px; margin-bottom: 24px; border-bottom: 1px solid var(--rule); }
 .sch-foot { padding-top: 17px; margin-top: 20px; border-top: 1px solid var(--rule); }
+
+.reg-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--win);
+}
+
+@media (max-width: 760px) {
+  .oracles-table-wrap, .cmp-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    width: 100%;
+    display: block;
+  }
+
+  .reg caption {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 12px;
+    font-size: 11px;
+    padding: 0 4px;
+    line-height: 1.4;
+  }
+
+  .reg, .reg tbody, .reg tr, .reg td,
+  .cmp, .cmp tbody, .cmp tr, .cmp td {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .reg thead, .cmp thead {
+    display: none !important;
+  }
+
+  .reg tr, .cmp tr {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid var(--rule) !important;
+  }
+  .reg tr:last-child, .cmp tr:last-child {
+    border-bottom: none !important;
+  }
+
+  .reg td {
+    padding: 6px 0 !important;
+    border-bottom: none !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 13.5px !important;
+    gap: 12px !important;
+  }
+
+  .reg td::before {
+    content: attr(data-label);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    flex: none;
+  }
+  .reg td:first-child::before {
+    content: "Platform";
+  }
+
+  .cmp td {
+    padding: 5px 0 !important;
+    border-bottom: none !important;
+    font-size: 13.5px !important;
+  }
+  .cmp td:first-child {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    color: var(--blood);
+    margin-bottom: 4px;
+  }
+  .cmp td.void::before {
+    content: "WITHOUT STAKES: ";
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--ink-4);
+    letter-spacing: .1em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .cmp td:last-child:not(:first-child)::before {
+    content: "UNDER CONTRACT: ";
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--win);
+    letter-spacing: .1em;
+    display: block;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+}
 
 .legend {
   display: flex;
@@ -2056,8 +2216,17 @@ footer .logo-wordmark-light,
 
 .sch-mobile { display: none; }
 @media(max-width:780px){
-  .sch svg { display: none; }
-  .sch-mobile { display: block; }
+  .sch svg {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+  }
+  .sch-mobile {
+    display: block !important;
+    position: relative;
+    z-index: 2;
+  }
   .sch-foot .legend:last-child { margin-left: 0; }
 }
 

@@ -90,7 +90,7 @@ export function renderLanding() {
                             Who holds you to it
                         </h2>
                         <p class="cm-rise cm-lede" style="--d: 160ms; max-width: 480px; font-size: 13.5px; line-height: 1.6; color: #8C877B;">
-                            Bet on yourself alone, or compete head-to-head against someone else. Both settle the same way, and neither asks your opinion.
+                            Stake against your own record, or against somebody who wants it as badly as you claim to. Both settle the same way, and neither asks your opinion.
                         </p>
                     </header>
 
@@ -111,12 +111,12 @@ export function renderLanding() {
                                     <h3 class="cm-hero-title" style="--d: 440ms">SOLO</h3>
                                     <p class="cm-vs-line" style="--d: 620ms">YOU<span class="cm-vs-tag">vs</span>YOU</p>
                                     <ul class="cm-terms-list">
-                                        <li class="cm-rise cm-term" style="--d: 740ms"><span class="cm-bullet">&sect;</span>Pick your goal and deadline. No extensions allowed</li>
+                                        <li class="cm-rise cm-term" style="--d: 740ms"><span class="cm-bullet">&sect;</span>You set the target. You don't get to move it</li>
                                         <li class="cm-rise cm-term" style="--d: 820ms"><span class="cm-bullet">&sect;</span>One oracle decides. No excuses</li>
                                         <li class="cm-rise cm-term" style="--d: 900ms"><span class="cm-bullet">&sect;</span>Hit it and every dollar comes back</li>
                                     </ul>
                                     <div class="cm-rise cm-cta-wrap" style="--d: 1020ms">
-                                        <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Start a Solo Goal &rarr;</a>
+                                        <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Write a solo contract &rarr;</a>
                                     </div>
                                 </div>
                             </article>
@@ -134,12 +134,12 @@ export function renderLanding() {
                                     <h3 class="cm-hero-title cm-hero-rivalry" style="--d: 560ms">RIVALRY</h3>
                                     <p class="cm-vs-line" style="--d: 740ms">YOU<span class="cm-vs-tag">vs</span><span class="cm-them">THEM</span></p>
                                     <ul class="cm-terms-list">
-                                        <li class="cm-rise cm-term" style="--d: 860ms"><span class="cm-bullet">&sect;</span>Both players put up equal cash for the exact same target</li>
-                                        <li class="cm-rise cm-term" style="--d: 940ms"><span class="cm-bullet">&sect;</span>The official API checks the score. No manual voting or cheating</li>
+                                        <li class="cm-rise cm-term" style="--d: 860ms"><span class="cm-bullet">&sect;</span>Equal capital, same metric, same clock</li>
+                                        <li class="cm-rise cm-term" style="--d: 940ms"><span class="cm-bullet">&sect;</span>One oracle decides. Neither of you gets a vote</li>
                                         <li class="cm-rise cm-term" style="--d: 1020ms"><span class="cm-bullet">&sect;</span>The escrow goes to the winner. There is no draw</li>
                                     </ul>
                                     <div class="cm-rise cm-cta-wrap" style="--d: 1140ms">
-                                        <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find an Opponent &rarr;</a>
+                                        <a href="/signin" class="cm-cta-link" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('signup'); } else { window.router.navigate('/signin'); } return false;">Find a counterparty &rarr;</a>
                                     </div>
                                 </div>
                             </article>
@@ -179,23 +179,9 @@ export function renderLanding() {
                 <div class="shell">
                     <div class="argue">
                         <div>
-                            <p class="eyebrow rise" style="--d:40ms">Self-enforcing performance contracts</p>
-                        <h1 class="h1 hl-headline">
-                            <span class="hl-w" style="--d:100ms">Put </span>
-                            <span class="hl-w" style="--d:170ms">money </span>
-                            <span class="hl-w" style="--d:240ms">on </span>
-                            <span class="hl-w" style="--d:310ms">your </span>
-                            <span class="hl-w" style="--d:380ms">own </span>
-                            <span class="hl-w hl-anchor" style="--d:470ms">
-                                deadline
-                                <span class="hl-rule" aria-hidden="true">
-                                    <span class="hl-fill" style="--fill:66%;"></span>
-                                    <span class="hl-tick"></span>
-                                </span>
-                            </span>
-                        </h1>
-                        <p class="hl-meta" aria-label="Sample contract telemetry">$1,000 &middot; 30 DAY WINDOW &middot; 11 DAYS LEFT</p>
-                        <p class="lede rise" style="--d:220ms; margin-top:18px; max-width:46ch">You already know what the next step is. You've
+                            <p class="eyebrow rise" style="--d:40ms">Why it works</p>
+                            <h2 class="title clip-wipe" style="--d:120ms">A plan without stakes is just a comfortable wish</h2>
+                            <p class="lede rise" style="--d:220ms; margin-top:18px; max-width:46ch">You already know what the next step is. You've
                                 known for months. What you don't have is a reason it has to happen this week instead of
                                 some other week, because missing it costs a feeling, and feelings are cheap enough to
                                 absorb forever.</p>
@@ -233,7 +219,7 @@ export function renderLanding() {
                 <div class="shell">
                     <div class="oracles-head">
                         <div class="oracles-title-block">
-                            <p class="eyebrow rise" style="--d:40ms">Connected Apps</p>
+                            <p class="eyebrow rise" style="--d:40ms">Verification sources</p>
                             <h2 class="title clip-wipe" style="--d:120ms">Four APIs decide every contract</h2>
                             <p class="lede rise" style="--d:220ms">Collateral does not score you. It reads the same numbers your platform
                                 already reports, on a fixed schedule, and settles on whatever it finds there.</p>
@@ -373,14 +359,14 @@ export function renderLanding() {
                             </div>
                             <div class="perf" aria-hidden="true"></div>
                             <div class="r-bottom lost">
-                                <div><p class="r-amt">&minus;$1,500.00</p><p class="r-note">Lost to the winner bonus pool</p></div>
+                                <div><p class="r-amt">&minus;$1,500.00</p><p class="r-note">Forfeited to match pool</p></div>
                                 <span class="r-stamp lost">Denied</span>
                             </div>
                         </article>
                     </div>
 
                     <div class="footing card-rise" style="--d:500ms">
-                        <p class="mono" style="margin:0 0 6px">Total platform totals &middot; since launch</p>
+                        <p class="mono" style="margin:0 0 6px">Book totals &middot; inception to date</p>
                         <dl style="margin:0">
                             <div class="f-row"><dt>Contracts won</dt><span class="dots"></span><dd>74%</dd></div>
                             <div class="f-row"><dt>Verified counterparties</dt><span class="dots"></span><dd>812</dd></div>
@@ -416,7 +402,7 @@ export function renderLanding() {
                             </div>
                             <div class="stage-mid">
                                 <div class="track" id="track" aria-hidden="true"></div>
-                                <p class="mid-label">Lost deposit goes<br>to bonus pool &rarr;</p>
+                                <p class="mid-label">Forfeited deposit<br>recirculates &rarr;</p>
                             </div>
                             <div class="stage-col">
                                 <span class="mono">Match pool</span>
@@ -592,7 +578,7 @@ export function renderLanding() {
                                 </div>
                                 <div class="field" style="margin-top:30px">
                                     <div class="field-top">
-                                        <span class="mono" style="color:var(--ink-2)">Time Limit</span>
+                                        <span class="mono" style="color:var(--ink-2)">Execution window</span>
                                     </div>
                                     <div class="seg" id="seg" role="group" aria-label="Execution window">
                                         <button type="button" data-days="14" aria-pressed="false">14 days</button>
@@ -603,7 +589,7 @@ export function renderLanding() {
                             </div>
 
                             <div class="calc-left-foot">
-                                <span class="mono">Rules lock as soon as you start</span>
+                                <span class="mono">Parameters lock on signature</span>
                             </div>
                         </div>
 
@@ -613,7 +599,7 @@ export function renderLanding() {
                                 <div class="outcome">
                                     <span class="mono" style="color:var(--win)">If you hit target</span>
                                     <p class="outcome-val" id="o-win">$2,500</p>
-                                    <p class="outcome-note">Your deposit back + cash bonus</p>
+                                    <p class="outcome-note">Principal + matching yield</p>
                                 </div>
                                 <div class="outcome">
                                     <span class="mono" style="color:var(--blood)">If you miss</span>
@@ -668,7 +654,7 @@ export function renderLanding() {
 
                     <div class="marg rise" style="--d:620ms; margin-top:34px">
                         <span class="marg-mark">&sect; 6.2</span>
-                        <p>Shorter deadlines pay bigger cash bonuses because they require faster action!
+                        <p>Shorter windows pay more because they are harder, not because we are being generous.
                             Fourteen days is chosen by people who have already started.</p>
                     </div>
                 </div>
@@ -733,8 +719,8 @@ export function renderLanding() {
                         <h2 id="faq-h" class="clip-wipe" style="--d:120ms">Everything a contract<br />does to your money</h2>
                         <p class="rise" style="--d:220ms">Nine clauses covering custody, the window, settlement, and what Collateral can see on the accounts you connect.</p>
                         <div class="note rise" style="--d:320ms">
-                            <b>QUICK NOTE</b>
-                            <span>Everything you need to know is right here. No hidden surprises or fine print.</span>
+                            <b>CLERK'S NOTE</b>
+                            <span>If a question is not answered here, it is answered in the full terms. Nothing material is kept off this page.</span>
                         </div>
                     </div>
 
@@ -749,7 +735,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a11" role="region">
                                 <div>
-                                    <p>Your money goes straight to an official, secure third-party payment partner (Stripe). Collateral never holds your funds directly. If you hit your goal, your deposit returns to your card with your cash bonus. If you fail, it goes into the winner bonus pool.</p>
+                                    <p>It moves to a third-party custodian on Stripe Connect the moment the contract opens. Collateral never holds it. Hit your target and it returns to your card with the matched yield. Miss, and it settles to the forfeiture pool.</p>
                                 </div>
                             </div>
                         </div>
@@ -762,7 +748,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a12" role="region">
                                 <div>
-                                    <p>The official app or platform API you connected. We automatically read the exact numbers reported by your app. Nobody reviews your work manually, and no human can alter the score.</p>
+                                    <p>The API you named in the contract. Collateral reads the same numbers your platform already reports, on the cadence listed in the register, and settles on whatever it finds. Nobody here reviews your work, and neither you nor a counterparty gets a vote.</p>
                                 </div>
                             </div>
                         </div>
@@ -775,7 +761,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a13" role="region">
                                 <div>
-                                    <p>If an app's servers are down when your deadline hits, the system waits up to 72 hours for a successful update. If it remains down, your contract is canceled and your money is refunded in full.</p>
+                                    <p>Settlement waits for the next successful read within a 72-hour grace window. If the platform still has not reported by then, the contract voids and your deposit returns in full. A broken oracle is never treated as a miss.</p>
                                 </div>
                             </div>
                         </div>
@@ -790,7 +776,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a21" role="region">
                                 <div>
-                                    <p>No. Once your goal starts, the deadline cannot be changed, paused, or extended by anyone. That strict rule is what makes this work.</p>
+                                    <p>No. The date is fixed when the contract opens and cannot be extended, paused, or renegotiated by either party. That constraint is the product.</p>
                                 </div>
                             </div>
                         </div>
@@ -803,7 +789,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a22" role="region">
                                 <div>
-                                    <p>You can cancel for a 100% full refund within 1 hour of starting. After 1 hour, your deposit stays locked until the deadline.</p>
+                                    <p>Within one hour of opening, yes, in full. After that the deposit is committed until the window closes.</p>
                                 </div>
                             </div>
                         </div>
@@ -818,7 +804,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a31" role="region">
                                 <div>
-                                    <p>Lost deposits go directly into the bonus pool that pays out winners who hit their targets in the same period. People who quit pay for the bonuses of people who succeed. We take a tiny 0.5% fee to run the system.</p>
+                                    <p>Into the pool that funds matched yield for people who hit their targets in the same period. Your miss pays someone else's win. Collateral takes a fee on settled contracts, disclosed before you sign, and takes nothing from the pool itself.</p>
                                 </div>
                             </div>
                         </div>
@@ -831,7 +817,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a32" role="region">
                                 <div>
-                                    <p>No. Your result depends entirely on your own effort toward a goal you chose, measured by an official app &mdash; not on random luck or chance. You control your outcome.</p>
+                                    <p>The outcome depends on your own conduct against a target you set, measured by a source you nominate &mdash; not on chance or on an event outside your control. That is the distinction regulators draw, and it is why Collateral is not a broker, dealer, or exchange. It is also why we cannot promise you a return.</p>
                                 </div>
                             </div>
                         </div>
@@ -846,7 +832,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a41" role="region">
                                 <div>
-                                    <p>Only read-only statistics for the specific goals you track. We can never post messages, make purchases, or change settings on your accounts.</p>
+                                    <p>Read-only scopes on the specific metrics listed in your contract, and nothing else. Collateral cannot post, message, refund, or change a setting on any account you connect, and you can revoke the token at any time without affecting an open contract's settlement.</p>
                                 </div>
                             </div>
                         </div>
@@ -859,7 +845,7 @@ export function renderLanding() {
                             </button>
                             <div class="a" id="a42" role="region">
                                 <div>
-                                    <p>If you disconnect your app before the deadline and don't reconnect it, your goal will count as missed. Simply reconnect your app before the deadline so we can verify your progress.</p>
+                                    <p>The contract settles as a miss at the end of its window. Disconnecting removes the only source of truth it has, and an unverifiable target is treated the same as an unmet one. Reconnect before the window closes and settlement proceeds normally.</p>
                                 </div>
                             </div>
                         </div>
@@ -873,7 +859,7 @@ export function renderLanding() {
             <footer class="site-footer" style="background:var(--bg, #FAF7F1); border-top:1px solid var(--rule, #D8D2C6); padding:64px 24px 72px; text-align:center; box-sizing:border-box; width:100%;">
                 <div class="footer-inner" style="max-width:720px; margin:0 auto;">
                     <p class="footer-disclaimer" style="margin:0 0 28px; color:#55534E; font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:12px; line-height:1.75; letter-spacing:0.01em; text-align:center;">
-                        Deposits are held securely by third-party custodians via Stripe Connect and are not held directly by Collateral. Goal outcomes are verified automatically using read-only data from connected platform APIs. Cash bonuses are funded from forfeited deposits and sponsor contributions. Collateral is not a broker, dealer, or bank. Lost deposits are non-refundable. All stats shown reflect actual platform book totals.
+                        Deposits are held by a third-party custodian via Stripe Connect and are not held by Collateral. Outcomes are determined solely by read-only telemetry from the connected platform API named in the contract. Matching yield is funded from forfeited deposits and sponsor contributions, is not interest, and is not guaranteed. Collateral is not a broker, dealer, exchange, investment adviser, or deposit institution. Forfeited capital is not recoverable. The settlement feed shows recently settled contracts and may be delayed. Figures shown are book totals as of 25 July 2026.
                     </p>
                     <div class="footer-meta mono" style="font-family:ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size:11px; letter-spacing:0.12em; color:#6B6862; text-transform:uppercase; display:flex; justify-content:center; align-items:center; gap:24px; flex-wrap:wrap;">
                         <span>&copy; 2026 COLLATERAL INC.</span>
@@ -1215,13 +1201,13 @@ export function initLanding() {
         var MODES = {
             solo: {
                 kind: "SOLO CONTRACT", a: "YOU", b: "YOU", amount: "$1,000",
-                under: "YOUR DEPOSIT AT STAKE",
+                under: "LOCKED BY YOU, AGAINST YOU",
                 rows: [["DEPOSIT","$1,000",""],["WINDOW","30 days",""],
                        ["ON SUCCESS","$2,500","win"],["ON MISS","\u2212$1,000","blood"]]
             },
             rivalry: {
                 kind: "RIVALRY CONTRACT", a: "YOU", b: "THEM", amount: "$1,000",
-                under: "MATCHED BY OPPONENT",
+                under: "MATCHED BY COUNTERPARTY",
                 rows: [["DEPOSIT","$1,000",""],["WINDOW","30 days",""],
                        ["ON WIN","$2,000","win"],["ON LOSS","\u2212$1,000","blood"]]
             }
@@ -1392,7 +1378,6 @@ export function initLanding() {
 
     /* ── Schedule of Common Questions Accordion Controller (Delegated & Global) ── */
     (function initFaqAccordion() {
-        // Remove existing listener if re-initializing
         if (window.__faqAccordionHandler) {
             document.removeEventListener("click", window.__faqAccordionHandler, true);
         }
@@ -1415,7 +1400,6 @@ export function initLanding() {
             }
         };
 
-        // Attach with useCapture=true so no parent element or router can swallow the click
         document.addEventListener("click", window.__faqAccordionHandler, true);
     })();
 

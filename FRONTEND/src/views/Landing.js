@@ -179,9 +179,23 @@ export function renderLanding() {
                 <div class="shell">
                     <div class="argue">
                         <div>
-                            <p class="eyebrow rise" style="--d:40ms">Why it works</p>
-                            <h2 class="title clip-wipe" style="--d:120ms">A plan without stakes is just a comfortable wish</h2>
-                            <p class="lede rise" style="--d:220ms; margin-top:18px; max-width:46ch">You already know what the next step is. You've
+                            <p class="eyebrow rise" style="--d:40ms">Self-enforcing performance contracts</p>
+                        <h1 class="h1 hl-headline">
+                            <span class="hl-w" style="--d:100ms">Put </span>
+                            <span class="hl-w" style="--d:170ms">money </span>
+                            <span class="hl-w" style="--d:240ms">on </span>
+                            <span class="hl-w" style="--d:310ms">your </span>
+                            <span class="hl-w" style="--d:380ms">own </span>
+                            <span class="hl-w hl-anchor" style="--d:470ms">
+                                deadline
+                                <span class="hl-rule" aria-hidden="true">
+                                    <span class="hl-fill" style="--fill:66%;"></span>
+                                    <span class="hl-tick"></span>
+                                </span>
+                            </span>
+                        </h1>
+                        <p class="hl-meta" aria-label="Sample contract telemetry">$1,000 &middot; 30 DAY WINDOW &middot; 11 DAYS LEFT</p>
+                        <p class="lede rise" style="--d:220ms; margin-top:18px; max-width:46ch">You already know what the next step is. You've
                                 known for months. What you don't have is a reason it has to happen this week instead of
                                 some other week, because missing it costs a feeling, and feelings are cheap enough to
                                 absorb forever.</p>

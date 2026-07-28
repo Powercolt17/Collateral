@@ -1376,18 +1376,33 @@ export function initLanding() {
     })();
 
 
-    /* ── Schedule of Common Questions Accordion Controller ── */
+    /* ── Schedule of Common Questions Accordion Controller (Delegated & Global) ── */
     (function initFaqAccordion() {
-        var items = document.querySelectorAll("#sched .item");
-        if (!items.length) return;
-        items.forEach(function (item) {
-            var btn = item.querySelector(".q");
+        // Remove existing listener if re-initializing
+        if (window.__faqAccordionHandler) {
+            document.removeEventListener("click", window.__faqAccordionHandler, true);
+        }
+
+        window.__faqAccordionHandler = function (e) {
+            var btn = e.target && e.target.closest && e.target.closest(".faq .q, #sched .q");
             if (!btn) return;
-            btn.addEventListener("click", function () {
-                var open = item.classList.toggle("open");
-                btn.setAttribute("aria-expanded", String(open));
-            });
-        });
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            var item = btn.closest(".item");
+            var isExpanded = btn.getAttribute("aria-expanded") === "true";
+            var nextState = !isExpanded;
+
+            btn.setAttribute("aria-expanded", String(nextState));
+
+            if (item) {
+                item.classList.toggle("open", nextState);
+            }
+        };
+
+        // Attach with useCapture=true so no parent element or router can swallow the click
+        document.addEventListener("click", window.__faqAccordionHandler, true);
     })();
 
 

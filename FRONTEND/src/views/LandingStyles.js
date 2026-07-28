@@ -1026,7 +1026,6 @@ footer .logo-wordmark-light,
 .cm-step,
 .r-plate,
 .receipt,
-.faq .item,
 .duel {
   opacity: 0;
   transform: translateY(24px);
@@ -3521,6 +3520,14 @@ html.js-motion-active .reveal.is-in .r-rule {
   }
 
   .faq .item {
+    opacity: 1 !important;
+    transform: none !important;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .faq .group {
+    opacity: 1 !important;
+    transform: none !important;
+  }
     border-bottom: 1px solid var(--rule-soft);
   }
   .faq .q {
@@ -3586,12 +3593,10 @@ html.js-motion-active .reveal.is-in .r-rule {
     transition: transform 200ms var(--ease);
     transform-origin: center;
   }
-  .faq .q[aria-expanded="true"] .sign::after,
-  .faq .item.open .sign::after {
+  .faq .q[aria-expanded="true"] .sign::after.open .sign::after {
     transform: scaleY(0);
   }
-  .faq .q[aria-expanded="true"] .qt,
-  .faq .item.open .qt {
+  .faq .q[aria-expanded="true"] .qt.open .qt {
     color: var(--accent);
   }
 

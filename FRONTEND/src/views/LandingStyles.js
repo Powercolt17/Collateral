@@ -3554,7 +3554,7 @@ html.js-motion-active .reveal.is-in .r-rule {
     background: none !important;
     border: 0 !important;
     margin: 0 !important;
-    padding: 16px 10px 4px 0 !important;
+    padding: 16px 10px 0 0 !important;
     font: inherit !important;
     cursor: pointer !important;
     color: inherit !important;

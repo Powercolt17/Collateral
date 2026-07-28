@@ -733,9 +733,9 @@ export function renderLanding() {
                                 <span class="qt">What happens to my deposit?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a11" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a11" role="region">
                                 <div>
-                                    <p>It moves to a third-party custodian on Stripe Connect the moment the contract opens. Collateral never holds it. Hit your target and it returns to your card with the matched yield. Miss, and it settles to the forfeiture pool.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">It moves to a third-party custodian on Stripe Connect the moment the contract opens. Collateral never holds it. Hit your target and it returns to your card with the matched yield. Miss, and it settles to the forfeiture pool.</p>
                                 </div>
                             </div>
                         </div>
@@ -746,9 +746,9 @@ export function renderLanding() {
                                 <span class="qt">Who decides whether I hit the target?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a12" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a12" role="region">
                                 <div>
-                                    <p>The API you named in the contract. Collateral reads the same numbers your platform already reports, on the cadence listed in the register, and settles on whatever it finds. Nobody here reviews your work, and neither you nor a counterparty gets a vote.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">The API you named in the contract. Collateral reads the same numbers your platform already reports, on the cadence listed in the register, and settles on whatever it finds. Nobody here reviews your work, and neither you nor a counterparty gets a vote.</p>
                                 </div>
                             </div>
                         </div>
@@ -759,9 +759,9 @@ export function renderLanding() {
                                 <span class="qt">What if the API is down at settlement?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a13" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a13" role="region">
                                 <div>
-                                    <p>Settlement waits for the next successful read within a 72-hour grace window. If the platform still has not reported by then, the contract voids and your deposit returns in full. A broken oracle is never treated as a miss.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">Settlement waits for the next successful read within a 72-hour grace window. If the platform still has not reported by then, the contract voids and your deposit returns in full. A broken oracle is never treated as a miss.</p>
                                 </div>
                             </div>
                         </div>
@@ -774,9 +774,9 @@ export function renderLanding() {
                                 <span class="qt">Can I move the deadline?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a21" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a21" role="region">
                                 <div>
-                                    <p>No. The date is fixed when the contract opens and cannot be extended, paused, or renegotiated by either party. That constraint is the product.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">No. The date is fixed when the contract opens and cannot be extended, paused, or renegotiated by either party. That constraint is the product.</p>
                                 </div>
                             </div>
                         </div>
@@ -787,9 +787,9 @@ export function renderLanding() {
                                 <span class="qt">Can I cancel?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a22" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a22" role="region">
                                 <div>
-                                    <p>Within one hour of opening, yes, in full. After that the deposit is committed until the window closes.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">Within one hour of opening, yes, in full. After that the deposit is committed until the window closes.</p>
                                 </div>
                             </div>
                         </div>
@@ -802,9 +802,9 @@ export function renderLanding() {
                                 <span class="qt">Where does forfeited money go?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a31" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a31" role="region">
                                 <div>
-                                    <p>Into the pool that funds matched yield for people who hit their targets in the same period. Your miss pays someone else's win. Collateral takes a fee on settled contracts, disclosed before you sign, and takes nothing from the pool itself.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">Into the pool that funds matched yield for people who hit their targets in the same period. Your miss pays someone else's win. Collateral takes a fee on settled contracts, disclosed before you sign, and takes nothing from the pool itself.</p>
                                 </div>
                             </div>
                         </div>
@@ -815,9 +815,9 @@ export function renderLanding() {
                                 <span class="qt">Is this gambling?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a32" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a32" role="region">
                                 <div>
-                                    <p>The outcome depends on your own conduct against a target you set, measured by a source you nominate &mdash; not on chance or on an event outside your control. That is the distinction regulators draw, and it is why Collateral is not a broker, dealer, or exchange. It is also why we cannot promise you a return.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">The outcome depends on your own conduct against a target you set, measured by a source you nominate &mdash; not on chance or on an event outside your control. That is the distinction regulators draw, and it is why Collateral is not a broker, dealer, or exchange. It is also why we cannot promise you a return.</p>
                                 </div>
                             </div>
                         </div>
@@ -830,9 +830,9 @@ export function renderLanding() {
                                 <span class="qt">What can Collateral see on my accounts?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a41" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a41" role="region">
                                 <div>
-                                    <p>Read-only scopes on the specific metrics listed in your contract, and nothing else. Collateral cannot post, message, refund, or change a setting on any account you connect, and you can revoke the token at any time without affecting an open contract's settlement.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">Read-only scopes on the specific metrics listed in your contract, and nothing else. Collateral cannot post, message, refund, or change a setting on any account you connect, and you can revoke the token at any time without affecting an open contract's settlement.</p>
                                 </div>
                             </div>
                         </div>
@@ -843,9 +843,9 @@ export function renderLanding() {
                                 <span class="qt">What if I disconnect the platform mid-contract?</span>
                                 <span class="sign" aria-hidden="true"></span>
                             </button>
-                            <div class="a" id="a42" role="region">
+                            <div class="a" style="margin:0 !important; padding:0 !important; border:none !important; min-height:0 !important;" id="a42" role="region">
                                 <div>
-                                    <p>The contract settles as a miss at the end of its window. Disconnecting removes the only source of truth it has, and an unverifiable target is treated the same as an unmet one. Reconnect before the window closes and settlement proceeds normally.</p>
+                                    <p style="margin:0 !important; padding:0 44px 20px 78px !important; line-height:1.72 !important; display:block !important; text-align:left !important;">The contract settles as a miss at the end of its window. Disconnecting removes the only source of truth it has, and an unverifiable target is treated the same as an unmet one. Reconnect before the window closes and settlement proceeds normally.</p>
                                 </div>
                             </div>
                         </div>

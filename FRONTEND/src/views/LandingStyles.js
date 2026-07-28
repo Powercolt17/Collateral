@@ -3517,6 +3517,7 @@ html.js-motion-active .reveal.is-in .r-rule {
   .faq .sched {
     border-top: 1px solid var(--ink);
     text-align: left;
+    display: block !important;
   }
   .faq .group {
     font-family: var(--mono);
@@ -3531,12 +3532,17 @@ html.js-motion-active .reveal.is-in .r-rule {
     padding-top: 20px;
   }
 
+  /* Zero-gap accordion items */
   .faq .item {
-    border-bottom: 1px solid var(--rule-soft);
+    display: block !important;
+    border-bottom: 1px solid var(--rule-soft) !important;
     opacity: 1 !important;
     transform: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
   }
   .faq .q {
     width: 100% !important;
@@ -3548,10 +3554,13 @@ html.js-motion-active .reveal.is-in .r-rule {
     background: none !important;
     border: 0 !important;
     margin: 0 !important;
-    padding: 16px 10px 12px 0 !important;
+    padding: 16px 10px 4px 0 !important;
     font: inherit !important;
     cursor: pointer !important;
     color: inherit !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     transition: background-color 150ms var(--ease) !important;
   }
   @media (hover: hover) {
@@ -3614,14 +3623,15 @@ html.js-motion-active .reveal.is-in .r-rule {
   /* Smooth max-height & opacity toggle with zero top gap */
   .faq .a {
     display: block !important;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 280ms var(--ease), opacity 200ms var(--ease);
+    max-height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    transition: max-height 280ms var(--ease), opacity 200ms var(--ease) !important;
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
     min-height: 0 !important;
+    height: auto !important;
   }
   .faq .item.open .a,
   .faq .q[aria-expanded="true"] + .a,
@@ -3631,19 +3641,26 @@ html.js-motion-active .reveal.is-in .r-rule {
   }
 
   .faq .a > div {
+    display: block !important;
     padding: 0 !important;
     margin: 0 !important;
-    overflow: visible;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
   .faq .a p {
+    display: block !important;
     margin: 0 !important;
-    padding: 4px 44px 20px 78px !important;
-    max-width: 62ch;
-    color: var(--body);
-    font-size: 15.5px;
-    line-height: 1.72;
-    text-align: left;
+    padding: 0px 44px 20px 78px !important;
+    max-width: 62ch !important;
+    color: var(--body) !important;
+    font-size: 15.5px !important;
+    line-height: 1.72 !important;
+    text-align: left !important;
+    height: auto !important;
+    min-height: 0 !important;
+    transform: none !important;
   }
 
   .faq .tail {
@@ -3681,7 +3698,7 @@ html.js-motion-active .reveal.is-in .r-rule {
       gap: 0 12px !important;
     }
     .faq .a p {
-      padding: 4px 22px 18px 62px !important;
+      padding: 0px 22px 18px 62px !important;
     }
     .faq .rail h2 {
       font-size: 32px;

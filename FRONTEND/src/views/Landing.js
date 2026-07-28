@@ -727,7 +727,7 @@ export function renderLanding() {
                     <div class="sched" id="sched">
                         <div class="group rise" style="--d:160ms">&sect; 1 &nbsp;CUSTODY</div>
 
-                        <div class="item card-rise open" style="--d:240ms">
+                        <div class="item open" style="--d:240ms">
                             <button class="q" aria-expanded="true" aria-controls="a11">
                                 <span class="clause">&sect; 1.1</span>
                                 <span class="qt">What happens to my deposit?</span>
@@ -740,7 +740,7 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <div class="item card-rise" style="--d:320ms">
+                        <div class="item" style="--d:320ms">
                             <button class="q" aria-expanded="false" aria-controls="a12">
                                 <span class="clause">&sect; 1.2</span>
                                 <span class="qt">Who decides whether I hit the target?</span>
@@ -753,7 +753,7 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <div class="item card-rise" style="--d:400ms">
+                        <div class="item" style="--d:400ms">
                             <button class="q" aria-expanded="false" aria-controls="a13">
                                 <span class="clause">&sect; 1.3</span>
                                 <span class="qt">What if the API is down at settlement?</span>

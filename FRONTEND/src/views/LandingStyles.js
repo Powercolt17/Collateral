@@ -3526,6 +3526,8 @@ html.js-motion-active .reveal.is-in .r-rule {
     border-bottom: 1px solid var(--rule-soft);
     opacity: 1 !important;
     transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .faq .q {
     width: 100% !important;
@@ -3537,7 +3539,7 @@ html.js-motion-active .reveal.is-in .r-rule {
     background: none !important;
     border: 0 !important;
     margin: 0 !important;
-    padding: 19px 10px 19px 0 !important;
+    padding: 16px 10px 12px 0 !important;
     font: inherit !important;
     cursor: pointer !important;
     color: inherit !important;
@@ -3600,38 +3602,34 @@ html.js-motion-active .reveal.is-in .r-rule {
     color: var(--accent);
   }
 
+  /* Smooth max-height & opacity toggle with zero top gap */
   .faq .a {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 260ms var(--ease);
-    padding: 0;
-    margin: 0;
-    border: none;
-    min-height: 0;
+    display: block !important;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 280ms var(--ease), opacity 200ms var(--ease);
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    min-height: 0 !important;
   }
   .faq .item.open .a,
   .faq .q[aria-expanded="true"] + .a,
   .faq .q[aria-expanded="true"] ~ .a {
-    grid-template-rows: 1fr !important;
+    max-height: 400px !important;
+    opacity: 1 !important;
   }
 
   .faq .a > div {
-    overflow: hidden;
-    min-height: 0;
-    visibility: hidden;
-    transition: visibility 260ms var(--ease);
-    padding: 0;
-    margin: 0;
-  }
-  .faq .item.open .a > div,
-  .faq .q[aria-expanded="true"] + .a > div,
-  .faq .q[aria-expanded="true"] ~ .a > div {
-    visibility: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible;
   }
 
   .faq .a p {
-    margin: 0;
-    padding: 0 44px 24px 78px;
+    margin: 0 !important;
+    padding: 4px 44px 20px 78px !important;
     max-width: 62ch;
     color: var(--body);
     font-size: 15.5px;
@@ -3674,14 +3672,14 @@ html.js-motion-active .reveal.is-in .r-rule {
       gap: 0 12px !important;
     }
     .faq .a p {
-      padding: 0 22px 22px 62px;
+      padding: 4px 22px 18px 62px !important;
     }
     .faq .rail h2 {
       font-size: 32px;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .faq .a, .faq .a > div, .faq .sign::after, .faq .q {
+    .faq .a, .faq .sign::after, .faq .q {
       transition: none !important;
     }
   }

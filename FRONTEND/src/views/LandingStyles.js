@@ -3434,6 +3434,7 @@ html.js-motion-active .reveal.is-in .r-rule {
     width: 100%;
     box-sizing: border-box;
   }
+
   .faq-grid {
     max-width: 1240px;
     margin: 0 auto;
@@ -3514,46 +3515,42 @@ html.js-motion-active .reveal.is-in .r-rule {
     letter-spacing: .15em;
     color: var(--muted);
     padding: 26px 0 10px;
+    opacity: 1 !important;
+    transform: none !important;
   }
   .faq .group:first-of-type {
     padding-top: 20px;
   }
 
   .faq .item {
+    border-bottom: 1px solid var(--rule-soft);
     opacity: 1 !important;
     transform: none !important;
-    border-bottom: 1px solid var(--rule-soft);
-  }
-  .faq .group {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-    border-bottom: 1px solid var(--rule-soft);
   }
   .faq .q {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 62px 1fr 22px;
-    align-items: start;
-    gap: 0 16px;
-    text-align: left;
-    background: none;
-    border: 0;
-    margin: 0;
-    padding: 19px 10px 19px 0;
-    font: inherit;
-    cursor: pointer;
-    color: inherit;
-    transition: background-color 150ms var(--ease);
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 62px 1fr 22px !important;
+    align-items: start !important;
+    gap: 0 16px !important;
+    text-align: left !important;
+    background: none !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 19px 10px 19px 0 !important;
+    font: inherit !important;
+    cursor: pointer !important;
+    color: inherit !important;
+    transition: background-color 150ms var(--ease) !important;
   }
   @media (hover: hover) {
     .faq .q:hover {
-      background: rgba(26,26,24,.028);
+      background: rgba(26,26,24,.028) !important;
     }
   }
   .faq .q:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
+    outline: 2px solid var(--accent) !important;
+    outline-offset: -2px !important;
   }
   .faq .clause {
     font-family: var(--mono);
@@ -3573,6 +3570,7 @@ html.js-motion-active .reveal.is-in .r-rule {
     width: 11px;
     height: 11px;
     margin: 6px 0 0 auto;
+    display: block;
   }
   .faq .sign::before, .faq .sign::after {
     content: "";
@@ -3593,14 +3591,15 @@ html.js-motion-active .reveal.is-in .r-rule {
     transition: transform 200ms var(--ease);
     transform-origin: center;
   }
-  .faq .q[aria-expanded="true"] .sign::after.open .sign::after {
+  .faq .q[aria-expanded="true"] .sign::after,
+  .faq .item.open .sign::after {
     transform: scaleY(0);
   }
-  .faq .q[aria-expanded="true"] .qt.open .qt {
+  .faq .q[aria-expanded="true"] .qt,
+  .faq .item.open .qt {
     color: var(--accent);
   }
 
-  /* Outer: Grid container (0fr / 1fr). ZERO padding, margin, border, min-height */
   .faq .a {
     display: grid;
     grid-template-rows: 0fr;
@@ -3611,11 +3610,11 @@ html.js-motion-active .reveal.is-in .r-rule {
     min-height: 0;
   }
   .faq .item.open .a,
-  .faq .q[aria-expanded="true"] + .a {
-    grid-template-rows: 1fr;
+  .faq .q[aria-expanded="true"] + .a,
+  .faq .q[aria-expanded="true"] ~ .a {
+    grid-template-rows: 1fr !important;
   }
 
-  /* Middle: overflow: hidden; min-height: 0; visibility: hidden when closed. ZERO padding */
   .faq .a > div {
     overflow: hidden;
     min-height: 0;
@@ -3625,11 +3624,11 @@ html.js-motion-active .reveal.is-in .r-rule {
     margin: 0;
   }
   .faq .item.open .a > div,
-  .faq .q[aria-expanded="true"] + .a > div {
-    visibility: visible;
+  .faq .q[aria-expanded="true"] + .a > div,
+  .faq .q[aria-expanded="true"] ~ .a > div {
+    visibility: visible !important;
   }
 
-  /* Inner: ALL PADDING LIVES HERE AND ONLY HERE (~24px below answer paragraph) */
   .faq .a p {
     margin: 0;
     padding: 0 44px 24px 78px;
@@ -3638,15 +3637,6 @@ html.js-motion-active .reveal.is-in .r-rule {
     font-size: 15.5px;
     line-height: 1.72;
     text-align: left;
-  }
-
-  /* Motion — prefers-reduced-motion removes transitions */
-  @media (prefers-reduced-motion: reduce) {
-    .faq .a,
-    .faq .a > div,
-    .faq .sign::after {
-      transition: none !important;
-    }
   }
 
   .faq .tail {
@@ -3680,8 +3670,8 @@ html.js-motion-active .reveal.is-in .r-rule {
       padding: 84px 20px 90px;
     }
     .faq .q {
-      grid-template-columns: 50px 1fr 20px;
-      gap: 0 12px;
+      grid-template-columns: 50px 1fr 20px !important;
+      gap: 0 12px !important;
     }
     .faq .a p {
       padding: 0 22px 22px 62px;
@@ -3691,8 +3681,8 @@ html.js-motion-active .reveal.is-in .r-rule {
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .faq .a, .faq .sign::after, .faq .q {
-      transition: none;
+    .faq .a, .faq .a > div, .faq .sign::after, .faq .q {
+      transition: none !important;
     }
   }
 

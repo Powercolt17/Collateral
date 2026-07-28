@@ -3,6 +3,15 @@ import { revealStyles } from "./LandingMotion";
 
 export const landingCSS = `
 /* ═══════════ TOKENS ═══════════ */
+
+/* ═══════════ REMOVE DOTS / SLASHES IN ZERO (GLOBAL) ═══════════ */
+.cl-root, .cl-root *, .cl-root *::before, .cl-root *::after {
+  font-feature-settings: "zero" 0, "cv01" 0, "cv02" 0, "tnum" 1 !important;
+  -webkit-font-feature-settings: "zero" 0, "cv01" 0, "cv02" 0, "tnum" 1 !important;
+  -moz-font-feature-settings: "zero" 0, "cv01" 0, "cv02" 0, "tnum" 1 !important;
+  font-variant-numeric: lining-nums tabular-nums !important;
+}
+
 .cl-root {
   --paper: #F7F4ED;
   --paper-alt: #EFEAE0;
@@ -28,7 +37,7 @@ export const landingCSS = `
   --display: "Archivo", system-ui, sans-serif;
   --wordmark: "Archivo", system-ui, sans-serif;
   --body: "Public Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --mono: "Roboto Mono", "Segoe UI Mono", "Cascadia Code", system-ui, monospace;
   --shell: 1240px;
   --gutter: 28px;
   --section-y: 132px;
